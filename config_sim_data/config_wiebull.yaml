@@ -1,0 +1,4 @@
+name: wiebull
+parameters:
+    nsim: [10000,50000] 
+    shape: [1,5]
