@@ -876,15 +876,14 @@ class booststream:
             self.max_list = [k for k in new_data_chunk if (avg + 3*std <= k <= avg + 4*std)]
             hist_data = [0] * int(self.numbin) # initialize experimental histogram    
             hist_theo = [0] * int(self.numbin) # initialize theoritical histogram
-        #     hist_data[0] = len(end_bin_left) # left most bin
-        
-        #     hist_data[-1] = len(end_bin_right) # right most bin
-        #     hist_data[1] = len([i for i in new_data_chunk if (avg - 3*std <= i <= avg - 2*std)])
-        #     hist_data[-2] = len([i for i in new_data_chunk if (avg + 2*std <= i <= avg + 3*std)])
-        #     percent_data = boostrap_v1.get_percent_std_data_from_best_distribution(\
-        #                                        self.total_size, self.endL, self.endR, \
-        #                                        self.dist_list)
-        #     hist_theo = [math.ceil(i*self.total_size/100.0) for i in percent_data]
+            hist_data[0] = len(end_bin_left) # left most bin
+            hist_data[-1] = len(end_bin_right) # right most bin
+            hist_data[1] = len([i for i in new_data_chunk if (avg - 3*std <= i <= avg - 2*std)])
+            hist_data[-2] = len([i for i in new_data_chunk if (avg + 2*std <= i <= avg + 3*std)])
+            percent_data = boostrap_v1.get_percent_std_data_from_best_distribution(\
+                                               self.total_size, self.min_list, self.max_list, \
+                                               self.dist_list)
+            hist_theo = [math.ceil(i*self.total_size/100.0) for i in percent_data]
         #     self.endLn.append(len(self.endL))
         #     self.endRn.append(len(self.endR))
         #     expand = False
@@ -1102,7 +1101,27 @@ class samp1d():
         list_chunk.append(pop_sim[(self.chunk_size*(num_ch-1)):(self.chunk_size*(num_ch-1)) + self.chunk_size])
         self.samp_chuck = list_chunk
 
+import json
+
+# Function to read a JSON file and return its contents as a Python object
+def read_json_file(file_path):
+    with open(file_path, 'r') as file:
+        data = json.load(file)  # Load the data from the file
+    return data
+
+# Example usage
+file_path = './config_sim_data/wiebull/wiebullshape1n10000.json'  # Path to your JSON file
+try:
+    json_data = read_json_file(file_path)
+    print(json_data)  # Print the contents of the JSON file
+except FileNotFoundError:
+    print(f"The file {file_path} was not found.")
+except json.JSONDecodeError:
+    print(f"The file {file_path} is not a valid JSON.")
+
+
 net1 = booststream()
 net1.set_online()
-net1.expand_whole()
+net1.expand_bt_online()
+# net1.expand_whole()
 # print(net1) 
