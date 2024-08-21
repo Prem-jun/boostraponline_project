@@ -1002,10 +1002,10 @@ class boostrap_v1:
                                 ]
         previous_bootstrap_mean = 0      
         for idx,samples in enumerate(bootstrap_sample_list):
-            present_bootstrap_mean = (np.mean(bootstrap_sample) +
+            present_bootstrap_mean = (np.mean(samples) +
                                       previous_bootstrap_mean)/2
             previous_bootstrap_mean = present_bootstrap_mean
-            bootstrap_means[i] = present_bootstrap_mean
+            bootstrap_means[idx] = present_bootstrap_mean
             if minmax_boost:
                 bootstrap_sample_min_list.append(np.min(samples))
                 bootstrap_sample_max_list.append(np.max(samples))
@@ -1759,6 +1759,21 @@ class booststream:
         self.std.append((rightmost-leftmost)/8)
         
     def expand_bt_online(self,new_data_chunk:list) -> None:
+        '''
+        1. Check if the network is online manner or not
+        2. update the number of learning samples
+        3. Compute min and max values of the current data chunk
+        4. If we get the new min or max values update the left-expand or right-expand
+            4.1 Compute the update vales based on min-max boostrapping, or
+            4.2 Compute the update vales based on min and max vaues of the current data chunk
+        5. If the left and right expand values have been updated.
+            5.1 Update mean and std from the left and right expand values
+            5.2 Collect the list of minimum and maximum data list from data fall into \
+                the leftmost bin and the rightmost bin
+            5.3 Compute the data histogram and theoritical histogram    
+        
+        '''
+        # 1. Check if the network is online manner or not
         try: 
             if self.online is False:
                 raise ValueError("The network in traditional mode. Can not perform online mode.")
@@ -1766,9 +1781,21 @@ class booststream:
         except ValueError as e:
             return print(f"Error: {e}")
         
+        # 2. Update the number of learning samples  
         self.total_size += len(new_data_chunk)
+        
+        # 3. Compute min and max values of the current data chunk
         new_data_chunk_min = min(new_data_chunk)
         new_data_chunk_max = max(new_data_chunk)
+        if new_data_chunk_min < self.min_chs:
+            self.min_chs = new_data_chunk_min
+        if new_data_chunk_max < self.max_chs:
+            self.min_max = new_data_chunk_max
+        expand_min = False
+        expand_max = False
+        # 4. If we get the new min or max values update the left-expand or right-expand
+            # 4.1 Compute the update vales based on min-max boostrapping, or
+            # 4.2 Compute the update vales based on min and max vaues of the current data chunk
         if new_data_chunk_min < self.exp_l:
             expand_min = True
             if len(self.min_list) >= self.nboost and (self.minmax_boost is True):
@@ -1793,26 +1820,29 @@ class booststream:
                                                                     minmax_boost = self.minmax_boost,\
                                                                         prob = False)
                 
-        #         expand_max = True
-        #         # expansion = True
                 if self.exp_r <= adjust_right_std:
                     self.exp_r = adjust_right_std
             else:
-        #         expand_max = True
-        #         # expansion = True
                 self.exp_r = new_data_chunk_max
-                
+        # 5. If the left and right expand values have been updated.        
         if expand_min is True or expand_max is True:
+            # 5.1 Update mean and std from the left and right expand values
             self.update_center_range(self.exp_l,self.exp_r)
             avg = self.avg[-1]
             std = self.std[-1]
             end_bin_left = []
             end_bin_right = []
             new_data_chunk = new_data_chunk + self.min_list + self.max_list
+            # 5.2 Collect the list of minimum and maximum data list from data fall into \
+                # the leftmost bin and the rightmost bin  
             self.min_list = [k for k in new_data_chunk if (avg - 4*std <= k <= avg - 3*std)]
             self.max_list = [k for k in new_data_chunk if (avg + 3*std <= k <= avg + 4*std)]
             hist_data = [0] * int(self.numbin) # initialize experimental histogram    
             hist_theo = [0] * int(self.numbin) # initialize theoritical histogram
+            end_bin_left= self.min_list
+            end_bin_right = self.max_list
+            
+            # 5.3 Compute the data histogram and theoritical histogram 
             hist_data[0] = len(end_bin_left) # left most bin
             hist_data[-1] = len(end_bin_right) # right most bin
             hist_data[1] = len([i for i in new_data_chunk if (avg - 3*std <= i <= avg - 2*std)])
@@ -1823,94 +1853,85 @@ class booststream:
             hist_theo = [math.ceil(i*self.total_size/100.0) for i in percent_data]
         #     self.endLn.append(len(self.endL))
         #     self.endRn.append(len(self.endR))
-        #     expand = False
-        #     expansion = False
-        #     difference_max = hist_data[-1] - hist_theo[-1]
-        #     difference_min = hist_data[0] - hist_theo[0]
+            expand = False
+            expansion = False
+            
+            # 5.4 Compute the different values of the both histograms
+            difference_max = hist_data[-1] - hist_theo[-1]
+            difference_min = hist_data[0] - hist_theo[0]
         #     # while (difference_max > 0 or difference_min > 0):
-        #     if (difference_max > 0 or difference_min > 0):
-        #         dif_expand = True    
-        #     else:
-        #         dif_expand = False    
-        #     while dif_expand is True:    
+            if (difference_max > 0 or difference_min > 0):
+                dif_expand = True    
+            else:
+                dif_expand = False    
+            while dif_expand is True:    
         #         # difference_max_tmp = difference_max
         #         # difference_min_tmp = difference_min
-        #         expandL = self.expandL
-        #         expandR = self.expandR
-        #         if difference_max > 0:
-            
-        #             # if use_bootstrap is True:
-        #             if hist_data[-1] >= self.nboost:
-        #                 if self.expandR <= max(self.endR):
-        #                     self.expandR = boostrap_v1.bootstrap_online(self.endR, "right",\
-        #                                                                 number_bootstrap_iteration = self.number_bt_iter, \
-        #                                                                   minmax_boost = self.minmax_boost)
-        #                     # self.expandR = max_right_end
-        #                     expand = True
-        #                     expansion = True
+                expandL = self.exp_l
+                expandR = self.exp_r
+                if difference_max > 0:
+                    
+                    if hist_data[-1] >= self.nboost:
+                        if self.exp_r <= max(self.max_list):
+                            self.exp_r = boostrap_v1.bootstrap_online(self.max_list, "right",\
+                                                                number_bootstrap_iteration = self.number_bt_iter, \
+                                                                    minmax_boost = self.minmax_boost,\
+                                                                        prob = False)
+    
+                            expand = True
+                            expansion = True
+                else:
+                    expand = False
                         
-        #         if difference_min > 0:
-        #             if hist_data[-1] >= self.nboost:
-        #                 if self.expandL >= min(self.endL):
-        #                     self.expandL = boostrap_v1.bootstrap_online(self.endL, "left",\
-        #                                                                 number_bootstrap_iteration = self.number_bt_iter, \
-        #                                                                     minmax_boost = self.minmax_boost)
-        #                     # self.expandL = min_left_end
-        #                     expand = True
-        #                     expansion = True
-        #         if expand is True:
-        #             self.update_center_range(self.expandL,self.expandR)
-        #             avg = self.avg[-1]
-        #             std = self.std[-1]
-        #             expand = False
-        #             hist_data = [0] * int(self.numbin)
-        #             end_bin_left = [] # add
-        #             end_bin_right = [] # add
-        #             end_bin_left = [i for i in new_data_chunk if (avg - 4*std <= i <= avg - 3*std)]
-        #             end_bin_right = [i for i in new_data_chunk if (avg + 3*std <= i <= avg + 4*std)]
-        #             # end_bin_num_left.append(len(end_bin_left)) 
-        #             # end_bin_num_right.append(len(end_bin_right))
-        #             hist_data[0] = len(end_bin_left)
-        #             hist_data[-1] = len(end_bin_right)
-        #             hist_data[1] = len([i for i in new_data_chunk if (avg - 3*std <= i <= avg - 2*std)])
-        #             hist_data[-2] = len([i for i in new_data_chunk if (avg + 2*std <= i <= avg + 3*std)])
-        #             # count += 1
-        #             # boostrap_v1.plot_histogram(hist_theo[0],hist_theo[1], hist_theo[2],hist_theo[3],\
-        #             #                    hist_theo[4],hist_theo[5], hist_theo[6],hist_theo[7],\
-        #             #                        hist_data[0],hist_data[1], hist_data[2],hist_data[3],\
-        #             #                            hist_data[4],hist_data[5], hist_data[6],hist_data[7],\
-        #             #                                min_expand, max_expand, 1, expand)
-        #             # plt.show()
-        #             # difference_max = hist_data[-1] - hist_theo[-1]
-        #             # difference_min = hist_data[0] - hist_theo[0]
-        #             self.endL = end_bin_left
-        #             self.endR = end_bin_right
+                if difference_min > 0:
+                    if hist_data[0] >= self.nboost:
+                        if self.exp_l >= min(self.min_list):
+                            self.exp_l = boostrap_v1.bootstrap_online(self.min_list, "left",\
+                                                                number_bootstrap_iteration = self.number_bt_iter, \
+                                                                    minmax_boost = self.minmax_boost,\
+                                                                        prob = False)
+                            expand = True
+                            expansion = True
+                # else:
+                #     if expand is False:
+                #         expand = True
+                if expand is True:
+                    self.update_center_range(self.exp_l,self.exp_r)
+                    avg = self.avg[-1]
+                    std = self.std[-1]
+                    expand = False
+                    hist_data = [0] * int(self.numbin)
+                    end_bin_left = [] # add
+                    end_bin_right = [] # add
+                    end_bin_left = [i for i in new_data_chunk if (avg - 4*std <= i <= avg - 3*std)]
+                    end_bin_right = [i for i in new_data_chunk if (avg + 3*std <= i <= avg + 4*std)]
+                    hist_data[0] = len(end_bin_left)
+                    hist_data[-1] = len(end_bin_right)
+                    hist_data[1] = len([i for i in new_data_chunk if (avg - 3*std <= i <= avg - 2*std)])
+                    hist_data[-2] = len([i for i in new_data_chunk if (avg + 2*std <= i <= avg + 3*std)])
+                    self.min_list = end_bin_left
+                    self.max_list = end_bin_right
         #             self.endLn.append(len(end_bin_left))
         #             self.endRn.append(len(end_bin_right))
                     
                     
         #             # if abs(difference_max-difference_max_tmp) == 0 and abs(difference_min-difference_min_tmp) == 0:
-        #             if expandL == self.expandL and expandR == self.expandR:     
-        #                 # if self.expandL < new_data_chunk_min and new_data_chunk_max < self.expandR:
-        #                 #     # tmp_leftright = False
-        #                 #     break
-        #                 dif_expand = False
-                
-                        
-        #         # else:
-                    
-        #         #     if abs(difference_max-difference_max_tmp) == 0 and abs(difference_min-difference_min_tmp) == 0:
-        #         #         # tmp_chunk_end  = end_bin_left + end_bin_right
-        #         #         # tmp_leftright = True
-        #         #         break
-        # if (expansion is True) or (expand_max is True) or (expand_min is True):
-        #    self.range = self.expandR - self.expandL
+                    if expandL == self.exp_l and expandR == self.exp_r:     
+                        dif_expand = False
+                    else:
+                        expand = False
+                        difference_max = hist_data[-1] - hist_theo[-1]
+                        difference_min = hist_data[0] - hist_theo[0]
+                else:
+                    dif_expand = False
+        if (expansion is True) or (expand_max is True) or (expand_min is True):
+           self.range = self.exp_r - self.exp_l
         #    self.le_samp.append(self.min_chs - self.expandL)
         #    self.re_samp.append(self.max_chs - self.expandR)
         #    self.le_pop.append(self.pop_min - self.expandL)
         #    self.re_pop.append(self.pop_max - self.expandR)
-        #    expansion = True
-        # return expansion          
+           expansion = True
+        return expansion          
         
     def expand_bt_trad(self,input_data:list) -> None:
         # Traditional boostrap method
@@ -2060,6 +2081,7 @@ except json.JSONDecodeError:
 
 net1 = booststream()
 net1.set_online()
-net1.expand_bt_online(chunk_data[0])
+for samples_chunk in chunk_data:
+    expansion = net1.expand_bt_online(samples_chunk)
 # net1.expand_whole()
 # print(net1) 
