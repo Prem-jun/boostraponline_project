@@ -1793,6 +1793,7 @@ class booststream:
             self.min_max = new_data_chunk_max
         expand_min = False
         expand_max = False
+        expansion = False
         # 4. If we get the new min or max values update the left-expand or right-expand
             # 4.1 Compute the update vales based on min-max boostrapping, or
             # 4.2 Compute the update vales based on min and max vaues of the current data chunk
@@ -2059,7 +2060,7 @@ class samp1d():
         list_chunk.append(pop_sim[(self.chunk_size*(num_ch-1)):(self.chunk_size*(num_ch-1)) + self.chunk_size])
         self.samp_chuck = list_chunk
 
-import json
+import json, pickle
 
 # Function to read a JSON file and return its contents as a Python object
 def read_json_file(file_path):
@@ -2068,7 +2069,10 @@ def read_json_file(file_path):
     return data
 
 # Example usage
-file_path = './config_sim_data/wiebull/wiebullshape1n10000.json'  # Path to your JSON file
+folder_path = './config_sim_data/wiebull/'
+file_name = 'wiebullshape1n10000'
+file_type = '.json'
+file_path = folder_path + file_name + file_type
 try:
     json_data = read_json_file(file_path)
     chunk_data = json_data[0]['samp_chuck']
@@ -2078,10 +2082,24 @@ except FileNotFoundError:
 except json.JSONDecodeError:
     print(f"The file {file_path} is not a valid JSON.")
 
-
+pop_data =  pd.read_pickle(folder_path+file_name+'.pkl')
+pop_min = np.min(pop_data)
+pop_max = np.max(pop_data)
+pop_range = pop_max-pop_min
 net1 = booststream()
 net1.set_online()
-for samples_chunk in chunk_data:
+exp_l_list = []
+exp_r_list = []
+exp_range_list = []
+for idx,samples_chunk in enumerate(chunk_data):
     expansion = net1.expand_bt_online(samples_chunk)
+    exp_l_list.append(net1.exp_l)
+    exp_r_list.append(net1.exp_r)
+    exp_range_list.append(net1.range)
+    
+    print('============')
+    print(f'pop_min:{pop_min:.4f}/ exp_min:{net1.exp_l:.4f}/ error:{(pop_min-net1.exp_l):.4f}')
+    print(f'pop_max:{pop_max:.4f}/ exp_max:{net1.exp_r:.4f}/ error:{(pop_max-net1.exp_r):.4f}')
+    print(f'pop_range:{(pop_range):.4f}/ error_range:{(pop_range-net1.range)}')
 # net1.expand_whole()
 # print(net1) 
