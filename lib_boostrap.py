@@ -1094,154 +1094,7 @@ class boostrap_v1:
         # print("final_estimated_std:", final_estimated_std)
     
         return final_estimated_std
-        
-        
-        
-        
-        
-        
-        
-        # for i in range(number_bootstrap_iteration):
-     
-        #     if prob:
-                
-        #         # bootstrap_sample = [ np.random.choice(data_set, 1,replace=True,p=pdist) for i in range(size_boost)]
-        #         bootstrap_sample = list(np.random.choice(data_set, size_boost,replace=True,p=pdist))
-        #     else:
-        #         # bootstrap_sample = [ np.random.choice(data_set, 1,replace=True) for i in range(size_boost)]
-        #         bootstrap_sample = list(np.random.choice(data_set, size_boost,replace=True))
-            
-            
-        #     # bootstrap_sample = list(np.random.choice(data_set, size_data_set, \
-        #     #                                           replace = with_replacement))
-        #     # bootstrap_sample = list(random.sample)
-        #     bootstrap_sample_list.append(bootstrap_sample)
-        #     if minmax_boost:
-        #         bootstrap_sample_min_list.append(min(bootstrap_sample))
-        #         bootstrap_sample_max_list.append(max(bootstrap_sample))
-            
-        #     present_bootstrap_mean = (np.mean(bootstrap_sample) +
-        #                               previous_bootstrap_mean)/2
-        #     previous_bootstrap_mean = present_bootstrap_mean
-        #     bootstrap_means[i] = present_bootstrap_mean
-    
-        # estimated_mean = np.mean(bootstrap_means)
-        # # estimated_std_of_mean = boostrap_v1.stdev(bootstrap_means,estimated_mean)
-        # if prob:
-        #   input_mean = sum(np.array(pdist)*np.array(input_data))
-        # else:
-        #     input_mean = np.mean(input_data) # Aj Chid mean
-        
-        # # different_input_mean_bootstrap_mean = abs(boostrap_v1.mean(input_data) - estimated_mean)
-        # different_input_mean_bootstrap_mean = abs(input_mean - estimated_mean)
-        
-        # for i in range(number_bootstrap_iteration):
-        #     data = bootstrap_sample_list[i]
-        #     variance = [(k-estimated_mean)**2 for k in data]
-        #     std = math.sqrt(sum(variance)/(size_boost-1))
-        #     # std = 0
-        #     # for j in range(size_boost):
-        #     #     std = std + (data[j] - estimated_mean)**2
-        #     # std = math.sqrt(std/(size_boost-1))
-        #     # # diff_dist_right_std = max(data) - (std + estimated_mean)
-        #     # # diff_dist_left_std = (estimated_mean - std) - min(data)
-        #     # # max_std = (diff_dist_right_std + diff_dist_left_std)/2
-        #     bootstrap_std.append(std)
-        #     # bootstrap_max_diff_dist_std.append(max_std)
-    
-        # estimated_std = np.mean(bootstrap_std)
-        # # estimated_std_of_std = boostrap_v1.stdev(bootstrap_std,estimated_std)
-        # different_input_std_bootstrap_std = abs(boostrap_v1.stdev(input_data,input_mean) - estimated_std)
-        # # different_input_std_bootstrap_std = abs(boostrap_v1.stdev(input_data,) - estimated_std)
-    
-        # # estimated_diff_dist_std = np.mean(bootstrap_max_diff_dist_std)
-        # # estimated_std_of_diff_dist_std = np.std(bootstrap_max_diff_dist_std)
-    
-        
-        # # input_std = boostrap_v1.stdev(input_data) No use in the below lines.
-    
-        # # print("=====================================================================")
-        # # print(">>>>> in Bootstrap")
-        # # print("\n----- ", end_side)
-        # # print("left min:", min(data_set))
-        # # print("right max:", max(data_set))
-        # # print("\ninput mean:", input_mean)
-        # # print("estimated_mean:", estimated_mean)
-        # # print("estimated_std_of_mean:", estimated_std_of_mean)
-        # # print(" ")
-        # # print("input std:", input_std)
-        # # print("estimated_std:", estimated_std)
-        # # print("estimated_std_of_std:", estimated_std_of_std)
-        # # print(" ")
-        # # print("estimated_diff_dist_std:", estimated_diff_dist_std)
-        # # print("estimated_std_of_diff_dist_std:", estimated_std_of_diff_dist_std)
-    
-        # # input_mean = np.mean(input_data)
-    
-    #     if end_side == "left":
-    #         if minmax_boost is True:
-    #             if prob:
-    #                 dist_min = abs(bootstrap_sample_min_list-np.mean(bootstrap_sample_min_list))
-    #                 idist_min = 1/dist_min
-    #                 pdist_min = idist_min/np.sum(idist_min)
-    #                 left_min_1 = sum(np.array(pdist_min)*np.array(bootstrap_sample_min_list))
-    #                 left_min = left_min_1
-    #             else:
-    #                 left_min = np.mean(bootstrap_sample_min_list)
-    #             # left_min = np.mean(bootstrap_sample_min_list)#-np.std(bootstrap_sample_min_list)
-    #             # left_min = st.mode(np.array(bootstrap_sample_min_list))[0][0]
-    #         else:
-    #             left_min = min(data_set)
-    #         if estimated_mean < input_mean:
-    #             # left_min = min(data_set)
-    #             final_estimated_std = left_min - different_input_mean_bootstrap_mean
-    # #            final_estimated_std = left_min - estimated_std_of_diff_dist_std
-    #             print("\n>>>>> Bootstrap in left end: estimated_mean < input_mean")
-    #             print("left min:", min(data_set), " final_estimated_std:", \
-    #                   final_estimated_std)
-                
-    #         if input_mean < estimated_mean:
-                
-    #             # left_min = min(data_set)
-    # #            final_estimated_std = left_min - estimated_std_of_std
-    #             final_estimated_std = left_min - different_input_std_bootstrap_std
-    #             print("\n>>>>> Bootstrap in left end: input_mean < estimated_mean")
-    #             print("left min:", min(data_set), " final_estimated_std:", \
-    #                   final_estimated_std)
-        
-    #     if end_side == "right":
-    #         if minmax_boost is True:
-    #             if prob:
-    #                 dist_max = abs(bootstrap_sample_max_list-np.mean(bootstrap_sample_max_list))
-    #                 idist_max = 1/dist_max
-    #                 pdist_max = idist_max/np.sum(idist_max)
-    #                 right_max_1 = sum(np.array(pdist_max)*np.array(bootstrap_sample_max_list))
-    #                 right_max = right_max_1
-    #             else:
-    #                 right_max = np.mean(bootstrap_sample_max_list)
-    #             # right_max = np.mean(bootstrap_sample_max_list)#+np.std(bootstrap_sample_max_list)
-    #             # right_max = st.mode(np.array(bootstrap_sample_max_list))[0][0]
-    #         else:
-    #             right_max = max(data_set)
-    #         if estimated_mean < input_mean:
-    #             # right_max = max(data_set)
-    # #            final_estimated_std = right_max + estimated_std_of_std
-    #             final_estimated_std = right_max + different_input_std_bootstrap_std
-    #             print("\n>>>>> Bootstrap in right end: estimated_mean < input_mean")
-    #             print("right max:", max(data_set), " final_estimated_std:", \
-    #                   final_estimated_std)
-                                      
-    #         if input_mean < estimated_mean:
-    #             # right_max = max(data_set)
-    #             final_estimated_std = right_max + different_input_mean_bootstrap_mean            
-    #             print("\n>>>>> Bootstrap in right end: input_mean < estimated_mean")
-    #             print("right max:", max(data_set), " final_estimated_std:", \
-    #                   final_estimated_std)
-    
-    #     print(" ")
-    #     print("final_estimated_std:", final_estimated_std)
-    
-    #     return final_estimated_std    
+         
     #============================================================================
     def estimate_width_1D(input_data: list, max_value: float, z_score:float) -> float:
         sample = copy.deepcopy(input_data)
@@ -1755,6 +1608,10 @@ class booststream:
         self.exp_l = 9999.99
         self.exp_r = -9999.99
     
+    def compute_error(self,target_l: float,target_r: float):
+        target_range = target_r - target_l
+        return (target_l-self.exp_l), (target_r-self.exp_r), (target_range-self.range)
+        
     def update_center_range(self,leftmost: float,rightmost: float)-> None:
         self.avg.append((rightmost+leftmost)/2)
         self.std.append((rightmost-leftmost)/8)

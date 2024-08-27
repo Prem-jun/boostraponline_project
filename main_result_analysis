@@ -1,0 +1,60 @@
+''' 
+ Decription: 
+ Arguments:
+ Output: results object 
+ data_wb = {
+                'samples_size': samples_size,
+                'chunk_sizes': chunk_size,
+                'net_online': net_online_list,
+                'net_online_mm': net_online_mm_list,
+                'net_online_whole': net_online_whole,
+                'net_offline': net_offline
+            }
+''' 
+import pickle, os
+import pandas as pd
+import numpy as np
+
+
+
+
+folder_path = './config_sim_data/wiebull/'
+filename_list = ['wiebullshape1n10000','wiebullshape1n50000']
+filetype = '.pkl'
+col_name = ['filename','method','samp/ch_size','exp_l','exp_r','exp_range','error_l','error_r','error_range']
+result_list = []
+for filename in filename_list:
+    file_re = os.path.join(folder_path,filename+'_re.pkl')
+    if os.path.isfile(file_re):
+        result = []
+        pop_data =  pd.read_pickle(folder_path+filename+'.pkl')    
+        pop_min = np.min(pop_data)
+        pop_max = np.max(pop_data)
+        pop_range = pop_max-pop_min
+        with open(file_re, 'rb') as file:
+            loaded_data = pickle.load(file)        
+        # for key, value in loaded_data.items():
+        #     if 'offline' in key:
+                 
+        # net_name = 'net_offline'    
+        # net = loaded_data[net_name]
+        # result.append((filename+'_re.pkl'))
+        # result.append(net_name)
+        # if 'offline' in net_name:
+        #     result.append(net['samples_size'])
+        # elif 'whole' in net_name:    
+        #     result.append(net['samples_size'])
+        # else:
+        #     result.append(net['samples_size'])    
+    
+
+# filetype = '.pkl'
+# pop_data =  pd.read_pickle(folder_path+filename+'.pkl')    
+# pop_min = np.min(pop_data)
+# pop_max = np.max(pop_data)
+# pop_range = pop_max-pop_min
+# with open(os.path.join(folder_path,filename+'_re'+filetype), 'rb') as file:
+#     loaded_data = pickle.load(file)
+
+# print("Data loaded from pickle file:")
+# print(loaded_data)
