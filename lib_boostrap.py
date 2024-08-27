@@ -1730,6 +1730,7 @@ class booststream:
     exp_l:float = 0.0
     exp_r:float = 0.0
     range:float = 0.0
+    flag_learning:bool = False # flag for idenfying the learning process is performed.
     
     # filewd: dict = ''
     # pop_max: float = 0.0
@@ -1783,14 +1784,14 @@ class booststream:
         
         # 2. Update the number of learning samples  
         self.total_size += len(new_data_chunk)
-        
+        self.chunk_size = len(new_data_chunk)
         # 3. Compute min and max values of the current data chunk
         new_data_chunk_min = min(new_data_chunk)
         new_data_chunk_max = max(new_data_chunk)
         if new_data_chunk_min < self.min_chs:
             self.min_chs = new_data_chunk_min
-        if new_data_chunk_max < self.max_chs:
-            self.min_max = new_data_chunk_max
+        if new_data_chunk_max > self.max_chs:
+            self.max_chs = new_data_chunk_max
         expand_min = False
         expand_max = False
         expansion = False
@@ -1873,6 +1874,16 @@ class booststream:
                 if difference_max > 0:
                     
                     if hist_data[-1] >= self.nboost:
+                        if self.flag_learning is False:
+                            tmp_exp_r = boostrap_v1.bootstrap_online(self.max_list, "right",\
+                                                                number_bootstrap_iteration = self.number_bt_iter, \
+                                                                    minmax_boost = self.minmax_boost,\
+                                                                        prob = False) 
+                            
+                            self.exp_r = tmp_exp_r
+                            expand = True
+                            expansion = True
+                                
                         if self.exp_r <= max(self.max_list):
                             self.exp_r = boostrap_v1.bootstrap_online(self.max_list, "right",\
                                                                 number_bootstrap_iteration = self.number_bt_iter, \
@@ -1886,6 +1897,15 @@ class booststream:
                         
                 if difference_min > 0:
                     if hist_data[0] >= self.nboost:
+                        if self.flag_learning is False:
+                            self.flag_learning = True
+                            tmp_exp_l = boostrap_v1.bootstrap_online(self.min_list, "left",\
+                                                                number_bootstrap_iteration = self.number_bt_iter, \
+                                                                    minmax_boost = self.minmax_boost,\
+                                                                        prob = False) 
+                            self.exp_l = tmp_exp_l
+                            expand = True
+                            expansion = True
                         if self.exp_l >= min(self.min_list):
                             self.exp_l = boostrap_v1.bootstrap_online(self.min_list, "left",\
                                                                 number_bootstrap_iteration = self.number_bt_iter, \
@@ -1942,6 +1962,7 @@ class booststream:
             
         except ValueError as e:
             return print(f"Error: {e}")
+        self.number_bt_iter = 600
         data_set = copy.deepcopy(input_data)
         bootstrap_min = []
         bootstrap_max = []
@@ -2068,38 +2089,44 @@ def read_json_file(file_path):
         data = json.load(file)  # Load the data from the file
     return data
 
-# Example usage
-folder_path = './config_sim_data/wiebull/'
-file_name = 'wiebullshape1n10000'
-file_type = '.json'
-file_path = folder_path + file_name + file_type
-try:
-    json_data = read_json_file(file_path)
-    chunk_data = json_data[0]['samp_chuck']
-    # print(json_data)  # Print the contents of the JSON file
-except FileNotFoundError:
-    print(f"The file {file_path} was not found.")
-except json.JSONDecodeError:
-    print(f"The file {file_path} is not a valid JSON.")
+# # Example usage
+# folder_path = './config_sim_data/wiebull/'
+# file_name = 'wiebullshape1n10000'
+# file_type = '.json'
+# file_path = folder_path + file_name + file_type
+# try:
+#     json_data = read_json_file(file_path)
+#     chunk_data = json_data[0]['samp_chuck']
+#     # print(json_data)  # Print the contents of the JSON file
+# except FileNotFoundError:
+#     print(f"The file {file_path} was not found.")
+# except json.JSONDecodeError:
+#     print(f"The file {file_path} is not a valid JSON.")
 
-pop_data =  pd.read_pickle(folder_path+file_name+'.pkl')
-pop_min = np.min(pop_data)
-pop_max = np.max(pop_data)
-pop_range = pop_max-pop_min
-net1 = booststream()
-net1.set_online()
-exp_l_list = []
-exp_r_list = []
-exp_range_list = []
-for idx,samples_chunk in enumerate(chunk_data):
-    expansion = net1.expand_bt_online(samples_chunk)
-    exp_l_list.append(net1.exp_l)
-    exp_r_list.append(net1.exp_r)
-    exp_range_list.append(net1.range)
+# pop_data =  pd.read_pickle(folder_path+file_name+'.pkl')
+# pop_min = np.min(pop_data)
+# pop_max = np.max(pop_data)
+# pop_range = pop_max-pop_min
+# net1 = booststream()
+# net1.set_online()
+# exp_l_list = []
+# exp_r_list = []
+# exp_range_list = []
+# expandsion_list = []
+# sample_whole = []
+# for idx,samples_chunk in enumerate(chunk_data):
+#     sample_whole = sample_whole + samples_chunk
+#     expandsion = net1.expand_bt_online(samples_chunk)
+#     if expandsion:
+#         expandsion_list.append((idx+1))
+#     exp_l_list.append(net1.exp_l)
+#     exp_r_list.append(net1.exp_r)
+#     exp_range_list.append(net1.range)
     
-    print('============')
-    print(f'pop_min:{pop_min:.4f}/ exp_min:{net1.exp_l:.4f}/ error:{(pop_min-net1.exp_l):.4f}')
-    print(f'pop_max:{pop_max:.4f}/ exp_max:{net1.exp_r:.4f}/ error:{(pop_max-net1.exp_r):.4f}')
-    print(f'pop_range:{(pop_range):.4f}/ error_range:{(pop_range-net1.range)}')
-# net1.expand_whole()
-# print(net1) 
+#     print('============')
+#     print(f'pop_min:{pop_min:.4f}/ exp_min:{net1.exp_l:.4f}/ error:{(pop_min-net1.exp_l):.4f}')
+#     print(f'pop_max:{pop_max:.4f}/ exp_max:{net1.exp_r:.4f}/ error:{(pop_max-net1.exp_r):.4f}')
+#     print(f'pop_range:{(pop_range):.4f}/ error_range:{(pop_range-net1.range):.4f}')
+# complete = 1
+# # net1.expand_whole()
+# # print(net1) 
