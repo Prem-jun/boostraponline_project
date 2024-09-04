@@ -33,8 +33,11 @@ for filename in filename_list:
         pop_range = pop_max-pop_min
         with open(file_re, 'rb') as file:
             loaded_data = pickle.load(file)        
-        # for key, value in loaded_data.items():
-        #     if 'offline' in key:
+        result.append((filename+'_re.pkl'))
+        for key, value in loaded_data.items():
+            if 'net' in key:
+                if 'whole' in loaded_data[key]:
+                    result.append(key)
                  
         # net_name = 'net_offline'    
         # net = loaded_data[net_name]
