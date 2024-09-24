@@ -5,4 +5,6 @@
 
 3. `lib_boostrap.py` => library file relating to the online boostrap functions.
  
-4. `main_boostrap.py` => The main program for executing boostrap online.
+4. `main_boostrap.py` => the main program for executing boostrap online algorithms.
+
+5. `main_result_analysis.py` => the main program for analysing the results from `main_boostrap.py` 

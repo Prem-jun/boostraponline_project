@@ -61,8 +61,8 @@ def main(folder_path,filename):
                 samples_size = len(sample_whole)
                 net_online_whole.expand_bt_online(sample_whole)
                 net_offline.expand_bt_trad(sample_whole)
-                net_online_list.append(net_online)
-                net_online_mm_list.append(net_online_mm)    
+                # net_online_list.append(net_online)
+                # net_online_mm_list.append(net_online_mm)    
             else:
                 for samples_chunk in chunk_data:
                     expandsion = net_online.expand_bt_online(samples_chunk)

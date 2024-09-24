@@ -14,30 +14,51 @@
 import pickle, os
 import pandas as pd
 import numpy as np
-
-
-
-
 folder_path = './config_sim_data/wiebull/'
 filename_list = ['wiebullshape1n10000','wiebullshape1n50000']
 filetype = '.pkl'
 col_name = ['filename','method','samp/ch_size','exp_l','exp_r','exp_range','error_l','error_r','error_range']
 result_list = []
 for filename in filename_list:
-    file_re = os.path.join(folder_path,filename+'_re.pkl')
+    file_re = os.path.join(folder_path,filename+'_re.pkl') # result file ended with _re words
     if os.path.isfile(file_re):
-        result = []
+        
+        # computing population min, max and rage from the simulated population .pkl file
         pop_data =  pd.read_pickle(folder_path+filename+'.pkl')    
         pop_min = np.min(pop_data)
         pop_max = np.max(pop_data)
         pop_range = pop_max-pop_min
+        
         with open(file_re, 'rb') as file:
             loaded_data = pickle.load(file)        
-        result.append((filename+'_re.pkl'))
+        
+        
+        ch_size = loaded_data['chunk_sizes']
         for key, value in loaded_data.items():
             if 'net' in key:
-                if 'whole' in loaded_data[key]:
-                    result.append(key)
+                for ch in range(len(ch_size)):
+                  result = []
+                  result.append((filename+'_re.pkl'))
+                  net = value[ch]
+                  if net.online is False:
+                    result.append('net_offline')
+                  else:
+                      if net.minmax_boost is False:
+                          result.append('net_offline')
+                # result = [] # the row list contain the values refering to the `col_name` variable
+                # result.append((filename+'_re.pkl'))
+                # if 'online_whole' in key:
+                #     result.append(key)
+                # elif 'online_mm' in key:
+                #     result.append(key)
+                # elif 'online' in key:
+                #     result.append(key)
+                # else:
+                #     result.append(key)
+                # for ch in ch_size:
+                        
+            
+                    
                  
         # net_name = 'net_offline'    
         # net = loaded_data[net_name]
