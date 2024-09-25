@@ -45,14 +45,16 @@ def main(folder_path,filename):
             # create the initial network
             net_online = lib_boostrap.booststream()
             net_online_mm = lib_boostrap.booststream()
-            net_online_whole = lib_boostrap.booststream()
-            net_offline = lib_boostrap.booststream()
+            
             
             # Setting for online manner
             net_online.set_online()
-            net_online_mm.set_online()
-            net_online_whole.set_online()
+            net_online_mm.set_online(minmax_flag=True)
+            
             if count == 0:
+                net_online_whole = lib_boostrap.booststream()
+                net_online_whole.set_online()
+                net_offline = lib_boostrap.booststream()
                 sample_whole = [] 
                 for samples_chunk in chunk_data:
                     sample_whole = sample_whole + samples_chunk
@@ -61,8 +63,8 @@ def main(folder_path,filename):
                 samples_size = len(sample_whole)
                 net_online_whole.expand_bt_online(sample_whole)
                 net_offline.expand_bt_trad(sample_whole)
-                # net_online_list.append(net_online)
-                # net_online_mm_list.append(net_online_mm)    
+                net_online_list.append(net_online)
+                net_online_mm_list.append(net_online_mm)    
             else:
                 for samples_chunk in chunk_data:
                     expandsion = net_online.expand_bt_online(samples_chunk)
@@ -78,8 +80,8 @@ def main(folder_path,filename):
                 'chunk_sizes': chunk_size,
                 'net_online': net_online_list,
                 'net_online_mm': net_online_mm_list,
-                'net_online_whole': net_online_whole,
-                'net_offline': net_offline
+                'net_online_whole': [net_online_whole],
+                'net_offline': [net_offline]
             }
         # Specify the name of the pickle file
         pickle_file = os.path.join(folder_path,filename+'_re.pkl')

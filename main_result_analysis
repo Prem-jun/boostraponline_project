@@ -31,20 +31,54 @@ for filename in filename_list:
         
         with open(file_re, 'rb') as file:
             loaded_data = pickle.load(file)        
-        
-        
         ch_size = loaded_data['chunk_sizes']
         for key, value in loaded_data.items():
             if 'net' in key:
-                for ch in range(len(ch_size)):
-                  result = []
-                  result.append((filename+'_re.pkl'))
-                  net = value[ch]
-                  if net.online is False:
-                    result.append('net_offline')
-                  else:
-                      if net.minmax_boost is False:
-                          result.append('net_offline')
+                for net in value:
+                    result = []
+                    result.append((filename+'_re.pkl'))
+                    if net.online is False:
+                        result.append('net_offline')
+                    else:
+                        if net.minmax_boost is True:
+                           result.append('net_online_mm')
+                        else:
+                            if net.total_size == net.chunk_size:
+                               result.append('net_online_whole')
+                            else:
+                                result.append('net_online')
+                    result.append(net.chunk_size)
+                    result.append(net.exp_l)
+                    result.append(net.exp_r)
+                    result.append(net.range)
+                    result.append(pop_min - net.exp_l)
+                    result.append(pop_max - net.exp_r)
+                    result.append(pop_range - net.range)
+                    result_list.append(result)                
+                                             
+                        
+                # if 'offline' in key:
+                #     result = []
+                #     result.append((filename+'_re.pkl'))
+                #     net = value
+                #     flag = True
+                # elif 'whole' in key:
+                #     result = []
+                #     result.append((filename+'_re.pkl'))
+                #     net = value
+                #     flag = True
+                # else:
+                #     for ch in range(len(ch_size)):
+                #         result = []
+                #         result.append((filename+'_re.pkl'))
+                #         net = value[ch]
+                #         if net.minmax_boost is False:
+                #             result.append('net_online')
+                #         else:
+                #             result.append('net_online_mm')
+                #         result_list.append(result)
+                # if flag:
+                #     result_list.append(result)
                 # result = [] # the row list contain the values refering to the `col_name` variable
                 # result.append((filename+'_re.pkl'))
                 # if 'online_whole' in key:
