@@ -93,7 +93,7 @@ def main(config_path: str, fileload: str):
 
 if __name__=='__main__':
     config_path = './config_sim_data/' # 
-    config_file_wald = 'config_wald.yaml'
+    file_config_wald = 'config_wald.yaml'
     file_config_wiebull = 'config_wiebull.yaml'
     main(config_path,file_config_wald)
     

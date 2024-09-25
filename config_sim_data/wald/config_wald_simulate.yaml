@@ -1,0 +1,47 @@
+file_config: ./config_sim_data/config_wald.yaml
+file_data_chunk: waldm1sd05n10000
+nsim: 10000
+mean: 1
+scale: 0.5
+---
+file_config: ./config_sim_data/config_wald.yaml
+file_data_chunk: waldm1sd2n10000
+nsim: 10000
+mean: 1
+scale: 2
+---
+file_config: ./config_sim_data/config_wald.yaml
+file_data_chunk: waldm3sd05n10000
+nsim: 10000
+mean: 3
+scale: 0.5
+---
+file_config: ./config_sim_data/config_wald.yaml
+file_data_chunk: waldm3sd2n10000
+nsim: 10000
+mean: 3
+scale: 2
+---
+file_config: ./config_sim_data/config_wald.yaml
+file_data_chunk: waldm1sd05n50000
+nsim: 50000
+mean: 1
+scale: 0.5
+---
+file_config: ./config_sim_data/config_wald.yaml
+file_data_chunk: waldm1sd2n50000
+nsim: 50000
+mean: 1
+scale: 2
+---
+file_config: ./config_sim_data/config_wald.yaml
+file_data_chunk: waldm3sd05n50000
+nsim: 50000
+mean: 3
+scale: 0.5
+---
+file_config: ./config_sim_data/config_wald.yaml
+file_data_chunk: waldm3sd2n50000
+nsim: 50000
+mean: 3
+scale: 2

@@ -41,6 +41,18 @@ def main(folder_config:str = None,file_config:str = None, percent_feed:int = 30,
     return 0
 
 if __name__=='__main__':
-    folder_config = './config_sim_data/wiebull/' 
-    file_config_wiebull = 'config_wiebull_simulate.yaml'
-    main(folder_config,file_config_wiebull)
+    # dist_select = 'wiebull'
+    dist_select = 'wald'
+    
+    # program part
+    if dist_select == 'wiebull':
+        # ======== Wiebull distribution   
+        folder_config = './config_sim_data/wiebull/' 
+        file_config = 'config_wiebull_simulate.yaml'
+        # ========
+    if dist_select == 'wald':
+        # ======== Wald distribution   
+        folder_config = './config_sim_data/wald/' 
+        file_config = 'config_wald_simulate.yaml'
+        # ========
+    main(folder_config,file_config)

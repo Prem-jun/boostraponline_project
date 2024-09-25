@@ -15,49 +15,69 @@ import pickle, os
 import pandas as pd
 import numpy as np
 import openpyxl
-folder_path = './config_sim_data/wiebull/'
-filename_list = ['wiebullshape1n10000','wiebullshape1n50000','wiebullshape1n50000','wiebullshape5n50000']
-result_name = 'result_all.xlsx'
-### program part
-filetype = '.pkl'
-col_name = ['filename','method','samp/ch_size','exp_l','exp_r','exp_range','error_l','error_r','error_range']
-result_list = []
-for filename in filename_list:
-    file_re = os.path.join(folder_path,filename+'_re.pkl') # result file ended with _re words
-    if os.path.isfile(file_re):
-        
-        # computing population min, max and rage from the simulated population .pkl file
-        pop_data =  pd.read_pickle(folder_path+filename+'.pkl')    
-        pop_min = np.min(pop_data)
-        pop_max = np.max(pop_data)
-        pop_range = pop_max-pop_min
-        
-        with open(file_re, 'rb') as file:
-            loaded_data = pickle.load(file)        
-        ch_size = loaded_data['chunk_sizes']
-        for key, value in loaded_data.items():
-            if 'net' in key:
-                for net in value:
-                    result = []
-                    result.append((filename+'_re.pkl'))
-                    if net.online is False:
-                        result.append('net_offline')
-                    else:
-                        if net.minmax_boost is True:
-                           result.append('net_online_mm')
+
+def main(folder_path,filename_list,result_name):
+    ### program part
+    filetype = '.pkl'
+    col_name = ['filename','method','samp/ch_size','exp_l','exp_r','exp_range','error_l','error_r','error_range']
+    result_list = []
+    for filename in filename_list:
+        file_re = os.path.join(folder_path,filename+'_re.pkl') # result file ended with _re words
+        if os.path.isfile(file_re):
+            
+            # computing population min, max and rage from the simulated population .pkl file
+            pop_data =  pd.read_pickle(folder_path+filename+'.pkl')    
+            pop_min = np.min(pop_data)
+            pop_max = np.max(pop_data)
+            pop_range = pop_max-pop_min
+            
+            with open(file_re, 'rb') as file:
+                loaded_data = pickle.load(file)        
+            ch_size = loaded_data['chunk_sizes']
+            for key, value in loaded_data.items():
+                if 'net' in key:
+                    for net in value:
+                        result = []
+                        result.append((filename+'_re.pkl'))
+                        if net.online is False:
+                            result.append('net_offline')
                         else:
-                            if net.total_size == net.chunk_size:
-                               result.append('net_online_whole')
+                            if net.minmax_boost is True:
+                                result.append('net_online_mm')
                             else:
-                                result.append('net_online')
-                    result.append(net.chunk_size)
-                    result.append(net.exp_l)
-                    result.append(net.exp_r)
-                    result.append(net.range)
-                    result.append(pop_min - net.exp_l)
-                    result.append(pop_max - net.exp_r)
-                    result.append(pop_range - net.range)
-                    result_list.append(result)                
-result_pd = pd.DataFrame(data = result_list,columns = col_name) 
-result_pd.to_excel(os.path.join(folder_path,result_name))    
-print('process done:')                            
+                                if net.total_size == net.chunk_size:
+                                    result.append('net_online_whole')
+                                else:
+                                    result.append('net_online')
+                        result.append(net.chunk_size)
+                        result.append(net.exp_l)
+                        result.append(net.exp_r)
+                        result.append(net.range)
+                        result.append(pop_min - net.exp_l)
+                        result.append(pop_max - net.exp_r)
+                        result.append(pop_range - net.range)
+                        result_list.append(result)                
+    if not result_list:
+        print('No online network')
+        return -1
+    else:
+        result_pd = pd.DataFrame(data = result_list,columns = col_name) 
+        result_pd.to_excel(os.path.join(folder_path,result_name))    
+        print('process done:')      
+        return 0
+
+if __name__=='__main__':
+    # dist_select = 'wiebull'
+    dist_select = 'wald'
+    
+    if dist_select == 'wiebull':
+        folder_path = './config_sim_data/wiebull/'
+        filename_list = ['wiebullshape1n10000','wiebullshape5n10000','wiebullshape1n50000','wiebullshape5n50000']
+        
+    if dist_select == 'wald':
+        folder_path = './config_sim_data/wald/'
+        filename_list = ['waldm1sd2n10000','waldm1sd2n50000','waldm1sd05n10000','waldm1sd05n50000',
+                    'waldm3sd2n10000','waldm3sd2n50000','waldm3sd05n10000','waldm3sd05n10000']
+    result_name = 'result_all_'+dist_select+'.xlsx'
+    main(folder_path,filename_list,result_name)
+                      

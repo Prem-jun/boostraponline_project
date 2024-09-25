@@ -98,6 +98,21 @@ def main(folder_path,filename):
     return 0
             
 if __name__=='__main__':
-    folder_path = './config_sim_data/wiebull/'
-    filename = 'wiebullshape5n50000'
-    main(folder_path,filename)
+    # dist_select = 'wiebull'
+    dist_select = 'wald'
+    # ====== program part
+    
+    if dist_select == 'wiebull':
+        # wiebull distribution
+        folder_path = './config_sim_data/wiebull/'
+        filename_list = ['wiebullshape1n10000','wiebullshape1n50000','wiebullshape5n10000',
+                        'wiebullshape5n50000']
+        # ======
+    if dist_select == 'wald':    
+        # wald distribution
+        folder_path = './config_sim_data/wald/'
+        filename_list = ['waldm1sd2n10000','waldm1sd2n50000','waldm1sd05n10000','waldm1sd05n50000',
+                    'waldm3sd2n10000','waldm3sd2n50000','waldm3sd05n10000','waldm3sd05n10000']
+        # ======
+    for filename in filename_list:
+        main(folder_path,filename)
