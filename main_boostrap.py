@@ -99,5 +99,5 @@ def main(folder_path,filename):
             
 if __name__=='__main__':
     folder_path = './config_sim_data/wiebull/'
-    filename = 'wiebullshape1n10000'
+    filename = 'wiebullshape5n50000'
     main(folder_path,filename)

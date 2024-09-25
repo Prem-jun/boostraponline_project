@@ -95,33 +95,6 @@ if __name__=='__main__':
     config_path = './config_sim_data/' # 
     config_file_wald = 'config_wald.yaml'
     file_config_wiebull = 'config_wiebull.yaml'
-    main(config_path,file_config_wiebull)
-    
-    
-    # if dist_name == 'normal':
-    #     # Generate from normal distribution
-    #     amount_sample = 20000
-    #     mean = 500
-    #     std = 100.0
-    #     nrep = 2
-    #     # rng1 = np.random.default_rng()
-    #     np_data = np.random.normal(loc=mean,scale=std,size = amount_sample)
-    #     filename = dist+'m'+str(mean)+'n'+str(amount_sample)+'-'+str(nrep)
-    #     fig, ax = plt.subplots(1, 1)
-    #     ax.hist(np_data, density=False, bins='auto', histtype='stepfilled', alpha=0.2,label = 'Weibull shape = 1')
-    #     plt.show()
-    #     fig.savefig(filename)
-    #     # np_data = np.transpose(np_data)
-    # if dist_name == 'unif':
-    #     amount_sample = 10000
-    #     str_val = 0
-    #     end_val = 500
-    #     nrep = 2
-    #     np_data  = np.random.uniform(str_val,end_val,amount_sample)
-    #     filename = dist+'s'+str(str_val)+'e'+str(end_val)+'n'+str(amount_sample)+'-'+str(nrep)
-    #     fig, ax = plt.subplots(1, 1)
-    #     ax.hist(np_data, density=False, bins='auto', histtype='stepfilled', alpha=0.2,label = 'Weibull shape = 1')
-    #     plt.show()
-    #     fig.savefig(filename)    
+    main(config_path,file_config_wald)
     
     

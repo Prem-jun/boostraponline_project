@@ -14,8 +14,11 @@
 import pickle, os
 import pandas as pd
 import numpy as np
+import openpyxl
 folder_path = './config_sim_data/wiebull/'
-filename_list = ['wiebullshape1n10000','wiebullshape1n50000']
+filename_list = ['wiebullshape1n10000','wiebullshape1n50000','wiebullshape1n50000','wiebullshape5n50000']
+result_name = 'result_all.xlsx'
+### program part
 filetype = '.pkl'
 col_name = ['filename','method','samp/ch_size','exp_l','exp_r','exp_range','error_l','error_r','error_range']
 result_list = []
@@ -55,64 +58,6 @@ for filename in filename_list:
                     result.append(pop_max - net.exp_r)
                     result.append(pop_range - net.range)
                     result_list.append(result)                
-                                             
-                        
-                # if 'offline' in key:
-                #     result = []
-                #     result.append((filename+'_re.pkl'))
-                #     net = value
-                #     flag = True
-                # elif 'whole' in key:
-                #     result = []
-                #     result.append((filename+'_re.pkl'))
-                #     net = value
-                #     flag = True
-                # else:
-                #     for ch in range(len(ch_size)):
-                #         result = []
-                #         result.append((filename+'_re.pkl'))
-                #         net = value[ch]
-                #         if net.minmax_boost is False:
-                #             result.append('net_online')
-                #         else:
-                #             result.append('net_online_mm')
-                #         result_list.append(result)
-                # if flag:
-                #     result_list.append(result)
-                # result = [] # the row list contain the values refering to the `col_name` variable
-                # result.append((filename+'_re.pkl'))
-                # if 'online_whole' in key:
-                #     result.append(key)
-                # elif 'online_mm' in key:
-                #     result.append(key)
-                # elif 'online' in key:
-                #     result.append(key)
-                # else:
-                #     result.append(key)
-                # for ch in ch_size:
-                        
-            
-                    
-                 
-        # net_name = 'net_offline'    
-        # net = loaded_data[net_name]
-        # result.append((filename+'_re.pkl'))
-        # result.append(net_name)
-        # if 'offline' in net_name:
-        #     result.append(net['samples_size'])
-        # elif 'whole' in net_name:    
-        #     result.append(net['samples_size'])
-        # else:
-        #     result.append(net['samples_size'])    
-    
-
-# filetype = '.pkl'
-# pop_data =  pd.read_pickle(folder_path+filename+'.pkl')    
-# pop_min = np.min(pop_data)
-# pop_max = np.max(pop_data)
-# pop_range = pop_max-pop_min
-# with open(os.path.join(folder_path,filename+'_re'+filetype), 'rb') as file:
-#     loaded_data = pickle.load(file)
-
-# print("Data loaded from pickle file:")
-# print(loaded_data)
+result_pd = pd.DataFrame(data = result_list,columns = col_name) 
+result_pd.to_excel(os.path.join(folder_path,result_name))    
+print('process done:')                            
