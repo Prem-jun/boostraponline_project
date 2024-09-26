@@ -99,9 +99,14 @@ def main(folder_path,filename):
             
 if __name__=='__main__':
     # dist_select = 'wiebull'
-    dist_select = 'wald'
+    dist_select = 'normal'
     # ====== program part
-    
+    if dist_select == 'normal':
+        # normal distribution
+        folder_path = './config_sim_data/normal/'
+        filename_list = ['normalm0sd25n10000','normalm0sd25n10000','normalm0sd100n10000',
+                         'normalm0sd25n50000','normalm0sd25n50000','normalm0sd100n50000']
+        # ======
     if dist_select == 'wiebull':
         # wiebull distribution
         folder_path = './config_sim_data/wiebull/'
@@ -111,8 +116,10 @@ if __name__=='__main__':
     if dist_select == 'wald':    
         # wald distribution
         folder_path = './config_sim_data/wald/'
-        filename_list = ['waldm1sd2n10000','waldm1sd2n50000','waldm1sd05n10000','waldm1sd05n50000',
-                    'waldm3sd2n10000','waldm3sd2n50000','waldm3sd05n10000','waldm3sd05n10000']
+        filename_list = ['waldm1sd2n10000','waldm1sd05n10000',
+                    'waldm3sd2n10000','waldm3sd05n10000','waldm3sd05n10000']
+        # filename_list = ['waldm1sd2n10000','waldm1sd2n50000','waldm1sd05n10000','waldm1sd05n50000',
+        #             'waldm3sd2n10000','waldm3sd2n50000','waldm3sd05n10000','waldm3sd05n10000']
         # ======
     for filename in filename_list:
         main(folder_path,filename)

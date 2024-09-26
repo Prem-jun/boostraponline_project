@@ -36,6 +36,32 @@ def main(config_path: str, fileload: str):
     if not os.path.isdir(path):
         os.makedirs(path)
     filesave = 'config_'+doc['name']+'_simulate.yaml'
+    if doc['name'] == 'normal':
+        doc_sim = []
+        for amount_sample in doc['parameters']['nsim']:
+            for mean in doc['parameters']['mean']:
+                for scale in doc['parameters']['scale']:
+                    np_data  = np.random.normal(loc=mean,scale=scale,size = amount_sample)
+                    filename = doc['name']+'m'+str(mean)+'sd'+str(scale)+'n'+str(amount_sample)
+                    fig, ax = plt.subplots(1, 1)
+                    ax.hist(np_data, density=False, bins='auto', histtype='stepfilled', alpha=0.2,label = 'Wald')
+                    plt.show()
+                    path_fig =os.path.join(path, filename)
+                    fig.savefig(path_fig)
+                    list_data = list(np_data)
+                    print('Histrogram figure done.')
+                    
+                    pickle.dump(list_data, open(path_fig+".pkl", "wb"))
+                    
+                    # create config file ended wigh `.yaml`
+                    dict_tmp = {'file_config':ypath,
+                                'file_data_chunk':filename,
+                                'nsim':amount_sample,
+                                'mean':mean,
+                                'scale':scale,
+                                }
+                    doc_sim.append(dict_tmp)   
+                    
     if doc['name'] == 'wald':
         doc_sim = []
         for amount_sample in doc['parameters']['nsim']:
@@ -93,8 +119,27 @@ def main(config_path: str, fileload: str):
 
 if __name__=='__main__':
     config_path = './config_sim_data/' # 
-    file_config_wald = 'config_wald.yaml'
-    file_config_wiebull = 'config_wiebull.yaml'
-    main(config_path,file_config_wald)
+    dist_select = 'normal'
+    if dist_select == 'wiebull':
+        file_config = 'config_wiebull.yaml'
+    if dist_select == 'wald':
+        file_config = 'config_wald.yaml'
+    if dist_select == 'normal':
+        file_config = 'config_normal.yaml'    
     
+    main(config_path,file_config)
     
+# if dist_name == 'normal':
+    #     # Generate from normal distribution
+    #     amount_sample = 20000
+    #     mean = 500
+    #     std = 100.0
+    #     nrep = 2
+    #     # rng1 = np.random.default_rng()
+    #     np_data = np.random.normal(loc=mean,scale=std,size = amount_sample)
+    #     filename = dist+'m'+str(mean)+'n'+str(amount_sample)+'-'+str(nrep)
+    #     fig, ax = plt.subplots(1, 1)
+    #     ax.hist(np_data, density=False, bins='auto', histtype='stepfilled', alpha=0.2,label = 'Weibull shape = 1')
+    #     plt.show()
+    #     fig.savefig(filename)
+    #     # np_data = np.transpose(np_data)

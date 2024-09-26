@@ -41,10 +41,15 @@ def main(folder_config:str = None,file_config:str = None, percent_feed:int = 30,
     return 0
 
 if __name__=='__main__':
-    # dist_select = 'wiebull'
-    dist_select = 'wald'
+    dist_select = 'normal'
     
     # program part
+    if dist_select == 'normal':
+        # ======== Normal distribution   
+        folder_config = './config_sim_data/normal/' 
+        file_config = 'config_normal_simulate.yaml'
+        # ========
+        
     if dist_select == 'wiebull':
         # ======== Wiebull distribution   
         folder_config = './config_sim_data/wiebull/' 
