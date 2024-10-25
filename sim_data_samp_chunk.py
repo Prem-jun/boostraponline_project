@@ -1,5 +1,6 @@
 ''' 
- Decription: 
+ Decription: Create the streaming data chunk from specified number of propotion of the 
+            population data. 
  Arguments:
  Output:
 ''' 

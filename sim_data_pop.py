@@ -1,13 +1,15 @@
 
 ''' 
- Decription: The python script is the main script for createing the 1-D simulation data from the config file.
-            For an example of config file: config_wald.yaml, config_wiebull.yaml  
+ Decription: Create the 1-D simulated data from the specified config file. This data is considered as
+            population data. For an example of config file: 
+                - config_wald.yaml, 
+                - config_wiebull.yaml.  
  Arguments: 
           - config_path: a path containing config file.
           - config_file: the .yaml file.     
  Output:
-        - The folder contain pickle files of the simulated data.
-        - The detail of each file written in .yaml format.
+        - The folder contain pickle files (pkl) and their related figure of the simulated data.
+        - The description of each file written in .yaml format.
 '''  
 import numpy as np
 import pandas as pd
@@ -27,9 +29,6 @@ def sim_1d(config_file_path):
  
 def main(config_path: str, fileload: str):
     ypath = os.path.join(config_path, fileload)
-
-    # with open(ypath,'r') as f:
-    #     doc = yaml.safe_load(f)
     doc = read_yaml(ypath=ypath)    
     
     path = os.path.join(config_path, doc['name'])
@@ -118,15 +117,14 @@ def main(config_path: str, fileload: str):
     print('Simulation data has been done.')
 
 if __name__=='__main__':
-    config_path = './config_sim_data/' # 
-    dist_select = 'normal'
+    config_path = './config_sim_data/' # main path
+    dist_select = 'normal' # specify the distribution
     if dist_select == 'wiebull':
         file_config = 'config_wiebull.yaml'
     if dist_select == 'wald':
         file_config = 'config_wald.yaml'
     if dist_select == 'normal':
         file_config = 'config_normal.yaml'    
-    
     main(config_path,file_config)
     
 # if dist_name == 'normal':
