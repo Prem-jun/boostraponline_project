@@ -1574,8 +1574,8 @@ class booststream:
     dist_list:List[str] = field(default_factory=list)
     total_size:int = -1
     chunk_size:float = 0.0
-    max_chs:float = 0.0
-    min_chs:float = 0.0
+    max_chs:float = 0.0 # maximumn value of learning data
+    min_chs:float = 0.0 # minimum value of learning data
     min_list:List[str] = field(default_factory=list) 
     max_list:List[str] = field(default_factory=list)
     avg: List[str] = field(default_factory=list)
@@ -1619,7 +1619,7 @@ class booststream:
     def expand_bt_online(self,new_data_chunk:list) -> None:
         '''
         1. Check if the network is online manner or not
-        2. update the number of learning samples
+        2. Update the number of learning samples
         3. Compute min and max values of the current data chunk
         4. If we get the new min or max values update the left-expand or right-expand
             4.1 Compute the update vales based on min-max boostrapping, or

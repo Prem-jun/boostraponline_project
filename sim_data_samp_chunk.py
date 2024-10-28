@@ -1,8 +1,9 @@
 ''' 
  Decription: Create the streaming data chunk from specified number of propotion of the 
             population data. 
- Arguments:
- Output:
+ Arguments: folder_config => a folder containing population data file. 
+            file_config => a config yaml file containing decription of the population file. 
+ Output: streaming data chunk saved as the json file type. 
 ''' 
 import polars as pl
 import pandas as pd 
