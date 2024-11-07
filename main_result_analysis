@@ -68,7 +68,7 @@ def main(folder_path,filename_list,result_name):
 
 if __name__=='__main__':
     # dist_select = 'wiebull'
-    dist_select = 'normal'
+    dist_select = 'wald'
     if dist_select == 'normal':
         folder_path = './config_sim_data/normal/'
         filename_list = ['normalm0sd25n10000','normalm0sd100n10000']
@@ -80,7 +80,7 @@ if __name__=='__main__':
     if dist_select == 'wald':
         folder_path = './config_sim_data/wald/'
         filename_list = ['waldm1sd2n10000','waldm1sd05n10000',
-                    'waldm3sd2n10000','waldm3sd05n10000','waldm3sd05n10000']
+                    'waldm3sd2n10000','waldm3sd05n10000']
     result_name = 'result_all_'+dist_select+'.xlsx'
     main(folder_path,filename_list,result_name)
                       
