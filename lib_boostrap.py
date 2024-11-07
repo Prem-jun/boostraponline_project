@@ -1607,6 +1607,8 @@ class booststream:
         self.min_chs = 9999.99
         self.exp_l = 9999.99
         self.exp_r = -9999.99
+        self.nlearn_l = []
+        self.nlearn_r = []
     
     def compute_error(self,target_l: float,target_r: float):
         target_range = target_r - target_l
@@ -1715,12 +1717,20 @@ class booststream:
             expand = False
             expansion = False
             
+             
+            
             # 5.4 Compute the different values of the both histograms
             difference_max = hist_data[-1] - hist_theo[-1]
             difference_min = hist_data[0] - hist_theo[0]
         #     # while (difference_max > 0 or difference_min > 0):
             if (difference_max > 0 or difference_min > 0):
-                dif_expand = True    
+                dif_expand = True
+                if difference_max > 0:
+                    self.nlearn_r.append(difference_max)
+                    # self.nlearn_r += difference_max
+                if difference_min > 0:
+                    self.nlearn_l.append(difference_min)
+                    # self.nlearn_l += difference_min          
             else:
                 dif_expand = False    
             while dif_expand is True:    

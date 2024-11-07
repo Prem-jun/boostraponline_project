@@ -56,6 +56,7 @@ def main(folder_path,filename):
                 net_online_whole.set_online()
                 net_offline = lib_boostrap.booststream()
                 sample_whole = [] 
+
                 for samples_chunk in chunk_data:
                     sample_whole = sample_whole + samples_chunk
                     expandsion = net_online.expand_bt_online(samples_chunk)
@@ -99,7 +100,7 @@ def main(folder_path,filename):
             
 if __name__=='__main__':
     # dist_select = 'wiebull'
-    dist_select = 'normal'
+    dist_select = 'wald'
     # ====== program part
     if dist_select == 'normal':
         # normal distribution
