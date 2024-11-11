@@ -1584,6 +1584,9 @@ class booststream:
     exp_r:float = 0.0
     range:float = 0.0
     flag_learning:bool = False # flag for idenfying the learning process is performed.
+    nlearn_l: List[int] = field(default_factory=list)
+    nlearn_r: List[int] = field(default_factory=list)
+    
     
     # filewd: dict = ''
     # pop_max: float = 0.0
@@ -1607,8 +1610,7 @@ class booststream:
         self.min_chs = 9999.99
         self.exp_l = 9999.99
         self.exp_r = -9999.99
-        self.nlearn_l = []
-        self.nlearn_r = []
+        
     
     def compute_error(self,target_l: float,target_r: float):
         target_range = target_r - target_l

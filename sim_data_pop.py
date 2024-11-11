@@ -19,6 +19,14 @@ import polars as pl
 import pickle
 import matplotlib.pyplot as plt   
 
+def get_file_format(filename):
+    # Extract the file extension
+    if '.' in filename:
+        file_extension = filename.rsplit('.', 1)[1].lower()
+        return file_extension
+    else:
+        return None
+
 def read_yaml(ypath):
     with open(ypath,'r') as f:
          return yaml.safe_load(f)
@@ -34,7 +42,29 @@ def main(config_path: str, fileload: str):
     path = os.path.join(config_path, doc['name'])
     if not os.path.isdir(path):
         os.makedirs(path)
+        
     filesave = 'config_'+doc['name']+'_simulate.yaml'
+    
+    if doc['name'] == 'realworld':
+        doc_sim = []
+        for i in range(len(doc['parameters']['filename'])):
+            filename = doc['parameters']['filename'][i]
+            file_format = doc['parameters']['filetype'][i]
+            if file_format == 'csv':
+                df = pd.read_csv(filename+'.'+file_format)
+                np_data = df['Price_euros'].to_numpy()
+                list_data = list(np_data)
+                path_fig =os.path.join(path, filename)
+                pickle.dump(list_data, open(path_fig+".pkl", "wb"))
+                    
+                # create config file ended wigh `.yaml`
+                dict_tmp = {'file_config':ypath,
+                            'file_data_chunk':filename+'.'+file_format,
+                            }
+                doc_sim.append(dict_tmp)
+                     
+        
+    
     if doc['name'] == 'normal':
         doc_sim = []
         for amount_sample in doc['parameters']['nsim']:
@@ -118,13 +148,16 @@ def main(config_path: str, fileload: str):
 
 if __name__=='__main__':
     config_path = './config_sim_data/' # main path
-    dist_select = 'normal' # specify the distribution
+    dist_select = 'realworld' # specify the distribution
     if dist_select == 'wiebull':
         file_config = 'config_wiebull.yaml'
     if dist_select == 'wald':
         file_config = 'config_wald.yaml'
     if dist_select == 'normal':
-        file_config = 'config_normal.yaml'    
+        file_config = 'config_normal.yaml'
+    if dist_select == 'realworld':
+        file_config = 'config_real_labtop.yaml'
+                
     main(config_path,file_config)
     
 # if dist_name == 'normal':

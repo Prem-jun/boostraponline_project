@@ -43,7 +43,7 @@ def main(folder_config:str = None,file_config:str = None, percent_feed:int = 30,
     return 0
 
 if __name__=='__main__':
-    dist_select = 'normal'
+    dist_select = 'realworld'
     
     # program part
     if dist_select == 'normal':
@@ -62,4 +62,7 @@ if __name__=='__main__':
         folder_config = './config_sim_data/wald/' 
         file_config = 'config_wald_simulate.yaml'
         # ========
+    if dist_select == 'realworld':
+        folder_config = './config_sim_data/realworld/' 
+        file_config = 'config_realworld_simulate.yaml'
     main(folder_config,file_config)

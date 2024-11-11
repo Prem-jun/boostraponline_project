@@ -100,13 +100,13 @@ def main(folder_path,filename):
             
 if __name__=='__main__':
     # dist_select = 'wiebull'
-    dist_select = 'wald'
+    dist_select = 'normal'
     # ====== program part
     if dist_select == 'normal':
         # normal distribution
         folder_path = './config_sim_data/normal/'
-        filename_list = ['normalm0sd25n10000','normalm0sd25n10000','normalm0sd100n10000',
-                         'normalm0sd25n50000','normalm0sd25n50000','normalm0sd100n50000']
+        filename_list = ['normalm0sd25n10000''normalm0sd100n10000',
+                         'normalm0sd25n50000','normalm0sd100n50000']
         # ======
     if dist_select == 'wiebull':
         # wiebull distribution

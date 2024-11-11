@@ -19,7 +19,7 @@ import openpyxl
 def main(folder_path,filename_list,result_name):
     ### program part
     filetype = '.pkl'
-    col_name = ['filename','method','samp/ch_size','exp_l','exp_r','exp_range','error_l','error_r','error_range']
+    col_name = ['filename','method','samp/ch_size','exp_l','exp_r','exp_range','error_l','error_r','error_range','n_learn_l','n_learn_r']
     result_list = []
     for filename in filename_list:
         file_re = os.path.join(folder_path,filename+'_re.pkl') # result file ended with _re words
@@ -56,7 +56,16 @@ def main(folder_path,filename_list,result_name):
                         result.append(pop_min - net.exp_l)
                         result.append(pop_max - net.exp_r)
                         result.append(pop_range - net.range)
-                        result_list.append(result)                
+                        result_list.append(result)   
+                        if len(net.nlearn_l) == 0:
+                            result.append(0)
+                        else:
+                            result.append(np.mean(net.nlearn_l)) 
+                        if len(net.nlearn_r) == 0:
+                            result.append(0)
+                        else:
+                            result.append(np.mean(net.nlearn_r))     
+                            
     if not result_list:
         print('No online network')
         return -1
@@ -68,7 +77,7 @@ def main(folder_path,filename_list,result_name):
 
 if __name__=='__main__':
     # dist_select = 'wiebull'
-    dist_select = 'wald'
+    dist_select = 'wiebull'
     if dist_select == 'normal':
         folder_path = './config_sim_data/normal/'
         filename_list = ['normalm0sd25n10000','normalm0sd100n10000']

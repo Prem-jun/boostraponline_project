@@ -1,0 +1,2 @@
+file_config: ./config_sim_data/config_real_labtop.yaml
+file_data_chunk: laptop_prices.csv

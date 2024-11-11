@@ -1,0 +1,4 @@
+name: realworld
+parameters:
+    filename: ['laptop_prices']
+    filetype: ['csv']
