@@ -1,0 +1,12 @@
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+method & samp/ch_size & error_l & error_r & error_range & n_learn_l & n_learn_r \\ \hline
+Online BT & 50 & -0.02 & 6.36 & 6.38 & 118.31 & 1.57 \\ \hline
+Online BT & 100 & -0.02 & 6.36 & 6.38 & 231.36 & 1.4 \\ \hline
+Online BT & 500 & -0.02 & 6.36 & 6.38 & 609.0 & 4.0 \\ \hline
+Min-max online BT & 50 & -0.04 & 6.36 & 6.4 & 165.67 & 1.33 \\ \hline
+Min-max online BT & 100 & -0.04 & 6.96 & 7.0 & 248.58 & 1.0 \\ \hline
+Min-max online BT & 500 & -0.04 & 6.97 & 7.0 & 604.8 & 3.0 \\ \hline
+Online BT 1 ch & 3000 & -0.02 & 6.36 & 6.38 & 1761.0 & 0.0 \\ \hline
+Traditional BT & 3000 & -0.02 & 6.95 & 6.97 & 0.0 & 0.0 \\ \hline
+\end{tabular}

@@ -19,7 +19,6 @@ def read_json_file(file_path):
     return data
      
 def main(folder_path,filename):
-
     # Define the path to the JSON file
     filetype_re = '.pkl'
     filetype_samp = '.json'
@@ -100,8 +99,13 @@ def main(folder_path,filename):
             
 if __name__=='__main__':
     # dist_select = 'wiebull'
-    dist_select = 'normal'
+    dist_select = 'realworld'
     # ====== program part
+    if dist_select == 'realworld':
+        # normal distribution
+        folder_path = './config_sim_data/realworld/'
+        filename_list = ['laptop_prices']
+    
     if dist_select == 'normal':
         # normal distribution
         folder_path = './config_sim_data/normal/'

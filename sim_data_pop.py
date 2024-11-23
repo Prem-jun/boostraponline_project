@@ -1,16 +1,4 @@
-
-''' 
- Decription: Create the 1-D simulated data from the specified config file. This data is considered as
-            population data. For an example of config file: 
-                - config_wald.yaml, 
-                - config_wiebull.yaml.  
- Arguments: 
-          - config_path: a path containing config file.
-          - config_file: the .yaml file.     
- Output:
-        - The folder contain pickle files (pkl) and their related figure of the simulated data.
-        - The description of each file written in .yaml format.
-'''  
+  
 import numpy as np
 import pandas as pd
 import os, yaml
@@ -18,24 +6,66 @@ from scipy.stats import weibull_min
 import polars as pl
 import pickle
 import matplotlib.pyplot as plt   
+from typing import List, Union
 
-def get_file_format(filename):
+def get_file_format(filename: str) -> str:
+    """ Get the format from a full filename.
+    Args:
+        filename: a string of filename.
+    
+    Returns:
+       a file format as a string. 
+       
+    Raises:
+        ValueError: If the full filename does not contain a period.   
+    
+    Examples:
+    
+    """     
     # Extract the file extension
     if '.' in filename:
         file_extension = filename.rsplit('.', 1)[1].lower()
         return file_extension
     else:
-        return None
+        raise ValueError("Cannot extract the format file")
+        #return None
 
-def read_yaml(ypath):
+def read_yaml(ypath: str)->List:
+    """ Read .yaml file.
+    Args:
+        filename: a string of filename.
+    
+    Returns:
+       A list of data. 
+       
+    Raises:
+        -
+    
+    Examples:
+    
+    """
     with open(ypath,'r') as f:
          return yaml.safe_load(f)
+     
 def sim_1d(config_file_path):
     with open(config_file_path,'r') as f:
         yaml.safe_load(f)
     return 0
  
 def main(config_path: str, fileload: str):
+    """ Create the 1-D simulated data from the specified config file. This data is considered as
+    population data. For an example of config file: 
+                - config_wald.yaml, 
+                - config_wiebull.yaml
+    Args:
+        config_path: a string of a path containing config file
+        fileload: a string of a path containing config file
+    
+    Returns:
+        - The folder contain pickle files (pkl) and their related figure of the simulated data.
+        - The description of each file written in .yaml format. 
+                
+    """
     ypath = os.path.join(config_path, fileload)
     doc = read_yaml(ypath=ypath)    
     
@@ -59,7 +89,8 @@ def main(config_path: str, fileload: str):
                     
                 # create config file ended wigh `.yaml`
                 dict_tmp = {'file_config':ypath,
-                            'file_data_chunk':filename+'.'+file_format,
+                            'file_data_chunk':filename,
+                            'filetype':file_format
                             }
                 doc_sim.append(dict_tmp)
                      
@@ -159,18 +190,3 @@ if __name__=='__main__':
         file_config = 'config_real_labtop.yaml'
                 
     main(config_path,file_config)
-    
-# if dist_name == 'normal':
-    #     # Generate from normal distribution
-    #     amount_sample = 20000
-    #     mean = 500
-    #     std = 100.0
-    #     nrep = 2
-    #     # rng1 = np.random.default_rng()
-    #     np_data = np.random.normal(loc=mean,scale=std,size = amount_sample)
-    #     filename = dist+'m'+str(mean)+'n'+str(amount_sample)+'-'+str(nrep)
-    #     fig, ax = plt.subplots(1, 1)
-    #     ax.hist(np_data, density=False, bins='auto', histtype='stepfilled', alpha=0.2,label = 'Weibull shape = 1')
-    #     plt.show()
-    #     fig.savefig(filename)
-    #     # np_data = np.transpose(np_data)

@@ -8,3 +8,7 @@
 4. `main_boostrap.py` => the main program for executing boostrap online algorithms.
 
 5. `main_result_analysis.py` => the main program for analysing the results from `main_boostrap.py` 
+
+## main_boostrap.py
+
+    Step 1: Read population data file (json file) 
