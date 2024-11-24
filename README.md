@@ -11,4 +11,6 @@
 
 ## main_boostrap.py
 
-    Step 1: Read population data file (json file) 
+    Step 1: Read population data file saved as list (json file).
+    Step 2: For each data:
+        Step 3:  
