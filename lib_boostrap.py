@@ -1563,53 +1563,47 @@ class boostrap_v1:
 
 @dataclass
 class booststream:
-    online:bool = False # Online boostrap exploited.
-    minmax_boost:bool = False # Minmax boostrap applied. 
+    online_cum: bool = False
+    online:bool = False # if Online boostrap active, it is set to True.
+    minmax_boost:bool = False # if Minmax boostrap active, it is set to True. 
     # addnoise:bool = False # Addnoise in simulate data
     # prob:bool = False # prob-based sample selection in boostrap applied.
-    filesampl:str = ''
-    numbin:int = 0
-    number_bt_iter:int = 0
+    filesampl:str = '' # file name of samples
+    numbin:int = 0 # number of theoritical bin for an example 8
+    number_bt_iter:int = 600 # number of boostrap iteration.
     nboost:int = 0 # minimum number of conducting boostrap.
     dist_list:List[str] = field(default_factory=list)
-    total_size:int = -1
-    chunk_size:float = 0.0
-    max_chs:float = 0.0 # maximumn value of learning data
-    min_chs:float = 0.0 # minimum value of learning data
+    total_size:int = 0 # number of total learned data.
+    chunk_size:int = 0 
+    max_chs:float = - 9999.99 # maximumn value of learning data from the start to current chunk.
+    min_chs:float =  9999.99 # minimum value of learning data from the start to current chunk.
     min_list:List[str] = field(default_factory=list) 
     max_list:List[str] = field(default_factory=list)
     avg: List[str] = field(default_factory=list)
     std: List[str] = field(default_factory=list)
-    exp_l:float = 0.0
-    exp_r:float = 0.0
+    exp_l:float = 9999.99
+    exp_r:float = -9999.99
     range:float = 0.0
     flag_learning:bool = False # flag for idenfying the learning process is performed.
     nlearn_l: List[int] = field(default_factory=list)
     nlearn_r: List[int] = field(default_factory=list)
     
-    
-    # filewd: dict = ''
-    # pop_max: float = 0.0
-    # pop_min: float = 0.0
-    # ch_size: int = 0 # # data points per chunk.
-    # feed_percent: int = 0 # portion of data used as samples from entire dataset. 
-    
-    
-    def set_online(self,minmax_flag:bool=False):
+    def set_online(self,minmax_flag:bool = False):
         dist_list = ['exponweib', 'wald', 'gamma', 'norm',\
                          'expon', 'powerlaw', 'lognorm', 'chi2', 'weibull_min',\
                          'weibull_max']
         self.online = True
-        self.minmax_boost = minmax_flag
+        self.minmax_boost = minmax_flag 
         self.numbin = 8
-        self.number_bt_iter = 600
+        # self.number_bt_iter = 600
         self.dist_list = dist_list
         self.nboost = 3
-        self.total_size  = 0
-        self.max_chs = - 9999.99
-        self.min_chs = 9999.99
-        self.exp_l = 9999.99
-        self.exp_r = -9999.99
+        # self.total_size  = 0
+        # self.max_chs = - 9999.99
+        # self.min_chs = 9999.99
+        # self.exp_l = 9999.99
+        # self.exp_r = -9999.99
+        
         
     
     def compute_error(self,target_l: float,target_r: float):
@@ -1620,8 +1614,8 @@ class booststream:
         self.avg.append((rightmost+leftmost)/2)
         self.std.append((rightmost-leftmost)/8)
         
-    def expand_bt_online(self,new_data_chunk:list) -> None:
-        '''
+    def expand_bt_online(self,new_data_chunk:list,cum:bool = False) -> None:
+        """
         1. Check if the network is online manner or not
         2. Update the number of learning samples
         3. Compute min and max values of the current data chunk
@@ -1634,7 +1628,8 @@ class booststream:
                 the leftmost bin and the rightmost bin
             5.3 Compute the data histogram and theoritical histogram    
         
-        '''
+        """
+        
         # 1. Check if the network is online manner or not
         try: 
             if self.online is False:
@@ -1643,8 +1638,11 @@ class booststream:
         except ValueError as e:
             return print(f"Error: {e}")
         
-        # 2. Update the number of learning samples  
-        self.total_size += len(new_data_chunk)
+        # 2. Update the number of learning samples
+        if not cum:  
+            self.total_size += len(new_data_chunk)
+        else:
+            self.total_size = len(new_data_chunk)
         self.chunk_size = len(new_data_chunk)
         # 3. Compute min and max values of the current data chunk
         new_data_chunk_min = min(new_data_chunk)
@@ -1729,9 +1727,13 @@ class booststream:
                 dif_expand = True
                 if difference_max > 0:
                     self.nlearn_r.append(difference_max)
+                else:
+                    self.nlearn_r.append(0)    
                     # self.nlearn_r += difference_max
                 if difference_min > 0:
                     self.nlearn_l.append(difference_min)
+                else:
+                    self.nlearn_l.append(0)
                     # self.nlearn_l += difference_min          
             else:
                 dif_expand = False    
@@ -1833,6 +1835,7 @@ class booststream:
             return print(f"Error: {e}")
         self.number_bt_iter = 600
         data_set = copy.deepcopy(input_data)
+        nsample = len(data_set)
         bootstrap_min = []
         bootstrap_max = []
         bootstrap_std = []
@@ -1852,6 +1855,8 @@ class booststream:
         self.exp_l = np.mean(bootstrap_min)
         self.exp_r = np.mean(bootstrap_max)
         self.range = self.exp_r - self.exp_l    
+        self.nlearn_l.append(nsample)
+        self.nlearn_r.append(nsample) 
             # if idx == 0:
             #     bootstrap_min.append(np.min(samples))
             #     previous_bootstrap_mean = bootstrap_means[0]
