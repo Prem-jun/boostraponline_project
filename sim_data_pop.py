@@ -179,7 +179,7 @@ def main(config_path: str, fileload: str):
 
 if __name__=='__main__':
     config_path = './config_sim_data/' # main path
-    dist_select = 'realworld' # specify the distribution
+    dist_select = 'normal' # specify the distribution
     if dist_select == 'wiebull':
         file_config = 'config_wiebull.yaml'
     if dist_select == 'wald':

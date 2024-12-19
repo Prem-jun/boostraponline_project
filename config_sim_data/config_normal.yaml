@@ -2,4 +2,4 @@ name: normal
 parameters:
     nsim: [10000,50000] 
     mean: [0,100,500]
-    scale: [4, 25,100] 
+    scale: [1,4, 25,100] 

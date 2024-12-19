@@ -121,8 +121,9 @@ def main(folder_path,filename_list,result_name):
         return 0
 
 if __name__=='__main__':
-    dist_select = 'wiebull'
+    # dist_select = 'wiebull'
     # dist_select = 'realworld'
+    dist_select = 'wald'
     if dist_select == 'realworld':
         folder_path = './config_sim_data/realworld/'
         filename_list = ['laptop_prices']
@@ -138,7 +139,7 @@ if __name__=='__main__':
     if dist_select == 'wald':
         folder_path = './config_sim_data/wald/'
         filename_list = ['waldm1sd2n10000','waldm1sd05n10000',
-                    'waldm3sd2n10000','waldm3sd05n10000']
+                    'waldm3sd2n10000','waldm3sd05n10000','waldm3sd05n10000']
     result_name = 'result_all_'+dist_select+'.xlsx'
     main(folder_path,filename_list,result_name)
                       
