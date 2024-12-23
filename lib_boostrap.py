@@ -1651,13 +1651,16 @@ class booststream:
             self.min_chs = new_data_chunk_min
         if new_data_chunk_max > self.max_chs:
             self.max_chs = new_data_chunk_max
+        
+        # Start learning
         expand_min = False
         expand_max = False
         expansion = False
         # 4. If we get the new min or max values update the left-expand or right-expand
             # 4.1 Compute the update vales based on min-max boostrapping, or
             # 4.2 Compute the update vales based on min and max vaues of the current data chunk
-        if new_data_chunk_min < self.exp_l:
+        
+        if new_data_chunk_min < self.exp_l: # the min of the chunk is less than the min of the network.
             expand_min = True
             if len(self.min_list) >= self.nboost and (self.minmax_boost is True):
                 self.min_list.append(new_data_chunk_min)
@@ -1685,8 +1688,9 @@ class booststream:
                     self.exp_r = adjust_right_std
             else:
                 self.exp_r = new_data_chunk_max
+                
         # 5. If the left and right expand values have been updated.        
-        if expand_min is True or expand_max is True:
+        if (expand_min is True) or (expand_max is True):
             # 5.1 Update mean and std from the left and right expand values
             self.update_center_range(self.exp_l,self.exp_r)
             avg = self.avg[-1]
@@ -1714,6 +1718,7 @@ class booststream:
             hist_theo = [math.ceil(i*self.total_size/100.0) for i in percent_data]
         #     self.endLn.append(len(self.endL))
         #     self.endRn.append(len(self.endR))
+            
             expand = False
             expansion = False
             
@@ -1726,17 +1731,17 @@ class booststream:
             if (difference_max > 0 or difference_min > 0):
                 dif_expand = True
                 if difference_max > 0:
-                    self.nlearn_r.append(difference_max)
+                    self.nlearn_r.append(hist_data[-1])
                 else:
                     self.nlearn_r.append(0)    
-                    # self.nlearn_r += difference_max
+                    
                 if difference_min > 0:
-                    self.nlearn_l.append(difference_min)
+                    self.nlearn_l.append(hist_data[0])
                 else:
                     self.nlearn_l.append(0)
-                    # self.nlearn_l += difference_min          
             else:
                 dif_expand = False    
+                
             while dif_expand is True:    
         #         # difference_max_tmp = difference_max
         #         # difference_min_tmp = difference_min
@@ -1750,17 +1755,19 @@ class booststream:
                                                                 number_bootstrap_iteration = self.number_bt_iter, \
                                                                     minmax_boost = self.minmax_boost,\
                                                                         prob = False) 
-                            
-                            self.exp_r = tmp_exp_r
-                            expand = True
-                            expansion = True
+                            if tmp_exp_r>expandR:
+                                self.exp_r = tmp_exp_r
+                                expand = True
+                                expansion = True
                                 
                         if self.exp_r <= max(self.max_list):
                             self.exp_r = boostrap_v1.bootstrap_online(self.max_list, "right",\
                                                                 number_bootstrap_iteration = self.number_bt_iter, \
                                                                     minmax_boost = self.minmax_boost,\
                                                                         prob = False)
-    
+                            if self.exp_r<expandR:
+                                self.exp_r = expandR
+                                
                             expand = True
                             expansion = True
                 else:
@@ -1774,14 +1781,17 @@ class booststream:
                                                                 number_bootstrap_iteration = self.number_bt_iter, \
                                                                     minmax_boost = self.minmax_boost,\
                                                                         prob = False) 
-                            self.exp_l = tmp_exp_l
-                            expand = True
-                            expansion = True
+                            if tmp_exp_l<expandL:
+                                self.exp_l = tmp_exp_l
+                                expand = True
+                                expansion = True
                         if self.exp_l >= min(self.min_list):
                             self.exp_l = boostrap_v1.bootstrap_online(self.min_list, "left",\
                                                                 number_bootstrap_iteration = self.number_bt_iter, \
                                                                     minmax_boost = self.minmax_boost,\
                                                                         prob = False)
+                            if self.exp_l>expandL:
+                                self.exp_l = expandL
                             expand = True
                             expansion = True
                 # else:
