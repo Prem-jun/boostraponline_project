@@ -94,7 +94,32 @@ def main(config_path: str, fileload: str):
                             }
                 doc_sim.append(dict_tmp)
                      
-        
+    if doc['name'] == 'fdist':
+        doc_sim = []
+        for amount_sample in doc['parameters']['nsim']:
+            for dfd in doc['parameters']['dfd']:
+                for dfn in doc['parameters']['dfn']:
+                    np_data = np.random.f(dfnum = dfn, dfden=dfn, size=amount_sample)
+                    
+                    filename = doc['name']+'dfn'+str(dfn)+'dfd'+str(dfd)+'n'+str(amount_sample)
+                    fig, ax = plt.subplots(1, 1)
+                    ax.hist(np_data, density=False, bins='auto', histtype='stepfilled', alpha=0.2,label = 'Wald')
+                    plt.show()
+                    path_fig =os.path.join(path, filename)
+                    fig.savefig(path_fig)
+                    list_data = list(np_data)
+                    print('Histrogram figure done.')
+                    
+                    pickle.dump(list_data, open(path_fig+".pkl", "wb"))
+                    
+                    # create config file ended wigh `.yaml`
+                    dict_tmp = {'file_config':ypath,
+                                'file_data_chunk':filename,
+                                'nsim':amount_sample,
+                                'dfn':dfn,
+                                'dfd':dfd,
+                                }
+                    doc_sim.append(dict_tmp)    
     
     if doc['name'] == 'normal':
         doc_sim = []
@@ -177,9 +202,11 @@ def main(config_path: str, fileload: str):
         yaml.dump_all(doc_sim, file, sort_keys=False)
     print('Simulation data has been done.')
 
-if __name__=='__main__':
+if __name__== '__main__':
     config_path = './config_sim_data/' # main path
-    dist_select = 'normal' # specify the distribution
+    dist_select = 'fdist' # specify the distribution
+    if dist_select is 'fdist':
+        file_config = 'config_fdist.yaml'
     if dist_select == 'wiebull':
         file_config = 'config_wiebull.yaml'
     if dist_select == 'wald':

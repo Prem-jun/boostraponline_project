@@ -1,0 +1,107 @@
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn5dfd10n10000
+nsim: 10000
+dfn: 5
+dfd: 10
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn10dfd10n10000
+nsim: 10000
+dfn: 10
+dfd: 10
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn15dfd10n10000
+nsim: 10000
+dfn: 15
+dfd: 10
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn5dfd15n10000
+nsim: 10000
+dfn: 5
+dfd: 15
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn10dfd15n10000
+nsim: 10000
+dfn: 10
+dfd: 15
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn15dfd15n10000
+nsim: 10000
+dfn: 15
+dfd: 15
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn5dfd20n10000
+nsim: 10000
+dfn: 5
+dfd: 20
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn10dfd20n10000
+nsim: 10000
+dfn: 10
+dfd: 20
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn15dfd20n10000
+nsim: 10000
+dfn: 15
+dfd: 20
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn5dfd10n50000
+nsim: 50000
+dfn: 5
+dfd: 10
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn10dfd10n50000
+nsim: 50000
+dfn: 10
+dfd: 10
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn15dfd10n50000
+nsim: 50000
+dfn: 15
+dfd: 10
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn5dfd15n50000
+nsim: 50000
+dfn: 5
+dfd: 15
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn10dfd15n50000
+nsim: 50000
+dfn: 10
+dfd: 15
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn15dfd15n50000
+nsim: 50000
+dfn: 15
+dfd: 15
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn5dfd20n50000
+nsim: 50000
+dfn: 5
+dfd: 20
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn10dfd20n50000
+nsim: 50000
+dfn: 10
+dfd: 20
+---
+file_config: ./config_sim_data/config_fdist.yaml
+file_data_chunk: fdistdfn15dfd20n50000
+nsim: 50000
+dfn: 15
+dfd: 20

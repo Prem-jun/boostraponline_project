@@ -153,13 +153,20 @@ def main(folder_path:str ,filename:str):
     #return 0
             
 if __name__=='__main__':
-    dist_select = 'wiebull'
+    dist_select = 'fdist'
     # dist_select = 'realworld'
     # ====== program part
     if dist_select == 'realworld':
         # normal distribution
         folder_path = './config_sim_data/realworld/'
         filename_list = ['laptop_prices']
+    
+    if dist_select == 'fdist':
+        # normal distribution
+        folder_path = './config_sim_data/fdist/'
+        # filename_list = ['normalm0sd1n10000','normalm0sd25n10000',
+        #                  'normalm0sd25n50000','normalm0sd100n50000']
+        filename_list = ['fdistdfn5dfd10n10000','fdistdfn5dfd15n10000','fdistdfn5dfd20n10000']
     
     if dist_select == 'normal':
         # normal distribution
