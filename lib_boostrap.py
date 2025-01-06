@@ -1614,8 +1614,8 @@ class booststream:
         self.avg.append((rightmost+leftmost)/2)
         self.std.append((rightmost-leftmost)/8)
         
-    def expand_bt_online(self,new_data_chunk:list,cum:bool = False) -> None:
-        """
+    def expand_bt_online(self,new_data_chunk:list,cum:bool = False,cum_left_right:bool = False) -> None:
+        '''
         1. Check if the network is online manner or not
         2. Update the number of learning samples
         3. Compute min and max values of the current data chunk
@@ -1627,8 +1627,7 @@ class booststream:
             5.2 Collect the list of minimum and maximum data list from data fall into \
                 the leftmost bin and the rightmost bin
             5.3 Compute the data histogram and theoritical histogram    
-        
-        """
+        '''
         
         # 1. Check if the network is online manner or not
         try: 
@@ -1639,7 +1638,7 @@ class booststream:
             return print(f"Error: {e}")
         
         # 2. Update the number of learning samples
-        if not cum:  
+        if not cum:  # 
             self.total_size += len(new_data_chunk)
         else:
             self.total_size = len(new_data_chunk)
@@ -1697,7 +1696,9 @@ class booststream:
             std = self.std[-1]
             end_bin_left = []
             end_bin_right = []
-            new_data_chunk = new_data_chunk + self.min_list + self.max_list
+            
+            if cum_left_right is True: # accumulated addition of the left and the right bin
+                new_data_chunk = new_data_chunk + self.min_list + self.max_list
             # 5.2 Collect the list of minimum and maximum data list from data fall into \
                 # the leftmost bin and the rightmost bin  
             self.min_list = [k for k in new_data_chunk if (avg - 4*std <= k <= avg - 3*std)]
@@ -1708,8 +1709,8 @@ class booststream:
             end_bin_right = self.max_list
             
             # 5.3 Compute the data histogram and theoritical histogram 
-            hist_data[0] = len(end_bin_left) # left most bin
-            hist_data[-1] = len(end_bin_right) # right most bin
+            hist_data[0] = len(end_bin_left) # The # data in the left most bin.
+            hist_data[-1] = len(end_bin_right) # The # data in the right most bin.
             hist_data[1] = len([i for i in new_data_chunk if (avg - 3*std <= i <= avg - 2*std)])
             hist_data[-2] = len([i for i in new_data_chunk if (avg + 2*std <= i <= avg + 3*std)])
             percent_data = boostrap_v1.get_percent_std_data_from_best_distribution(\

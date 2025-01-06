@@ -80,7 +80,7 @@ def main(config_path: str, fileload: str):
         for i in range(len(doc['parameters']['filename'])):
             filename = doc['parameters']['filename'][i]
             file_format = doc['parameters']['filetype'][i]
-            if file_format == 'csv':
+            if (file_format == 'csv') and (filename == 'laptop_prices'):
                 df = pd.read_csv(filename+'.'+file_format)
                 np_data = df['Price_euros'].to_numpy()
                 list_data = list(np_data)
@@ -93,6 +93,47 @@ def main(config_path: str, fileload: str):
                             'filetype':file_format
                             }
                 doc_sim.append(dict_tmp)
+            elif (file_format == 'csv') and (filename == 'Electronic_sales_Sep2023-Sep2024'):
+                df = pd.read_csv(filename+'.'+file_format)
+                np_data = df['Total Price'].to_numpy()
+                list_data = list(np_data)
+                path_fig =os.path.join(path, filename)
+                pickle.dump(list_data, open(path_fig+".pkl", "wb"))
+                    
+                # create config file ended wigh `.yaml`
+                dict_tmp = {'file_config':ypath,
+                            'file_data_chunk':filename,
+                            'filetype':file_format
+                            }
+                doc_sim.append(dict_tmp)
+            elif (file_format == 'csv') and (filename == 'Ecommerce_Sales_Prediction_Dataset'):    
+                df = pd.read_csv(filename+'.'+file_format)
+                np_data = df['Marketing_Spend'].to_numpy()
+                list_data = list(np_data)
+                path_fig =os.path.join(path, filename)
+                pickle.dump(list_data, open(path_fig+".pkl", "wb"))
+                    
+                # create config file ended wigh `.yaml`
+                dict_tmp = {'file_config':ypath,
+                            'file_data_chunk':filename,
+                            'filetype':file_format
+                            }
+                doc_sim.append(dict_tmp)
+                
+            elif (file_format == 'csv') and (filename == 'world_tourism_economy_data'):    
+                df = pd.read_csv(filename+'.'+file_format)
+                df = df.dropna(subset=['tourism_expenditures'])
+                np_data = df['tourism_expenditures'].to_numpy()
+                list_data = list(np_data)
+                path_fig =os.path.join(path, filename)
+                pickle.dump(list_data, open(path_fig+".pkl", "wb"))
+                    
+                # create config file ended wigh `.yaml`
+                dict_tmp = {'file_config':ypath,
+                            'file_data_chunk':filename,
+                            'filetype':file_format
+                            }
+                doc_sim.append(dict_tmp)    
                      
     if doc['name'] == 'fdist':
         doc_sim = []
@@ -204,7 +245,7 @@ def main(config_path: str, fileload: str):
 
 if __name__== '__main__':
     config_path = './config_sim_data/' # main path
-    dist_select = 'fdist' # specify the distribution
+    dist_select = 'wiebull' # specify the distribution
     if dist_select is 'fdist':
         file_config = 'config_fdist.yaml'
     if dist_select == 'wiebull':

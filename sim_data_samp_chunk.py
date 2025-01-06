@@ -80,7 +80,7 @@ def main(folder_config:str = None,file_config:str = None, percent_feed:int = 30,
     return 0
 
 if __name__=='__main__':
-    dist_select = 'fdist'
+    dist_select = 'wiebull'
     
     # program part
     if dist_select == 'realworld':

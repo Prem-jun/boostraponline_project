@@ -153,13 +153,17 @@ def main(folder_path:str ,filename:str):
     #return 0
             
 if __name__=='__main__':
-    dist_select = 'fdist'
+    dist_list = ['normal','wald']
+    idx = 1
+    dist_select = dist_list[idx]
     # dist_select = 'realworld'
     # ====== program part
     if dist_select == 'realworld':
         # normal distribution
         folder_path = './config_sim_data/realworld/'
-        filename_list = ['laptop_prices']
+        # filename_list = ['laptop_prices','Electronic_sales_Sep2023-Sep2024',
+        #                  'Ecommerce_Sales_Prediction_Dataset','world_tourism_economy_data']
+        filename_list = ['world_tourism_economy_data']
     
     if dist_select == 'fdist':
         # normal distribution
@@ -179,8 +183,7 @@ if __name__=='__main__':
         # wiebull distribution
         folder_path = './config_sim_data/wiebull/'
         # filename_list = ['wiebullshape5n50000']
-        filename_list = ['wiebullshape1n10000','wiebullshape1n50000','wiebullshape5n10000',
-                        'wiebullshape5n50000']
+        filename_list = ['wiebullshape1n10000','wiebullshape5n10000']
         
         # ======
     if dist_select == 'wald':    
@@ -192,5 +195,10 @@ if __name__=='__main__':
         # filename_list = ['waldm1sd2n10000','waldm1sd2n50000','waldm1sd05n10000','waldm1sd05n50000',
         #             'waldm3sd2n10000','waldm3sd2n50000','waldm3sd05n10000','waldm3sd05n10000']
         # ======
-    for filename in filename_list:
-        main(folder_path,filename)
+    print(f"Your selected distribution is: {dist_select}")
+    flag = input("Running y/n: ")
+    if (flag == 'y') or (flag == 'Y'):    
+        for filename in filename_list:
+            main(folder_path,filename)
+    else:
+        print(f'Please, change the selected distribution')        
