@@ -153,8 +153,8 @@ def main(folder_path:str ,filename:str):
     #return 0
             
 if __name__=='__main__':
-    dist_list = ['normal','wald']
-    idx = 1
+    dist_list = ['normal','wald','wiebull','fdist','realworld']
+    idx = 4
     dist_select = dist_list[idx]
     # dist_select = 'realworld'
     # ====== program part
