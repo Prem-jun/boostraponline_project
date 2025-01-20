@@ -1,0 +1,3 @@
+dist: 'wiebull'
+folder_path: 'config_sim_data/wiebull'
+filename_list: ['wiebullshape1n10000','wiebullshape5n10000']
