@@ -370,7 +370,7 @@ def parse_opt():
     opt = parser.parse_args()
     return opt
 
-def run(source:str):
+def run(source:str = "./config_sim_data/config_results_normal.yaml"):
     with open(source, 'r') as file:
         config = yaml.safe_load(file)
     folder_path = config['folder_path']
