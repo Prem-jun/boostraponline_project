@@ -1,0 +1,5 @@
+name: fdist
+parameters:
+    nsim: [10000,50000] 
+    dfn: [5,10,15]
+    dfd: [10,15, 20]

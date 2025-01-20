@@ -1094,154 +1094,7 @@ class boostrap_v1:
         # print("final_estimated_std:", final_estimated_std)
     
         return final_estimated_std
-        
-        
-        
-        
-        
-        
-        
-        # for i in range(number_bootstrap_iteration):
-     
-        #     if prob:
-                
-        #         # bootstrap_sample = [ np.random.choice(data_set, 1,replace=True,p=pdist) for i in range(size_boost)]
-        #         bootstrap_sample = list(np.random.choice(data_set, size_boost,replace=True,p=pdist))
-        #     else:
-        #         # bootstrap_sample = [ np.random.choice(data_set, 1,replace=True) for i in range(size_boost)]
-        #         bootstrap_sample = list(np.random.choice(data_set, size_boost,replace=True))
-            
-            
-        #     # bootstrap_sample = list(np.random.choice(data_set, size_data_set, \
-        #     #                                           replace = with_replacement))
-        #     # bootstrap_sample = list(random.sample)
-        #     bootstrap_sample_list.append(bootstrap_sample)
-        #     if minmax_boost:
-        #         bootstrap_sample_min_list.append(min(bootstrap_sample))
-        #         bootstrap_sample_max_list.append(max(bootstrap_sample))
-            
-        #     present_bootstrap_mean = (np.mean(bootstrap_sample) +
-        #                               previous_bootstrap_mean)/2
-        #     previous_bootstrap_mean = present_bootstrap_mean
-        #     bootstrap_means[i] = present_bootstrap_mean
-    
-        # estimated_mean = np.mean(bootstrap_means)
-        # # estimated_std_of_mean = boostrap_v1.stdev(bootstrap_means,estimated_mean)
-        # if prob:
-        #   input_mean = sum(np.array(pdist)*np.array(input_data))
-        # else:
-        #     input_mean = np.mean(input_data) # Aj Chid mean
-        
-        # # different_input_mean_bootstrap_mean = abs(boostrap_v1.mean(input_data) - estimated_mean)
-        # different_input_mean_bootstrap_mean = abs(input_mean - estimated_mean)
-        
-        # for i in range(number_bootstrap_iteration):
-        #     data = bootstrap_sample_list[i]
-        #     variance = [(k-estimated_mean)**2 for k in data]
-        #     std = math.sqrt(sum(variance)/(size_boost-1))
-        #     # std = 0
-        #     # for j in range(size_boost):
-        #     #     std = std + (data[j] - estimated_mean)**2
-        #     # std = math.sqrt(std/(size_boost-1))
-        #     # # diff_dist_right_std = max(data) - (std + estimated_mean)
-        #     # # diff_dist_left_std = (estimated_mean - std) - min(data)
-        #     # # max_std = (diff_dist_right_std + diff_dist_left_std)/2
-        #     bootstrap_std.append(std)
-        #     # bootstrap_max_diff_dist_std.append(max_std)
-    
-        # estimated_std = np.mean(bootstrap_std)
-        # # estimated_std_of_std = boostrap_v1.stdev(bootstrap_std,estimated_std)
-        # different_input_std_bootstrap_std = abs(boostrap_v1.stdev(input_data,input_mean) - estimated_std)
-        # # different_input_std_bootstrap_std = abs(boostrap_v1.stdev(input_data,) - estimated_std)
-    
-        # # estimated_diff_dist_std = np.mean(bootstrap_max_diff_dist_std)
-        # # estimated_std_of_diff_dist_std = np.std(bootstrap_max_diff_dist_std)
-    
-        
-        # # input_std = boostrap_v1.stdev(input_data) No use in the below lines.
-    
-        # # print("=====================================================================")
-        # # print(">>>>> in Bootstrap")
-        # # print("\n----- ", end_side)
-        # # print("left min:", min(data_set))
-        # # print("right max:", max(data_set))
-        # # print("\ninput mean:", input_mean)
-        # # print("estimated_mean:", estimated_mean)
-        # # print("estimated_std_of_mean:", estimated_std_of_mean)
-        # # print(" ")
-        # # print("input std:", input_std)
-        # # print("estimated_std:", estimated_std)
-        # # print("estimated_std_of_std:", estimated_std_of_std)
-        # # print(" ")
-        # # print("estimated_diff_dist_std:", estimated_diff_dist_std)
-        # # print("estimated_std_of_diff_dist_std:", estimated_std_of_diff_dist_std)
-    
-        # # input_mean = np.mean(input_data)
-    
-    #     if end_side == "left":
-    #         if minmax_boost is True:
-    #             if prob:
-    #                 dist_min = abs(bootstrap_sample_min_list-np.mean(bootstrap_sample_min_list))
-    #                 idist_min = 1/dist_min
-    #                 pdist_min = idist_min/np.sum(idist_min)
-    #                 left_min_1 = sum(np.array(pdist_min)*np.array(bootstrap_sample_min_list))
-    #                 left_min = left_min_1
-    #             else:
-    #                 left_min = np.mean(bootstrap_sample_min_list)
-    #             # left_min = np.mean(bootstrap_sample_min_list)#-np.std(bootstrap_sample_min_list)
-    #             # left_min = st.mode(np.array(bootstrap_sample_min_list))[0][0]
-    #         else:
-    #             left_min = min(data_set)
-    #         if estimated_mean < input_mean:
-    #             # left_min = min(data_set)
-    #             final_estimated_std = left_min - different_input_mean_bootstrap_mean
-    # #            final_estimated_std = left_min - estimated_std_of_diff_dist_std
-    #             print("\n>>>>> Bootstrap in left end: estimated_mean < input_mean")
-    #             print("left min:", min(data_set), " final_estimated_std:", \
-    #                   final_estimated_std)
-                
-    #         if input_mean < estimated_mean:
-                
-    #             # left_min = min(data_set)
-    # #            final_estimated_std = left_min - estimated_std_of_std
-    #             final_estimated_std = left_min - different_input_std_bootstrap_std
-    #             print("\n>>>>> Bootstrap in left end: input_mean < estimated_mean")
-    #             print("left min:", min(data_set), " final_estimated_std:", \
-    #                   final_estimated_std)
-        
-    #     if end_side == "right":
-    #         if minmax_boost is True:
-    #             if prob:
-    #                 dist_max = abs(bootstrap_sample_max_list-np.mean(bootstrap_sample_max_list))
-    #                 idist_max = 1/dist_max
-    #                 pdist_max = idist_max/np.sum(idist_max)
-    #                 right_max_1 = sum(np.array(pdist_max)*np.array(bootstrap_sample_max_list))
-    #                 right_max = right_max_1
-    #             else:
-    #                 right_max = np.mean(bootstrap_sample_max_list)
-    #             # right_max = np.mean(bootstrap_sample_max_list)#+np.std(bootstrap_sample_max_list)
-    #             # right_max = st.mode(np.array(bootstrap_sample_max_list))[0][0]
-    #         else:
-    #             right_max = max(data_set)
-    #         if estimated_mean < input_mean:
-    #             # right_max = max(data_set)
-    # #            final_estimated_std = right_max + estimated_std_of_std
-    #             final_estimated_std = right_max + different_input_std_bootstrap_std
-    #             print("\n>>>>> Bootstrap in right end: estimated_mean < input_mean")
-    #             print("right max:", max(data_set), " final_estimated_std:", \
-    #                   final_estimated_std)
-                                      
-    #         if input_mean < estimated_mean:
-    #             # right_max = max(data_set)
-    #             final_estimated_std = right_max + different_input_mean_bootstrap_mean            
-    #             print("\n>>>>> Bootstrap in right end: input_mean < estimated_mean")
-    #             print("right max:", max(data_set), " final_estimated_std:", \
-    #                   final_estimated_std)
-    
-    #     print(" ")
-    #     print("final_estimated_std:", final_estimated_std)
-    
-    #     return final_estimated_std    
+         
     #============================================================================
     def estimate_width_1D(input_data: list, max_value: float, z_score:float) -> float:
         sample = copy.deepcopy(input_data)
@@ -1710,59 +1563,61 @@ class boostrap_v1:
 
 @dataclass
 class booststream:
-    online:bool = False # Online boostrap exploited.
-    minmax_boost:bool = False # Minmax boostrap applied. 
+    online_cum: bool = False
+    online:bool = False # if Online boostrap active, it is set to True.
+    minmax_boost:bool = False # if Minmax boostrap active, it is set to True. 
     # addnoise:bool = False # Addnoise in simulate data
     # prob:bool = False # prob-based sample selection in boostrap applied.
-    filesampl:str = ''
-    numbin:int = 0
-    number_bt_iter:int = 0
+    filesampl:str = '' # file name of samples
+    numbin:int = 0 # number of theoritical bin for an example 8
+    number_bt_iter:int = 600 # number of boostrap iteration.
     nboost:int = 0 # minimum number of conducting boostrap.
     dist_list:List[str] = field(default_factory=list)
-    total_size:int = -1
-    chunk_size:float = 0.0
-    max_chs:float = 0.0
-    min_chs:float = 0.0
+    total_size:int = 0 # number of total learned data.
+    chunk_size:int = 0 
+    max_chs:float = - 9999.99 # maximumn value of learning data from the start to current chunk.
+    min_chs:float =  9999.99 # minimum value of learning data from the start to current chunk.
     min_list:List[str] = field(default_factory=list) 
     max_list:List[str] = field(default_factory=list)
     avg: List[str] = field(default_factory=list)
     std: List[str] = field(default_factory=list)
-    exp_l:float = 0.0
-    exp_r:float = 0.0
+    exp_l:float = 9999.99
+    exp_r:float = -9999.99
     range:float = 0.0
     flag_learning:bool = False # flag for idenfying the learning process is performed.
+    nlearn_l: List[int] = field(default_factory=list)
+    nlearn_r: List[int] = field(default_factory=list)
     
-    # filewd: dict = ''
-    # pop_max: float = 0.0
-    # pop_min: float = 0.0
-    # ch_size: int = 0 # # data points per chunk.
-    # feed_percent: int = 0 # portion of data used as samples from entire dataset. 
-    
-    
-    def set_online(self,minmax_flag:bool=False):
+    def set_online(self,minmax_flag:bool = False):
         dist_list = ['exponweib', 'wald', 'gamma', 'norm',\
                          'expon', 'powerlaw', 'lognorm', 'chi2', 'weibull_min',\
                          'weibull_max']
         self.online = True
-        self.minmax_boost = minmax_flag
+        self.minmax_boost = minmax_flag 
         self.numbin = 8
-        self.number_bt_iter = 600
+        # self.number_bt_iter = 600
         self.dist_list = dist_list
         self.nboost = 3
-        self.total_size  = 0
-        self.max_chs = - 9999.99
-        self.min_chs = 9999.99
-        self.exp_l = 9999.99
-        self.exp_r = -9999.99
+        # self.total_size  = 0
+        # self.max_chs = - 9999.99
+        # self.min_chs = 9999.99
+        # self.exp_l = 9999.99
+        # self.exp_r = -9999.99
+        
+        
     
+    def compute_error(self,target_l: float,target_r: float):
+        target_range = target_r - target_l
+        return (target_l-self.exp_l), (target_r-self.exp_r), (target_range-self.range)
+        
     def update_center_range(self,leftmost: float,rightmost: float)-> None:
         self.avg.append((rightmost+leftmost)/2)
         self.std.append((rightmost-leftmost)/8)
         
-    def expand_bt_online(self,new_data_chunk:list) -> None:
+    def expand_bt_online(self,new_data_chunk:list,cum:bool = False,cum_left_right:bool = False) -> None:
         '''
         1. Check if the network is online manner or not
-        2. update the number of learning samples
+        2. Update the number of learning samples
         3. Compute min and max values of the current data chunk
         4. If we get the new min or max values update the left-expand or right-expand
             4.1 Compute the update vales based on min-max boostrapping, or
@@ -1772,8 +1627,8 @@ class booststream:
             5.2 Collect the list of minimum and maximum data list from data fall into \
                 the leftmost bin and the rightmost bin
             5.3 Compute the data histogram and theoritical histogram    
-        
         '''
+        
         # 1. Check if the network is online manner or not
         try: 
             if self.online is False:
@@ -1782,8 +1637,11 @@ class booststream:
         except ValueError as e:
             return print(f"Error: {e}")
         
-        # 2. Update the number of learning samples  
-        self.total_size += len(new_data_chunk)
+        # 2. Update the number of learning samples
+        if not cum:  # 
+            self.total_size += len(new_data_chunk)
+        else:
+            self.total_size = len(new_data_chunk)
         self.chunk_size = len(new_data_chunk)
         # 3. Compute min and max values of the current data chunk
         new_data_chunk_min = min(new_data_chunk)
@@ -1792,13 +1650,16 @@ class booststream:
             self.min_chs = new_data_chunk_min
         if new_data_chunk_max > self.max_chs:
             self.max_chs = new_data_chunk_max
+        
+        # Start learning
         expand_min = False
         expand_max = False
         expansion = False
         # 4. If we get the new min or max values update the left-expand or right-expand
             # 4.1 Compute the update vales based on min-max boostrapping, or
             # 4.2 Compute the update vales based on min and max vaues of the current data chunk
-        if new_data_chunk_min < self.exp_l:
+        
+        if new_data_chunk_min < self.exp_l: # the min of the chunk is less than the min of the network.
             expand_min = True
             if len(self.min_list) >= self.nboost and (self.minmax_boost is True):
                 self.min_list.append(new_data_chunk_min)
@@ -1826,15 +1687,18 @@ class booststream:
                     self.exp_r = adjust_right_std
             else:
                 self.exp_r = new_data_chunk_max
+                
         # 5. If the left and right expand values have been updated.        
-        if expand_min is True or expand_max is True:
+        if (expand_min is True) or (expand_max is True):
             # 5.1 Update mean and std from the left and right expand values
             self.update_center_range(self.exp_l,self.exp_r)
             avg = self.avg[-1]
             std = self.std[-1]
             end_bin_left = []
             end_bin_right = []
-            new_data_chunk = new_data_chunk + self.min_list + self.max_list
+            
+            if cum_left_right is True: # accumulated addition of the left and the right bin
+                new_data_chunk = new_data_chunk + self.min_list + self.max_list
             # 5.2 Collect the list of minimum and maximum data list from data fall into \
                 # the leftmost bin and the rightmost bin  
             self.min_list = [k for k in new_data_chunk if (avg - 4*std <= k <= avg - 3*std)]
@@ -1845,8 +1709,8 @@ class booststream:
             end_bin_right = self.max_list
             
             # 5.3 Compute the data histogram and theoritical histogram 
-            hist_data[0] = len(end_bin_left) # left most bin
-            hist_data[-1] = len(end_bin_right) # right most bin
+            hist_data[0] = len(end_bin_left) # The # data in the left most bin.
+            hist_data[-1] = len(end_bin_right) # The # data in the right most bin.
             hist_data[1] = len([i for i in new_data_chunk if (avg - 3*std <= i <= avg - 2*std)])
             hist_data[-2] = len([i for i in new_data_chunk if (avg + 2*std <= i <= avg + 3*std)])
             percent_data = boostrap_v1.get_percent_std_data_from_best_distribution(\
@@ -1855,17 +1719,30 @@ class booststream:
             hist_theo = [math.ceil(i*self.total_size/100.0) for i in percent_data]
         #     self.endLn.append(len(self.endL))
         #     self.endRn.append(len(self.endR))
+            
             expand = False
             expansion = False
+            
+             
             
             # 5.4 Compute the different values of the both histograms
             difference_max = hist_data[-1] - hist_theo[-1]
             difference_min = hist_data[0] - hist_theo[0]
         #     # while (difference_max > 0 or difference_min > 0):
             if (difference_max > 0 or difference_min > 0):
-                dif_expand = True    
+                dif_expand = True
+                if difference_max > 0:
+                    self.nlearn_r.append(hist_data[-1])
+                else:
+                    self.nlearn_r.append(0)    
+                    
+                if difference_min > 0:
+                    self.nlearn_l.append(hist_data[0])
+                else:
+                    self.nlearn_l.append(0)
             else:
                 dif_expand = False    
+                
             while dif_expand is True:    
         #         # difference_max_tmp = difference_max
         #         # difference_min_tmp = difference_min
@@ -1879,17 +1756,19 @@ class booststream:
                                                                 number_bootstrap_iteration = self.number_bt_iter, \
                                                                     minmax_boost = self.minmax_boost,\
                                                                         prob = False) 
-                            
-                            self.exp_r = tmp_exp_r
-                            expand = True
-                            expansion = True
+                            if tmp_exp_r>expandR:
+                                self.exp_r = tmp_exp_r
+                                expand = True
+                                expansion = True
                                 
                         if self.exp_r <= max(self.max_list):
                             self.exp_r = boostrap_v1.bootstrap_online(self.max_list, "right",\
                                                                 number_bootstrap_iteration = self.number_bt_iter, \
                                                                     minmax_boost = self.minmax_boost,\
                                                                         prob = False)
-    
+                            if self.exp_r<expandR:
+                                self.exp_r = expandR
+                                
                             expand = True
                             expansion = True
                 else:
@@ -1903,14 +1782,17 @@ class booststream:
                                                                 number_bootstrap_iteration = self.number_bt_iter, \
                                                                     minmax_boost = self.minmax_boost,\
                                                                         prob = False) 
-                            self.exp_l = tmp_exp_l
-                            expand = True
-                            expansion = True
+                            if tmp_exp_l<expandL:
+                                self.exp_l = tmp_exp_l
+                                expand = True
+                                expansion = True
                         if self.exp_l >= min(self.min_list):
                             self.exp_l = boostrap_v1.bootstrap_online(self.min_list, "left",\
                                                                 number_bootstrap_iteration = self.number_bt_iter, \
                                                                     minmax_boost = self.minmax_boost,\
                                                                         prob = False)
+                            if self.exp_l>expandL:
+                                self.exp_l = expandL
                             expand = True
                             expansion = True
                 # else:
@@ -1964,6 +1846,7 @@ class booststream:
             return print(f"Error: {e}")
         self.number_bt_iter = 600
         data_set = copy.deepcopy(input_data)
+        nsample = len(data_set)
         bootstrap_min = []
         bootstrap_max = []
         bootstrap_std = []
@@ -1983,6 +1866,8 @@ class booststream:
         self.exp_l = np.mean(bootstrap_min)
         self.exp_r = np.mean(bootstrap_max)
         self.range = self.exp_r - self.exp_l    
+        self.nlearn_l.append(nsample)
+        self.nlearn_r.append(nsample) 
             # if idx == 0:
             #     bootstrap_min.append(np.min(samples))
             #     previous_bootstrap_mean = bootstrap_means[0]

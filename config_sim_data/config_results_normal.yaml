@@ -1,0 +1,3 @@
+dist: 'normal'
+folder_path: 'config_sim_data/normal'
+filename_list: ['normalm0sd1n10000','normalm0sd4n10000']

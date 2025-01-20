@@ -1,0 +1,15 @@
+file_config: ./config_sim_data/config_real_labtop.yaml
+file_data_chunk: laptop_prices
+filetype: csv
+---
+file_config: ./config_sim_data/config_real_labtop.yaml
+file_data_chunk: Electronic_sales_Sep2023-Sep2024
+filetype: csv
+---
+file_config: ./config_sim_data/config_real_labtop.yaml
+file_data_chunk: Ecommerce_Sales_Prediction_Dataset
+filetype: csv
+---
+file_config: ./config_sim_data/config_real_labtop.yaml
+file_data_chunk: world_tourism_economy_data
+filetype: csv
