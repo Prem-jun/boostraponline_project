@@ -396,7 +396,7 @@ def run(source:str = "./config_sim_data/config_results_normal.yaml"):
         pop_min = np.min(pop_data[-1])
         pop_max = np.max(pop_data[-1])
         pop_range = pop_max - pop_min
-        print(f" Distribution: {config['dist']}: min = {pop_min:.4f} and max = {pop_max:.4f}")
+        print(f" Distribution: {filename}: min = {pop_min:.4f} and max = {pop_max:.4f}")
         # print population distribution
         plot_hist(pop_data[-1],filesave = os.path.join(figure_path,filename))
         
