@@ -1,0 +1,3 @@
+dist: 'fdist'
+folder_path: 'config_sim_data/fdist'
+filename_list: ['fdistdfn5dfd10n10000','fdistdfn5dfd20n10000'] 
