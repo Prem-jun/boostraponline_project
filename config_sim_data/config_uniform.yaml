@@ -1,0 +1,6 @@
+name: uniform
+parameters:
+  nsim: [10000]
+  min: [-5, 0] 
+  max: [1]
+    

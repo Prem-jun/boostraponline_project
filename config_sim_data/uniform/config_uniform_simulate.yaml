@@ -1,0 +1,11 @@
+file_config: /Users/premjunsawang/Documents/GitHub/boostraponline_project/config_sim_data/config_uniform.yaml
+file_data_chunk: uniformmin-5max1n10000
+nsim: 10000
+min: -5
+max: 1
+---
+file_config: /Users/premjunsawang/Documents/GitHub/boostraponline_project/config_sim_data/config_uniform.yaml
+file_data_chunk: uniformmin0max1n10000
+nsim: 10000
+min: 0
+max: 1
