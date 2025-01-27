@@ -1,0 +1,3 @@
+dist: 'uniform'
+folder_path: 'config_sim_data/uniform'
+filename_list: ['uniformmin-5max1n10000','uniformmin0max1n10000']
