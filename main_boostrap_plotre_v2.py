@@ -85,7 +85,7 @@ def run(source:str = "./config_sim_data/config_results_normal.yaml"):
         pop_range = pop_max - pop_min
         print(f" Distribution: {filename}: min = {pop_min:.4f} and max = {pop_max:.4f}")
         # print population distribution
-        plot_hist(pop_data[-1],filesave = os.path.join(figure_path,filename))
+        res_bootstrap.plot_hist(pop_data[-1],filesave = os.path.join(figure_path,filename))
         
         res = res_all[-1]
         ch_size = list(set([res1.chunk_size for res1 in res]))

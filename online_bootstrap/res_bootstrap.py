@@ -9,7 +9,7 @@ from online_bootstrap import boot_stream
 @dataclass
 class Res_boostrap:
     net_name: str = ''
-    net:boot_stream = field(default_factory=boot_stream) 
+    net:boot_stream.booststream = field(default_factory=boot_stream.booststream) 
     chunk_size: int=0
     num_chunk: int =0
     exp_l:List[float] = field(default_factory=list)
@@ -18,7 +18,7 @@ class Res_boostrap:
     nlearnl:List[float] =field(default_factory=list)
     nlearnr:List[float] =field(default_factory=list)
     
-    def add_init_params(self, net:boot_stream, cum:bool=False):
+    def add_init_params(self, net:boot_stream.booststream, cum:bool=False):
         # add net_name attributes.
         self.net = net
         if self.net.online:
@@ -31,7 +31,7 @@ class Res_boostrap:
         
             
     
-    def add_params(self,net:lib_boostrap.booststream):
+    def add_params(self,net:boot_stream.booststream):
         self.net = net
         if self.num_chunk == 0:
             self.chunk_size = self.net.chunk_size

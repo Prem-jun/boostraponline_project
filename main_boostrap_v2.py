@@ -17,52 +17,12 @@ from online_bootstrap import *
 # import lib_boostrap
 from typing import List, Union, Dict
 from dataclasses import dataclass, field
+from online_bootstrap import res_bootstrap
 from pathlib import Path
 import argparse
 import yaml
 
-@dataclass
-class Res_boostrap:
-    net_name: str = ''
-    net:lib_boostrap.booststream = field(default_factory=lib_boostrap.booststream) 
-    chunk_size: int=0
-    num_chunk: int =0
-    exp_l:List[float] = field(default_factory=list)
-    exp_r:List[float] = field(default_factory=list)
-    exp_range:List[float] =field(default_factory=list)
-    nlearnl:List[float] =field(default_factory=list)
-    nlearnr:List[float] =field(default_factory=list)
-    
-    def add_init_params(self, net:lib_boostrap.booststream, cum:bool=False):
-        # add net_name attributes.
-        self.net = net
-        if self.net.online:
-            if not self.net.minmax_boost:
-                self.net_name = 'online' if not cum else 'online_cum'
-            else:
-                self.net_name = 'online_mm' if not cum else 'online_mm_cum'
-        else:
-            self.net_name = 'offline'
-        
-            
-    
-    def add_params(self,net:lib_boostrap.booststream):
-        self.net = net
-        if self.num_chunk == 0:
-            self.chunk_size = self.net.chunk_size
-        self.num_chunk +=1
-        self.exp_l.append(self.net.exp_l)
-        self.exp_r.append(self.net.exp_r)
-        self.exp_range.append(self.net.range)
-        if len(self.nlearnl) == 0:
-            self.nlearnl.append(0)
-        else: 
-            self.nlearnl.append(self.net.nlearn_l[-1])
-        if len(self.nlearnr) == 0:
-            self.nlearnr.append(0)
-        else:    
-            self.nlearnr.append(self.net.nlearn_r[-1])
-            
+
 # Function to read a JSON file and return its contents as a Python object
 def read_json_file(file_path):
     with open(file_path, 'r') as file:
@@ -115,10 +75,10 @@ def run(dir:str,file:str):
             # chunk_size.append(data['chunk_size'])
             chunk_data = data['samp_chuck']
             # create the initial network
-            net_online = boot_stream()
-            net_online_mm = boot_stream()
-            net_online_cum = boot_stream()
-            net_trad_cum = boot_stream()
+            net_online = boot_stream.booststream()
+            net_online_mm = boot_stream.booststream()
+            net_online_cum = boot_stream.booststream()
+            net_trad_cum = boot_stream.booststream()
             
             # Setting for online manner
             net_online.set_online()
@@ -126,13 +86,13 @@ def run(dir:str,file:str):
             net_online_cum.set_online()
             
             # Setting results 
-            res4 = Res_boostrap()
+            res4 = res_bootstrap.Res_boostrap()
             res4.add_init_params(net = net_trad_cum)
-            res1 = Res_boostrap()
+            res1 = res_bootstrap.Res_boostrap()
             res1.add_init_params(net = net_online)
-            res2 = Res_boostrap()
+            res2 = res_bootstrap.Res_boostrap()
             res2.add_init_params(net = net_online_mm)
-            res3 = Res_boostrap()
+            res3 = res_bootstrap.Res_boostrap()
             res3.add_init_params(net = net_online_cum,cum=True)
             sample_whole = []
             count2 = 0 
