@@ -1,0 +1,3 @@
+dist: 'chi2'
+folder_path: 'config_sim_data/chi2'
+filename_list: ['chi2df2n10000','chi2df10n10000']

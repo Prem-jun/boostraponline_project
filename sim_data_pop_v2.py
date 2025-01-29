@@ -4,6 +4,7 @@ import pandas as pd
 import os, yaml
 import pickle
 from pathlib import Path
+from typing import List
 import argparse
 
 def get_file_format(filename: str) -> str:
@@ -88,7 +89,7 @@ def parse_opt():
         )
     ROOT = Path(__file__).parent
     parser.add_argument("--dir", type = str, default=ROOT/"config_sim_data", help = 'working directory')
-    parser.add_argument("--file", type = str, default="config_uniform.yaml", help = 'config file')
+    parser.add_argument("--file", type = str, default="config_chi2.yaml", help = 'config file')
     opt = parser.parse_args()
     return opt
 
@@ -102,6 +103,23 @@ def run(dir:str,file:str):
     if not(ensure_directory_exists(folder_save)):
         print('Cannot create the saving foloder.')
     else:
+        if doc['name'] == 'chi2':
+            doc_sim = []
+            for amount_sample in doc['parameters']['nsim']:
+                for df in doc['parameters']['df']:
+                    np_data  = np.random.chisquare(df= df,size = amount_sample)
+                    filename = doc['name']+'df'+str(df)+'n'+str(amount_sample)
+                    file_save = os.path.join(source,filename)
+                    list_data = list(np_data)
+                    pickle.dump(list_data, open(os.path.join(folder_save,filename+".pkl"), "wb"))
+                    
+                    # create config file ended wigh `.yaml`
+                    dict_tmp = {'file_config':source,
+                                'file_data_chunk':filename,
+                                'nsim':amount_sample,
+                                'df':df,
+                                }
+                    doc_sim.append(dict_tmp)
         if doc['name'] == 'normal':
             doc_sim = []
             for amount_sample in doc['parameters']['nsim']:

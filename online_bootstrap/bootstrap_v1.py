@@ -390,7 +390,7 @@ def get_percent_std_data_from_best_distribution(total_size: int,left_interval_in
     for distribution_name in distribution_list:
         percent_data_lstd1, percent_data_lstd2, percent_data_lstd3, \
         percent_data_lstd4, percent_data_rstd1, percent_data_rstd2, \
-        percent_data_rstd3, percent_data_rstd4 = boostrap_v1.distribution_percent(\
+        percent_data_rstd3, percent_data_rstd4 = distribution_percent(\
                                                     distribution_name)
         
         slstd4 = math.ceil(percent_data_lstd4*total_size/100.0)

@@ -1,0 +1,4 @@
+name: chi2
+parameters:
+    nsim: [10000] 
+    df: [2,10]

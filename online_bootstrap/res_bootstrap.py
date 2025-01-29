@@ -28,9 +28,6 @@ class Res_boostrap:
                 self.net_name = 'online_mm' if not cum else 'online_mm_cum'
         else:
             self.net_name = 'offline'
-        
-            
-    
     def add_params(self,net:boot_stream.booststream):
         self.net = net
         if self.num_chunk == 0:

@@ -1,0 +1,9 @@
+file_config: /Users/premjunsawang/Documents/GitHub/boostraponline_project/config_sim_data/config_chi2.yaml
+file_data_chunk: chi2df2n10000
+nsim: 10000
+df: 2
+---
+file_config: /Users/premjunsawang/Documents/GitHub/boostraponline_project/config_sim_data/config_chi2.yaml
+file_data_chunk: chi2df10n10000
+nsim: 10000
+df: 10

@@ -53,11 +53,11 @@ def parse_opt():
         prog='Bootstrap-Tool'
         )
     ROOT = Path(__file__).parent
-    parser.add_argument("--source", type = str, default=ROOT/"config_sim_data/config_results_normal.yaml", help = 'source for loading config file results')
+    parser.add_argument("--source", type = str, default=ROOT/"config_sim_data/config_results_chi2.yaml", help = 'source for loading config file results')
     opt = parser.parse_args()
     return opt
 
-def run(source:str = "./config_sim_data/config_results_normal.yaml"):
+def run(source:str):
     with open(source, 'r') as file:
         config = yaml.safe_load(file)
     folder_path = config['folder_path']
