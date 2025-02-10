@@ -48,7 +48,7 @@ def parse_opt():
     """
     parser = argparse.ArgumentParser(
         description='Bootstraping running results',
-        epilog='Example: python script.py --source config_sim_data/normal',  # ข้อความท้าย help
+        epilog='Example: python script.py --source config_sim_data/config_results_fdist.yaml',  # ข้อความท้าย help
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,  # แสดง default values
         prog='Bootstrap-Tool'
         )
