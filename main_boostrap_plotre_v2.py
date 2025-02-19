@@ -48,22 +48,35 @@ def parse_opt():
     """
     parser = argparse.ArgumentParser(
         description='Bootstraping running results',
-        epilog='Example: python script.py --source config_sim_data/config_results_fdist.yaml',  # ข้อความท้าย help
+        epilog='Example: python script.py --source config_sim_data/config_results_wald.yaml',  # ข้อความท้าย help
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,  # แสดง default values
         prog='Bootstrap-Tool'
         )
     ROOT = Path(__file__).parent
-    parser.add_argument("--source", type = str, default=ROOT/"config_sim_data/config_results_chi2.yaml", help = 'source for loading config file results')
+    parser.add_argument("--source", type = str, default=ROOT/"config_sim_data/config_results_realworld.yaml", help = 'source for loading config file results')
+    parser.add_argument("--savename", type = str, default="result-realworld.csv", help = 'source for loading config file results')
     opt = parser.parse_args()
     return opt
 
-def run(source:str):
+def run(source:str,savename:str):
     with open(source, 'r') as file:
         config = yaml.safe_load(file)
     folder_path = config['folder_path']
     filename_list = config['filename_list']
     res_all = []
     pop_data = []
+    popminmax_list = []
+    column = ['filename','ch_size','popmin','popmax','min_exp','max_exp','range_err','nlearn','method']
+    filerun_list = []
+    ch_size_list = []
+    popmin = []
+    popmax = []
+    minv = []
+    maxv = []
+    range_err = []
+    nlearn_n = []
+    method = []
+    select_size = [50,500]
     for filename in filename_list:
         
         # Save the result figures.
@@ -111,6 +124,9 @@ def run(source:str):
             error_r.append([list(map(lambda x: pop_max - x, res1.exp_r)) for res1 in res if res1.chunk_size==size])
             error_range.append([list(map(lambda x: pop_range - x, res1.exp_range)) for res1 in res if res1.chunk_size==size])    
         popminmax = [pop_min,pop_max]
+        popminmax_list.append(popminmax) 
+        
+            
         for idx in range(len(exp_l)):
             res_bootstrap.plot_minmax_line(ch_size[idx],exp_l[idx], exp_r[idx], name_l[idx],name_r[idx], popminmax,
                             filesave = os.path.join(figure_path,filename+name[idx][0]))
@@ -118,7 +134,32 @@ def run(source:str):
                         filesave = os.path.join(figure_path,filename+name[idx][0]+'error'),position = 'top-right')
             res_bootstrap.plot_nlearn_line(ch_size[idx],nlearn[idx], name[idx], 
                             filesave = os.path.join(figure_path,filename+name[idx][0]+'_n'))
-    
+        
+        
+        # for filename in filename_list:
+        for size_run in select_size:
+            if size_run==50:
+                idx =0
+            else: 
+                idx=-1
+            for i in range(3):
+                filerun_list.append(filename)
+                ch_size_list.append(size_run)
+                popmin.append(popminmax[0])
+                popmax.append(popminmax[1])
+                minv.append(exp_l[idx][i][-1])
+                maxv.append(exp_r[idx][i][-1])
+                range_err.append(error_range[idx][i][-1])
+                nlearn_n.append(nlearn[idx][i][-1])
+                method.append(name[idx][i])
+    data = data = list(zip(filerun_list, ch_size_list, popmin,
+                           popmax, minv, maxv, range_err, nlearn_n,method))
+    df = pd.DataFrame(data, columns=column)
+    df.to_csv(os.path.join(folder_path,savename),index = 'False',float_format="%.4f")
+                    
+            
+        
+        
 def main(opt):
     run(**vars(opt))
     

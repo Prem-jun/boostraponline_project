@@ -7,13 +7,13 @@ file_config: ./config_sim_data/config_wiebull.yaml
 file_data_chunk: wiebullshape5n10000
 nsim: 10000
 shape: 5
----
-file_config: ./config_sim_data/config_wiebull.yaml
-file_data_chunk: wiebullshape1n50000
-nsim: 50000
-shape: 1
----
-file_config: ./config_sim_data/config_wiebull.yaml
-file_data_chunk: wiebullshape5n50000
-nsim: 50000
-shape: 5
+# ---
+# file_config: ./config_sim_data/config_wiebull.yaml
+# file_data_chunk: wiebullshape1n50000
+# nsim: 50000
+# shape: 1
+# ---
+# file_config: ./config_sim_data/config_wiebull.yaml
+# file_data_chunk: wiebullshape5n50000
+# nsim: 50000
+# shape: 5

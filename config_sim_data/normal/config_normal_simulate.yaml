@@ -9,135 +9,135 @@ file_data_chunk: normalm0sd4n10000
 nsim: 10000
 mean: 0
 scale: 4
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm0sd25n10000
-nsim: 10000
-mean: 0
-scale: 25
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm0sd100n10000
-nsim: 10000
-mean: 0
-scale: 100
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm100sd1n10000
-nsim: 10000
-mean: 100
-scale: 1
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm100sd4n10000
-nsim: 10000
-mean: 100
-scale: 4
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm100sd25n10000
-nsim: 10000
-mean: 100
-scale: 25
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm100sd100n10000
-nsim: 10000
-mean: 100
-scale: 100
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm500sd1n10000
-nsim: 10000
-mean: 500
-scale: 1
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm500sd4n10000
-nsim: 10000
-mean: 500
-scale: 4
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm500sd25n10000
-nsim: 10000
-mean: 500
-scale: 25
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm500sd100n10000
-nsim: 10000
-mean: 500
-scale: 100
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm0sd1n50000
-nsim: 50000
-mean: 0
-scale: 1
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm0sd4n50000
-nsim: 50000
-mean: 0
-scale: 4
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm0sd25n50000
-nsim: 50000
-mean: 0
-scale: 25
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm0sd100n50000
-nsim: 50000
-mean: 0
-scale: 100
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm100sd1n50000
-nsim: 50000
-mean: 100
-scale: 1
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm100sd4n50000
-nsim: 50000
-mean: 100
-scale: 4
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm100sd25n50000
-nsim: 50000
-mean: 100
-scale: 25
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm100sd100n50000
-nsim: 50000
-mean: 100
-scale: 100
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm500sd1n50000
-nsim: 50000
-mean: 500
-scale: 1
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm500sd4n50000
-nsim: 50000
-mean: 500
-scale: 4
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm500sd25n50000
-nsim: 50000
-mean: 500
-scale: 25
----
-file_config: ./config_sim_data/config_normal.yaml
-file_data_chunk: normalm500sd100n50000
-nsim: 50000
-mean: 500
-scale: 100
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm0sd25n10000
+# nsim: 10000
+# mean: 0
+# scale: 25
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm0sd100n10000
+# nsim: 10000
+# mean: 0
+# scale: 100
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm100sd1n10000
+# nsim: 10000
+# mean: 100
+# scale: 1
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm100sd4n10000
+# nsim: 10000
+# mean: 100
+# scale: 4
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm100sd25n10000
+# nsim: 10000
+# mean: 100
+# scale: 25
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm100sd100n10000
+# nsim: 10000
+# mean: 100
+# scale: 100
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm500sd1n10000
+# nsim: 10000
+# mean: 500
+# scale: 1
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm500sd4n10000
+# nsim: 10000
+# mean: 500
+# scale: 4
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm500sd25n10000
+# nsim: 10000
+# mean: 500
+# scale: 25
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm500sd100n10000
+# nsim: 10000
+# mean: 500
+# scale: 100
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm0sd1n50000
+# nsim: 50000
+# mean: 0
+# scale: 1
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm0sd4n50000
+# nsim: 50000
+# mean: 0
+# scale: 4
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm0sd25n50000
+# nsim: 50000
+# mean: 0
+# scale: 25
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm0sd100n50000
+# nsim: 50000
+# mean: 0
+# scale: 100
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm100sd1n50000
+# nsim: 50000
+# mean: 100
+# scale: 1
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm100sd4n50000
+# nsim: 50000
+# mean: 100
+# scale: 4
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm100sd25n50000
+# nsim: 50000
+# mean: 100
+# scale: 25
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm100sd100n50000
+# nsim: 50000
+# mean: 100
+# scale: 100
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm500sd1n50000
+# nsim: 50000
+# mean: 500
+# scale: 1
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm500sd4n50000
+# nsim: 50000
+# mean: 500
+# scale: 4
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm500sd25n50000
+# nsim: 50000
+# mean: 500
+# scale: 25
+# ---
+# file_config: ./config_sim_data/config_normal.yaml
+# file_data_chunk: normalm500sd100n50000
+# nsim: 50000
+# mean: 500
+# scale: 100

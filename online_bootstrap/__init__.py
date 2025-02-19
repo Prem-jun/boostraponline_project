@@ -7,6 +7,7 @@ weibull_min_percent_area_in_each_std,weibull_max_percent_area_in_each_std)
 from .bootstrap_v1 import *
 from .boot_stream import *
 from .samp1d import *
+from .res_bootstrap import *
 
 
 
