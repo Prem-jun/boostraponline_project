@@ -48,7 +48,7 @@ def bootstrap_online(input_data: list, end_side: str,
     if number_bootstrap_iteration is None:
         number_bootstrap_iteration = 600
 
-    bootstrap_means = np.zeros(number_bootstrap_iteration)
+    bootstrap_means = np.zeros(number_bootstrap_iteration) # mean value of each boostrap
     bootstrap_std = []
     # bootstrap_max_diff_dist_std = []
 

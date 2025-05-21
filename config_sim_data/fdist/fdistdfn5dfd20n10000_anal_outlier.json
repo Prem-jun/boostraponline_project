@@ -1,0 +1,98 @@
+[
+    {
+        "file": "fdistdfn5dfd20n10000",
+        "method": [
+            "online",
+            "online_mm",
+            "offline"
+        ],
+        "chunk_size": 50,
+        "test_pop_errl": {
+            "stat": "t-test",
+            "values": [
+                [
+                    NaN,
+                    NaN
+                ],
+                [
+                    -1.1168919693570591,
+                    0.13428416760241746
+                ]
+            ]
+        },
+        "test_pop_errr": {
+            "stat": "t-test",
+            "values": [
+                [
+                    -Infinity,
+                    0.0
+                ],
+                [
+                    22.168868057031688,
+                    1.0
+                ]
+            ]
+        },
+        "test_pop_errrange": {
+            "stat": "t-test",
+            "values": [
+                [
+                    -Infinity,
+                    0.0
+                ],
+                [
+                    22.142171910614987,
+                    1.0
+                ]
+            ]
+        }
+    },
+    {
+        "file": "fdistdfn5dfd20n10000",
+        "method": [
+            "online",
+            "online_mm",
+            "offline"
+        ],
+        "chunk_size": 500,
+        "test_pop_errl": {
+            "stat": "w-test",
+            "values": [
+                [
+                    Infinity,
+                    1.0
+                ],
+                [
+                    0.4937761854812149,
+                    0.6788060402276863
+                ]
+            ]
+        },
+        "test_pop_errr": {
+            "stat": "w-test",
+            "values": [
+                [
+                    -Infinity,
+                    0.0
+                ],
+                [
+                    6.292612399163114,
+                    0.9992548493568337
+                ]
+            ]
+        },
+        "test_pop_errrange": {
+            "stat": "w-test",
+            "values": [
+                [
+                    -Infinity,
+                    0.0
+                ],
+                [
+                    6.2901748710116125,
+                    0.999253544010793
+                ]
+            ]
+        }
+    }
+]

@@ -5,10 +5,11 @@
 
 from dataclasses import dataclass, field
 from typing import List
-from online_bootstrap import bootstrap_v1
+from online_bootstrap import bootstrap_v1, BatchOutlierDetection
 import math, copy, statistics
 import numpy as np
 import pandas as pd
+import statistics
 
 
 @dataclass
@@ -29,8 +30,8 @@ class booststream:
     min_chs:float =  9999.99 # minimum value of learning data from the start to current chunk.
     min_list:List[str] = field(default_factory=list) 
     max_list:List[str] = field(default_factory=list)
-    avg: List[str] = field(default_factory=list)
-    std: List[str] = field(default_factory=list)
+    avg: List[float] = field(default_factory=list)
+    std: List[float] = field(default_factory=list)
     exp_l:float = 9999.99
     exp_r:float = -9999.99
     range:float = 0.0
@@ -64,7 +65,9 @@ class booststream:
         self.avg.append((rightmost+leftmost)/2)
         self.std.append((rightmost-leftmost)/8)
         
-    def expand_bt_online(self,new_data_chunk:list,cum:bool = False,cum_left_right:bool = False) -> None:
+    
+        
+    def expand_bt_online(self,new_data_chunk:list,outlier:bool,cum:bool = False,cum_left_right:bool = False) -> None:
         '''
         1. Check if the network is online manner or not
         2. Update the number of learning samples
@@ -93,7 +96,20 @@ class booststream:
         else:
             self.total_size = len(new_data_chunk)
         self.chunk_size = len(new_data_chunk)
+        
+        if outlier:
+            if self.avg ==[]:    
+                self.avg.append(statistics.mean(new_data_chunk))
+            if self.std == []:
+                self.std.append(statistics.stdev(new_data_chunk)) # sample standard deviation. 
+            detector = BatchOutlierDetection.ZBatchOutlierDetector()
+            detector.add_init_params(threshold=3.0,mean=self.avg[-1],sd=self.std[-1])
+            new_data_chunk = detector.get_clean_data(new_data_chunk)
+        
         # 3. Compute min and max values of the current data chunk
+        
+        
+        
         new_data_chunk_min = min(new_data_chunk)
         new_data_chunk_max = max(new_data_chunk)
         if new_data_chunk_min < self.min_chs:
@@ -284,7 +300,19 @@ class booststream:
         #    self.le_pop.append(self.pop_min - self.expandL)
         #    self.re_pop.append(self.pop_max - self.expandR)
            expansion = True
-        return expansion          
+        return expansion  
+    
+    # def expand_bt_online_outlier(self,new_data_chunk:list,cum:bool = False,cum_left_right:bool = False) -> None: 
+    #     self.outlier = True
+    #     if self.avg ==[]:    
+    #         self.avg.append(statistics.mean(new_data_chunk))
+    #     if self.std == []:
+    #         self.std.append(statistics.stdev(new_data_chunk)) # sample standard deviation. 
+    #     detector = BatchOutlierDetection.ZBatchOutlierDetector()
+    #     detector.add_init_params(threshold=3.0,mean=self.avg[-1],sd=self.std[-1])
+    #     new_data_chunk = detector.get_clean_data(new_data_chunk)
+    #     expansion = self.expand_bt_online(new_data_chunk,cum,cum_left_right)     
+    #     return expansion            
         
     def expand_bt_trad(self,input_data:list) -> None:
         # Traditional boostrap method

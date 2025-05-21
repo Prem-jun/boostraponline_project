@@ -18,6 +18,7 @@ from online_bootstrap import *
 from typing import List, Union, Dict
 from dataclasses import dataclass, field
 from online_bootstrap import res_bootstrap
+from online_bootstrap import BatchOutlierDetection
 from pathlib import Path
 import argparse
 import yaml
@@ -50,8 +51,9 @@ def parse_opt():
         prog='Sample generator-Tool'
         )
     ROOT = Path(__file__).parent
-    parser.add_argument("--dir", type = str, default=ROOT/"config_sim_data/realworld", help = 'working directory')
-    parser.add_argument("--file", type = str, default="config_realworld_simulate.yaml", help = 'config file')
+    parser.add_argument("--dir", type = str, default=ROOT/"config_sim_data/fdist", help = 'working directory')
+    parser.add_argument("--file", type = str, default="config_fdist_simulate.yaml", help = 'config file')
+    parser.add_argument("--outlier", action = 'store_true')
     opt = parser.parse_args()
     return opt
 
@@ -65,9 +67,14 @@ def read_yaml_config(file_path):
         configs = list(yaml.safe_load_all(file))
     return configs
 
-def run(dir:str,file:str):
+def run(dir:str,file:str,outlier:bool):
+    # outlier = True
     yaml_path = os.path.join(dir,file)
     configs = read_yaml_config(yaml_path)
+    # if outlier:
+    #     detector = BatchOutlierDetection.ZBatchOutlierDetector()
+    #     # detector.add_init_params(alpha=0.05, threshold=4.0)
+    #     detector.add_init_threshold(threshold=0.3)
     for config in configs:
         res_all = []
         json_data = read_json_file(os.path.join(dir,config['file_data_chunk']+'.json'))
@@ -97,18 +104,29 @@ def run(dir:str,file:str):
             sample_whole = []
             count2 = 0 
             for samples_chunk in chunk_data:
+                # if outlier:
+                #     samples_chunk = detector.get_clean_data(samples_chunk)
+                
                 count2 +=1
                 sample_whole = sample_whole + samples_chunk
                 # Train online chunk
-                print(f'Online running round:{count}/{count2}')
-                expandsion = net_online.expand_bt_online(samples_chunk)
-                res1.add_params(net_online)
-                print(f'Online minmax running round:{count}/{count2}')
-                expandsion_mm = net_online_mm.expand_bt_online(samples_chunk)
-                res2.add_params(net_online_mm)
-                # print(f'Online whole running round:{count}/{count2}')
-                # expansion_ocum = net_online_cum.expand_bt_online(sample_whole,cum=True)
-                # res3.add_params(net_online_cum)
+                if outlier:
+                    print(f'Online running round:{count}/{count2}')
+                    expandsion = net_online.expand_bt_online(samples_chunk,outlier=outlier) 
+                    res1.add_params(net_online)
+                    print(f'Online minmax running round:{count}/{count2}')
+                    expandsion_mm = net_online_mm.expand_bt_online(samples_chunk,outlier=outlier)
+                    res2.add_params(net_online_mm)
+                else:   
+                    print(f'Online running round:{count}/{count2}')
+                    expandsion = net_online.expand_bt_online(samples_chunk)
+                    res1.add_params(net_online)
+                    print(f'Online minmax running round:{count}/{count2}')
+                    expandsion_mm = net_online_mm.expand_bt_online(samples_chunk)
+                    res2.add_params(net_online_mm)
+                    # print(f'Online whole running round:{count}/{count2}')
+                    # expansion_ocum = net_online_cum.expand_bt_online(sample_whole,cum=True)
+                    # res3.add_params(net_online_cum)
                 print(f'Offline running round:{count}/{count2}')
                 expansion_tcum = net_trad_cum.expand_bt_trad(sample_whole)
                 res4.add_params(net_trad_cum)
@@ -122,7 +140,10 @@ def run(dir:str,file:str):
                 'result_all': res_all
             }
         # Specify the name of the pickle file
-        pickle_file = os.path.join(dir,config['file_data_chunk']+'_re.pkl')
+        if outlier:
+            pickle_file = os.path.join(dir,config['file_data_chunk']+'_re_outlier.pkl')
+        else:    
+            pickle_file = os.path.join(dir,config['file_data_chunk']+'_re.pkl')
         # Save the variables to the pickle file
         with open(pickle_file, 'wb') as file:
             pickle.dump(data_wb, file)

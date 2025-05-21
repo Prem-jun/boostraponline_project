@@ -8,6 +8,8 @@ from .bootstrap_v1 import *
 from .boot_stream import *
 from .samp1d import *
 from .res_bootstrap import *
+from .BatchOutlierDetection import *
+from .bootstrap_online import *
 
 
 

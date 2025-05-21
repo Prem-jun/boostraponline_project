@@ -1,0 +1,98 @@
+[
+    {
+        "file": "waldm1sd05n10000",
+        "method": [
+            "online",
+            "online_mm",
+            "offline"
+        ],
+        "chunk_size": 50,
+        "test_pop_errl": {
+            "stat": "t-test",
+            "values": [
+                [
+                    26.190205693117882,
+                    1.0
+                ],
+                [
+                    26.202700618927455,
+                    1.0
+                ]
+            ]
+        },
+        "test_pop_errr": {
+            "stat": "t-test",
+            "values": [
+                [
+                    NaN,
+                    NaN
+                ],
+                [
+                    -15.166334268623828,
+                    2.5367694716591e-22
+                ]
+            ]
+        },
+        "test_pop_errrange": {
+            "stat": "t-test",
+            "values": [
+                [
+                    -26.190205693117584,
+                    1.7528041648804642e-34
+                ],
+                [
+                    -15.236088982318803,
+                    2.0428077085446508e-22
+                ]
+            ]
+        }
+    },
+    {
+        "file": "waldm1sd05n10000",
+        "method": [
+            "online",
+            "online_mm",
+            "offline"
+        ],
+        "chunk_size": 500,
+        "test_pop_errl": {
+            "stat": "w-test",
+            "values": [
+                [
+                    Infinity,
+                    1.0
+                ],
+                [
+                    5.575459998247733,
+                    0.9987213949473566
+                ]
+            ]
+        },
+        "test_pop_errr": {
+            "stat": "w-test",
+            "values": [
+                [
+                    NaN,
+                    NaN
+                ],
+                [
+                    -5.800354368133146,
+                    0.0010734215508652444
+                ]
+            ]
+        },
+        "test_pop_errrange": {
+            "stat": "w-test",
+            "values": [
+                [
+                    -Infinity,
+                    0.0
+                ],
+                [
+                    -5.802344300220117,
+                    0.0010717868318574895
+                ]
+            ]
+        }
+    }
+]
