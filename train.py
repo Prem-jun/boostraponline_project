@@ -13,7 +13,16 @@ def read_json_file(file_path):
     with open(file_path, 'r') as file:
         data = json.load(file)  # Load the data from the file
     return data
-
+def convert_np_floats(obj):
+    if isinstance(obj, dict):
+        return {k: convert_np_floats(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_np_floats(v) for v in obj]
+    elif isinstance(obj, np.floating):
+        return float(obj)
+    else:
+        return obj
+    
 def read_yaml_config(file_path):
     """
     Read YAML configuration file that contains multiple documents separated by '---'
@@ -66,7 +75,12 @@ def run(dir:str,file:str):
             bt_est_onmm = bootstrap_online.BootstrapOnline()\
             .pipe(lambda x: x.set_online(minmax_boost = True))
             bt_est_trad = bootstrap_online.BootstrapOnline()\
-            .pipe(lambda x: x.set_trad())        
+            .pipe(lambda x: x.set_trad())     
+            
+            bt_est_on_out = bootstrap_online.BootstrapOnline()\
+                .pipe(lambda x: x.set_online())\
+                .pipe(lambda x: x.set_outlier_detection(method = 'zscore'))\
+       
             sample_whole = []
             count2 = 0    
             for samples_chunk in chunk_data:
@@ -75,15 +89,26 @@ def run(dir:str,file:str):
                 bt_est_on.bt_online(new_data_chunk = samples_chunk,ndata=len(samples_chunk))
                 bt_est_onmm.bt_online(new_data_chunk = samples_chunk,ndata=len(samples_chunk))
                 bt_est_trad.bt_trad(new_data_chunk = sample_whole,ndata=len(sample_whole))
+                
+                bt_est_on_out.bt_online(new_data_chunk = samples_chunk,ndata=len(samples_chunk))
+                
                 print(f'Complete running chunk: {count2} size: {len(samples_chunk)}')
         # estimator.pipe(lambda x: x.set_online(online_cum=True))
             # Collect dataclass fields as dicts for YAML
+            # res_all.append({
+            #     'config_file': config['file_data_chunk'],
+            #     'chunk_size': data['chunk_size'],
+            #     'bt_est_on': {k: getattr(bt_est_on, k) for k in bt_est_on.__dataclass_fields__},
+            #     'bt_est_onmm': {k: getattr(bt_est_onmm, k) for k in bt_est_onmm.__dataclass_fields__},
+            #     'bt_est_trad': {k: getattr(bt_est_trad, k) for k in bt_est_trad.__dataclass_fields__}
+            # })
             res_all.append({
                 'config_file': config['file_data_chunk'],
                 'chunk_size': data['chunk_size'],
-                'bt_est_on': {k: getattr(bt_est_on, k) for k in bt_est_on.__dataclass_fields__},
-                'bt_est_onmm': {k: getattr(bt_est_onmm, k) for k in bt_est_onmm.__dataclass_fields__},
-                'bt_est_trad': {k: getattr(bt_est_trad, k) for k in bt_est_trad.__dataclass_fields__}
+                'bt_est_on': convert_np_floats({k: getattr(bt_est_on, k) for k in bt_est_on.__dataclass_fields__}),
+                'bt_est_onmm': convert_np_floats({k: getattr(bt_est_onmm, k) for k in bt_est_onmm.__dataclass_fields__}),
+                'bt_est_trad': convert_np_floats({k: getattr(bt_est_trad, k) for k in bt_est_trad.__dataclass_fields__}),
+                'bt_est_on_out': convert_np_floats({k: getattr(bt_est_on_out, k) for k in bt_est_on_out.__dataclass_fields__})
             })
         # Write all results for this config to a YAML file
         yaml_outfile = os.path.join(dir, config['file_data_chunk']+"_results.yaml")

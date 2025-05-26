@@ -4,7 +4,7 @@ from typing import List, Optional
 import numpy as np
 import json, math
 from math import inf
-from online_bootstrap import bootstrap_v1
+from online_bootstrap import bootstrap_v1, BatchOutlierDetection
 import math, copy, statistics
 
 @dataclass
@@ -12,6 +12,8 @@ class BootstrapOnline:
     # Configurable settings
     online_cum: bool = False
     online: bool = False
+    outlier_detection: bool = False
+    outlier_method: str = ''
     flag_learning: bool = False
 
     # Initialized later
@@ -63,6 +65,11 @@ class BootstrapOnline:
             'max_list': [],'nlearn_l': 0, 'nlearn_r': 0,\
                 'flag_learning': False}]
     
+    def set_outlier_detection(self, method: str):
+        """Set the outlier detection method."""
+        self.outlier_detection = True
+        self.outlier_method = method
+    
     def set_online(self,online_cum :bool = False,minmax_boost:bool = False):
         """Configure the object for online mode with default parameters."""
         self.online = True
@@ -88,8 +95,8 @@ class BootstrapOnline:
                         flag_learning: Optional[bool] = None):
         if self.num_learn == 0:
             
-            self.history[0]['exp_l'] = self.exp_l
-            self.history[0]['exp_r'] = self.exp_r
+            self.history[0]['exp_l'] = float(self.exp_l)
+            self.history[0]['exp_r'] = float(self.exp_r)
             self.history[0]['ch_min'] = ch_min
             self.history[0]['ch_max'] = ch_max
             self.history[0]['min_list'] = min_list if min_list is not None else []
@@ -98,7 +105,7 @@ class BootstrapOnline:
             self.history[0]['nlearn_r'] = nlearn_r if nlearn_r is not None else 0
             self.history[0]['flag_learning'] = flag_learning if flag_learning is not None else False
         else:
-            self.history.append({'exp_l':self.exp_l,'exp_r':self.exp_r,"ch_min": ch_min, "ch_max": ch_max,\
+            self.history.append({'exp_l':float(self.exp_l),'exp_r':float(self.exp_r),"ch_min": ch_min, "ch_max": ch_max,\
                 "min_list": min_list if min_list is not None else [],\
                     "max_list": max_list if max_list is not None else [],\
                         "nlearn_l": nlearn_l if nlearn_l is not None else 0,\
@@ -233,9 +240,38 @@ class BootstrapOnline:
                 
                 # Determine the amount of learning needed on the right
                 nlearn_r = hist_data[-1] if difference_max > 0 else 0
+                if nlearn_r > 5:
+                    if self.outlier_detection:
+                        if self.outlier_method == 'zscore':
+                                # Use Z-score method for outlier detection
+                                detector = BatchOutlierDetection.BatchOutlierDetection()
+                                mean = statistics.mean(max_list)
+                                std = statistics.stdev(max_list)
+                                detector.add_init_params(threshold=4.0,mean=mean,std=std)   
+                                # outliers = detector.detect_outliers(max_list)
+                                clearn_data = detector.get_clean_data(data = max_list)
+                                if len(clearn_data) < hist_data[-1]:
+                                    hist_data[-1] = len(clearn_data)
+                                    nlearn_r = len(clearn_data)
 
                 # Determine the amount of learning needed on the left
                 nlearn_l = hist_data[0] if difference_min > 0 else 0
+                if nlearn_l > 5:
+                    if self.outlier_detection:
+                        if self.outlier_method == 'zscore':
+                                # Use Z-score method for outlier detection
+                                detector = BatchOutlierDetection.ZBatchOutlierDetector()
+                                mean = statistics.mean(min_list)
+                                std = statistics.stdev(min_list)
+                                detector.add_init_params(threshold=3.5,mean=mean,sd=std)   
+                                # outliers = detector.detect_outliers(min_list)
+                                clearn_data = detector.get_clean_data(data = min_list)
+                                if len(clearn_data) < hist_data[0]:
+                                    hist_data[0] = len(clearn_data)
+                                    nlearn_l = len(clearn_data)
+                                
+                                
+                                
             else:
                 dif_expand = False
                 nlearn_r = 0
@@ -359,11 +395,11 @@ class BootstrapOnline:
             bootstrap_max.append(np.max(samples))
         
         self.chunk_size = ndata
-        self.exp_l = np.mean(bootstrap_min)
-        self.exp_r = np.mean(bootstrap_max)
+        self.exp_l = float(np.mean(bootstrap_min))
+        self.exp_r = float(np.mean(bootstrap_max))
         self.update_center_range(self.exp_l, self.exp_r)
-        chunk_max = np.max(data_set)
-        chunk_min = np.min(data_set)  
+        chunk_max = float(np.max(data_set))
+        chunk_min = float(np.min(data_set))  
         self.log_epoch(ch_min = chunk_min, ch_max = chunk_max,\
             min_list = [], max_list = [],\
                 nlearn_l = 0, nlearn_r = 0,\

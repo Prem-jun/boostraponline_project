@@ -1,5 +1,7 @@
 import os
 import yaml
+import pickle
+import pandas as pd
 
 def load_config_list(config_list_path):
     """Load the list of result YAML files from the config list YAML."""
@@ -16,23 +18,52 @@ def load_results(result_file_path):
 def evaluate_results(config_list_path, results_dir):
     config_files = load_config_list(config_list_path)
     all_results = []
+    perf_rows = []
     for result_file in config_files:
+        # Get the population data file name from the result file name
+        pop_file = result_file.split('_')[0] + '.pkl'
+        pop_data = pd.read_pickle(os.path.join(results_dir, pop_file))
+        pop_min = min(pop_data)
+        pop_max = max(pop_data)
+        pop_range = pop_max-pop_min
         result_path = os.path.join(results_dir, result_file)
+        
         if not os.path.exists(result_path):
             print(f"Warning: {result_path} not found.")
             continue
         results = load_results(result_path)
+        for result in results:
+            # Store all history entries for all three estimators
+            for key in ['bt_est_on', 'bt_est_onmm', 'bt_est_trad']:
+                est = result.get(key, {})
+                history = est.get('history', [])
+                for hist_entry in history:
+                    tmp_exp_l = hist_entry.get('exp_l')
+                    tmp_exp_r = hist_entry.get('exp_r')
+                    perf_rows.append({
+                        'config_file': result.get('config_file'),
+                        'chunk_size': result.get('chunk_size'),
+                        'estimator': key,
+                        'exp_l': tmp_exp_l,
+                        'exp_r': tmp_exp_r,
+                        'nlearn_l': hist_entry.get('nlearn_l'),
+                        'nlearn_r': hist_entry.get('nlearn_r'),
+                        'ch_min': hist_entry.get('ch_min'),
+                        'ch_max': hist_entry.get('ch_max'),
+                        'poperr_min': pop_min - tmp_exp_l,
+                        'poperr_max': pop_max - tmp_exp_r,
+                        'poperr_range': pop_range - (tmp_exp_r - tmp_exp_l)
+                    })
         all_results.extend(results)
         print(f"Loaded {len(results)} results from {result_file}")
-    # Example: print summary statistics for bt_est_on['history'] length
-    for idx, entry in enumerate(all_results):
-        bt_est_on = entry.get('bt_est_on', {})
-        history = bt_est_on.get('history', [])
-        print(f"Result {idx+1}: config_file={entry.get('config_file')}, history_len={len(history)}")
-    # You can add more evaluation/analysis code here
+    # Create DataFrame from performance rows
+    perf_df = pd.DataFrame(perf_rows)
+    print(perf_df.head())
+    perf_df.to_csv(os.path.join(results_dir, "performance_summary.csv"), index=False)
+    return perf_df
 
 if __name__ == "__main__":
     # Example usage: adjust these paths as needed
     config_list_path = "config_sim_data/fdist/results_config_files.yaml"
     results_dir = "config_sim_data/fdist"
-    evaluate_results(config_list_path, results_dir)
+    perf_df = evaluate_results(config_list_path, results_dir)
