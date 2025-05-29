@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 from typing import List, Union, Dict
 from dataclasses import dataclass, field
-from online_bootstrap import bootstrap_online
+from online_bootstrap import bootstrap_online, BatchOutlierDetection
 from pathlib import Path
 
 def read_json_file(file_path):
@@ -55,18 +55,22 @@ def parse_opt():
     ROOT = Path(__file__).parent
     parser.add_argument("--dir", type = str, default=ROOT/"config_sim_data/fdist", help = 'working directory')
     parser.add_argument("--file", type = str, default="config_fdist_simulate.yaml", help = 'config file')
-    # parser.add_argument("--outlier", action = 'store_true')
+    parser.add_argument("--outlier", action = 'store_true', help = 'Run with outlier contamination')
     # parser.add_argument("--savename", type = str, default="result-fdist-statanal2.csv", help = 'source for loading config file results')
+    parser.set_defaults(outlier=True)
     opt = parser.parse_args()
     return opt
 
-def run(dir:str,file:str):
+def run(dir:str,file:str,outlier:bool):
     yaml_path = os.path.join(dir,file)
     configs = read_yaml_config(yaml_path)
     config_files_used = []
     for config in configs:
         res_all = []
-        json_data = read_json_file(os.path.join(dir,config['file_data_chunk']+'.json'))
+        if outlier:
+            json_data = read_json_file(os.path.join(dir,config['file_data_chunk']+'_outlier.json'))
+        else:
+            json_data = read_json_file(os.path.join(dir,config['file_data_chunk']+'.json'))
         for count, data in enumerate(json_data):
             
             chunk_data = data['samp_chuck']
@@ -111,13 +115,23 @@ def run(dir:str,file:str):
                 'bt_est_on_out': convert_np_floats({k: getattr(bt_est_on_out, k) for k in bt_est_on_out.__dataclass_fields__})
             })
         # Write all results for this config to a YAML file
-        yaml_outfile = os.path.join(dir, config['file_data_chunk']+"_results.yaml")
-        with open(yaml_outfile, 'w') as f:
-            yaml.dump_all(res_all, f, sort_keys=False)
-        # Collect config file name
-        config_files_used.append(config['file_data_chunk']+"_results.yaml")
+        if outlier:
+            yaml_outfile = os.path.join(dir, config['file_data_chunk']+"_outlier_results.yaml")
+            with open(yaml_outfile, 'w') as f:
+                yaml.dump_all(res_all, f, sort_keys=False)
+            # Collect config file name
+            config_files_used.append(config['file_data_chunk']+"_outlier_results.yaml")
+        else:    
+            yaml_outfile = os.path.join(dir, config['file_data_chunk']+"_results.yaml")
+            with open(yaml_outfile, 'w') as f:
+                yaml.dump_all(res_all, f, sort_keys=False)
+            # Collect config file name
+            config_files_used.append(config['file_data_chunk']+"_results.yaml")
     # Write the list of config result files to a separate YAML file
-    config_list_file = os.path.join(dir, "results_config_files.yaml")
+    if outlier:
+        config_list_file = os.path.join(dir, "results_config_files_outlier.yaml")
+    else:
+        config_list_file = os.path.join(dir, "results_config_files.yaml")
     with open(config_list_file, 'w') as f:
         yaml.dump(config_files_used, f)
         

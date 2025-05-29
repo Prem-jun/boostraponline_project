@@ -113,6 +113,7 @@ class BootstrapOnline:
                                 "flag_learning": flag_learning if flag_learning is not None else False})    
         self.num_learn += 1
     
+    
     def expand_leftby_chmin(self, chunk_min: float):
         """Expand the left boundary by the minimum value."""
         if chunk_min < self.exp_l: # the min of the chunk is less than the min of the network.
@@ -178,8 +179,41 @@ class BootstrapOnline:
         hist_data[-2] = len([i for i in new_data_chunk if (avg + 2*std <= i <= avg + 3*std)])
         return hist_data, hist_theo, min_list, max_list
     # def get_histogram_difference(self, hist_data: List[int], hist_theo: List[int]):
-        
     
+    def detect_outliers(self, data: List[float], method: str ='zscore') -> List[bool]:    
+        if self.outlier_method == 'zscore':
+            # Use Z-score method for outlier detection
+            avg = self.avg
+            std = self.std
+            min_list = [k for k in data if (k <= avg - 3*std)]
+            max_list = [k for k in data if (avg + 3*std <= k)]
+            mid_list = [k for k in data if (avg - 3*std < k < avg + 3*std)]
+            # min_list = [k for k in data if (avg - 4*std <= k <= avg - 3*std)]
+            # max_list = [k for k in data if (avg + 3*std <= k<= avg + 4*std)]
+            # mid_list = [k for k in data if (avg - 3*std < k < avg + 3*std)]
+            if len(max_list)>=5:
+                detector_r = BatchOutlierDetection.ZBatchOutlierDetector()
+                mean_r = statistics.mean(max_list)
+                std_r = statistics.stdev(max_list)
+                detector_r.add_init_params(threshold=3.5,mean=mean_r,sd=std_r)   
+                # outliers = detector.detect_outliers(max_list)
+                clean_max_list = detector_r.get_clean_data(data = max_list)
+            else:
+                 clean_max_list = max_list  
+                #  clean_max_list = []
+            if len(min_list)>=5:
+                detector_l = BatchOutlierDetection.ZBatchOutlierDetector()
+                mean_l = statistics.mean(min_list)
+                std_l = statistics.stdev(min_list)
+                detector_l.add_init_params(threshold=3.5,mean=mean_l,sd=std_l)
+                clean_min_list = detector_l.get_clean_data(data = min_list)
+            else:
+                clean_min_list = min_list
+                # clean_min_list = []
+            return clean_min_list+ mid_list + clean_max_list
+        else:
+            raise ValueError(f"Unsupported outlier detection method: {method}")
+            
     def bt_online(self,new_data_chunk:list,ndata:int):    
         '''
         1. Check if the network is online manner or not
@@ -210,10 +244,15 @@ class BootstrapOnline:
         self.chunk_size = ndata
         
         # 3. Compute min and max values of the current data chunk
+        if self.outlier_detection:
+            if self.num_learn == 0:
+                chunk_min = min(new_data_chunk)
+                chunk_max = max(new_data_chunk)
+            else:
+                new_data_chunk=self.detect_outliers(new_data_chunk, method='zscore')
+         
         chunk_min = min(new_data_chunk)
         chunk_max = max(new_data_chunk)
-        
-            
         # Start learning
         expansion = False
         
@@ -240,35 +279,37 @@ class BootstrapOnline:
                 
                 # Determine the amount of learning needed on the right
                 nlearn_r = hist_data[-1] if difference_max > 0 else 0
-                if nlearn_r > 5:
-                    if self.outlier_detection:
-                        if self.outlier_method == 'zscore':
-                                # Use Z-score method for outlier detection
-                                detector = BatchOutlierDetection.BatchOutlierDetection()
-                                mean = statistics.mean(max_list)
-                                std = statistics.stdev(max_list)
-                                detector.add_init_params(threshold=4.0,mean=mean,std=std)   
-                                # outliers = detector.detect_outliers(max_list)
-                                clearn_data = detector.get_clean_data(data = max_list)
-                                if len(clearn_data) < hist_data[-1]:
-                                    hist_data[-1] = len(clearn_data)
-                                    nlearn_r = len(clearn_data)
+                # if nlearn_r > 5:
+                #     if self.outlier_detection:
+                #         if self.outlier_method == 'zscore':
+                #                 # Use Z-score method for outlier detection
+                #                 detector = BatchOutlierDetection.BatchOutlierDetection()
+                #                 mean = statistics.mean(max_list)
+                #                 std = statistics.stdev(max_list)
+                #                 detector.add_init_params(threshold=4.0,mean=mean,std=std)   
+                #                 # outliers = detector.detect_outliers(max_list)
+                #                 clearn_data = detector.get_clean_data(data = max_list)
+                #                 if len(clearn_data) < hist_data[-1]:
+                #                     hist_data[-1] = len(clearn_data)
+                #                     nlearn_r = len(clearn_data)
+                #                     self.exp_r = max(clearn_data)  # Update exp_r to the new max value
 
                 # Determine the amount of learning needed on the left
                 nlearn_l = hist_data[0] if difference_min > 0 else 0
-                if nlearn_l > 5:
-                    if self.outlier_detection:
-                        if self.outlier_method == 'zscore':
-                                # Use Z-score method for outlier detection
-                                detector = BatchOutlierDetection.ZBatchOutlierDetector()
-                                mean = statistics.mean(min_list)
-                                std = statistics.stdev(min_list)
-                                detector.add_init_params(threshold=3.5,mean=mean,sd=std)   
-                                # outliers = detector.detect_outliers(min_list)
-                                clearn_data = detector.get_clean_data(data = min_list)
-                                if len(clearn_data) < hist_data[0]:
-                                    hist_data[0] = len(clearn_data)
-                                    nlearn_l = len(clearn_data)
+                # if nlearn_l > 5:
+                #     if self.outlier_detection:
+                #         if self.outlier_method == 'zscore':
+                #                 # Use Z-score method for outlier detection
+                #                 detector = BatchOutlierDetection.ZBatchOutlierDetector()
+                #                 mean = statistics.mean(min_list)
+                #                 std = statistics.stdev(min_list)
+                #                 detector.add_init_params(threshold=3.5,mean=mean,sd=std)   
+                #                 # outliers = detector.detect_outliers(min_list)
+                #                 clearn_data = detector.get_clean_data(data = min_list)
+                #                 if len(clearn_data) < hist_data[0]:
+                #                     hist_data[0] = len(clearn_data)
+                #                     nlearn_l = len(clearn_data)
+                #                     self.exp_l = min(clearn_data)
                                 
                                 
                                 

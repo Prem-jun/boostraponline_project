@@ -5,7 +5,8 @@
             file_config => a config yaml file containing decription of the population file. 
  Output: streaming data chunk saved as the json file type. 
 ''' 
-import pandas as pd 
+import pandas as pd
+import numpy as np 
 import os, yaml
 import json
 from dataclasses import asdict
@@ -36,6 +37,36 @@ def get_file_format(filename: str) -> str:
         raise ValueError("Cannot extract the format file")
         #return None
 
+def inject_outliers(data_chunk, outlier_ratio=0.03, outlier_strength=5):
+    """
+    Inject outlier data into a sample chunk.
+
+    Args:
+        data_chunk (List[float] or np.ndarray): Original sample data chunk.
+        outlier_ratio (float): Ratio of outliers to inject (e.g., 0.03 for 3%).
+        outlier_strength (float): How far outliers deviate from the mean in terms of std.
+
+    Returns:
+        np.ndarray: New data chunk with injected outliers.
+    """
+    data_chunk = np.array(data_chunk)
+    n_outliers = max(1, int(len(data_chunk) * outlier_ratio))
+
+    # Calculate mean and std of original data
+    mean = np.mean(data_chunk)
+    std = np.std(data_chunk)
+
+    # Create outliers (half on left, half on right)
+    outliers = np.concatenate([
+        np.random.normal(loc=mean - outlier_strength * std, scale=std * 0.5, size=n_outliers // 2),
+        np.random.normal(loc=mean + outlier_strength * std, scale=std * 0.5, size=n_outliers - n_outliers // 2)
+    ])
+
+    # Combine and shuffle
+    combined_data = np.concatenate([data_chunk, outliers])
+    np.random.shuffle(combined_data)
+    return outliers.tolist()  # Convert back to list for consistency
+
 def parse_opt():
     """
     Args:
@@ -56,13 +87,13 @@ def parse_opt():
         prog='Sample generator-Tool'
         )
     ROOT = Path(__file__).parent
-    parser.add_argument("--dir", type = str, default="./config_sim_data/uniform", help = 'working directory')
-    parser.add_argument("--file", type = str, default="config_uniform_simulate.yaml", help = 'config file')
+    parser.add_argument("--dir", type = str, default="./config_sim_data/fdist", help = 'working directory')
+    parser.add_argument("--file", type = str, default="config_fdist_simulate.yaml", help = 'config file')
     parser.add_argument("--pfeed", type = int, default=30, help = 'percent of samples out of population')
     opt = parser.parse_args()
     return opt
 
-def run(dir:str,file:str,pfeed:int,ch_size:List = [50,500]):
+def run(dir:str,file:str,pfeed:int,ch_size:List = [50,500],outlier:bool = True):
     pathfile = os.path.join(dir,file)
     with open(pathfile,'r') as f:
         docs = yaml.safe_load_all(f)
@@ -73,15 +104,32 @@ def run(dir:str,file:str,pfeed:int,ch_size:List = [50,500]):
     
     for file in list_filename:
         pop_sim = pd.read_pickle(os.path.join(dir,file+'.pkl'))
-        samp_list = []
-        for size in ch_size:
-            samp_list.append(samp1d(file_config=dir, nsim=len(pop_sim),name = file, 
-                               percent_feed=pfeed))
-            samp_list[-1].split2chunk(pop_sim,size) 
-        samp_list_dict = [asdict(samp) for samp in samp_list]  
-        samp_json = json.dumps(samp_list_dict, indent=4)
-        with open(os.path.join(dir,file+'.json'), 'w') as json_file:
-            json_file.write(samp_json)  
+        if outlier:
+            # Inject outliers into the population data
+            outlier_sim = inject_outliers(pop_sim, outlier_ratio=0.0005, outlier_strength=10)
+            samp_list = []
+            for size in ch_size:
+                samp_list.append(samp1d(file_config=dir, nsim=len(pop_sim),name = file, 
+                                percent_feed=pfeed))
+                samp_list[-1].split2chunk(pop_sim,size)
+                if len(samp_list[-1].samp_chuck)>7:
+                    samp_list[-1].samp_chuck[9].extend(outlier_sim)  # Inject outliers into the first chunk
+                else:
+                    samp_list[-1].samp_chuck[4].extend(outlier_sim)  # Inject outliers into the first chunk
+            samp_list_dict = [asdict(samp) for samp in samp_list]  
+            samp_json = json.dumps(samp_list_dict, indent=4)
+            with open(os.path.join(dir,file+'_outlier.json'), 'w') as json_file:
+                json_file.write(samp_json)  
+        else:
+            samp_list = []
+            for size in ch_size:
+                samp_list.append(samp1d(file_config=dir, nsim=len(pop_sim),name = file, 
+                                percent_feed=pfeed))
+                samp_list[-1].split2chunk(pop_sim,size) 
+            samp_list_dict = [asdict(samp) for samp in samp_list]  
+            samp_json = json.dumps(samp_list_dict, indent=4)
+            with open(os.path.join(dir,file+'.json'), 'w') as json_file:
+                json_file.write(samp_json)  
     return 0
 def main(opt):
     run(**vars(opt))
