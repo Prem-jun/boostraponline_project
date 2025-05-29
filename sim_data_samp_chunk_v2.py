@@ -87,13 +87,16 @@ def parse_opt():
         prog='Sample generator-Tool'
         )
     ROOT = Path(__file__).parent
-    parser.add_argument("--dir", type = str, default="./config_sim_data/fdist", help = 'working directory')
-    parser.add_argument("--file", type = str, default="config_fdist_simulate.yaml", help = 'config file')
+    parser.add_argument("--dir", type = str, default="./config_sim_data/wald", help = 'working directory')
+    parser.add_argument("--file", type = str, default="config_wald_simulate.yaml", help = 'config file')
     parser.add_argument("--pfeed", type = int, default=30, help = 'percent of samples out of population')
+    parser.add_argument("--outlier", action = 'store_true', help = 'Run with outlier contamination')
+    # parser.add_argument("--savename", type = str, default="result-fdist-statanal2.csv", help = 'source for loading config file results')
+    parser.set_defaults(outlier=True)
     opt = parser.parse_args()
     return opt
 
-def run(dir:str,file:str,pfeed:int,ch_size:List = [50,500],outlier:bool = True):
+def run(dir:str,file:str,pfeed:int,outlier:bool,ch_size:List = [50,500]):
     pathfile = os.path.join(dir,file)
     with open(pathfile,'r') as f:
         docs = yaml.safe_load_all(f)

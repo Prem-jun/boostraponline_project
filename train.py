@@ -53,8 +53,8 @@ def parse_opt():
         prog='Bootstrap-Tool'
         )
     ROOT = Path(__file__).parent
-    parser.add_argument("--dir", type = str, default=ROOT/"config_sim_data/fdist", help = 'working directory')
-    parser.add_argument("--file", type = str, default="config_fdist_simulate.yaml", help = 'config file')
+    parser.add_argument("--dir", type = str, default=ROOT/"config_sim_data/wald", help = 'working directory')
+    parser.add_argument("--file", type = str, default="config_wald_simulate.yaml", help = 'config file')
     parser.add_argument("--outlier", action = 'store_true', help = 'Run with outlier contamination')
     # parser.add_argument("--savename", type = str, default="result-fdist-statanal2.csv", help = 'source for loading config file results')
     parser.set_defaults(outlier=True)
