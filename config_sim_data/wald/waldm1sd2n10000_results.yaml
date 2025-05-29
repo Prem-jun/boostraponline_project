@@ -10,15 +10,15 @@ bt_est_on:
   numbin: 8
   number_bt_iter: 600
   nboost: 3
-  avg: 3.2991943704947495
-  std: 0.7928248246399616
-  exp_l: 0.12789507193490318
+  avg: 3.29818477245577
+  std: 0.7930772241497065
+  exp_l: 0.1258758758569438
   exp_r: 6.470493669054596
   total_size: 3000
   num_learn: 60
   history:
-  - exp_l: 0.255367270065202
-    exp_r: 2.5880073300323785
+  - exp_l: 0.25446469451164894
+    exp_r: 2.5916450175987626
     ch_min: 0.25539203836184
     ch_max: 0.25539203836184
     min_list:
@@ -39,7 +39,7 @@ bt_est_on:
     nlearn_l: 10
     nlearn_r: 3
     flag_learning: true
-  - exp_l: 0.255367270065202
+  - exp_l: 0.25446469451164894
     exp_r: 4.1838393935755045
     ch_min: 0.26779358320473645
     ch_max: 0.26779358320473645
@@ -55,7 +55,6 @@ bt_est_on:
     - 0.7197106859836846
     - 0.5849302538548591
     - 0.6580038004585514
-    - 0.7462498601117993
     - 0.6195851728686929
     - 0.7097889746527971
     - 0.3280994911470603
@@ -63,7 +62,7 @@ bt_est_on:
     - 0.6662103371159425
     max_list:
     - 4.1838393935755045
-    nlearn_l: 17
+    nlearn_l: 16
     nlearn_r: 0
     flag_learning: true
   - exp_l: 0.22221835140027824
@@ -104,7 +103,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18631373707902754
+  - exp_l: 0.18891383981453974
     exp_r: 4.1838393935755045
     ch_min: 0.18914926262545517
     ch_max: 0.18914926262545517
@@ -129,7 +128,7 @@ bt_est_on:
     nlearn_l: 16
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.18631373707902754
+  - exp_l: 0.18891383981453974
     exp_r: 4.1838393935755045
     ch_min: 0.19548117783779428
     ch_max: 0.19548117783779428
@@ -138,7 +137,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18631373707902754
+  - exp_l: 0.18891383981453974
     exp_r: 4.416129231126029
     ch_min: 0.31505002998078935
     ch_max: 0.31505002998078935
@@ -167,7 +166,7 @@ bt_est_on:
     nlearn_l: 18
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.18631373707902754
+  - exp_l: 0.18891383981453974
     exp_r: 4.416129231126029
     ch_min: 0.19095126406735785
     ch_max: 0.19095126406735785
@@ -176,7 +175,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18631373707902754
+  - exp_l: 0.18891383981453974
     exp_r: 4.416129231126029
     ch_min: 0.2265808517724901
     ch_max: 0.2265808517724901
@@ -185,7 +184,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1799898029313554
+  - exp_l: 0.18096293859041912
     exp_r: 4.416129231126029
     ch_min: 0.18099790316755593
     ch_max: 0.18099790316755593
@@ -219,7 +218,7 @@ bt_est_on:
     nlearn_l: 25
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.1799898029313554
+  - exp_l: 0.18096293859041912
     exp_r: 4.416129231126029
     ch_min: 0.2746839698832705
     ch_max: 0.2746839698832705
@@ -228,7 +227,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1799898029313554
+  - exp_l: 0.18096293859041912
     exp_r: 4.416129231126029
     ch_min: 0.21959642387497547
     ch_max: 0.21959642387497547
@@ -237,7 +236,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1799898029313554
+  - exp_l: 0.18096293859041912
     exp_r: 4.416129231126029
     ch_min: 0.34892850668082187
     ch_max: 0.34892850668082187
@@ -246,7 +245,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1799898029313554
+  - exp_l: 0.18096293859041912
     exp_r: 4.416129231126029
     ch_min: 0.27561616118481336
     ch_max: 0.27561616118481336
@@ -255,7 +254,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1799898029313554
+  - exp_l: 0.18096293859041912
     exp_r: 4.416129231126029
     ch_min: 0.23764845647127686
     ch_max: 0.23764845647127686
@@ -264,7 +263,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.14966301742429788
+  - exp_l: 0.14999508777192663
     exp_r: 4.416129231126029
     ch_min: 0.15039429236242263
     ch_max: 0.15039429236242263
@@ -294,7 +293,7 @@ bt_est_on:
     nlearn_l: 21
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.14966301742429788
+  - exp_l: 0.14999508777192663
     exp_r: 4.416129231126029
     ch_min: 0.19842230225385893
     ch_max: 0.19842230225385893
@@ -303,7 +302,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.14966301742429788
+  - exp_l: 0.14999508777192663
     exp_r: 4.416129231126029
     ch_min: 0.18193354185215926
     ch_max: 0.18193354185215926
@@ -312,7 +311,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.14966301742429788
+  - exp_l: 0.14999508777192663
     exp_r: 4.427576080714473
     ch_min: 0.17951762486984868
     ch_max: 0.17951762486984868
@@ -341,7 +340,7 @@ bt_est_on:
     nlearn_l: 19
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.14966301742429788
+  - exp_l: 0.14999508777192663
     exp_r: 4.427576080714473
     ch_min: 0.28607985215510134
     ch_max: 0.28607985215510134
@@ -350,7 +349,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.14966301742429788
+  - exp_l: 0.14999508777192663
     exp_r: 4.427576080714473
     ch_min: 0.2867694433164264
     ch_max: 0.2867694433164264
@@ -359,7 +358,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.14966301742429788
+  - exp_l: 0.14999508777192663
     exp_r: 4.427576080714473
     ch_min: 0.25442203684512643
     ch_max: 0.25442203684512643
@@ -368,7 +367,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1419860161184056
+  - exp_l: 0.140659524426052
     exp_r: 4.427576080714473
     ch_min: 0.14199193965142864
     ch_max: 0.14199193965142864
@@ -393,7 +392,7 @@ bt_est_on:
     nlearn_l: 16
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.1419860161184056
+  - exp_l: 0.140659524426052
     exp_r: 4.530780850491004
     ch_min: 0.18711977087566511
     ch_max: 0.18711977087566511
@@ -426,7 +425,7 @@ bt_est_on:
     nlearn_l: 23
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.1419860161184056
+  - exp_l: 0.140659524426052
     exp_r: 4.530780850491004
     ch_min: 0.23191194800984039
     ch_max: 0.23191194800984039
@@ -435,7 +434,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1419860161184056
+  - exp_l: 0.140659524426052
     exp_r: 4.530780850491004
     ch_min: 0.22421262978647216
     ch_max: 0.22421262978647216
@@ -444,7 +443,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.129944060044226
     exp_r: 4.530780850491004
     ch_min: 0.13056514758911764
     ch_max: 0.13056514758911764
@@ -473,7 +472,7 @@ bt_est_on:
     nlearn_l: 20
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.129944060044226
     exp_r: 4.530780850491004
     ch_min: 0.20892779347590862
     ch_max: 0.20892779347590862
@@ -482,7 +481,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.129944060044226
     exp_r: 4.530780850491004
     ch_min: 0.20714239097803144
     ch_max: 0.20714239097803144
@@ -491,7 +490,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.129944060044226
     exp_r: 4.530780850491004
     ch_min: 0.2557547727533762
     ch_max: 0.2557547727533762
@@ -500,7 +499,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.129944060044226
     exp_r: 4.530780850491004
     ch_min: 0.25527287993556147
     ch_max: 0.25527287993556147
@@ -509,7 +508,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.129944060044226
     exp_r: 4.530780850491004
     ch_min: 0.24545283757207126
     ch_max: 0.24545283757207126
@@ -518,16 +517,34 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 4.530780850491004
     ch_min: 0.12798676813134158
     ch_max: 0.12798676813134158
-    min_list: []
+    min_list:
+    - 0.44781374439317234
+    - 0.6672310129122266
+    - 0.2305111662293624
+    - 0.39661768046418344
+    - 0.6419862886834676
+    - 0.34273802114123186
+    - 0.415920701628819
+    - 0.34615338030917275
+    - 0.5475782202225135
+    - 0.1667211186082702
+    - 0.5359544491676403
+    - 0.6447272468076732
+    - 0.6197966851330268
+    - 0.12798676813134158
+    - 0.4361095905091239
+    - 0.42897909327433803
+    - 0.3708897084865347
+    - 0.5411343481020217
     max_list: []
-    nlearn_l: 0
+    nlearn_l: 18
     nlearn_r: 0
-    flag_learning: false
-  - exp_l: 0.12789507193490318
+    flag_learning: true
+  - exp_l: 0.1258758758569438
     exp_r: 4.530780850491004
     ch_min: 0.27036504422377794
     ch_max: 0.27036504422377794
@@ -536,7 +553,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 4.530780850491004
     ch_min: 0.1328486132296698
     ch_max: 0.1328486132296698
@@ -545,7 +562,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 4.530780850491004
     ch_min: 0.21293503752021103
     ch_max: 0.21293503752021103
@@ -554,7 +571,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 4.530780850491004
     ch_min: 0.1634673705652867
     ch_max: 0.1634673705652867
@@ -563,7 +580,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 4.530780850491004
     ch_min: 0.2257562811763869
     ch_max: 0.2257562811763869
@@ -572,7 +589,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 4.530780850491004
     ch_min: 0.3326045218039848
     ch_max: 0.3326045218039848
@@ -581,7 +598,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 4.530780850491004
     ch_min: 0.22191545373232202
     ch_max: 0.22191545373232202
@@ -590,7 +607,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 4.530780850491004
     ch_min: 0.15494691291404905
     ch_max: 0.15494691291404905
@@ -599,7 +616,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 4.530780850491004
     ch_min: 0.19252355873384697
     ch_max: 0.19252355873384697
@@ -608,7 +625,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 4.530780850491004
     ch_min: 0.1587904492188339
     ch_max: 0.1587904492188339
@@ -617,7 +634,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 4.530780850491004
     ch_min: 0.27437885573358867
     ch_max: 0.27437885573358867
@@ -626,7 +643,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 4.530780850491004
     ch_min: 0.20370402023120393
     ch_max: 0.20370402023120393
@@ -635,7 +652,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 6.470493669054596
     ch_min: 0.280328586770035
     ch_max: 0.280328586770035
@@ -674,7 +691,7 @@ bt_est_on:
     nlearn_l: 29
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 6.470493669054596
     ch_min: 0.23187518413788366
     ch_max: 0.23187518413788366
@@ -683,7 +700,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 6.470493669054596
     ch_min: 0.24720765610127815
     ch_max: 0.24720765610127815
@@ -692,7 +709,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 6.470493669054596
     ch_min: 0.20016168446741944
     ch_max: 0.20016168446741944
@@ -701,7 +718,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 6.470493669054596
     ch_min: 0.25328060037438815
     ch_max: 0.25328060037438815
@@ -710,7 +727,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 6.470493669054596
     ch_min: 0.23038179139423298
     ch_max: 0.23038179139423298
@@ -719,7 +736,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 6.470493669054596
     ch_min: 0.2695942227022634
     ch_max: 0.2695942227022634
@@ -728,7 +745,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 6.470493669054596
     ch_min: 0.259174822848679
     ch_max: 0.259174822848679
@@ -737,7 +754,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 6.470493669054596
     ch_min: 0.15847946837086413
     ch_max: 0.15847946837086413
@@ -746,7 +763,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 6.470493669054596
     ch_min: 0.25101832239352473
     ch_max: 0.25101832239352473
@@ -755,7 +772,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 6.470493669054596
     ch_min: 0.30544002098676426
     ch_max: 0.30544002098676426
@@ -764,7 +781,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 6.470493669054596
     ch_min: 0.18161237175697953
     ch_max: 0.18161237175697953
@@ -773,7 +790,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 6.470493669054596
     ch_min: 0.20634068309971765
     ch_max: 0.20634068309971765
@@ -782,7 +799,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 6.470493669054596
     ch_min: 0.16751144652038885
     ch_max: 0.16751144652038885
@@ -791,7 +808,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12789507193490318
+  - exp_l: 0.1258758758569438
     exp_r: 6.470493669054596
     ch_min: 0.23457029491390924
     ch_max: 0.23457029491390924
@@ -1748,15 +1765,15 @@ bt_est_trad:
   numbin: null
   number_bt_iter: 600
   nboost: null
-  avg: 2.9962443874941136
-  std: 0.7166045317927484
-  exp_l: 0.12982626032312036
-  exp_r: 5.862662514665107
+  avg: 2.9936718811113763
+  std: 0.7159703128388731
+  exp_l: 0.12979062975588415
+  exp_r: 5.857553132466869
   total_size: 0
   num_learn: 60
   history:
-  - exp_l: 0.2904188107557376
-    exp_r: 2.5132450545094467
+  - exp_l: 0.29175683533774166
+    exp_r: 2.516427624436836
     ch_min: 0.25539203836184
     ch_max: 2.5864603817871505
     min_list: []
@@ -1764,8 +1781,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.2685297722112577
-    exp_r: 3.8150737991833163
+  - exp_l: 0.26719291816454244
+    exp_r: 3.83422738906429
     ch_min: 0.25539203836184
     ch_max: 4.1838393935755045
     min_list: []
@@ -1773,8 +1790,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.22734581677958532
-    exp_r: 3.8434488162172906
+  - exp_l: 0.22723131904543759
+    exp_r: 3.882806635759645
     ch_min: 0.22221835140027824
     ch_max: 4.1838393935755045
     min_list: []
@@ -1782,8 +1799,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.2269189242202404
-    exp_r: 3.8341237092748384
+  - exp_l: 0.22631410578663
+    exp_r: 3.8339442988543873
     ch_min: 0.22221835140027824
     ch_max: 4.1838393935755045
     min_list: []
@@ -1791,8 +1808,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.19547026423314912
-    exp_r: 3.9270648893369056
+  - exp_l: 0.19452975454432406
+    exp_r: 3.9343459380645345
     ch_min: 0.18914926262545517
     ch_max: 4.1838393935755045
     min_list: []
@@ -1800,8 +1817,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.19208818989671508
-    exp_r: 3.9200584190785035
+  - exp_l: 0.19231089463538562
+    exp_r: 3.9361517489162514
     ch_min: 0.18914926262545517
     ch_max: 4.1838393935755045
     min_list: []
@@ -1809,8 +1826,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.19212461528178668
-    exp_r: 4.286762483500065
+  - exp_l: 0.19161957033095542
+    exp_r: 4.28856055850094
     ch_min: 0.18914926262545517
     ch_max: 4.416129231126029
     min_list: []
@@ -1818,8 +1835,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.19060652256799737
-    exp_r: 4.290844694442061
+  - exp_l: 0.19042606698584785
+    exp_r: 4.285451643360012
     ch_min: 0.18914926262545517
     ch_max: 4.416129231126029
     min_list: []
@@ -1827,8 +1844,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1906198649669639
-    exp_r: 4.275047197154226
+  - exp_l: 0.1906025952142639
+    exp_r: 4.266109086291934
     ch_min: 0.18914926262545517
     ch_max: 4.416129231126029
     min_list: []
@@ -1836,8 +1853,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18389180726628152
-    exp_r: 4.260777356604288
+  - exp_l: 0.18412966943712245
+    exp_r: 4.2812226271948495
     ch_min: 0.18099790316755593
     ch_max: 4.416129231126029
     min_list: []
@@ -1845,8 +1862,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1844532066961192
-    exp_r: 4.293244648326712
+  - exp_l: 0.18411222251482498
+    exp_r: 4.2917397916597695
     ch_min: 0.18099790316755593
     ch_max: 4.416129231126029
     min_list: []
@@ -1854,8 +1871,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18416172657675337
-    exp_r: 4.294059518829254
+  - exp_l: 0.1840236260060931
+    exp_r: 4.296725755822791
     ch_min: 0.18099790316755593
     ch_max: 4.416129231126029
     min_list: []
@@ -1863,8 +1880,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18446625016220825
-    exp_r: 4.2972969994337
+  - exp_l: 0.18402094012432613
+    exp_r: 4.289853731437339
     ch_min: 0.18099790316755593
     ch_max: 4.416129231126029
     min_list: []
@@ -1872,8 +1889,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1839292554192836
-    exp_r: 4.294294300913933
+  - exp_l: 0.18431876932830196
+    exp_r: 4.295075183274685
     ch_min: 0.18099790316755593
     ch_max: 4.416129231126029
     min_list: []
@@ -1881,8 +1898,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.184016144480994
-    exp_r: 4.313711411889277
+  - exp_l: 0.18394415918788104
+    exp_r: 4.309104150861967
     ch_min: 0.18099790316755593
     ch_max: 4.416129231126029
     min_list: []
@@ -1890,8 +1907,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.16083108501386467
-    exp_r: 4.296289844219309
+  - exp_l: 0.1606943334099586
+    exp_r: 4.3062245473984895
     ch_min: 0.15039429236242263
     ch_max: 4.416129231126029
     min_list: []
@@ -1899,8 +1916,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.159985354057337
-    exp_r: 4.298389822685017
+  - exp_l: 0.1605838754578841
+    exp_r: 4.301930762729345
     ch_min: 0.15039429236242263
     ch_max: 4.416129231126029
     min_list: []
@@ -1908,8 +1925,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.15938518381945097
-    exp_r: 4.307853078262313
+  - exp_l: 0.16174554402900274
+    exp_r: 4.30463421226725
     ch_min: 0.15039429236242263
     ch_max: 4.416129231126029
     min_list: []
@@ -1917,8 +1934,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.16001322065195855
-    exp_r: 4.376914526044957
+  - exp_l: 0.15950214514818334
+    exp_r: 4.392986099475803
     ch_min: 0.15039429236242263
     ch_max: 4.427576080714473
     min_list: []
@@ -1926,8 +1943,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.15977713787752593
-    exp_r: 4.375450319119707
+  - exp_l: 0.15943357328147031
+    exp_r: 4.383720462906703
     ch_min: 0.15039429236242263
     ch_max: 4.427576080714473
     min_list: []
@@ -1935,8 +1952,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1600909954768614
-    exp_r: 4.388061306049181
+  - exp_l: 0.16008883144397998
+    exp_r: 4.384696672937885
     ch_min: 0.15039429236242263
     ch_max: 4.427576080714473
     min_list: []
@@ -1944,8 +1961,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.16064229604906563
-    exp_r: 4.382979277225391
+  - exp_l: 0.16002347054118915
+    exp_r: 4.383386002511538
     ch_min: 0.15039429236242263
     ch_max: 4.427576080714473
     min_list: []
@@ -1953,8 +1970,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1480906516497088
-    exp_r: 4.390773331744991
+  - exp_l: 0.14799789073598718
+    exp_r: 4.3862464364606435
     ch_min: 0.14199193965142864
     ch_max: 4.427576080714473
     min_list: []
@@ -1962,8 +1979,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1488102464921919
-    exp_r: 4.479202208132564
+  - exp_l: 0.14818248497368805
+    exp_r: 4.476402885104957
     ch_min: 0.14199193965142864
     ch_max: 4.530780850491004
     min_list: []
@@ -1971,8 +1988,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.14804270858661286
-    exp_r: 4.4782607379808175
+  - exp_l: 0.14856796376945017
+    exp_r: 4.478193646379269
     ch_min: 0.14199193965142864
     ch_max: 4.530780850491004
     min_list: []
@@ -1980,8 +1997,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.14934941051989148
-    exp_r: 4.4701949231411895
+  - exp_l: 0.149336546988812
+    exp_r: 4.478143937189959
     ch_min: 0.14199193965142864
     ch_max: 4.530780850491004
     min_list: []
@@ -1989,8 +2006,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.13725163956617556
-    exp_r: 4.477886921687423
+  - exp_l: 0.13676472056559993
+    exp_r: 4.477930395335309
     ch_min: 0.13056514758911764
     ch_max: 4.530780850491004
     min_list: []
@@ -1998,8 +2015,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.13763879982997262
-    exp_r: 4.474172337756913
+  - exp_l: 0.1377599236018999
+    exp_r: 4.4767781420837744
     ch_min: 0.13056514758911764
     ch_max: 4.530780850491004
     min_list: []
@@ -2007,8 +2024,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.13711077289100715
-    exp_r: 4.4747194094397615
+  - exp_l: 0.13700980278984265
+    exp_r: 4.475446497739965
     ch_min: 0.13056514758911764
     ch_max: 4.530780850491004
     min_list: []
@@ -2016,8 +2033,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1367526163530282
-    exp_r: 4.468233190973207
+  - exp_l: 0.13720959217322434
+    exp_r: 4.4757107512243275
     ch_min: 0.13056514758911764
     ch_max: 4.530780850491004
     min_list: []
@@ -2025,8 +2042,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.13612052216247686
-    exp_r: 4.476474019562711
+  - exp_l: 0.1371448315485635
+    exp_r: 4.478495055818885
     ch_min: 0.13056514758911764
     ch_max: 4.530780850491004
     min_list: []
@@ -2034,8 +2051,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.13659289047012693
-    exp_r: 4.475859118825171
+  - exp_l: 0.13639546414561818
+    exp_r: 4.472630067290367
     ch_min: 0.13056514758911764
     ch_max: 4.530780850491004
     min_list: []
@@ -2043,8 +2060,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.13125492487545146
-    exp_r: 4.4793291102628014
+  - exp_l: 0.13173160106987622
+    exp_r: 4.475389008223044
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -2052,8 +2069,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1317523547990646
-    exp_r: 4.477203358445379
+  - exp_l: 0.13157518142735256
+    exp_r: 4.479672836854893
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -2061,8 +2078,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12973715682070225
-    exp_r: 4.480021591465623
+  - exp_l: 0.13003967378685657
+    exp_r: 4.480910426111286
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -2070,8 +2087,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12979149086482814
-    exp_r: 4.474272640604669
+  - exp_l: 0.12963716641565082
+    exp_r: 4.477111236680687
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -2079,8 +2096,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12999737164117506
-    exp_r: 4.476835515772409
+  - exp_l: 0.12969910050520836
+    exp_r: 4.479812200905622
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -2088,8 +2105,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12997826496555584
-    exp_r: 4.479937554589238
+  - exp_l: 0.1297340873712363
+    exp_r: 4.481726898867349
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -2097,8 +2114,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.130065181598598
-    exp_r: 4.476141503735669
+  - exp_l: 0.13001595022972842
+    exp_r: 4.477093211969023
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -2106,8 +2123,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1300193928461886
-    exp_r: 4.469842782419421
+  - exp_l: 0.13002850198224195
+    exp_r: 4.475805635572136
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -2115,8 +2132,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12961687895642612
-    exp_r: 4.473882342303862
+  - exp_l: 0.12985626854256868
+    exp_r: 4.4762703828102595
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -2124,8 +2141,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1298224142800296
-    exp_r: 4.473455000008576
+  - exp_l: 0.12995901080315247
+    exp_r: 4.473057510938168
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -2133,8 +2150,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12962427752587305
-    exp_r: 4.479478352994896
+  - exp_l: 0.12973431378071518
+    exp_r: 4.4834625598303095
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -2142,8 +2159,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12979925654298335
-    exp_r: 4.476760266338123
+  - exp_l: 0.1297580733469988
+    exp_r: 4.477127072408889
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -2151,8 +2168,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1298959536442984
-    exp_r: 4.472104947135117
+  - exp_l: 0.12974627287677049
+    exp_r: 4.473124298027539
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -2160,8 +2177,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12966482425004425
-    exp_r: 5.6820089086705226
+  - exp_l: 0.12988347074085463
+    exp_r: 5.753214885893816
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -2169,8 +2186,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12982708706172302
-    exp_r: 5.756423983962956
+  - exp_l: 0.12978517839222461
+    exp_r: 5.6366823519387985
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -2178,8 +2195,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1297156538469669
-    exp_r: 5.7287299421047155
+  - exp_l: 0.1297658382531263
+    exp_r: 5.781264932311452
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -2187,8 +2204,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1296463990117423
-    exp_r: 5.701611597238801
+  - exp_l: 0.13006501880153312
+    exp_r: 5.765024989330426
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -2196,8 +2213,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12974811459328958
-    exp_r: 5.6578973594378965
+  - exp_l: 0.12963908862107096
+    exp_r: 5.758828579734554
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -2205,8 +2222,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1299059018443381
-    exp_r: 5.757691782598837
+  - exp_l: 0.12997148004293688
+    exp_r: 5.646476235203106
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -2214,8 +2231,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12967543064829784
-    exp_r: 5.665111977713211
+  - exp_l: 0.12964488317639394
+    exp_r: 5.742108084881611
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -2223,8 +2240,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1298138713925365
-    exp_r: 5.700344438243062
+  - exp_l: 0.12987151414911063
+    exp_r: 5.723473753028105
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -2232,8 +2249,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1303016227074282
-    exp_r: 5.711461362273911
+  - exp_l: 0.1298418948993154
+    exp_r: 5.6913940986502665
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -2241,8 +2258,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1297723796597401
-    exp_r: 5.663584525192129
+  - exp_l: 0.13007928265435012
+    exp_r: 5.710946617262718
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -2250,8 +2267,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12950743878536697
-    exp_r: 5.89791880457093
+  - exp_l: 0.12981083194331694
+    exp_r: 5.882115576835575
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -2259,8 +2276,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1297135071793682
-    exp_r: 5.858301617179195
+  - exp_l: 0.1296466705482243
+    exp_r: 5.821149568525546
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -2268,8 +2285,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12991346729898942
-    exp_r: 5.891896475775912
+  - exp_l: 0.1298456210113275
+    exp_r: 5.867045722590072
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -2277,8 +2294,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.13019018003116817
-    exp_r: 5.853980565328475
+  - exp_l: 0.12987214930110927
+    exp_r: 5.916216050235859
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -2286,8 +2303,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12982626032312036
-    exp_r: 5.862662514665107
+  - exp_l: 0.12979062975588415
+    exp_r: 5.857553132466869
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -2306,15 +2323,15 @@ bt_est_on_out:
   numbin: 8
   number_bt_iter: 600
   nboost: 3
-  avg: 3.297936923632562
-  std: 0.7931391863555085
-  exp_l: 0.12538017821052821
+  avg: 3.2981977549769876
+  std: 0.7930739785194021
+  exp_l: 0.1259018408993793
   exp_r: 6.470493669054596
   total_size: 3000
   num_learn: 60
   history:
-  - exp_l: 0.2539058384296794
-    exp_r: 2.5891590422456137
+  - exp_l: 0.2540534897625157
+    exp_r: 2.5884361475417568
     ch_min: 0.25539203836184
     ch_max: 0.25539203836184
     min_list:
@@ -2335,7 +2352,7 @@ bt_est_on_out:
     nlearn_l: 10
     nlearn_r: 3
     flag_learning: true
-  - exp_l: 0.2539058384296794
+  - exp_l: 0.2540534897625157
     exp_r: 4.1838393935755045
     ch_min: 0.26779358320473645
     ch_max: 0.26779358320473645
@@ -2399,7 +2416,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18842339347523815
+  - exp_l: 0.18703565746971135
     exp_r: 4.1838393935755045
     ch_min: 0.18914926262545517
     ch_max: 0.18914926262545517
@@ -2424,7 +2441,7 @@ bt_est_on_out:
     nlearn_l: 16
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.18842339347523815
+  - exp_l: 0.18703565746971135
     exp_r: 4.1838393935755045
     ch_min: 0.19548117783779428
     ch_max: 0.19548117783779428
@@ -2433,7 +2450,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18842339347523815
+  - exp_l: 0.18703565746971135
     exp_r: 4.416129231126029
     ch_min: 0.31505002998078935
     ch_max: 0.31505002998078935
@@ -2462,7 +2479,7 @@ bt_est_on_out:
     nlearn_l: 18
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.18842339347523815
+  - exp_l: 0.18703565746971135
     exp_r: 4.416129231126029
     ch_min: 0.19095126406735785
     ch_max: 0.19095126406735785
@@ -2471,7 +2488,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18842339347523815
+  - exp_l: 0.18703565746971135
     exp_r: 4.416129231126029
     ch_min: 0.2265808517724901
     ch_max: 0.2265808517724901
@@ -2480,7 +2497,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18046407046246302
+  - exp_l: 0.179422905653653
     exp_r: 4.416129231126029
     ch_min: 0.18099790316755593
     ch_max: 0.18099790316755593
@@ -2514,7 +2531,7 @@ bt_est_on_out:
     nlearn_l: 25
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.18046407046246302
+  - exp_l: 0.179422905653653
     exp_r: 4.416129231126029
     ch_min: 0.2746839698832705
     ch_max: 0.2746839698832705
@@ -2523,7 +2540,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18046407046246302
+  - exp_l: 0.179422905653653
     exp_r: 4.416129231126029
     ch_min: 0.21959642387497547
     ch_max: 0.21959642387497547
@@ -2532,7 +2549,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18046407046246302
+  - exp_l: 0.179422905653653
     exp_r: 4.416129231126029
     ch_min: 0.34892850668082187
     ch_max: 0.34892850668082187
@@ -2541,7 +2558,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18046407046246302
+  - exp_l: 0.179422905653653
     exp_r: 4.416129231126029
     ch_min: 0.27561616118481336
     ch_max: 0.27561616118481336
@@ -2550,7 +2567,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18046407046246302
+  - exp_l: 0.179422905653653
     exp_r: 4.416129231126029
     ch_min: 0.23764845647127686
     ch_max: 0.23764845647127686
@@ -2559,7 +2576,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1487066548920356
+  - exp_l: 0.1488822031550755
     exp_r: 4.416129231126029
     ch_min: 0.15039429236242263
     ch_max: 0.15039429236242263
@@ -2589,7 +2606,7 @@ bt_est_on_out:
     nlearn_l: 21
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.1487066548920356
+  - exp_l: 0.1488822031550755
     exp_r: 4.416129231126029
     ch_min: 0.19842230225385893
     ch_max: 0.19842230225385893
@@ -2598,7 +2615,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1487066548920356
+  - exp_l: 0.1488822031550755
     exp_r: 4.416129231126029
     ch_min: 0.18193354185215926
     ch_max: 0.18193354185215926
@@ -2607,7 +2624,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1487066548920356
+  - exp_l: 0.1488822031550755
     exp_r: 4.427576080714473
     ch_min: 0.17951762486984868
     ch_max: 0.17951762486984868
@@ -2636,7 +2653,7 @@ bt_est_on_out:
     nlearn_l: 19
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.1487066548920356
+  - exp_l: 0.1488822031550755
     exp_r: 4.427576080714473
     ch_min: 0.28607985215510134
     ch_max: 0.28607985215510134
@@ -2645,7 +2662,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1487066548920356
+  - exp_l: 0.1488822031550755
     exp_r: 4.427576080714473
     ch_min: 0.2867694433164264
     ch_max: 0.2867694433164264
@@ -2654,7 +2671,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1487066548920356
+  - exp_l: 0.1488822031550755
     exp_r: 4.427576080714473
     ch_min: 0.25442203684512643
     ch_max: 0.25442203684512643
@@ -2663,7 +2680,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.14041909838415392
+  - exp_l: 0.1405556348924849
     exp_r: 4.427576080714473
     ch_min: 0.14199193965142864
     ch_max: 0.14199193965142864
@@ -2688,7 +2705,7 @@ bt_est_on_out:
     nlearn_l: 16
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.14041909838415392
+  - exp_l: 0.1405556348924849
     exp_r: 4.530780850491004
     ch_min: 0.18711977087566511
     ch_max: 0.18711977087566511
@@ -2721,7 +2738,7 @@ bt_est_on_out:
     nlearn_l: 23
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.14041909838415392
+  - exp_l: 0.1405556348924849
     exp_r: 4.530780850491004
     ch_min: 0.23191194800984039
     ch_max: 0.23191194800984039
@@ -2730,7 +2747,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.14041909838415392
+  - exp_l: 0.1405556348924849
     exp_r: 4.530780850491004
     ch_min: 0.22421262978647216
     ch_max: 0.22421262978647216
@@ -2739,7 +2756,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12831701472109275
+  - exp_l: 0.12805399446230165
     exp_r: 4.530780850491004
     ch_min: 0.13056514758911764
     ch_max: 0.13056514758911764
@@ -2768,7 +2785,7 @@ bt_est_on_out:
     nlearn_l: 20
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.12831701472109275
+  - exp_l: 0.12805399446230165
     exp_r: 4.530780850491004
     ch_min: 0.20892779347590862
     ch_max: 0.20892779347590862
@@ -2777,7 +2794,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12831701472109275
+  - exp_l: 0.12805399446230165
     exp_r: 4.530780850491004
     ch_min: 0.20714239097803144
     ch_max: 0.20714239097803144
@@ -2786,7 +2803,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12831701472109275
+  - exp_l: 0.12805399446230165
     exp_r: 4.530780850491004
     ch_min: 0.2557547727533762
     ch_max: 0.2557547727533762
@@ -2795,7 +2812,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12831701472109275
+  - exp_l: 0.12805399446230165
     exp_r: 4.530780850491004
     ch_min: 0.25527287993556147
     ch_max: 0.25527287993556147
@@ -2804,7 +2821,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12831701472109275
+  - exp_l: 0.12805399446230165
     exp_r: 4.530780850491004
     ch_min: 0.24545283757207126
     ch_max: 0.24545283757207126
@@ -2813,7 +2830,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 4.530780850491004
     ch_min: 0.12798676813134158
     ch_max: 0.12798676813134158
@@ -2840,7 +2857,7 @@ bt_est_on_out:
     nlearn_l: 18
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 4.530780850491004
     ch_min: 0.27036504422377794
     ch_max: 0.27036504422377794
@@ -2849,7 +2866,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 4.530780850491004
     ch_min: 0.1328486132296698
     ch_max: 0.1328486132296698
@@ -2858,7 +2875,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 4.530780850491004
     ch_min: 0.21293503752021103
     ch_max: 0.21293503752021103
@@ -2867,7 +2884,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 4.530780850491004
     ch_min: 0.1634673705652867
     ch_max: 0.1634673705652867
@@ -2876,7 +2893,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 4.530780850491004
     ch_min: 0.2257562811763869
     ch_max: 0.2257562811763869
@@ -2885,7 +2902,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 4.530780850491004
     ch_min: 0.3326045218039848
     ch_max: 0.3326045218039848
@@ -2894,7 +2911,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 4.530780850491004
     ch_min: 0.22191545373232202
     ch_max: 0.22191545373232202
@@ -2903,7 +2920,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 4.530780850491004
     ch_min: 0.15494691291404905
     ch_max: 0.15494691291404905
@@ -2912,7 +2929,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 4.530780850491004
     ch_min: 0.19252355873384697
     ch_max: 0.19252355873384697
@@ -2921,7 +2938,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 4.530780850491004
     ch_min: 0.1587904492188339
     ch_max: 0.1587904492188339
@@ -2930,7 +2947,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 4.530780850491004
     ch_min: 0.27437885573358867
     ch_max: 0.27437885573358867
@@ -2939,7 +2956,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 4.530780850491004
     ch_min: 0.20370402023120393
     ch_max: 0.20370402023120393
@@ -2948,7 +2965,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 6.470493669054596
     ch_min: 0.280328586770035
     ch_max: 0.280328586770035
@@ -2981,12 +2998,13 @@ bt_est_on_out:
     - 0.7755672427827741
     - 0.8403896655329539
     - 0.7440870958071757
+    - 0.91883105922007
     max_list:
     - 6.470493669054596
-    nlearn_l: 28
+    nlearn_l: 29
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 6.470493669054596
     ch_min: 0.23187518413788366
     ch_max: 0.23187518413788366
@@ -2995,7 +3013,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 6.470493669054596
     ch_min: 0.24720765610127815
     ch_max: 0.24720765610127815
@@ -3004,7 +3022,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 6.470493669054596
     ch_min: 0.20016168446741944
     ch_max: 0.20016168446741944
@@ -3013,7 +3031,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 6.470493669054596
     ch_min: 0.25328060037438815
     ch_max: 0.25328060037438815
@@ -3022,7 +3040,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 6.470493669054596
     ch_min: 0.23038179139423298
     ch_max: 0.23038179139423298
@@ -3031,7 +3049,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 6.470493669054596
     ch_min: 0.2695942227022634
     ch_max: 0.2695942227022634
@@ -3040,7 +3058,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 6.470493669054596
     ch_min: 0.259174822848679
     ch_max: 0.259174822848679
@@ -3049,7 +3067,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 6.470493669054596
     ch_min: 0.15847946837086413
     ch_max: 0.15847946837086413
@@ -3058,7 +3076,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 6.470493669054596
     ch_min: 0.25101832239352473
     ch_max: 0.25101832239352473
@@ -3067,7 +3085,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 6.470493669054596
     ch_min: 0.30544002098676426
     ch_max: 0.30544002098676426
@@ -3076,7 +3094,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 6.470493669054596
     ch_min: 0.18161237175697953
     ch_max: 0.18161237175697953
@@ -3085,7 +3103,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 6.470493669054596
     ch_min: 0.20634068309971765
     ch_max: 0.20634068309971765
@@ -3094,7 +3112,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 6.470493669054596
     ch_min: 0.16751144652038885
     ch_max: 0.16751144652038885
@@ -3103,7 +3121,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12538017821052821
+  - exp_l: 0.1259018408993793
     exp_r: 6.470493669054596
     ch_min: 0.23457029491390924
     ch_max: 0.23457029491390924
@@ -3136,14 +3154,14 @@ bt_est_on:
   numbin: 8
   number_bt_iter: 600
   nboost: 3
-  avg: 3.2986894206983948
-  std: 0.7929510620890503
-  exp_l: 0.12688517234219376
+  avg: 3.2986188101214147
+  std: 0.7929687147332953
+  exp_l: 0.12674395118823306
   exp_r: 6.470493669054596
   total_size: 3000
   num_learn: 30
   history:
-  - exp_l: 0.25330446830648734
+  - exp_l: 0.25451881697551615
     exp_r: 4.1838393935755045
     ch_min: 0.25539203836184
     ch_max: 0.25539203836184
@@ -3241,7 +3259,7 @@ bt_est_on:
     nlearn_l: 43
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.18714042736642617
+  - exp_l: 0.18809101915003545
     exp_r: 4.1838393935755045
     ch_min: 0.18914926262545517
     ch_max: 0.18914926262545517
@@ -3288,7 +3306,7 @@ bt_est_on:
     nlearn_l: 38
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.18714042736642617
+  - exp_l: 0.18809101915003545
     exp_r: 4.416129231126029
     ch_min: 0.19095126406735785
     ch_max: 0.19095126406735785
@@ -3339,7 +3357,7 @@ bt_est_on:
     nlearn_l: 40
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.17893714566227792
+  - exp_l: 0.17982553188276645
     exp_r: 4.416129231126029
     ch_min: 0.18099790316755593
     ch_max: 0.18099790316755593
@@ -3396,7 +3414,7 @@ bt_est_on:
     nlearn_l: 48
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.17893714566227792
+  - exp_l: 0.17982553188276645
     exp_r: 4.416129231126029
     ch_min: 0.21959642387497547
     ch_max: 0.21959642387497547
@@ -3405,7 +3423,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.17893714566227792
+  - exp_l: 0.17982553188276645
     exp_r: 4.416129231126029
     ch_min: 0.27561616118481336
     ch_max: 0.27561616118481336
@@ -3414,7 +3432,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.14954603860016366
+  - exp_l: 0.1497722157306099
     exp_r: 4.416129231126029
     ch_min: 0.15039429236242263
     ch_max: 0.15039429236242263
@@ -3468,7 +3486,7 @@ bt_est_on:
     nlearn_l: 45
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.14954603860016366
+  - exp_l: 0.1497722157306099
     exp_r: 4.416129231126029
     ch_min: 0.18193354185215926
     ch_max: 0.18193354185215926
@@ -3477,7 +3495,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.14954603860016366
+  - exp_l: 0.1497722157306099
     exp_r: 4.427576080714473
     ch_min: 0.17951762486984868
     ch_max: 0.17951762486984868
@@ -3523,7 +3541,7 @@ bt_est_on:
     nlearn_l: 36
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.14954603860016366
+  - exp_l: 0.1497722157306099
     exp_r: 4.427576080714473
     ch_min: 0.25442203684512643
     ch_max: 0.25442203684512643
@@ -3532,7 +3550,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.14047761294481065
+  - exp_l: 0.13938823403385153
     exp_r: 4.530780850491004
     ch_min: 0.14199193965142864
     ch_max: 0.14199193965142864
@@ -3581,7 +3599,7 @@ bt_est_on:
     nlearn_l: 40
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.14047761294481065
+  - exp_l: 0.13938823403385153
     exp_r: 4.530780850491004
     ch_min: 0.22421262978647216
     ch_max: 0.22421262978647216
@@ -3590,7 +3608,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12893142003466848
+  - exp_l: 0.13005808176818007
     exp_r: 4.530780850491004
     ch_min: 0.13056514758911764
     ch_max: 0.13056514758911764
@@ -3634,7 +3652,7 @@ bt_est_on:
     nlearn_l: 35
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.12893142003466848
+  - exp_l: 0.13005808176818007
     exp_r: 4.530780850491004
     ch_min: 0.20714239097803144
     ch_max: 0.20714239097803144
@@ -3643,7 +3661,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12893142003466848
+  - exp_l: 0.13005808176818007
     exp_r: 4.530780850491004
     ch_min: 0.24545283757207126
     ch_max: 0.24545283757207126
@@ -3652,7 +3670,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12688517234219376
+  - exp_l: 0.12674395118823306
     exp_r: 4.530780850491004
     ch_min: 0.12798676813134158
     ch_max: 0.12798676813134158
@@ -3698,7 +3716,7 @@ bt_est_on:
     nlearn_l: 38
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.12688517234219376
+  - exp_l: 0.12674395118823306
     exp_r: 4.530780850491004
     ch_min: 0.1328486132296698
     ch_max: 0.1328486132296698
@@ -3707,7 +3725,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12688517234219376
+  - exp_l: 0.12674395118823306
     exp_r: 4.530780850491004
     ch_min: 0.1634673705652867
     ch_max: 0.1634673705652867
@@ -3716,7 +3734,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12688517234219376
+  - exp_l: 0.12674395118823306
     exp_r: 4.530780850491004
     ch_min: 0.22191545373232202
     ch_max: 0.22191545373232202
@@ -3725,7 +3743,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12688517234219376
+  - exp_l: 0.12674395118823306
     exp_r: 4.530780850491004
     ch_min: 0.15494691291404905
     ch_max: 0.15494691291404905
@@ -3734,7 +3752,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12688517234219376
+  - exp_l: 0.12674395118823306
     exp_r: 4.530780850491004
     ch_min: 0.1587904492188339
     ch_max: 0.1587904492188339
@@ -3743,7 +3761,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12688517234219376
+  - exp_l: 0.12674395118823306
     exp_r: 6.470493669054596
     ch_min: 0.20370402023120393
     ch_max: 0.20370402023120393
@@ -3818,7 +3836,7 @@ bt_est_on:
     nlearn_l: 65
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.12688517234219376
+  - exp_l: 0.12674395118823306
     exp_r: 6.470493669054596
     ch_min: 0.23187518413788366
     ch_max: 0.23187518413788366
@@ -3827,7 +3845,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12688517234219376
+  - exp_l: 0.12674395118823306
     exp_r: 6.470493669054596
     ch_min: 0.20016168446741944
     ch_max: 0.20016168446741944
@@ -3836,7 +3854,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12688517234219376
+  - exp_l: 0.12674395118823306
     exp_r: 6.470493669054596
     ch_min: 0.23038179139423298
     ch_max: 0.23038179139423298
@@ -3845,7 +3863,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12688517234219376
+  - exp_l: 0.12674395118823306
     exp_r: 6.470493669054596
     ch_min: 0.15847946837086413
     ch_max: 0.15847946837086413
@@ -3854,7 +3872,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12688517234219376
+  - exp_l: 0.12674395118823306
     exp_r: 6.470493669054596
     ch_min: 0.25101832239352473
     ch_max: 0.25101832239352473
@@ -3863,7 +3881,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12688517234219376
+  - exp_l: 0.12674395118823306
     exp_r: 6.470493669054596
     ch_min: 0.18161237175697953
     ch_max: 0.18161237175697953
@@ -3872,7 +3890,7 @@ bt_est_on:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12688517234219376
+  - exp_l: 0.12674395118823306
     exp_r: 6.470493669054596
     ch_min: 0.16751144652038885
     ch_max: 0.16751144652038885
@@ -4722,15 +4740,15 @@ bt_est_trad:
   numbin: null
   number_bt_iter: 600
   nboost: null
-  avg: 3.001596208798575
-  std: 0.7178162668849026
-  exp_l: 0.13033114125896433
-  exp_r: 5.8728612763381856
+  avg: 2.9966192659314497
+  std: 0.716698427795471
+  exp_l: 0.12982555474956595
+  exp_r: 5.863412977113334
   total_size: 0
   num_learn: 30
   history:
-  - exp_l: 0.2667528392156919
-    exp_r: 3.8023552180766957
+  - exp_l: 0.2671516635308581
+    exp_r: 3.843015188287906
     ch_min: 0.25539203836184
     ch_max: 4.1838393935755045
     min_list: []
@@ -4738,8 +4756,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.22604829607705124
-    exp_r: 3.8394251490179188
+  - exp_l: 0.22630292301222477
+    exp_r: 3.8581913958657816
     ch_min: 0.22221835140027824
     ch_max: 4.1838393935755045
     min_list: []
@@ -4747,8 +4765,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.19243959434236502
-    exp_r: 3.9293475976035825
+  - exp_l: 0.19265755476010443
+    exp_r: 3.9489159871494994
     ch_min: 0.18914926262545517
     ch_max: 4.1838393935755045
     min_list: []
@@ -4756,8 +4774,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1907848739308753
-    exp_r: 4.279920672307074
+  - exp_l: 0.19036392952710007
+    exp_r: 4.294291980742031
     ch_min: 0.18914926262545517
     ch_max: 4.416129231126029
     min_list: []
@@ -4765,8 +4783,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18429313790501395
-    exp_r: 4.278257861630325
+  - exp_l: 0.18397613318382214
+    exp_r: 4.281666142855713
     ch_min: 0.18099790316755593
     ch_max: 4.416129231126029
     min_list: []
@@ -4774,8 +4792,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18424402156694317
-    exp_r: 4.285143064708408
+  - exp_l: 0.18427375175537986
+    exp_r: 4.305944400950288
     ch_min: 0.18099790316755593
     ch_max: 4.416129231126029
     min_list: []
@@ -4783,8 +4801,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18422438242502617
-    exp_r: 4.302156072157884
+  - exp_l: 0.18384338319129687
+    exp_r: 4.2924266062192995
     ch_min: 0.18099790316755593
     ch_max: 4.416129231126029
     min_list: []
@@ -4792,8 +4810,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.16089151361778486
-    exp_r: 4.300548340134381
+  - exp_l: 0.16058181935061697
+    exp_r: 4.308799357188882
     ch_min: 0.15039429236242263
     ch_max: 4.416129231126029
     min_list: []
@@ -4801,8 +4819,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.16040460776945417
-    exp_r: 4.297128432311668
+  - exp_l: 0.1603364448361315
+    exp_r: 4.302002052835492
     ch_min: 0.15039429236242263
     ch_max: 4.416129231126029
     min_list: []
@@ -4810,8 +4828,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.16026659974111004
-    exp_r: 4.381144975443314
+  - exp_l: 0.15955093210175622
+    exp_r: 4.383385803231548
     ch_min: 0.15039429236242263
     ch_max: 4.427576080714473
     min_list: []
@@ -4819,8 +4837,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.15938571670593554
-    exp_r: 4.3826423092715086
+  - exp_l: 0.1600846117275459
+    exp_r: 4.382803971563117
     ch_min: 0.15039429236242263
     ch_max: 4.427576080714473
     min_list: []
@@ -4828,8 +4846,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1490330966329352
-    exp_r: 4.474708975238312
+  - exp_l: 0.1483597043168842
+    exp_r: 4.475067012722829
     ch_min: 0.14199193965142864
     ch_max: 4.530780850491004
     min_list: []
@@ -4837,8 +4855,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.14857709240737
-    exp_r: 4.47363847663389
+  - exp_l: 0.14863724388477076
+    exp_r: 4.473224377689593
     ch_min: 0.14199193965142864
     ch_max: 4.530780850491004
     min_list: []
@@ -4846,8 +4864,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.13726201834332297
-    exp_r: 4.4752588846210255
+  - exp_l: 0.1366003790608393
+    exp_r: 4.481306695266211
     ch_min: 0.13056514758911764
     ch_max: 4.530780850491004
     min_list: []
@@ -4855,8 +4873,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.13736783784168152
-    exp_r: 4.4759356855347034
+  - exp_l: 0.13707303169901094
+    exp_r: 4.4784087789946705
     ch_min: 0.13056514758911764
     ch_max: 4.530780850491004
     min_list: []
@@ -4864,8 +4882,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.13807695216101876
-    exp_r: 4.479805368337351
+  - exp_l: 0.1365338550562145
+    exp_r: 4.469779434266351
     ch_min: 0.13056514758911764
     ch_max: 4.530780850491004
     min_list: []
@@ -4873,8 +4891,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.13138008909738902
-    exp_r: 4.482427152038907
+  - exp_l: 0.13133685918115282
+    exp_r: 4.476440704380238
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -4882,8 +4900,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12986954831708108
-    exp_r: 4.47217956895032
+  - exp_l: 0.12991658626940789
+    exp_r: 4.474113133799508
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -4891,8 +4909,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12995084552965883
-    exp_r: 4.469591514492603
+  - exp_l: 0.1300137003025765
+    exp_r: 4.478768217889701
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -4900,8 +4918,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.129914705337735
-    exp_r: 4.468897071682174
+  - exp_l: 0.12978562843577632
+    exp_r: 4.47339123685788
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -4909,8 +4927,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12952268040150158
-    exp_r: 4.479086957251021
+  - exp_l: 0.12993574152413637
+    exp_r: 4.475725148468672
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -4918,8 +4936,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.130084746416724
-    exp_r: 4.475839299823007
+  - exp_l: 0.12987873641566922
+    exp_r: 4.471762933460569
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -4927,8 +4945,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.13032037697368407
-    exp_r: 5.736685427971005
+  - exp_l: 0.129886840293307
+    exp_r: 5.713713628692678
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -4936,8 +4954,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1300976507692413
-    exp_r: 5.802497849938946
+  - exp_l: 0.1298616669887893
+    exp_r: 5.7246176228280365
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -4945,8 +4963,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12949391373799166
-    exp_r: 5.6950775119602985
+  - exp_l: 0.1300541947527062
+    exp_r: 5.644022491457508
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -4954,8 +4972,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12979925429467562
-    exp_r: 5.715772107725477
+  - exp_l: 0.12986207970621197
+    exp_r: 5.712467337649643
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -4963,8 +4981,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12957946362914347
-    exp_r: 5.688527735550738
+  - exp_l: 0.12957761035863422
+    exp_r: 5.664371229029049
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -4972,8 +4990,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1298604128435221
-    exp_r: 5.850545506553332
+  - exp_l: 0.12992538915579677
+    exp_r: 5.879008402165745
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -4981,8 +4999,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.13002842776347343
-    exp_r: 5.823583122668117
+  - exp_l: 0.12980125215060506
+    exp_r: 5.84798490819532
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -4990,8 +5008,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.13033114125896433
-    exp_r: 5.8728612763381856
+  - exp_l: 0.12982555474956595
+    exp_r: 5.863412977113334
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -5010,14 +5028,14 @@ bt_est_on_out:
   numbin: 8
   number_bt_iter: 600
   nboost: 3
-  avg: 3.298871610544192
-  std: 0.792905514627601
-  exp_l: 0.12724955203378868
+  avg: 3.2984802353227116
+  std: 0.7930033584329711
+  exp_l: 0.12646680159082685
   exp_r: 6.470493669054596
   total_size: 3000
   num_learn: 30
   history:
-  - exp_l: 0.25327699399734716
+  - exp_l: 0.2533293318542078
     exp_r: 4.1838393935755045
     ch_min: 0.25539203836184
     ch_max: 0.25539203836184
@@ -5115,7 +5133,7 @@ bt_est_on_out:
     nlearn_l: 43
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.18885052809601766
+  - exp_l: 0.18855889853939778
     exp_r: 4.1838393935755045
     ch_min: 0.18914926262545517
     ch_max: 0.18914926262545517
@@ -5162,7 +5180,7 @@ bt_est_on_out:
     nlearn_l: 38
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.18885052809601766
+  - exp_l: 0.18855889853939778
     exp_r: 4.416129231126029
     ch_min: 0.19095126406735785
     ch_max: 0.19095126406735785
@@ -5213,7 +5231,7 @@ bt_est_on_out:
     nlearn_l: 40
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.18034340877825072
+  - exp_l: 0.17995445900787704
     exp_r: 4.416129231126029
     ch_min: 0.18099790316755593
     ch_max: 0.18099790316755593
@@ -5270,7 +5288,7 @@ bt_est_on_out:
     nlearn_l: 48
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.18034340877825072
+  - exp_l: 0.17995445900787704
     exp_r: 4.416129231126029
     ch_min: 0.21959642387497547
     ch_max: 0.21959642387497547
@@ -5279,7 +5297,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.18034340877825072
+  - exp_l: 0.17995445900787704
     exp_r: 4.416129231126029
     ch_min: 0.27561616118481336
     ch_max: 0.27561616118481336
@@ -5288,7 +5306,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.14947577298451697
+  - exp_l: 0.15003334807064939
     exp_r: 4.416129231126029
     ch_min: 0.15039429236242263
     ch_max: 0.15039429236242263
@@ -5342,7 +5360,7 @@ bt_est_on_out:
     nlearn_l: 45
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.14947577298451697
+  - exp_l: 0.15003334807064939
     exp_r: 4.416129231126029
     ch_min: 0.18193354185215926
     ch_max: 0.18193354185215926
@@ -5351,7 +5369,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.14947577298451697
+  - exp_l: 0.15003334807064939
     exp_r: 4.427576080714473
     ch_min: 0.17951762486984868
     ch_max: 0.17951762486984868
@@ -5397,7 +5415,7 @@ bt_est_on_out:
     nlearn_l: 36
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.14947577298451697
+  - exp_l: 0.15003334807064939
     exp_r: 4.427576080714473
     ch_min: 0.25442203684512643
     ch_max: 0.25442203684512643
@@ -5406,7 +5424,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1413583942724405
+  - exp_l: 0.14153237849508438
     exp_r: 4.530780850491004
     ch_min: 0.14199193965142864
     ch_max: 0.14199193965142864
@@ -5455,7 +5473,7 @@ bt_est_on_out:
     nlearn_l: 40
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.1413583942724405
+  - exp_l: 0.14153237849508438
     exp_r: 4.530780850491004
     ch_min: 0.22421262978647216
     ch_max: 0.22421262978647216
@@ -5464,7 +5482,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1303287003444845
+  - exp_l: 0.12987932731271568
     exp_r: 4.530780850491004
     ch_min: 0.13056514758911764
     ch_max: 0.13056514758911764
@@ -5508,7 +5526,7 @@ bt_est_on_out:
     nlearn_l: 35
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.1303287003444845
+  - exp_l: 0.12987932731271568
     exp_r: 4.530780850491004
     ch_min: 0.20714239097803144
     ch_max: 0.20714239097803144
@@ -5517,7 +5535,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.1303287003444845
+  - exp_l: 0.12987932731271568
     exp_r: 4.530780850491004
     ch_min: 0.24545283757207126
     ch_max: 0.24545283757207126
@@ -5526,7 +5544,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12724955203378868
+  - exp_l: 0.12646680159082685
     exp_r: 4.530780850491004
     ch_min: 0.12798676813134158
     ch_max: 0.12798676813134158
@@ -5572,7 +5590,7 @@ bt_est_on_out:
     nlearn_l: 38
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.12724955203378868
+  - exp_l: 0.12646680159082685
     exp_r: 4.530780850491004
     ch_min: 0.1328486132296698
     ch_max: 0.1328486132296698
@@ -5581,7 +5599,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12724955203378868
+  - exp_l: 0.12646680159082685
     exp_r: 4.530780850491004
     ch_min: 0.1634673705652867
     ch_max: 0.1634673705652867
@@ -5590,7 +5608,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12724955203378868
+  - exp_l: 0.12646680159082685
     exp_r: 4.530780850491004
     ch_min: 0.22191545373232202
     ch_max: 0.22191545373232202
@@ -5599,7 +5617,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12724955203378868
+  - exp_l: 0.12646680159082685
     exp_r: 4.530780850491004
     ch_min: 0.15494691291404905
     ch_max: 0.15494691291404905
@@ -5608,7 +5626,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12724955203378868
+  - exp_l: 0.12646680159082685
     exp_r: 4.530780850491004
     ch_min: 0.1587904492188339
     ch_max: 0.1587904492188339
@@ -5617,7 +5635,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12724955203378868
+  - exp_l: 0.12646680159082685
     exp_r: 6.470493669054596
     ch_min: 0.20370402023120393
     ch_max: 0.20370402023120393
@@ -5692,7 +5710,7 @@ bt_est_on_out:
     nlearn_l: 65
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.12724955203378868
+  - exp_l: 0.12646680159082685
     exp_r: 6.470493669054596
     ch_min: 0.23187518413788366
     ch_max: 0.23187518413788366
@@ -5701,7 +5719,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12724955203378868
+  - exp_l: 0.12646680159082685
     exp_r: 6.470493669054596
     ch_min: 0.20016168446741944
     ch_max: 0.20016168446741944
@@ -5710,7 +5728,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12724955203378868
+  - exp_l: 0.12646680159082685
     exp_r: 6.470493669054596
     ch_min: 0.23038179139423298
     ch_max: 0.23038179139423298
@@ -5719,7 +5737,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12724955203378868
+  - exp_l: 0.12646680159082685
     exp_r: 6.470493669054596
     ch_min: 0.15847946837086413
     ch_max: 0.15847946837086413
@@ -5728,7 +5746,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12724955203378868
+  - exp_l: 0.12646680159082685
     exp_r: 6.470493669054596
     ch_min: 0.25101832239352473
     ch_max: 0.25101832239352473
@@ -5737,7 +5755,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12724955203378868
+  - exp_l: 0.12646680159082685
     exp_r: 6.470493669054596
     ch_min: 0.18161237175697953
     ch_max: 0.18161237175697953
@@ -5746,7 +5764,7 @@ bt_est_on_out:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12724955203378868
+  - exp_l: 0.12646680159082685
     exp_r: 6.470493669054596
     ch_min: 0.16751144652038885
     ch_max: 0.16751144652038885
@@ -5779,14 +5797,14 @@ bt_est_on:
   numbin: 8
   number_bt_iter: 600
   nboost: 3
-  avg: 3.2987384296564395
-  std: 0.7929388098495391
-  exp_l: 0.12698319025828342
+  avg: 3.2986270445447152
+  std: 0.7929666561274702
+  exp_l: 0.1267604200348348
   exp_r: 6.470493669054596
   total_size: 3000
   num_learn: 6
   history:
-  - exp_l: 0.18007906033006976
+  - exp_l: 0.18054835666990726
     exp_r: 4.416129231126029
     ch_min: 0.18099790316755593
     ch_max: 0.18099790316755593
@@ -5821,6 +5839,7 @@ bt_est_on:
     - 0.5849302538548591
     - 0.6580038004585514
     - 0.6195851728686929
+    - 0.7097889746527971
     - 0.3280994911470603
     - 0.5181452448605802
     - 0.6662103371159425
@@ -6000,8 +6019,8 @@ bt_est_on:
     nlearn_l: 203
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.14948185207632458
-    exp_r: 4.4344511523571075
+  - exp_l: 0.14968429441679287
+    exp_r: 4.43849201982043
     ch_min: 0.15039429236242263
     ch_max: 0.15039429236242263
     min_list:
@@ -6205,7 +6224,7 @@ bt_est_on:
     nlearn_l: 193
     nlearn_r: 3
     flag_learning: true
-  - exp_l: 0.12959044230973815
+  - exp_l: 0.12997561347159314
     exp_r: 4.530780850491004
     ch_min: 0.13056514758911764
     ch_max: 0.13056514758911764
@@ -6410,7 +6429,7 @@ bt_est_on:
     nlearn_l: 194
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.12698319025828342
+  - exp_l: 0.1267604200348348
     exp_r: 4.530780850491004
     ch_min: 0.12798676813134158
     ch_max: 0.12798676813134158
@@ -6641,7 +6660,7 @@ bt_est_on:
     nlearn_l: 222
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.12698319025828342
+  - exp_l: 0.1267604200348348
     exp_r: 6.470493669054596
     ch_min: 0.15494691291404905
     ch_max: 0.15494691291404905
@@ -6945,7 +6964,7 @@ bt_est_on:
     nlearn_l: 294
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.12698319025828342
+  - exp_l: 0.1267604200348348
     exp_r: 6.470493669054596
     ch_min: 0.15847946837086413
     ch_max: 0.15847946837086413
@@ -8533,15 +8552,15 @@ bt_est_trad:
   numbin: null
   number_bt_iter: 600
   nboost: null
-  avg: 3.0028432820397657
-  std: 0.7182497874554089
-  exp_l: 0.12984413221813004
-  exp_r: 5.875842431861401
+  avg: 2.9753034231773308
+  std: 0.7113947129513654
+  exp_l: 0.12972457137186927
+  exp_r: 5.820882274982792
   total_size: 0
   num_learn: 6
   history:
-  - exp_l: 0.1840699556702756
-    exp_r: 4.264363500666946
+  - exp_l: 0.1838469007276233
+    exp_r: 4.283647083997809
     ch_min: 0.18099790316755593
     ch_max: 4.416129231126029
     min_list: []
@@ -8549,8 +8568,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.15954263767850843
-    exp_r: 4.383613702357521
+  - exp_l: 0.1595026191121163
+    exp_r: 4.377783459347896
     ch_min: 0.15039429236242263
     ch_max: 4.427576080714473
     min_list: []
@@ -8558,8 +8577,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.13830714855627388
-    exp_r: 4.475324090650517
+  - exp_l: 0.13743548307236766
+    exp_r: 4.476737447852647
     ch_min: 0.13056514758911764
     ch_max: 4.530780850491004
     min_list: []
@@ -8567,8 +8586,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12992006983079915
-    exp_r: 4.471591745115094
+  - exp_l: 0.1300226139181519
+    exp_r: 4.4699973164727105
     ch_min: 0.12798676813134158
     ch_max: 4.530780850491004
     min_list: []
@@ -8576,8 +8595,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12961585694199892
-    exp_r: 5.723332076731097
+  - exp_l: 0.12997363644168503
+    exp_r: 5.66616383971257
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -8585,8 +8604,8 @@ bt_est_trad:
     nlearn_l: 0
     nlearn_r: 0
     flag_learning: false
-  - exp_l: 0.12984413221813004
-    exp_r: 5.875842431861401
+  - exp_l: 0.12972457137186927
+    exp_r: 5.820882274982792
     ch_min: 0.12798676813134158
     ch_max: 6.470493669054596
     min_list: []
@@ -8605,14 +8624,14 @@ bt_est_on_out:
   numbin: 8
   number_bt_iter: 600
   nboost: 3
-  avg: 3.298895017960074
-  std: 0.7928996627736306
-  exp_l: 0.1272963668655514
+  avg: 3.298946788090496
+  std: 0.792886720241025
+  exp_l: 0.12739990712639587
   exp_r: 6.470493669054596
   total_size: 3000
   num_learn: 6
   history:
-  - exp_l: 0.18073913915619227
+  - exp_l: 0.18022687084270506
     exp_r: 4.416129231126029
     ch_min: 0.18099790316755593
     ch_max: 0.18099790316755593
@@ -8647,7 +8666,6 @@ bt_est_on_out:
     - 0.5849302538548591
     - 0.6580038004585514
     - 0.6195851728686929
-    - 0.7097889746527971
     - 0.3280994911470603
     - 0.5181452448605802
     - 0.6662103371159425
@@ -8827,8 +8845,8 @@ bt_est_on_out:
     nlearn_l: 203
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.1490322932120251
-    exp_r: 4.433341161956205
+  - exp_l: 0.14989272418573807
+    exp_r: 4.434572067973218
     ch_min: 0.15039429236242263
     ch_max: 0.15039429236242263
     min_list:
@@ -9032,7 +9050,7 @@ bt_est_on_out:
     nlearn_l: 193
     nlearn_r: 3
     flag_learning: true
-  - exp_l: 0.1297530375769978
+  - exp_l: 0.13042005351504954
     exp_r: 4.530780850491004
     ch_min: 0.13056514758911764
     ch_max: 0.13056514758911764
@@ -9237,7 +9255,7 @@ bt_est_on_out:
     nlearn_l: 194
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.1272963668655514
+  - exp_l: 0.12739990712639587
     exp_r: 4.530780850491004
     ch_min: 0.12798676813134158
     ch_max: 0.12798676813134158
@@ -9468,7 +9486,7 @@ bt_est_on_out:
     nlearn_l: 222
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.1272963668655514
+  - exp_l: 0.12739990712639587
     exp_r: 6.470493669054596
     ch_min: 0.15494691291404905
     ch_max: 0.15494691291404905
@@ -9773,7 +9791,7 @@ bt_est_on_out:
     nlearn_l: 295
     nlearn_r: 0
     flag_learning: true
-  - exp_l: 0.1272963668655514
+  - exp_l: 0.12739990712639587
     exp_r: 6.470493669054596
     ch_min: 0.15847946837086413
     ch_max: 0.15847946837086413
