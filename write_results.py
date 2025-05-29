@@ -21,7 +21,9 @@ def evaluate_results(config_list_path, results_dir):
     perf_rows = []
     for result_file in config_files:
         # Get the population data file name from the result file name
-        pop_file = result_file.split('_')[0] + '.pkl'
+        pop_file = result_file.split('_results')[0] + '.pkl'
+        # name, ext = os.path.splitext(result_file)
+        
         pop_data = pd.read_pickle(os.path.join(results_dir, pop_file))
         pop_min = min(pop_data)
         pop_max = max(pop_data)
@@ -71,7 +73,7 @@ def evaluate_results(config_list_path, results_dir):
 
 if __name__ == "__main__":
     # Example usage: adjust these paths as needed
-    # config_list_path = "config_sim_data/normal/results_config_files.yaml"
-    config_list_path = "config_sim_data/normal/results_config_files_outlier.yaml"
-    results_dir = "config_sim_data/normal"
+    config_list_path = "config_sim_data/realworld/results_config_files.yaml"
+    # config_list_path = "config_sim_data/normal/results_config_files_outlier.yaml"
+    results_dir = "config_sim_data/realworld"
     perf_df = evaluate_results(config_list_path, results_dir)

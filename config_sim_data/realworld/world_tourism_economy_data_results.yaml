@@ -1,0 +1,2087 @@
+config_file: world_tourism_economy_data
+chunk_size: 50
+bt_est_on:
+  online_cum: false
+  online: true
+  outlier_detection: false
+  outlier_method: ''
+  flag_learning: false
+  minmax_boost: false
+  numbin: 8
+  number_bt_iter: 600
+  nboost: 3
+  avg: 13.207215699955269
+  std: 3.1629914225949327
+  exp_l: 0.5552500095755372
+  exp_r: 25.859181390335
+  total_size: 1250
+  num_learn: 25
+  history:
+  - exp_l: 1.99843731217694
+    exp_r: 15.8890915730279
+    ch_min: 1.99843731217694
+    ch_max: 1.99843731217694
+    min_list:
+    - 2.48963819595907
+    - 3.69900655252589
+    - 2.28850801574026
+    - 3.07530233751224
+    max_list:
+    - 15.8890915730279
+    nlearn_l: 4
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.53993364816041
+    exp_r: 21.6675428476621
+    ch_min: 1.53993364816041
+    ch_max: 1.53993364816041
+    min_list:
+    - 3.84625181487048
+    - 3.0652461315484
+    - 4.01510383889238
+    - 3.82602637176802
+    - 2.17672374634246
+    - 4.03212050342349
+    - 3.42741935483871
+    - 3.31871409519047
+    - 2.7203266215404
+    max_list:
+    - 21.6675428476621
+    nlearn_l: 9
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.04501381733446
+    exp_r: 23.5472979072534
+    ch_min: 1.06216801789363
+    ch_max: 1.06216801789363
+    min_list:
+    - 1.06216801789363
+    - 3.12847354712411
+    - 3.34314332920281
+    - 3.82176980087508
+    - 2.28623685413809
+    - 3.05946630511628
+    - 2.94200591679031
+    - 2.85473643308268
+    - 2.74088304563991
+    max_list:
+    - 23.5472979072534
+    nlearn_l: 10
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.04501381733446
+    exp_r: 23.5472979072534
+    ch_min: 2.21297034154614
+    ch_max: 2.21297034154614
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.04501381733446
+    exp_r: 25.0782719124744
+    ch_min: 1.49124422668612
+    ch_max: 1.49124422668612
+    min_list:
+    - 1.49124422668612
+    - 3.880285991449
+    - 3.833628520825
+    - 2.29757731216814
+    max_list:
+    - 25.0782719124744
+    nlearn_l: 4
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.04501381733446
+    exp_r: 25.0782719124744
+    ch_min: 1.21923332955228
+    ch_max: 1.21923332955228
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.04501381733446
+    exp_r: 25.0782719124744
+    ch_min: 1.19450943737112
+    ch_max: 1.19450943737112
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.04501381733446
+    exp_r: 25.0782719124744
+    ch_min: 2.32847326165782
+    ch_max: 2.32847326165782
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.7578058348707729
+    exp_r: 25.859181390335
+    ch_min: 0.758740836292013
+    ch_max: 0.758740836292013
+    min_list:
+    - 3.65910515827624
+    - 2.41674191958705
+    - 0.758740836292013
+    - 3.82800939295697
+    - 3.60202229651979
+    - 3.83992108702644
+    - 1.3632225868743
+    max_list:
+    - 25.859181390335
+    nlearn_l: 7
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 0.7578058348707729
+    exp_r: 25.859181390335
+    ch_min: 1.9911492900615
+    ch_max: 1.9911492900615
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.7282703186939925
+    exp_r: 25.859181390335
+    ch_min: 0.734243795836534
+    ch_max: 0.734243795836534
+    min_list:
+    - 0.734243795836534
+    - 3.53790804140768
+    - 3.38820855177519
+    - 2.35565713997849
+    - 2.97741926003004
+    max_list: []
+    nlearn_l: 5
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 0.7282703186939925
+    exp_r: 25.859181390335
+    ch_min: 0.903963582395768
+    ch_max: 0.903963582395768
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.7282703186939925
+    exp_r: 25.859181390335
+    ch_min: 1.77801837832048
+    ch_max: 1.77801837832048
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5552500095755372
+    exp_r: 25.859181390335
+    ch_min: 0.556738775052417
+    ch_max: 0.556738775052417
+    min_list:
+    - 3.4259582741792
+    - 3.5756242422801
+    - 2.92494024986419
+    - 0.556738775052417
+    - 2.52565220758841
+    - 3.51402789132101
+    - 2.40846491807966
+    max_list: []
+    nlearn_l: 7
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 0.5552500095755372
+    exp_r: 25.859181390335
+    ch_min: 2.41962832856274
+    ch_max: 2.41962832856274
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5552500095755372
+    exp_r: 25.859181390335
+    ch_min: 1.01938392574708
+    ch_max: 1.01938392574708
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5552500095755372
+    exp_r: 25.859181390335
+    ch_min: 1.23747306558847
+    ch_max: 1.23747306558847
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5552500095755372
+    exp_r: 25.859181390335
+    ch_min: 0.808687735251078
+    ch_max: 0.808687735251078
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5552500095755372
+    exp_r: 25.859181390335
+    ch_min: 1.58313884497581
+    ch_max: 1.58313884497581
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5552500095755372
+    exp_r: 25.859181390335
+    ch_min: 1.07511460051223
+    ch_max: 1.07511460051223
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5552500095755372
+    exp_r: 25.859181390335
+    ch_min: 2.02714932126697
+    ch_max: 2.02714932126697
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5552500095755372
+    exp_r: 25.859181390335
+    ch_min: 0.891429156256578
+    ch_max: 0.891429156256578
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5552500095755372
+    exp_r: 25.859181390335
+    ch_min: 1.08584801613141
+    ch_max: 1.08584801613141
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5552500095755372
+    exp_r: 25.859181390335
+    ch_min: 1.53555807416112
+    ch_max: 1.53555807416112
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5552500095755372
+    exp_r: 25.859181390335
+    ch_min: 0.94941292389953
+    ch_max: 0.94941292389953
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  dist_list:
+  - exponweib
+  - wald
+  - gamma
+  - norm
+  - expon
+  - powerlaw
+  - lognorm
+  - chi2
+  - weibull_min
+  - weibull_max
+bt_est_onmm:
+  online_cum: false
+  online: true
+  outlier_detection: false
+  outlier_method: ''
+  flag_learning: false
+  minmax_boost: true
+  numbin: 8
+  number_bt_iter: 600
+  nboost: 3
+  avg: 13.207960082693708
+  std: 3.162805326910323
+  exp_l: 0.556738775052417
+  exp_r: 25.859181390335
+  total_size: 1250
+  num_learn: 25
+  history:
+  - exp_l: 1.99843731217694
+    exp_r: 15.8890915730279
+    ch_min: 1.99843731217694
+    ch_max: 1.99843731217694
+    min_list:
+    - 2.48963819595907
+    - 3.69900655252589
+    - 2.28850801574026
+    - 3.07530233751224
+    max_list:
+    - 15.8890915730279
+    nlearn_l: 4
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.99843731217694
+    exp_r: 21.6675428476621
+    ch_min: 1.53993364816041
+    ch_max: 1.53993364816041
+    min_list:
+    - 3.84625181487048
+    - 3.0652461315484
+    - 4.30587672434415
+    - 4.01510383889238
+    - 3.82602637176802
+    - 2.17672374634246
+    - 4.03212050342349
+    - 3.42741935483871
+    - 3.31871409519047
+    - 2.7203266215404
+    max_list:
+    - 21.6675428476621
+    nlearn_l: 10
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.99843731217694
+    exp_r: 23.5472979072534
+    ch_min: 1.06216801789363
+    ch_max: 1.06216801789363
+    min_list:
+    - 3.12847354712411
+    - 3.8651102464332
+    - 3.34314332920281
+    - 3.82176980087508
+    - 2.28623685413809
+    - 3.05946630511628
+    - 2.94200591679031
+    - 2.85473643308268
+    - 2.74088304563991
+    max_list:
+    - 23.5472979072534
+    nlearn_l: 9
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.99843731217694
+    exp_r: 23.5472979072534
+    ch_min: 2.21297034154614
+    ch_max: 2.21297034154614
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.49124422668612
+    exp_r: 25.0782719124744
+    ch_min: 1.49124422668612
+    ch_max: 1.49124422668612
+    min_list:
+    - 3.880285991449
+    - 3.833628520825
+    - 4.14602126870306
+    - 4.27878295434792
+    - 2.29757731216814
+    - 4.23658317567236
+    max_list:
+    - 25.0782719124744
+    nlearn_l: 6
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.49124422668612
+    exp_r: 25.0782719124744
+    ch_min: 1.21923332955228
+    ch_max: 1.21923332955228
+    min_list:
+    - 3.31825163203502
+    - 3.26209325718104
+    - 2.69766644622073
+    - 2.96717638078353
+    - 3.2309360318034
+    - 2.7310194150653
+    - 2.68172179200985
+    max_list: []
+    nlearn_l: 7
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.49124422668612
+    exp_r: 25.0782719124744
+    ch_min: 1.19450943737112
+    ch_max: 1.19450943737112
+    min_list:
+    - 2.33625261829104
+    - 2.22761777343425
+    - 2.48502879817456
+    - 3.3465529915203
+    - 3.31521096797069
+    - 3.53187951400228
+    - 2.20130996706093
+    max_list: []
+    nlearn_l: 7
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.49124422668612
+    exp_r: 25.0782719124744
+    ch_min: 2.32847326165782
+    ch_max: 2.32847326165782
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.758740836292013
+    exp_r: 25.859181390335
+    ch_min: 0.758740836292013
+    ch_max: 0.758740836292013
+    min_list:
+    - 3.65910515827624
+    - 2.41674191958705
+    - 0.758740836292013
+    - 3.82800939295697
+    - 3.60202229651979
+    - 3.83992108702644
+    - 1.3632225868743
+    max_list:
+    - 25.859181390335
+    nlearn_l: 7
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 0.758740836292013
+    exp_r: 25.859181390335
+    ch_min: 1.9911492900615
+    ch_max: 1.9911492900615
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.734243795836534
+    exp_r: 25.859181390335
+    ch_min: 0.734243795836534
+    ch_max: 0.734243795836534
+    min_list:
+    - 0.734243795836534
+    - 3.53790804140768
+    - 3.38820855177519
+    - 2.35565713997849
+    - 2.97741926003004
+    max_list: []
+    nlearn_l: 5
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 0.734243795836534
+    exp_r: 25.859181390335
+    ch_min: 0.903963582395768
+    ch_max: 0.903963582395768
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.734243795836534
+    exp_r: 25.859181390335
+    ch_min: 1.77801837832048
+    ch_max: 1.77801837832048
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.556738775052417
+    exp_r: 25.859181390335
+    ch_min: 0.556738775052417
+    ch_max: 0.556738775052417
+    min_list:
+    - 3.4259582741792
+    - 3.5756242422801
+    - 2.92494024986419
+    - 0.556738775052417
+    - 2.52565220758841
+    - 3.51402789132101
+    - 2.40846491807966
+    max_list: []
+    nlearn_l: 7
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 0.556738775052417
+    exp_r: 25.859181390335
+    ch_min: 2.41962832856274
+    ch_max: 2.41962832856274
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.556738775052417
+    exp_r: 25.859181390335
+    ch_min: 1.01938392574708
+    ch_max: 1.01938392574708
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.556738775052417
+    exp_r: 25.859181390335
+    ch_min: 1.23747306558847
+    ch_max: 1.23747306558847
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.556738775052417
+    exp_r: 25.859181390335
+    ch_min: 0.808687735251078
+    ch_max: 0.808687735251078
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.556738775052417
+    exp_r: 25.859181390335
+    ch_min: 1.58313884497581
+    ch_max: 1.58313884497581
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.556738775052417
+    exp_r: 25.859181390335
+    ch_min: 1.07511460051223
+    ch_max: 1.07511460051223
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.556738775052417
+    exp_r: 25.859181390335
+    ch_min: 2.02714932126697
+    ch_max: 2.02714932126697
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.556738775052417
+    exp_r: 25.859181390335
+    ch_min: 0.891429156256578
+    ch_max: 0.891429156256578
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.556738775052417
+    exp_r: 25.859181390335
+    ch_min: 1.08584801613141
+    ch_max: 1.08584801613141
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.556738775052417
+    exp_r: 25.859181390335
+    ch_min: 1.53555807416112
+    ch_max: 1.53555807416112
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.556738775052417
+    exp_r: 25.859181390335
+    ch_min: 0.94941292389953
+    ch_max: 0.94941292389953
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  dist_list:
+  - exponweib
+  - wald
+  - gamma
+  - norm
+  - expon
+  - powerlaw
+  - lognorm
+  - chi2
+  - weibull_min
+  - weibull_max
+bt_est_trad:
+  online_cum: false
+  online: false
+  outlier_detection: false
+  outlier_method: ''
+  flag_learning: false
+  minmax_boost: false
+  numbin: null
+  number_bt_iter: 600
+  nboost: null
+  avg: 13.054518734774652
+  std: 3.1055200363680373
+  exp_l: 0.632438589302501
+  exp_r: 25.4765988802468
+  total_size: 0
+  num_learn: 25
+  history:
+  - exp_l: 2.1749822806012062
+    exp_r: 14.835202744198208
+    ch_min: 1.99843731217694
+    ch_max: 15.8890915730279
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.7559230288558831
+    exp_r: 19.056444015683635
+    ch_min: 1.53993364816041
+    ch_max: 21.6675428476621
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.3216483432997435
+    exp_r: 21.97706088357064
+    ch_min: 1.06216801789363
+    ch_max: 23.5472979072534
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.2781062143975301
+    exp_r: 22.567401995884037
+    ch_min: 1.06216801789363
+    ch_max: 23.5472979072534
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.254169564656011
+    exp_r: 24.26644773697257
+    ch_min: 1.06216801789363
+    ch_max: 25.0782719124744
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.164951703180763
+    exp_r: 24.178848081688564
+    ch_min: 1.06216801789363
+    ch_max: 25.0782719124744
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.137278768745195
+    exp_r: 24.326834742444937
+    ch_min: 1.06216801789363
+    ch_max: 25.0782719124744
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.1312306573885482
+    exp_r: 24.395056376122213
+    ch_min: 1.06216801789363
+    ch_max: 25.0782719124744
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.8935821975883715
+    exp_r: 25.28033406259671
+    ch_min: 0.758740836292013
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.893535754470141
+    exp_r: 25.238214968474683
+    ch_min: 0.758740836292013
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.7878416736649333
+    exp_r: 25.247010376000052
+    ch_min: 0.734243795836534
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.7729090325044028
+    exp_r: 25.36334004266321
+    ch_min: 0.734243795836534
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.7813724784660601
+    exp_r: 25.367459170170008
+    ch_min: 0.734243795836534
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6413680494598931
+    exp_r: 25.41761303136874
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.633088514982927
+    exp_r: 25.36911629928806
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6414973742274652
+    exp_r: 25.53443699674301
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6318774828499899
+    exp_r: 25.52462420166723
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6291808730958308
+    exp_r: 25.544250484912574
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6265742887910225
+    exp_r: 25.50366974017956
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6256552086358456
+    exp_r: 25.543096338231873
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6330630862497646
+    exp_r: 25.53102729816146
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6238939655349369
+    exp_r: 25.499498997898797
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6265851975368057
+    exp_r: 25.533200793129957
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6329882268980221
+    exp_r: 25.50499768012694
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.632438589302501
+    exp_r: 25.4765988802468
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  dist_list: []
+bt_est_on_out:
+  online_cum: false
+  online: true
+  outlier_detection: true
+  outlier_method: zscore
+  flag_learning: false
+  minmax_boost: false
+  numbin: 8
+  number_bt_iter: 600
+  nboost: 3
+  avg: 13.162083528864631
+  std: 3.174274465367592
+  exp_l: 0.4649856673942645
+  exp_r: 25.859181390335
+  total_size: 1250
+  num_learn: 25
+  history:
+  - exp_l: 1.99843731217694
+    exp_r: 15.8890915730279
+    ch_min: 1.99843731217694
+    ch_max: 1.99843731217694
+    min_list:
+    - 2.48963819595907
+    - 3.69900655252589
+    - 2.28850801574026
+    - 3.07530233751224
+    max_list:
+    - 15.8890915730279
+    nlearn_l: 4
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.53993364816041
+    exp_r: 21.6675428476621
+    ch_min: 1.53993364816041
+    ch_max: 1.53993364816041
+    min_list:
+    - 3.0652461315484
+    - 2.17672374634246
+    - 3.42741935483871
+    - 3.31871409519047
+    - 2.7203266215404
+    - 3.84625181487048
+    - 4.01510383889238
+    - 3.82602637176802
+    - 4.03212050342349
+    max_list:
+    - 21.6675428476621
+    nlearn_l: 9
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.0129810373466657
+    exp_r: 23.5472979072534
+    ch_min: 1.06216801789363
+    ch_max: 1.06216801789363
+    min_list:
+    - 1.06216801789363
+    - 3.12847354712411
+    - 3.34314332920281
+    - 3.82176980087508
+    - 2.28623685413809
+    - 3.05946630511628
+    - 2.94200591679031
+    - 2.85473643308268
+    - 2.74088304563991
+    max_list:
+    - 23.5472979072534
+    nlearn_l: 10
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.0129810373466657
+    exp_r: 23.5472979072534
+    ch_min: 2.21297034154614
+    ch_max: 2.21297034154614
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.0129810373466657
+    exp_r: 25.0782719124744
+    ch_min: 1.49124422668612
+    ch_max: 1.49124422668612
+    min_list:
+    - 1.49124422668612
+    - 2.29757731216814
+    - 3.880285991449
+    - 3.833628520825
+    max_list:
+    - 25.0782719124744
+    nlearn_l: 4
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.0129810373466657
+    exp_r: 25.0782719124744
+    ch_min: 1.21923332955228
+    ch_max: 1.21923332955228
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.0129810373466657
+    exp_r: 25.0782719124744
+    ch_min: 1.19450943737112
+    ch_max: 1.19450943737112
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.0129810373466657
+    exp_r: 25.0782719124744
+    ch_min: 2.32847326165782
+    ch_max: 2.32847326165782
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.7390543586516131
+    exp_r: 25.859181390335
+    ch_min: 0.758740836292013
+    ch_max: 0.758740836292013
+    min_list:
+    - 3.65910515827624
+    - 2.41674191958705
+    - 0.758740836292013
+    - 3.82800939295697
+    - 3.60202229651979
+    - 3.83992108702644
+    - 1.3632225868743
+    max_list:
+    - 25.859181390335
+    nlearn_l: 7
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 0.7390543586516131
+    exp_r: 25.859181390335
+    ch_min: 1.9911492900615
+    ch_max: 1.9911492900615
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.7167076035319944
+    exp_r: 25.859181390335
+    ch_min: 0.734243795836534
+    ch_max: 0.734243795836534
+    min_list:
+    - 0.734243795836534
+    - 3.53790804140768
+    - 3.38820855177519
+    - 2.35565713997849
+    - 2.97741926003004
+    max_list: []
+    nlearn_l: 5
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 0.7167076035319944
+    exp_r: 25.859181390335
+    ch_min: 0.903963582395768
+    ch_max: 0.903963582395768
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.7167076035319944
+    exp_r: 25.859181390335
+    ch_min: 1.77801837832048
+    ch_max: 1.77801837832048
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.4649856673942645
+    exp_r: 25.859181390335
+    ch_min: 0.556738775052417
+    ch_max: 0.556738775052417
+    min_list:
+    - 3.4259582741792
+    - 3.5756242422801
+    - 2.92494024986419
+    - 0.556738775052417
+    - 2.52565220758841
+    - 3.51402789132101
+    - 2.40846491807966
+    max_list: []
+    nlearn_l: 7
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 0.4649856673942645
+    exp_r: 25.859181390335
+    ch_min: 2.41962832856274
+    ch_max: 2.41962832856274
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.4649856673942645
+    exp_r: 25.859181390335
+    ch_min: 1.01938392574708
+    ch_max: 1.01938392574708
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.4649856673942645
+    exp_r: 25.859181390335
+    ch_min: 1.23747306558847
+    ch_max: 1.23747306558847
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.4649856673942645
+    exp_r: 25.859181390335
+    ch_min: 0.808687735251078
+    ch_max: 0.808687735251078
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.4649856673942645
+    exp_r: 25.859181390335
+    ch_min: 1.58313884497581
+    ch_max: 1.58313884497581
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.4649856673942645
+    exp_r: 25.859181390335
+    ch_min: 1.07511460051223
+    ch_max: 1.07511460051223
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.4649856673942645
+    exp_r: 25.859181390335
+    ch_min: 2.02714932126697
+    ch_max: 2.02714932126697
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.4649856673942645
+    exp_r: 25.859181390335
+    ch_min: 0.891429156256578
+    ch_max: 0.891429156256578
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.4649856673942645
+    exp_r: 25.859181390335
+    ch_min: 1.08584801613141
+    ch_max: 1.08584801613141
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.4649856673942645
+    exp_r: 25.859181390335
+    ch_min: 1.53555807416112
+    ch_max: 1.53555807416112
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.4649856673942645
+    exp_r: 25.859181390335
+    ch_min: 0.94941292389953
+    ch_max: 0.94941292389953
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  dist_list:
+  - exponweib
+  - wald
+  - gamma
+  - norm
+  - expon
+  - powerlaw
+  - lognorm
+  - chi2
+  - weibull_min
+  - weibull_max
+---
+config_file: world_tourism_economy_data
+chunk_size: 100
+bt_est_on:
+  online_cum: false
+  online: true
+  outlier_detection: false
+  outlier_method: ''
+  flag_learning: false
+  minmax_boost: false
+  numbin: 8
+  number_bt_iter: 600
+  nboost: 3
+  avg: 13.20269231165109
+  std: 3.1641222696709774
+  exp_l: 0.5462032329671808
+  exp_r: 25.859181390335
+  total_size: 1200
+  num_learn: 12
+  history:
+  - exp_l: 1.53993364816041
+    exp_r: 21.6675428476621
+    ch_min: 1.53993364816041
+    ch_max: 1.53993364816041
+    min_list:
+    - 2.48963819595907
+    - 3.69900655252589
+    - 2.28850801574026
+    - 1.99843731217694
+    - 3.07530233751224
+    - 3.84625181487048
+    - 3.0652461315484
+    - 4.01510383889238
+    - 3.82602637176802
+    - 2.17672374634246
+    - 4.03212050342349
+    - 3.42741935483871
+    - 3.31871409519047
+    - 2.7203266215404
+    max_list:
+    - 21.6675428476621
+    nlearn_l: 14
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.0536671266193096
+    exp_r: 23.5472979072534
+    ch_min: 1.06216801789363
+    ch_max: 1.06216801789363
+    min_list:
+    - 1.06216801789363
+    - 3.12847354712411
+    - 3.8651102464332
+    - 3.34314332920281
+    - 3.82176980087508
+    - 2.28623685413809
+    - 3.05946630511628
+    - 2.94200591679031
+    - 2.85473643308268
+    - 2.74088304563991
+    - 3.52639808376859
+    - 3.00282582775383
+    - 3.22874991226223
+    - 3.06685780640357
+    - 2.54400607773507
+    - 2.21297034154614
+    - 3.24364075693706
+    max_list:
+    - 23.5472979072534
+    - 21.4767088795083
+    nlearn_l: 17
+    nlearn_r: 2
+    flag_learning: true
+  - exp_l: 1.0536671266193096
+    exp_r: 25.0782719124744
+    ch_min: 1.21923332955228
+    ch_max: 1.21923332955228
+    min_list:
+    - 1.49124422668612
+    - 3.880285991449
+    - 3.833628520825
+    - 2.29757731216814
+    - 3.31825163203502
+    - 3.26209325718104
+    - 1.21923332955228
+    - 2.69766644622073
+    - 2.96717638078353
+    - 3.2309360318034
+    - 2.7310194150653
+    - 2.68172179200985
+    max_list:
+    - 25.0782719124744
+    nlearn_l: 12
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.0536671266193096
+    exp_r: 25.0782719124744
+    ch_min: 1.19450943737112
+    ch_max: 1.19450943737112
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.7391043923617165
+    exp_r: 25.859181390335
+    ch_min: 0.758740836292013
+    ch_max: 0.758740836292013
+    min_list:
+    - 3.65910515827624
+    - 2.41674191958705
+    - 0.758740836292013
+    - 3.82800939295697
+    - 3.60202229651979
+    - 3.83992108702644
+    - 1.3632225868743
+    - 2.91305742701315
+    - 2.9386290522148
+    - 3.6002724530505
+    - 1.9911492900615
+    - 2.3539698031184
+    - 3.09343126664764
+    - 3.11229711118575
+    - 3.48777215973584
+    max_list:
+    - 25.859181390335
+    nlearn_l: 15
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 0.7237253881072536
+    exp_r: 25.859181390335
+    ch_min: 0.734243795836534
+    ch_max: 0.734243795836534
+    min_list:
+    - 0.734243795836534
+    - 3.53790804140768
+    - 3.38820855177519
+    - 2.35565713997849
+    - 2.97741926003004
+    - 2.70437917256709
+    - 3.75892417213477
+    - 2.33912627954415
+    - 0.903963582395768
+    max_list:
+    - 24.4495762210381
+    nlearn_l: 9
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 0.5462032329671808
+    exp_r: 25.859181390335
+    ch_min: 0.556738775052417
+    ch_max: 0.556738775052417
+    min_list:
+    - 3.30974723909706
+    - 1.77801837832048
+    - 3.63263271999045
+    - 3.29102021626704
+    - 2.44741873804971
+    - 2.92415512803622
+    - 3.4259582741792
+    - 3.5756242422801
+    - 2.92494024986419
+    - 0.556738775052417
+    - 2.52565220758841
+    - 3.51402789132101
+    - 2.40846491807966
+    max_list: []
+    nlearn_l: 13
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 0.5462032329671808
+    exp_r: 25.859181390335
+    ch_min: 1.01938392574708
+    ch_max: 1.01938392574708
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5462032329671808
+    exp_r: 25.859181390335
+    ch_min: 0.808687735251078
+    ch_max: 0.808687735251078
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5462032329671808
+    exp_r: 25.859181390335
+    ch_min: 1.07511460051223
+    ch_max: 1.07511460051223
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5462032329671808
+    exp_r: 25.859181390335
+    ch_min: 0.891429156256578
+    ch_max: 0.891429156256578
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5462032329671808
+    exp_r: 25.859181390335
+    ch_min: 1.08584801613141
+    ch_max: 1.08584801613141
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  dist_list:
+  - exponweib
+  - wald
+  - gamma
+  - norm
+  - expon
+  - powerlaw
+  - lognorm
+  - chi2
+  - weibull_min
+  - weibull_max
+bt_est_onmm:
+  online_cum: false
+  online: true
+  outlier_detection: false
+  outlier_method: ''
+  flag_learning: true
+  minmax_boost: true
+  numbin: 8
+  number_bt_iter: 600
+  nboost: 3
+  avg: 13.699557519247705
+  std: 3.0399059677718236
+  exp_l: 1.53993364816041
+  exp_r: 25.859181390335
+  total_size: 1200
+  num_learn: 12
+  history:
+  - exp_l: 1.53993364816041
+    exp_r: 21.6675428476621
+    ch_min: 1.53993364816041
+    ch_max: 1.53993364816041
+    min_list:
+    - 2.48963819595907
+    - 3.69900655252589
+    - 2.28850801574026
+    - 1.99843731217694
+    - 3.07530233751224
+    - 3.84625181487048
+    - 3.0652461315484
+    - 4.01510383889238
+    - 3.82602637176802
+    - 2.17672374634246
+    - 4.03212050342349
+    - 3.42741935483871
+    - 3.31871409519047
+    - 2.7203266215404
+    max_list:
+    - 21.6675428476621
+    nlearn_l: 14
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.53993364816041
+    exp_r: 23.5472979072534
+    ch_min: 1.06216801789363
+    ch_max: 1.06216801789363
+    min_list:
+    - 3.12847354712411
+    - 3.8651102464332
+    - 3.34314332920281
+    - 3.82176980087508
+    - 2.28623685413809
+    - 3.05946630511628
+    - 2.94200591679031
+    - 2.85473643308268
+    - 2.74088304563991
+    - 3.52639808376859
+    - 3.00282582775383
+    - 3.22874991226223
+    - 3.06685780640357
+    - 2.54400607773507
+    - 2.21297034154614
+    - 3.24364075693706
+    - 4.12915505699642
+    max_list:
+    - 23.5472979072534
+    - 21.4767088795083
+    nlearn_l: 17
+    nlearn_r: 2
+    flag_learning: true
+  - exp_l: 1.53993364816041
+    exp_r: 25.0782719124744
+    ch_min: 1.21923332955228
+    ch_max: 1.21923332955228
+    min_list:
+    - 3.880285991449
+    - 3.833628520825
+    - 4.14602126870306
+    - 4.27878295434792
+    - 2.29757731216814
+    - 4.23658317567236
+    - 3.31825163203502
+    - 3.26209325718104
+    - 2.69766644622073
+    - 2.96717638078353
+    - 3.2309360318034
+    - 2.7310194150653
+    - 2.68172179200985
+    max_list:
+    - 25.0782719124744
+    nlearn_l: 13
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.53993364816041
+    exp_r: 25.0782719124744
+    ch_min: 1.19450943737112
+    ch_max: 1.19450943737112
+    min_list:
+    - 2.33625261829104
+    - 2.22761777343425
+    - 2.48502879817456
+    - 3.3465529915203
+    - 3.31521096797069
+    - 3.53187951400228
+    - 2.20130996706093
+    - 4.38562025434649
+    - 2.32847326165782
+    - 3.03687658265453
+    - 4.38349581370112
+    max_list: []
+    nlearn_l: 11
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.53993364816041
+    exp_r: 25.859181390335
+    ch_min: 0.758740836292013
+    ch_max: 0.758740836292013
+    min_list:
+    - 4.52024247405942
+    - 3.65910515827624
+    - 2.41674191958705
+    - 3.82800939295697
+    - 3.60202229651979
+    - 3.83992108702644
+    - 3.93472757863623
+    - 2.91305742701315
+    - 2.9386290522148
+    - 3.6002724530505
+    - 4.417225822092
+    - 1.9911492900615
+    - 2.3539698031184
+    - 3.09343126664764
+    - 4.35840236174906
+    - 3.11229711118575
+    - 3.48777215973584
+    max_list:
+    - 25.859181390335
+    nlearn_l: 17
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.53993364816041
+    exp_r: 25.859181390335
+    ch_min: 0.734243795836534
+    ch_max: 0.734243795836534
+    min_list:
+    - 3.53790804140768
+    - 3.38820855177519
+    - 2.35565713997849
+    - 4.46333481829676
+    - 2.97741926003004
+    - 2.70437917256709
+    - 3.89871947584795
+    - 3.75892417213477
+    - 2.33912627954415
+    max_list:
+    - 24.4495762210381
+    nlearn_l: 9
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.53993364816041
+    exp_r: 25.859181390335
+    ch_min: 0.556738775052417
+    ch_max: 0.556738775052417
+    min_list:
+    - 3.74887528394825
+    - 3.30974723909706
+    - 1.77801837832048
+    - 3.63263271999045
+    - 3.90736909119847
+    - 3.29102021626704
+    - 2.44741873804971
+    - 2.92415512803622
+    - 4.4555579793301
+    - 3.4259582741792
+    - 3.5756242422801
+    - 2.92494024986419
+    - 3.93790606556564
+    - 2.52565220758841
+    - 3.51402789132101
+    - 2.40846491807966
+    - 3.76709665713372
+    max_list: []
+    nlearn_l: 17
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.53993364816041
+    exp_r: 25.859181390335
+    ch_min: 1.01938392574708
+    ch_max: 1.01938392574708
+    min_list:
+    - 4.42154622702898
+    - 4.07553165362389
+    - 4.46130478833437
+    - 3.24338273490666
+    - 4.32857047832738
+    - 2.41962832856274
+    - 3.89426983449509
+    - 4.30169199885288
+    - 4.39318569948236
+    - 3.96507560025173
+    - 1.93424966715234
+    - 3.78500719803786
+    - 3.2950361580012
+    - 1.81038388060903
+    max_list:
+    - 24.967663904469
+    nlearn_l: 14
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.53993364816041
+    exp_r: 25.859181390335
+    ch_min: 0.808687735251078
+    ch_max: 0.808687735251078
+    min_list:
+    - 3.51294746670545
+    - 3.52284572046813
+    - 4.45410836799741
+    - 2.52833354895389
+    - 4.23110103910485
+    - 4.34307005579712
+    - 2.34522345223452
+    - 3.53494396074133
+    - 4.10636913099711
+    - 3.81694334017172
+    - 3.44758513875201
+    - 4.32857047832738
+    - 3.85051185753988
+    - 4.1585595712763
+    - 3.34589017057021
+    - 2.99936202185791
+    - 3.6611601997695
+    - 2.2579268554272
+    - 3.40725879698207
+    - 2.28536641991591
+    - 3.03567525560386
+    - 4.40076525293185
+    - 4.25095661321369
+    - 3.85837919915505
+    max_list:
+    - 23.1268088369536
+    nlearn_l: 24
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.53993364816041
+    exp_r: 25.859181390335
+    ch_min: 1.07511460051223
+    ch_max: 1.07511460051223
+    min_list:
+    - 3.93088689776816
+    - 4.13476360614874
+    - 4.13350979266757
+    - 1.58313884497581
+    - 3.0094538360159
+    - 2.42422128370397
+    - 3.68542808047912
+    - 4.41517745086257
+    - 2.11422911354286
+    - 2.73925796283964
+    - 3.64324151989458
+    - 2.97354973248296
+    - 4.54034859021959
+    - 3.22570457178259
+    max_list: []
+    nlearn_l: 14
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.53993364816041
+    exp_r: 25.859181390335
+    ch_min: 0.891429156256578
+    ch_max: 0.891429156256578
+    min_list:
+    - 3.2390983407884
+    - 3.81280763560952
+    - 2.92563568166371
+    - 3.64617076735321
+    - 2.02714932126697
+    - 3.78436840826455
+    - 4.3176395264853
+    - 4.30595822094702
+    - 3.89770028830286
+    - 2.18212274197298
+    - 2.67484066541695
+    - 4.13350979266757
+    - 3.47181160127997
+    - 2.68566313022609
+    - 3.01126940266958
+    - 3.9554051070719
+    - 4.53388856194165
+    - 2.76046653646466
+    - 2.52239668635981
+    - 2.00258552313115
+    - 3.00092470354237
+    - 4.23813421362068
+    - 2.89351080804157
+    - 3.19370697333108
+    - 3.98775606489159
+    - 2.67857142857155
+    max_list:
+    - 23.0834119188353
+    nlearn_l: 26
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.53993364816041
+    exp_r: 25.859181390335
+    ch_min: 1.08584801613141
+    ch_max: 1.08584801613141
+    min_list:
+    - 4.23049235321175
+    - 3.69808089065359
+    - 2.59749620996389
+    - 4.57146766368705
+    - 4.43403624554107
+    - 3.80845706220229
+    - 3.65822344281759
+    - 4.21977527685798
+    - 4.55134404497141
+    - 4.44634170544845
+    - 2.40260262791847
+    - 3.69221604367433
+    - 3.00433589575777
+    - 2.84026013313403
+    - 3.59986012416158
+    - 3.04333557377683
+    - 4.47205832443363
+    - 1.68697422025122
+    - 3.32293955962209
+    - 4.00303166497667
+    - 3.61084743238967
+    - 2.08752584856114
+    - 3.96363218821351
+    max_list: []
+    nlearn_l: 23
+    nlearn_r: 0
+    flag_learning: true
+  dist_list:
+  - exponweib
+  - wald
+  - gamma
+  - norm
+  - expon
+  - powerlaw
+  - lognorm
+  - chi2
+  - weibull_min
+  - weibull_max
+bt_est_trad:
+  online_cum: false
+  online: false
+  outlier_detection: false
+  outlier_method: ''
+  flag_learning: false
+  minmax_boost: false
+  numbin: null
+  number_bt_iter: 600
+  nboost: null
+  avg: 13.08615855424672
+  std: 3.114849318010559
+  exp_l: 0.6267612822044848
+  exp_r: 25.545555826288957
+  total_size: 0
+  num_learn: 12
+  history:
+  - exp_l: 1.7529170526498357
+    exp_r: 19.33900780149756
+    ch_min: 1.53993364816041
+    ch_max: 21.6675428476621
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.3006959901471293
+    exp_r: 22.738636298470368
+    ch_min: 1.06216801789363
+    ch_max: 23.5472979072534
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.1559190394829153
+    exp_r: 24.04482285284361
+    ch_min: 1.06216801789363
+    ch_max: 25.0782719124744
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 1.1276116700483803
+    exp_r: 24.25207474369472
+    ch_min: 1.06216801789363
+    ch_max: 25.0782719124744
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.8879370401733995
+    exp_r: 25.232752332390696
+    ch_min: 0.758740836292013
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.7727348102242403
+    exp_r: 25.359014597121348
+    ch_min: 0.734243795836534
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6373930670467702
+    exp_r: 25.397549877430077
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6374407884622625
+    exp_r: 25.533672145412734
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6368067900618155
+    exp_r: 25.526605733851603
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6211270516512881
+    exp_r: 25.519181519527248
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6331490372209603
+    exp_r: 25.531416297114003
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.6267612822044848
+    exp_r: 25.545555826288957
+    ch_min: 0.556738775052417
+    ch_max: 25.859181390335
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  dist_list: []
+bt_est_on_out:
+  online_cum: false
+  online: true
+  outlier_detection: true
+  outlier_method: zscore
+  flag_learning: false
+  minmax_boost: false
+  numbin: 8
+  number_bt_iter: 600
+  nboost: 3
+  avg: 13.2062968674977
+  std: 3.1632211307093248
+  exp_l: 0.5534123446604026
+  exp_r: 25.859181390335
+  total_size: 1200
+  num_learn: 12
+  history:
+  - exp_l: 1.53993364816041
+    exp_r: 21.6675428476621
+    ch_min: 1.53993364816041
+    ch_max: 1.53993364816041
+    min_list:
+    - 2.48963819595907
+    - 3.69900655252589
+    - 2.28850801574026
+    - 1.99843731217694
+    - 3.07530233751224
+    - 3.84625181487048
+    - 3.0652461315484
+    - 4.01510383889238
+    - 3.82602637176802
+    - 2.17672374634246
+    - 4.03212050342349
+    - 3.42741935483871
+    - 3.31871409519047
+    - 2.7203266215404
+    max_list:
+    - 21.6675428476621
+    nlearn_l: 14
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.0454684344153011
+    exp_r: 23.5472979072534
+    ch_min: 1.06216801789363
+    ch_max: 1.06216801789363
+    min_list:
+    - 1.06216801789363
+    - 3.12847354712411
+    - 3.34314332920281
+    - 3.82176980087508
+    - 2.28623685413809
+    - 3.05946630511628
+    - 2.94200591679031
+    - 2.85473643308268
+    - 2.74088304563991
+    - 3.52639808376859
+    - 3.00282582775383
+    - 3.22874991226223
+    - 3.06685780640357
+    - 2.54400607773507
+    - 2.21297034154614
+    - 3.24364075693706
+    max_list:
+    - 23.5472979072534
+    - 21.4767088795083
+    nlearn_l: 17
+    nlearn_r: 2
+    flag_learning: true
+  - exp_l: 1.0454684344153011
+    exp_r: 25.0782719124744
+    ch_min: 1.21923332955228
+    ch_max: 1.21923332955228
+    min_list:
+    - 1.49124422668612
+    - 3.833628520825
+    - 2.29757731216814
+    - 3.31825163203502
+    - 3.26209325718104
+    - 1.21923332955228
+    - 2.69766644622073
+    - 2.96717638078353
+    - 3.2309360318034
+    - 2.7310194150653
+    - 2.68172179200985
+    - 3.880285991449
+    max_list:
+    - 25.0782719124744
+    nlearn_l: 12
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 1.0454684344153011
+    exp_r: 25.0782719124744
+    ch_min: 1.19450943737112
+    ch_max: 1.19450943737112
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.7579912576363613
+    exp_r: 25.859181390335
+    ch_min: 0.758740836292013
+    ch_max: 0.758740836292013
+    min_list:
+    - 3.65910515827624
+    - 2.41674191958705
+    - 0.758740836292013
+    - 3.82800939295697
+    - 3.60202229651979
+    - 3.83992108702644
+    - 1.3632225868743
+    - 2.91305742701315
+    - 2.9386290522148
+    - 3.6002724530505
+    - 1.9911492900615
+    - 2.3539698031184
+    - 3.09343126664764
+    - 3.11229711118575
+    - 3.48777215973584
+    max_list:
+    - 25.859181390335
+    nlearn_l: 15
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 0.6928600240623035
+    exp_r: 25.859181390335
+    ch_min: 0.734243795836534
+    ch_max: 0.734243795836534
+    min_list:
+    - 0.734243795836534
+    - 3.53790804140768
+    - 3.38820855177519
+    - 2.35565713997849
+    - 2.97741926003004
+    - 2.70437917256709
+    - 3.75892417213477
+    - 2.33912627954415
+    - 0.903963582395768
+    max_list:
+    - 24.4495762210381
+    nlearn_l: 9
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 0.5534123446604026
+    exp_r: 25.859181390335
+    ch_min: 0.556738775052417
+    ch_max: 0.556738775052417
+    min_list:
+    - 3.30974723909706
+    - 1.77801837832048
+    - 3.63263271999045
+    - 3.29102021626704
+    - 2.44741873804971
+    - 2.92415512803622
+    - 3.4259582741792
+    - 3.5756242422801
+    - 2.92494024986419
+    - 0.556738775052417
+    - 2.52565220758841
+    - 3.51402789132101
+    - 2.40846491807966
+    max_list: []
+    nlearn_l: 13
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 0.5534123446604026
+    exp_r: 25.859181390335
+    ch_min: 1.01938392574708
+    ch_max: 1.01938392574708
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5534123446604026
+    exp_r: 25.859181390335
+    ch_min: 0.808687735251078
+    ch_max: 0.808687735251078
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5534123446604026
+    exp_r: 25.859181390335
+    ch_min: 1.07511460051223
+    ch_max: 1.07511460051223
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5534123446604026
+    exp_r: 25.859181390335
+    ch_min: 0.891429156256578
+    ch_max: 0.891429156256578
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 0.5534123446604026
+    exp_r: 25.859181390335
+    ch_min: 1.08584801613141
+    ch_max: 1.08584801613141
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  dist_list:
+  - exponweib
+  - wald
+  - gamma
+  - norm
+  - expon
+  - powerlaw
+  - lognorm
+  - chi2
+  - weibull_min
+  - weibull_max

@@ -53,11 +53,11 @@ def parse_opt():
         prog='Bootstrap-Tool'
         )
     ROOT = Path(__file__).parent
-    parser.add_argument("--dir", type = str, default=ROOT/"config_sim_data/normal", help = 'working directory')
-    parser.add_argument("--file", type = str, default="config_normal_simulate.yaml", help = 'config file')
+    parser.add_argument("--dir", type = str, default=ROOT/"config_sim_data/realworld", help = 'working directory')
+    parser.add_argument("--file", type = str, default="config_realworld_simulate.yaml", help = 'config file')
     parser.add_argument("--outlier", action = 'store_true', help = 'Run with outlier contamination')
     # parser.add_argument("--savename", type = str, default="result-fdist-statanal2.csv", help = 'source for loading config file results')
-    parser.set_defaults(outlier=True)
+    parser.set_defaults(outlier=False)
     opt = parser.parse_args()
     return opt
 

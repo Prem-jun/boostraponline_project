@@ -1,0 +1,7273 @@
+config_file: Electronic_sales_Sep2023-Sep2024
+chunk_size: 50
+bt_est_on:
+  online_cum: false
+  online: true
+  outlier_detection: false
+  outlier_method: ''
+  flag_learning: false
+  minmax_boost: false
+  numbin: 8
+  number_bt_iter: 600
+  nboost: 3
+  avg: 4238.350527841527
+  std: 1055.5891093113942
+  exp_l: 15.99409059595024
+  exp_r: 8460.706965087104
+  total_size: 6000
+  num_learn: 120
+  history:
+  - exp_l: 36.38873425252007
+    exp_r: 7920.024556772985
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list:
+    - 741.09
+    - 41.5
+    - 83.0
+    - 83.0
+    - 103.75
+    - 124.5
+    - 83.0
+    - 988.12
+    - 844.83
+    - 844.83
+    - 83.0
+    - 103.75
+    - 988.12
+    - 186.75
+    - 62.25
+    - 791.19
+    - 145.25
+    - 145.25
+    - 207.5
+    max_list:
+    - 7603.47
+    - 7120.71
+    - 7911.9
+    nlearn_l: 19
+    nlearn_r: 3
+    flag_learning: true
+  - exp_l: 15.99409059595024
+    exp_r: 7920.024556772985
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list:
+    - 145.25
+    - 62.25
+    - 166.0
+    - 463.96
+    - 463.96
+    - 145.25
+    - 62.25
+    - 41.5
+    - 247.03
+    - 20.75
+    - 741.09
+    - 166.0
+    - 741.09
+    - 20.75
+    - 41.5
+    - 988.12
+    max_list:
+    - 7603.47
+    - 7603.47
+    - 7603.47
+    - 7120.71
+    nlearn_l: 16
+    nlearn_r: 4
+    flag_learning: true
+  - exp_l: 15.99409059595024
+    exp_r: 7920.024556772985
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list:
+    - 844.83
+    - 83.0
+    - 62.25
+    - 927.92
+    - 103.75
+    - 83.0
+    - 166.0
+    - 124.5
+    - 463.96
+    - 83.0
+    - 124.5
+    - 988.12
+    - 741.09
+    - 62.25
+    - 988.12
+    - 844.83
+    - 247.03
+    - 463.96
+    - 247.03
+    - 247.03
+    - 494.06
+    max_list:
+    - 8448.3
+    - 7603.47
+    - 7911.9
+    nlearn_l: 21
+    nlearn_r: 3
+    flag_learning: true
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 83.0
+    ch_max: 83.0
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 83.0
+    ch_max: 83.0
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 83.0
+    ch_max: 83.0
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 15.99409059595024
+    exp_r: 8460.706965087104
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  dist_list:
+  - exponweib
+  - wald
+  - gamma
+  - norm
+  - expon
+  - powerlaw
+  - lognorm
+  - chi2
+  - weibull_min
+  - weibull_max
+bt_est_onmm:
+  online_cum: false
+  online: true
+  outlier_detection: false
+  outlier_method: ''
+  flag_learning: false
+  minmax_boost: true
+  numbin: 8
+  number_bt_iter: 600
+  nboost: 3
+  avg: 4234.525
+  std: 1053.44375
+  exp_l: 20.75
+  exp_r: 8448.3
+  total_size: 6000
+  num_learn: 120
+  history:
+  - exp_l: 41.5
+    exp_r: 7911.9
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list:
+    - 741.09
+    - 41.5
+    - 83.0
+    - 83.0
+    - 103.75
+    - 124.5
+    - 83.0
+    - 988.12
+    - 844.83
+    - 844.83
+    - 83.0
+    - 103.75
+    - 988.12
+    - 186.75
+    - 62.25
+    - 791.19
+    - 145.25
+    - 145.25
+    - 207.5
+    max_list:
+    - 7603.47
+    - 7120.71
+    - 7911.9
+    nlearn_l: 19
+    nlearn_r: 3
+    flag_learning: true
+  - exp_l: 41.5
+    exp_r: 7911.9
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list:
+    - 145.25
+    - 62.25
+    - 166.0
+    - 463.96
+    - 463.96
+    - 145.25
+    - 62.25
+    - 41.5
+    - 247.03
+    - 741.09
+    - 166.0
+    - 741.09
+    - 41.5
+    - 988.12
+    max_list:
+    - 7603.47
+    - 7603.47
+    - 7603.47
+    - 7120.71
+    nlearn_l: 14
+    nlearn_r: 4
+    flag_learning: true
+  - exp_l: 41.5
+    exp_r: 7911.9
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list:
+    - 741.09
+    - 207.5
+    - 791.19
+    - 41.5
+    - 62.25
+    - 166.0
+    - 186.75
+    - 207.5
+    - 791.19
+    - 844.83
+    - 247.03
+    - 186.75
+    - 103.75
+    - 791.19
+    - 166.0
+    - 124.5
+    - 927.92
+    - 844.83
+    max_list:
+    - 7120.71
+    nlearn_l: 18
+    nlearn_r: 0
+    flag_learning: true
+  - exp_l: 41.5
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list:
+    - 844.83
+    - 83.0
+    - 62.25
+    - 927.92
+    - 103.75
+    - 83.0
+    - 166.0
+    - 124.5
+    - 463.96
+    - 83.0
+    - 124.5
+    - 988.12
+    - 741.09
+    - 62.25
+    - 988.12
+    - 844.83
+    - 247.03
+    - 463.96
+    - 247.03
+    - 247.03
+    - 494.06
+    max_list:
+    - 8448.3
+    - 7603.47
+    - 7911.9
+    nlearn_l: 21
+    nlearn_r: 3
+    flag_learning: true
+  - exp_l: 41.5
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list:
+    - 988.12
+    - 988.12
+    - 186.75
+    - 494.06
+    - 741.09
+    - 62.25
+    - 207.5
+    - 103.75
+    - 124.5
+    - 988.12
+    - 791.19
+    - 186.75
+    - 247.03
+    - 20.75
+    - 791.19
+    - 186.75
+    - 247.03
+    - 247.03
+    - 844.83
+    - 463.96
+    max_list:
+    - 7911.9
+    - 7911.9
+    - 7603.47
+    nlearn_l: 20
+    nlearn_r: 3
+    flag_learning: true
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 83.0
+    ch_max: 83.0
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 83.0
+    ch_max: 83.0
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 83.0
+    ch_max: 83.0
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  dist_list:
+  - exponweib
+  - wald
+  - gamma
+  - norm
+  - expon
+  - powerlaw
+  - lognorm
+  - chi2
+  - weibull_min
+  - weibull_max
+bt_est_trad:
+  online_cum: false
+  online: false
+  outlier_detection: false
+  outlier_method: ''
+  flag_learning: false
+  minmax_boost: false
+  numbin: null
+  number_bt_iter: 600
+  nboost: null
+  avg: 4234.525
+  std: 1053.44375
+  exp_l: 20.75
+  exp_r: 8448.3
+  total_size: 0
+  num_learn: 120
+  history:
+  - exp_l: 51.90958333333333
+    exp_r: 7717.8573000000015
+    ch_min: 41.5
+    ch_max: 7911.9
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 24.17375
+    exp_r: 7795.791749999999
+    ch_min: 20.75
+    ch_max: 7911.9
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 21.026666666666667
+    exp_r: 7792.1263500000005
+    ch_min: 20.75
+    ch_max: 7911.9
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 21.199583333333333
+    exp_r: 8243.4846
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 21.26875
+    exp_r: 8445.618
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.888333333333332
+    exp_r: 8443.31595
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.888333333333332
+    exp_r: 8446.512000000002
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.922916666666666
+    exp_r: 8442.042000000001
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8447.406
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8447.406
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8446.512000000002
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  dist_list: []
+bt_est_on_out:
+  online_cum: false
+  online: true
+  outlier_detection: true
+  outlier_method: zscore
+  flag_learning: false
+  minmax_boost: false
+  numbin: 8
+  number_bt_iter: 600
+  nboost: 3
+  avg: 4238.168904730843
+  std: 1054.9317107729325
+  exp_l: 18.44206163911275
+  exp_r: 8457.895747822573
+  total_size: 6000
+  num_learn: 120
+  history:
+  - exp_l: 40.59936563557136
+    exp_r: 7926.280695222389
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list:
+    - 741.09
+    - 41.5
+    - 83.0
+    - 83.0
+    - 103.75
+    - 124.5
+    - 83.0
+    - 988.12
+    - 844.83
+    - 844.83
+    - 83.0
+    - 103.75
+    - 988.12
+    - 186.75
+    - 62.25
+    - 791.19
+    - 145.25
+    - 145.25
+    - 207.5
+    max_list:
+    - 7603.47
+    - 7120.71
+    - 7911.9
+    nlearn_l: 19
+    nlearn_r: 3
+    flag_learning: true
+  - exp_l: 18.44206163911275
+    exp_r: 7926.280695222389
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list:
+    - 145.25
+    - 62.25
+    - 166.0
+    - 463.96
+    - 463.96
+    - 145.25
+    - 62.25
+    - 41.5
+    - 247.03
+    - 20.75
+    - 741.09
+    - 166.0
+    - 741.09
+    - 20.75
+    - 41.5
+    - 988.12
+    max_list:
+    - 7603.47
+    - 7603.47
+    - 7603.47
+    - 7120.71
+    nlearn_l: 16
+    nlearn_r: 4
+    flag_learning: true
+  - exp_l: 18.44206163911275
+    exp_r: 7926.280695222389
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list:
+    - 844.83
+    - 83.0
+    - 62.25
+    - 927.92
+    - 103.75
+    - 83.0
+    - 166.0
+    - 124.5
+    - 463.96
+    - 83.0
+    - 124.5
+    - 988.12
+    - 741.09
+    - 62.25
+    - 988.12
+    - 844.83
+    - 247.03
+    - 463.96
+    - 247.03
+    - 247.03
+    - 494.06
+    max_list:
+    - 8448.3
+    - 7603.47
+    - 7911.9
+    nlearn_l: 21
+    nlearn_r: 3
+    flag_learning: true
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 83.0
+    ch_max: 83.0
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 83.0
+    ch_max: 83.0
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 83.0
+    ch_max: 83.0
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.44206163911275
+    exp_r: 8457.895747822573
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  dist_list:
+  - exponweib
+  - wald
+  - gamma
+  - norm
+  - expon
+  - powerlaw
+  - lognorm
+  - chi2
+  - weibull_min
+  - weibull_max
+---
+config_file: Electronic_sales_Sep2023-Sep2024
+chunk_size: 100
+bt_est_on:
+  online_cum: false
+  online: true
+  outlier_detection: false
+  outlier_method: ''
+  flag_learning: false
+  minmax_boost: false
+  numbin: 8
+  number_bt_iter: 600
+  nboost: 3
+  avg: 4245.926746255215
+  std: 1056.803613188745
+  exp_l: 18.712293500234694
+  exp_r: 8473.141199010195
+  total_size: 6000
+  num_learn: 60
+  history:
+  - exp_l: 18.712293500234694
+    exp_r: 7919.082559773456
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list:
+    - 741.09
+    - 41.5
+    - 83.0
+    - 83.0
+    - 103.75
+    - 124.5
+    - 83.0
+    - 988.12
+    - 844.83
+    - 844.83
+    - 83.0
+    - 103.75
+    - 988.12
+    - 186.75
+    - 62.25
+    - 791.19
+    - 145.25
+    - 145.25
+    - 207.5
+    - 145.25
+    - 62.25
+    - 166.0
+    - 463.96
+    - 463.96
+    - 145.25
+    - 62.25
+    - 41.5
+    - 247.03
+    - 20.75
+    - 741.09
+    - 166.0
+    - 741.09
+    - 20.75
+    - 41.5
+    - 988.12
+    max_list:
+    - 7603.47
+    - 7120.71
+    - 7911.9
+    - 7603.47
+    - 7603.47
+    - 7603.47
+    - 7120.71
+    nlearn_l: 35
+    nlearn_r: 7
+    flag_learning: true
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list:
+    - 741.09
+    - 207.5
+    - 791.19
+    - 41.5
+    - 62.25
+    - 166.0
+    - 186.75
+    - 207.5
+    - 791.19
+    - 844.83
+    - 247.03
+    - 186.75
+    - 103.75
+    - 791.19
+    - 166.0
+    - 20.75
+    - 124.5
+    - 927.92
+    - 844.83
+    - 20.75
+    - 844.83
+    - 83.0
+    - 62.25
+    - 927.92
+    - 103.75
+    - 83.0
+    - 166.0
+    - 124.5
+    - 463.96
+    - 83.0
+    - 124.5
+    - 988.12
+    - 741.09
+    - 62.25
+    - 988.12
+    - 844.83
+    - 247.03
+    - 463.96
+    - 247.03
+    - 247.03
+    - 494.06
+    max_list:
+    - 8448.3
+    - 7603.47
+    - 7911.9
+    nlearn_l: 41
+    nlearn_r: 3
+    flag_learning: true
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 18.712293500234694
+    exp_r: 8473.141199010195
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  dist_list:
+  - exponweib
+  - wald
+  - gamma
+  - norm
+  - expon
+  - powerlaw
+  - lognorm
+  - chi2
+  - weibull_min
+  - weibull_max
+bt_est_onmm:
+  online_cum: false
+  online: true
+  outlier_detection: false
+  outlier_method: ''
+  flag_learning: false
+  minmax_boost: true
+  numbin: 8
+  number_bt_iter: 600
+  nboost: 3
+  avg: 4233.744236725437
+  std: 1053.6389408186405
+  exp_l: 19.188473450874845
+  exp_r: 8448.3
+  total_size: 6000
+  num_learn: 60
+  history:
+  - exp_l: 19.758625344321228
+    exp_r: 7911.9
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list:
+    - 741.09
+    - 41.5
+    - 83.0
+    - 83.0
+    - 103.75
+    - 124.5
+    - 83.0
+    - 988.12
+    - 844.83
+    - 844.83
+    - 83.0
+    - 103.75
+    - 988.12
+    - 186.75
+    - 62.25
+    - 791.19
+    - 145.25
+    - 145.25
+    - 207.5
+    - 145.25
+    - 62.25
+    - 166.0
+    - 463.96
+    - 463.96
+    - 145.25
+    - 62.25
+    - 41.5
+    - 247.03
+    - 20.75
+    - 741.09
+    - 166.0
+    - 741.09
+    - 20.75
+    - 41.5
+    - 988.12
+    max_list:
+    - 7603.47
+    - 7120.71
+    - 7911.9
+    - 7603.47
+    - 7603.47
+    - 7603.47
+    - 7120.71
+    nlearn_l: 35
+    nlearn_r: 7
+    flag_learning: true
+  - exp_l: 19.758625344321228
+    exp_r: 7911.9
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list:
+    - 741.09
+    - 207.5
+    - 791.19
+    - 41.5
+    - 62.25
+    - 166.0
+    - 186.75
+    - 207.5
+    - 791.19
+    - 844.83
+    - 247.03
+    - 186.75
+    - 103.75
+    - 791.19
+    - 166.0
+    - 20.75
+    - 124.5
+    - 927.92
+    - 844.83
+    - 20.75
+    - 844.83
+    - 83.0
+    - 62.25
+    - 927.92
+    - 103.75
+    - 83.0
+    - 166.0
+    - 124.5
+    - 463.96
+    - 83.0
+    - 124.5
+    - 988.12
+    - 741.09
+    - 62.25
+    - 988.12
+    - 844.83
+    - 247.03
+    - 463.96
+    - 247.03
+    - 247.03
+    - 494.06
+    max_list:
+    - 7120.71
+    - 7603.47
+    - 7911.9
+    nlearn_l: 41
+    nlearn_r: 3
+    flag_learning: true
+  - exp_l: 19.758625344321228
+    exp_r: 7911.9
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list:
+    - 494.06
+    - 41.5
+    - 207.5
+    - 494.06
+    - 494.06
+    - 791.19
+    - 463.96
+    - 62.25
+    - 844.83
+    - 741.09
+    - 62.25
+    - 844.83
+    - 103.75
+    - 186.75
+    - 207.5
+    - 186.75
+    - 166.0
+    - 927.92
+    - 494.06
+    - 103.75
+    - 186.75
+    - 988.12
+    - 988.12
+    - 186.75
+    - 494.06
+    - 741.09
+    - 62.25
+    - 207.5
+    - 103.75
+    - 124.5
+    - 988.12
+    - 791.19
+    - 186.75
+    - 247.03
+    - 20.75
+    - 791.19
+    - 186.75
+    - 247.03
+    - 247.03
+    - 844.83
+    - 463.96
+    max_list:
+    - 7603.47
+    - 7120.71
+    - 7911.9
+    - 7911.9
+    - 7603.47
+    nlearn_l: 41
+    nlearn_r: 5
+    flag_learning: true
+  - exp_l: 19.758625344321228
+    exp_r: 7911.9
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list:
+    - 145.25
+    - 741.09
+    - 988.12
+    - 207.5
+    - 463.96
+    - 20.75
+    - 103.75
+    - 145.25
+    - 927.92
+    - 41.5
+    - 166.0
+    - 166.0
+    - 20.75
+    - 62.25
+    - 741.09
+    - 41.5
+    - 145.25
+    - 844.83
+    - 463.96
+    - 20.75
+    - 463.96
+    - 844.83
+    - 247.03
+    - 103.75
+    - 124.5
+    - 103.75
+    - 145.25
+    - 124.5
+    - 494.06
+    - 41.5
+    - 145.25
+    - 62.25
+    - 844.83
+    - 741.09
+    - 83.0
+    - 741.09
+    max_list:
+    - 8448.3
+    - 7603.47
+    - 7911.9
+    - 8448.3
+    - 7911.9
+    - 7603.47
+    nlearn_l: 36
+    nlearn_r: 6
+    flag_learning: true
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.188473450874845
+    exp_r: 8448.3
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  dist_list:
+  - exponweib
+  - wald
+  - gamma
+  - norm
+  - expon
+  - powerlaw
+  - lognorm
+  - chi2
+  - weibull_min
+  - weibull_max
+bt_est_trad:
+  online_cum: false
+  online: false
+  outlier_detection: false
+  outlier_method: ''
+  flag_learning: false
+  minmax_boost: false
+  numbin: null
+  number_bt_iter: 600
+  nboost: null
+  avg: 4234.525
+  std: 1053.44375
+  exp_l: 20.75
+  exp_r: 8448.3
+  total_size: 0
+  num_learn: 60
+  history:
+  - exp_l: 23.412916666666668
+    exp_r: 7786.49415
+    ch_min: 20.75
+    ch_max: 7911.9
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 21.130416666666665
+    exp_r: 8245.429049999999
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.819166666666668
+    exp_r: 8446.512000000002
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.922916666666666
+    exp_r: 8447.406
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 20.75
+    exp_r: 8448.3
+    ch_min: 20.75
+    ch_max: 8448.3
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  dist_list: []
+bt_est_on_out:
+  online_cum: false
+  online: true
+  outlier_detection: true
+  outlier_method: zscore
+  flag_learning: false
+  minmax_boost: false
+  numbin: 8
+  number_bt_iter: 600
+  nboost: 3
+  avg: 4247.783959345733
+  std: 1056.9759098284378
+  exp_l: 19.88032003198191
+  exp_r: 8475.687598659484
+  total_size: 6000
+  num_learn: 60
+  history:
+  - exp_l: 19.88032003198191
+    exp_r: 7916.413020305323
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list:
+    - 741.09
+    - 41.5
+    - 83.0
+    - 83.0
+    - 103.75
+    - 124.5
+    - 83.0
+    - 988.12
+    - 844.83
+    - 844.83
+    - 83.0
+    - 103.75
+    - 988.12
+    - 186.75
+    - 62.25
+    - 791.19
+    - 145.25
+    - 145.25
+    - 207.5
+    - 145.25
+    - 62.25
+    - 166.0
+    - 463.96
+    - 463.96
+    - 145.25
+    - 62.25
+    - 41.5
+    - 247.03
+    - 20.75
+    - 741.09
+    - 166.0
+    - 741.09
+    - 20.75
+    - 41.5
+    - 988.12
+    max_list:
+    - 7603.47
+    - 7120.71
+    - 7911.9
+    - 7603.47
+    - 7603.47
+    - 7603.47
+    - 7120.71
+    nlearn_l: 35
+    nlearn_r: 7
+    flag_learning: true
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list:
+    - 741.09
+    - 207.5
+    - 791.19
+    - 41.5
+    - 62.25
+    - 166.0
+    - 186.75
+    - 207.5
+    - 791.19
+    - 844.83
+    - 247.03
+    - 186.75
+    - 103.75
+    - 791.19
+    - 166.0
+    - 20.75
+    - 124.5
+    - 927.92
+    - 844.83
+    - 20.75
+    - 844.83
+    - 83.0
+    - 62.25
+    - 927.92
+    - 103.75
+    - 83.0
+    - 166.0
+    - 124.5
+    - 463.96
+    - 83.0
+    - 124.5
+    - 988.12
+    - 741.09
+    - 62.25
+    - 988.12
+    - 844.83
+    - 247.03
+    - 463.96
+    - 247.03
+    - 247.03
+    - 494.06
+    max_list:
+    - 8448.3
+    - 7603.47
+    - 7911.9
+    nlearn_l: 41
+    nlearn_r: 3
+    flag_learning: true
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 62.25
+    ch_max: 62.25
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 20.75
+    ch_max: 20.75
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  - exp_l: 19.88032003198191
+    exp_r: 8475.687598659484
+    ch_min: 41.5
+    ch_max: 41.5
+    min_list: []
+    max_list: []
+    nlearn_l: 0
+    nlearn_r: 0
+    flag_learning: false
+  dist_list:
+  - exponweib
+  - wald
+  - gamma
+  - norm
+  - expon
+  - powerlaw
+  - lognorm
+  - chi2
+  - weibull_min
+  - weibull_max
