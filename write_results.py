@@ -71,7 +71,7 @@ def evaluate_results(config_list_path, results_dir):
 
 if __name__ == "__main__":
     # Example usage: adjust these paths as needed
-    config_list_path = "config_sim_data/wiebull/results_config_files.yaml"
-    # config_list_path = "config_sim_data/wiebull/results_config_files_outlier.yaml"
-    results_dir = "config_sim_data/wiebull"
+    # config_list_path = "config_sim_data/chi2/results_config_files.yaml"
+    config_list_path = "config_sim_data/chi2/results_config_files_outlier.yaml"
+    results_dir = "config_sim_data/chi2"
     perf_df = evaluate_results(config_list_path, results_dir)
