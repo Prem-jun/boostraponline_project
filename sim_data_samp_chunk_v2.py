@@ -87,8 +87,8 @@ def parse_opt():
         prog='Sample generator-Tool'
         )
     ROOT = Path(__file__).parent
-    parser.add_argument("--dir", type = str, default="./config_sim_data/chi2", help = 'working directory')
-    parser.add_argument("--file", type = str, default="config_chi2_simulate.yaml", help = 'config file')
+    parser.add_argument("--dir", type = str, default="./config_sim_data/normal", help = 'working directory')
+    parser.add_argument("--file", type = str, default="config_normal_simulate.yaml", help = 'config file')
     parser.add_argument("--pfeed", type = int, default=30, help = 'percent of samples out of population')
     parser.add_argument("--outlier", action = 'store_true', help = 'Run with outlier contamination')
     # parser.add_argument("--savename", type = str, default="result-fdist-statanal2.csv", help = 'source for loading config file results')
