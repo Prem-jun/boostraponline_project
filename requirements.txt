@@ -1,7 +1,7 @@
 # This file may be used to create an environment using:
 # $ conda create --name <env> --file <this file>
 # platform: osx-arm64
-_anaconda_depends=2024.02=py311_openblas_1
+# _anaconda_depends=2024.02=py311_openblas_1
 abseil-cpp=20230802.0=h313beb8_2
 aiobotocore=2.7.0=py311hca03da5_0
 aiofiles=22.1.0=pypi_0
