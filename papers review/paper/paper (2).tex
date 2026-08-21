@@ -1,0 +1,971 @@
+\documentclass[lettersize,journal]{IEEEtran}
+\usepackage{amsmath,amsfonts}
+\usepackage{amsthm}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{array}
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\usepackage{textcomp}
+\usepackage{stfloats}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{multirow}
+\hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
+% updated with editorial comments 8/9/2021
+
+\begin{document}
+
+\title{Predicting Number of Clusters by Using Past Knowledge Transfer of Pre-trained Cluster Patterns
+without Statistical Distance Analysis}
+
+\author{Chidchanok Lursinsap ~\IEEEmembership{}
+        % <-this % stops a space
+\thanks{Department of Mathematics and Computer Science, Faculty of Science, Chulalongkorn University, 
+Bangkok 10330, Thailand}% <-this % stops a space
+\thanks{}}
+
+% The paper headers
+\markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2021}%
+{Shell \MakeLowercase{\textit{et al.}}: A Sample Article Using IEEEtran.cls for IEEE Journals}
+
+\IEEEpubid{0000--0000/00\$00.00~\copyright~2021 IEEE}
+% Remember, if you use this you must call \IEEEpubidadjcol in the second
+% column for its text to clear the IEEEpubid mark.
+
+\maketitle
+
+\begin{abstract}
+Knowing the exact number of clusters and their centers in any dimension is the most important step to 
+achieve the highest accuracy of any recognition problems. There are several efficient clustering methods 
+proposed in the past to identify the clusters. These methods must specify the number of 
+clusters (k-value) prior to the clustering process which deploys some statistical distance analysis with a
+predefined decision threshold value. In this paper, a new approach based on the cognitive process of
+the brain using the past knowledge and experience to brain to solve problems is proposed. The problem of 
+identifying number of clusters is transformed into a problem of classifying data distribution patterns
+with number of clusters as a target. The preliminary result achieved 98\% prediction accuracy. The 
+theoretical upper bound in the number of pre-trained patterns is also given. An experiment on a real 
+data set was also conducted with the discussion about outcome. 
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+Article submission, IEEE, IEEEtran, journal, \LaTeX, paper, template, typesetting.
+\end{IEEEkeywords}
+
+\section{Introduction}
+\IEEEPARstart{C}{lustering} is a process to identify the number of groups or clusters of vector points 
+and their locations in the space with any predefined targets and also the center of each group. 
+The result of clustering can help improve 
+the result of classification which is core of machine learning. If the number of clusters also its 
+location are known a priori, then the minimum number of separating hyperplanes or radial basis functions 
+can be setup without any trial-and-error process. To locate each cluster, most algorithms requires
+a predefined parameters such as number of clusters, neighborhood size, branching factors before starting 
+the clustering process. Table \ref{cluster-method-parameter} summarizes the parameters needed by some 
+existing popular clustering methods implemented in package {\em scikit-learn}.  Therefore, knowing the 
+actual values of these parameters is the most important step. But it is rather difficult to estimate the 
+values of these parameters if it is more than 3 dimensions. Many proposed clustering algorithms 
+employed the analysis of distances among data points with various metrics to determine the gaps among
+potential clusters. Furthermore, the clustering process can be further improved by applying the concept of 
+hierarchical grouping to merge some nearest clusters so that some false negative and redundant clusters 
+can be eliminated. Although the approaches of distance analysis with deterministic metrics can produce a 
+correct number of clusters in most cases, these approaches are ad hoc to a specific circumstance
+and the accuracy depends strongly on a predefined threshold value,
+evaluation metrics, and types of analyzing distance. It is noticeable that the knowledge and experiences
+in predicting number of clusters obtained from previously analyzed cases cannot be transferred to new 
+cases to help achieve the high accuracy of the new cases.
+\begin{table}
+\label{cluster-method-parameter}
+\caption{Summary of some popular clustering methods and required parameters.}
+\begin{tabular}{|l|l|} \hline
+\multicolumn{1}{|c|}{Methods} & \multicolumn{1}{c|}{Parameters} \\ \hline
+K-means & Number of clusters \\
+Affinity propagation & Damping, Sample preference \\
+Mean shift & Bandwidth \\
+Spectral clustering & Number of clusters \\
+Ward hierarchical clustering & Number of cluster or Distance threshold \\
+Agglomerative clustering & Number of clusters or Distance threshold \\
+DBSCAN & Neighborhood size \\
+HDBSCAN & Minimum number cluster membership \\
+OPTICS & Minimum number cluster membership \\
+Gaussian mixtures & Number of Gaussian functions \\
+BIRCH & Branching factor, Threshold \\
+Bisecting K-means & Number of clusters \\ \hline
+\end{tabular}
+\end{table}
+
+\IEEEpubidadjcol
+In this study, a new approach is suggested so that the previous knowledge and experiences in predicting
+the number of clusters prior to finding the location of each cluster can be transferred to cope with
+new circumstances. This approach is based on the concept of {\em transfer of Knowledge
+in cognitive systems}. By applying this concept, there is no need to analyze the relations among the 
+data points in terms of distances and no evaluation metrics are required to determine the clusters.
+The more knowledge of data distribution patterns and number of existing clusters are encountered
+and experienced, the more accurate result of prediction can be achieved. Dagmar \cite{Dagmar} discussed
+how the brain uses its past experiences to guide future actions, including predictions. He also
+summarized the strong emerging trend towards
+the study on memory-based prediction in cognitive neuroscience. Hawkins and Blakeslee 
+\cite{Hawkins} stated that brain stores experiences as well as remembers events with their relations 
+it encountered and uses these pieces of information and knowledge to make prediction. This is the
+basis of brain intelligence, perception, creativity, and consciousness. Bar \cite{Bar} studied how 
+the brain uses a priori learned knowledge to generate predictions. He also summarized that the brain is
+proactive which means that it continuously produces predictions from the stored knowledge and also
+keeps extracting and storing the information from the inputs.
+
+\IEEEpubidadjcol
+To avoid the analysis of distances among data points, a set of cluster distribution patterns with
+their corresponding number of clusters as their targets are
+transformed into a set set of vector patterns and targets. These patterns with the targets are learned 
+by a supervised neural network. The network after being trained is used to predict the number of clusters.
+The detail of this approach will be discussed in Section \ref{concept}. This approach does not
+establish any constrained on the limitation of number of clusters, number of data points in each clusters,
+and number of dimensions of data points. However, if the leaning methods proposed in 
+{\em discard-after-learn} \cite{Prem}\cite{Mongkhon} are used, the training of new knowledge for the 
+network can be continuously added without losing the previously learned knowledge.
+
+The paper is organized into 5 sections.
+
+
+\section{Related Works and Concepts of Predicting Number of clusters}
+
+This section summarized some interesting works relating to predicting the number of clusters based on 
+distance analysis among data points.
+
+\IEEEpubidadjcol
+
+Hong Yu, Zhanguo Liu, Guoyin Wang \cite{Hong} applied the concepts of rough set and hierarchical clustering 
+to find the number of clusters in two algorithms, DTRS (decision-theoretic rough set) and FACA-DTRS
+(fast automatically clustering algorithm using
+decision-theoretic rough set). They also proposed some metrics to evaluate the clusters in terms
+of probability. However, a predefined threshold to make decision must be set up.
+Wilson Calmon and Mariana Albi \cite{Calmon} proposed two methods based on classical Plackett–Luce model.
+The number of clusters must be defined in advance before the clustering process. Probability mass function 
+was applied to rank vectors.
+Md Abdul Masud, Joshua Zhexue Huang, Chenghao Wei, Jikui Wang, Imran Khan, Ming Zhong \cite{Abdul}
+transformed the problem of predicting the number of clusters into the problem of finding number of hills
+in data distribution surface. The surface is constructed in the form of distance distribution captured
+Gamma mixture models (GMMs). Akaike information criterion variant (AICc) was used to select the hills.
+Jiye Liang, Xingwang Zhao, Deyu Li, Fuyuan Cao, Chuangyin Dang \cite{Liang} used Re´nyi entropy and 
+complement entropy as a metric to determine number of clusters for numerical and categorical data. 
+They considered the entropy within cluster and between clusters. In addition, a dissimilarity measure 
+also introduced to the k-prototypes algorithm.
+Avisek Gupta, Shounak Datta, Swagatam Das \cite{Gupta} introduced the concepts of Last Leap (LL) and 
+the Last Major Leap (LML) to find the number of clusters. Both concepts are based on the analysis of 
+distances among data points. The maximum number of clusters must be given before the analysis. 
+Ilias Gialampoukidis, Stefanos Vrochidis, Ioannis Kompatsiaris, Ioannis Antoniou \cite{Gialampoukidis}
+modified the classical DBSCAN algorithm by adding probability martingale into consideration. The new 
+algorithm is called DBSCAN-Martingale. The probability is computed from the distance between data points. 
+Seong S. Chaea, Janice L. DuBienb, William D. Warde \cite{Chaea} used several agglomerative clustering 
+algorithms and various metric indexes to determine number of clusters. They suggested a method to
+decide whether the index values generated by different algorithms agreed or disagreed.
+Mrinal Kanti Bhowmik, Tathagata Debnath, Debotosh Bhattacharjee, Paramartha Dutta \cite{Bhowmik}
+applied Coulomb's law of electrostatics to imitate electrostatic force to cluster pixels of 
+an image for image segmentation. Each pixel is treated as a point with some electrostatic charge which 
+can create an attraction force. E. Lippiello, S. Baccari, P. Bountzis \cite{Lippiello} proposed a method
+called Susceptibility of the Similarity Matrix. The matrix is transformed into another triangular matrix. 
+The degree of similarity of two data points is measured by Euclidean distance with some additional 
+parameters. Pingxin Wang, Yiyu Yao  \cite{Wang} applied the method of erosion and dilation in morphology
+to determine the clusters. This approach must use a {\em hard clustering method} which referred to
+existing clustering methods to find all tentative clusters first. Then they applied morphology to merged 
+clusters. Ramazan Unlu, Petros Xanthopoulos \cite{Ramazen} used consensus clustering algorithm and 
+different metrics which are Silhouette (SH), Calinski–Harabasz (CH), Davies–Bouldin (DB), and
+Consensus (CI) indices to estimate the correct number of clusters. This approach is simple. Each 
+existing clustering algorithm is applied and the result is evaluated by the metrics. Any result produced
+the highest metric value is interpreted as the correct one.
+Ahmed Fahim \cite{Fahim} added a pre-processing step to estimate an initial tentative number of 
+clusters by applying a density-based method which does not require a predefined number of clusters. 
+This estimated number of clusters is used as a $k$ value for further classical $k$-mean clustering methods.
+The classical DBSCAN (Density-based spatial clustering of application with noise) is used in
+the pre-processing step. Wei Luo \cite{Luo} proposed an interesting approach different from other 
+clustering methods. They perturbed the given set clusters by augmenting another set of clusters as 
+working clusters whose the number of perturbing clusters must be predefined. If the working clusters are 
+coincident with the given clusters, then the number of clusters should be equal to the number of working. 
+Otherwise the actual number of given clusters may be incorrectly estimated.  
+Zhenzhen He, Zongpu Jia,and  Xiaohong Zhang \cite{He} considered the problem of estimate the number of 
+clusters with complex distribution and scattered patterns. They used Gaussian kernel density function to 
+estimate maximum number of clusters and their centers. The number of clusters is determined from
+the change of minimum distance between center points. 
+Toan Nguyen Mau, YAasushi Inoguchi, and Van-Nam Huynh \cite{Toan} used dissimilarity measure between two
+data points and Locality-Sensitive Hashing (LSH) to produce fuzzy initial cluster prediction. Then the 
+method of iterative fuzzy clustering was used next to obtain the final number of clusters. 
+Xiaolong Wang, Yiping Jiao, Shumin Fei \cite{Xiaolong} used density and watershed method to partition
+data space into multiple regions. The number of regional centers is set as the initial number of clusters. 
+Md Moshiur Rahman, Abdul Masudy, Badhan Mazumderz \cite{Rahman} initially partitioned the selected 
+features of data to explore the compactness of clusters. The depth value of data points in each clusters 
+in the initial partition is estimated by {\em simplicial depth method}. The number of clusters having maximum depth value is considered as the estimated number of clusters. 
+Dong Sik Kim \cite{Dong} studied the effect of ratio of estimated number of clusters and size of data 
+points on the derivation of actual number of clusters.
+This ratio is used in the proposed algorithm to adjust the value of $k$ in classical
+$k$-mean clustering method.
+ 
+\section{Problem Formulation and Proposed Concept}
+The objective of this paper is to identify the actual number of clusters from a given set of data
+points in any $n$-dimensional space without deploying any density analysis, information analysis,
+and distance analysis. Each data point is represented in the form of coordinates. The following 
+constraints are imposed on the studied problems.
+ problem
+has the following constraints.
+\begin{enumerate}
+\item The number of data points in each given sample must be in between the minimum and maximum 
+number of data points.
+\item The number of dimensions is at least 1.
+\item The size of each dimension of the space containing data points in a sample is limited by 
+the maximum value of coordinate in the corresponding dimension.
+\end{enumerate}
+Since no analysis is involved in this problem, the following two main problems are investigated.
+\begin{enumerate}
+\item Since the number of data points in each sample is different, how to transform a set of 
+$n$-dimensional data points in each sample into a vector of fixed 
+dimensions, regardless to the number of data points in the sample.
+\item How to identify the actual number of clusters from the set of vectors obtained from problem 1
+without analyzing the statistical information of these vectors? 
+\end{enumerate}
+ 
+The concept to solve the problems comes from two directions. The first direction is based of the 
+uniqueness of data distribution pattern forming clusters. The second direction is from the studied 
+result in cognitive science in terms of applying past knowledge and experience of the brain to solve new 
+problems as mentioned by Dagmar \cite{Dagmar}.
+
+Solving the problem of identifying the actual number of clusters from a given set of $n$-dimensional
+data points without any statistical analysis is based on the observation that the distribution pattern
+of data points of each sample is obviously unique. This results in a unique set of clusters in the 
+data  pattern. Thus, a many-to-one mapping function can be developed to directly
+compute the number of clusters from each data distribution pattern. This function is possibly 
+realized by a multi-layer supervised learning neural network. It can be trained by a set of samples
+whose actual number of clusters is known prior to use it to identify the number of actual clusters of
+any unseen data distribution pattern. These training samples are considered as the past stored 
+knowledge and experience.
+
+The overview of proposed concept is illustrated in Figure \ref{overview}. There are two main processes.
+The first process is to pre-train a network by a set of synthetic data distribution patterns with the
+number of actual clusters as the targets. The second step is to identify the number of clusters of a test 
+pattern by using the pre-trained network. There are 6 main steps in the pre-training process as follows.
+
+\vspace{0.2in}
+\noindent
+{\bf Pre-training Process}
+\begin{enumerate}
+\item Synthesizing pre-training samples having different number of clusters.
+\item Making the number of data points in each sample equal by oversampling the data points to add extra
+data points.
+\item Representing data distribution pattern in each sample by a vector of fixed dimensions.
+\item Reducing the dimensions of representative vector by using self-encoding network. This step
+is to speed up the learning process. The encoder is obtained from this step.
+\item Pre-training encoded synthetic samples by a 3-layered network.
+\end{enumerate}
+
+\vspace{0.2in}
+\noindent
+{\bf Test Process}
+\begin{enumerate}
+\item Making the number of data points in the test pattern equal to number of data points in training
+pattern by oversampling the data points to add extra data points.
+\item Representing data distribution pattern in each sample by a vector of fixed dimensions.
+\item Use encode from the first process to encode the vector from step 2 of the second process.
+\item Use Pre-trained network from the first process to identify the number of clusters.
+\end{enumerate}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[scale=0.6]{overview.eps}
+\vspace{-0.6in}
+\caption{Overview of proposed concept to identify actual number of clusters based on
+the observation of uniqueness of data distribution pattern and the finding of how the brain uses
+the past knowledge and experience to solve new problem.}  
+\label{overview}
+\end{figure*}
+
+\section{Details of Past-Knowledge-Transfer Clustering Algorithms}
+
+The following notations are used in the proposed algorithms. Algorithm 1 is the overview of the proposed
+method. The other algorithms explain the detail of each step.
+\begin{enumerate}
+\item A set of pre-learning samples, ${\bf S} = \{{\bf s}_{1}, {\bf s}_{2}, \ldots, {\bf s}_{n}\}$.
+\item Maximum number of points, $M$, and minimum number of points, $N$, such that $N \leq |{\bf s}_{i}| \leq M$.
+\item Number of dimensions, $d$, of each point in the sample set.
+\item A set of points in each ${\bf s}_{i}$, ${\bf P}^{(i)} = \{{\bf p}^{(i)}_{1}, {\bf p}^{(i)}_{2}, 
+\ldots, {\bf p}^{(i)}_{m}\}$; ${\bf p}^{(i)}_{j} \in R^{d}$, $N \leq m \leq M$. 
+\item Maximum number of clusters, $C \geq 1$.
+\item Predicted bit string ${\bf B}^{(i)} = [b^{(i)}_{1}, b^{(i)}_{2}, \ldots, b^{(i)}_{C}]$; 
+$b^{(i)}_{j} \in$ $\{0, 1\}$ and $b^{(i)}_{j} = 0.5$ if there are $j$ clusters in sample ${\bf s}_{i}$.
+\end{enumerate}
+Note that the value of target bit $b^{(i)}_{j}$ is set to 0.5 in order to speed up the convergence of outcome.
+This value 0.5 can be interpreted as a threshold value as well.
+
+\vspace{0.2in}
+\noindent
+{\bf Algorithm 1: Overview of proposed pre-learning sample method}
+\label{alg1}        
+\begin{tabbing}
+1. \= Synthesize a set ${\bf S}$ of $n$ samples whose each ${\bf s}_{i}$ has various \\
+   \> number of clusters not more than $C$ and different point \\
+   \> distributions. For each sample ${\bf s}_{i}$, set the pattern of bit \\
+   \> string ${\bf B}^{(i)}$ corresponding to the number of generated \\
+   \> clusters. (see Algorithm 2) \\
+2. \> Add extra data points to each sample ${\bf s}_{i}$ to make every \\
+   \> $|{\bf s}_{i}| = M$. (see Algorithm 3) \\
+3. \> For each ${\bf s}_{i}$, arrange all coordinates of each ${\bf p}^{(i)}_{j} \in {\bf P}^{(i)}$ \\
+   \> to form a single sample vectors, ${\bf v}_{i} \in R^{d \times M}$ representing \\
+   \> sample ${\bf s}_{i}$. (see Algorithm 3) \\
+4. \> For each ${\bf s}_{i}$, set a proper target bit value of each $b^{(i)}_{j}$. \\
+5. \> Get one testing sample and apply Algorithms 3 to add \\
+   \> extra data points and to generate a new test sample vector ${\bf t}$. \\ 
+6. \> Reduce the dimensions of all samples ${\bf v}_{i}$ and the testing \\
+   \> sample ${\bf t}$ to create a new a set of vectors ${\bf v}^{\prime}_{i}$ and ${\bf t}^{\prime}$ by \\
+   \> using the same self-encoder network. (see Algorithm 4) \\
+7. \> Learn sample ${\bf s}_{i} \in {\bf S}$ with their corresponding target bit \\
+   \> string ${\bf B}^{(i)}$ by using a 3-layer network. \\
+8. \> Predict the target bits of test sample ${\bf t}^{\prime}$ from the trained \\
+   \> network. (see Algorithm 5)
+\end{tabbing}
+
+To enhance the capability of proposed method, two types of distributions of random points in each sample 
+are synthesized. The first type of distribution is based on Gaussian distribution with a randomly 
+predefined standard deviation value. The second type of distribution is based on random distribution.
+Let $x^{(i)}_{j,k}$ be a coordinate of point ${\bf p}^{(i)}_{j}$ in dimension $k$ of sample ${\bf s}_{i}$. 
+A center is also considered as a data point.
+
+\vspace{0.2in}
+\noindent
+\IEEEpubidadjcol
+{\bf Algorithm 2: Synthesizing a pre-learning sample ${\bf s}_{i}$}
+\label{alg2}
+\begin{tabbing}
+1. \= Generate a set of random cluster centers, ${\bf Z} = \{{\bf c}_{1}, \ldots, $ \\
+   \> ${\bf c}_{n}\}$; $1 \leq n \leq C$, in terms of coordinates in $d$ dimensions. \\
+2. \> Generate a random integer $m$ such that $N \leq m \leq M$. \\
+3. \> Generate a random standard deviation value $\sigma$. \\
+4. \> Alternatively use steps 4.1 and 4.2 to generate random \\
+   \> centers and points.\\
+   \> 4.1 \= Generate a set of random points ${\bf P}^{(i)}$ with respect to \\
+   \>     \> all centers in ${\bf Z}$ with a random standard deviation $\sigma$ \\
+   \>     \> such that $|{\bf P}^{(i)}| = m$. \\
+   \> 4.2 \> Generate a set of random points ${\bf P}^{(i)}$ with respect to \\
+   \>     \> all centers in ${\bf Z}$ with a random standard deviation $\sigma$ \\
+   \>     \> such that $|{\bf P}^{(i)}| = m$. \\
+5. \> Let $L_{k} = \min\limits_{\forall {\bf p}_{i}} (x_{i,k})$. and  $U_{k} = \max\limits_{\forall 
+{\bf p}_{i}} (x_{i,k})$. \\
+\IEEEpubidadjcol
+6. \> Normalize $ x^{(i)}_{j,k} = $ $\left\{ \begin{array}{ll}
+                                 \frac{x^{(i)}_{j,k} + |L_{k}|}{|U_{k}|} & \mbox{if $L_{k} < 0$} \\
+                                 \frac{x^{(i)}_{j,k}}{|U_{k}|} & \mbox{if $L_{k} > 0$}
+                                 \end{array} 
+                                 \right . $
+\end{tabbing}
+
+All coordinates of each sample ${\bf s}_{i}$ are normalized to lie within the same regional space. This 
+is beneficial to achieve the high accuracy of leaning process for all samples.
+Obviously, the number of points in each sample after Algorithm 2 may not be equal. This will make the 
+result of transforming the point distribution of each sample into a vector of equal dimension prior to the
+learning process impossible. Thus, Algorithm 3 is used to synthesize some extra points. It is important 
+that these extra points must not interfere and disturb the original topology of point distribution in each 
+sample.
+
+\vspace{0.2in}
+\noindent
+{\bf Algorithm 3: Making all sample sizes equal and transforming point distribution into a vector}
+\begin{tabbing}
+{\bf Input:} \= 1. \= A sample ${\bf s}_{i}$ whose set of points is ${\bf P}^{(i)} = \{{\bf p}^{(i)}_{1},$\\ 
+             \>    \> ${\bf p}^{(i)}_{2}, \ldots, {\bf p}^{(i)}_{m}\}$ such that ${\bf p}^{(i)}_{j}  = 
+                   [x^{(i)}_{j,1}, x^{(i)}_{j,2}, \ldots, $ \\
+             \>    \> $x^{(i)}_{j,d}]^{T}$. \\
+             \> 2. \> Maximum number of points, $M$.
+\end{tabbing}
+\begin{tabbing}
+{\bf Output:} \= 1. \= Sample $|{\bf s}_{i}| = M$ with extra points.\\
+              \> 2. \> ${\bf v}_{i} = [a^{(i)}_{1}, a^{(i)}_{2}, \ldots, a^{(i)}_{L}]^{T}$, where $L = d 
+                    \times |{\bf P}^{(i)}|$.
+\end{tabbing}
+
+\begin{tabbing}
+1. \= {\bf For} \= $1 \leq j \leq M - |{\bf s}_{i}|$:  \\
+2. \>           \> Randomly pick a point ${\bf p}^{(i)}_{j} \in {\bf P}^{(i)}$. \\
+3. \>           \> Set ${\bf p}^{(i)}_{i+m} = {\bf p}^{(i)}_{j}$. \\
+4. \>           \> ${\bf P}^{(i)} = {\bf P}^{(i)} \cup \{{\bf p}^{(i)}_{i+m}\}$. \\
+5. \> Let ${\bf v}^{(i)}_{j}$ be an empty sample vector for sample ${\bf s}_{i}$. \\
+6. \> {\bf For} \= $1 \leq k \leq d$: \\
+7. \>           \> Sort $x^{(i)}_{j,k}; \: 1 \leq j \leq |{\bf P}^{(i)}|$ in an ascending order. \\
+8. \>           \> Append all sorted $x^{(i)}_{j,k}; \: 1 \leq j \leq |{\bf P}^{(i)}|$ to ${\bf v}_{i}$. 
+\end{tabbing}
+
+After generating extra points to make the size of sample ${\bf s}_{i}$ equal $M$, all distributed points 
+are transformed into a vector of size $d \times M$. Since each point is at a random location in a $d$ 
+dimensional space, it is rather difficult to order these points according to their locations. Thus, the 
+coordinate in each dimension of each point is considered instead. All coordinates of all points in each 
+dimension are collected and sorted in an ascending order. Then all these sorted coordinates in all 
+dimensions are concatenated to form a vector in $R^{d \times M}$, as appeared in steps 6-8 in Algorithm 3.
+
+\vspace{0.2in}
+\noindent
+{\bf Algorithm 4: Self-encoding sample vectors and testing vector}
+\begin{tabbing}
+{\bf Input:}  \= 1. \= A set of all sample vectors, ${\bf V} = \{{\bf v}_{1} {\bf v}_{2}, \ldots, {\bf v}_{M}\}$ \\ 
+              \>    \> such that where $L = d \times |{\bf P}_{i}|$. \\
+              \> 2. \> ${\bf v}_{i} = [a^{(i)}_{1}, a^{(i)}_{2}, \ldots, ^{(i)}{L}]^{T}$, where $L = d 
+                       \times |{\bf P}^{(i)}|$. \\
+              \> 3. \> A test sample ${\bf t}= [b_{1}, b_{2}, \ldots, b_{L}]^{T}$.
+\end{tabbing}
+\begin{tabbing}
+{\bf Output:} \= All encoded sample vectors from the output of \\
+              \> hidden layer.
+\end{tabbing}
+\begin{tabbing}
+1. ~\= Create a 3-layer network whose input layer has $L$ neurons, \\
+   ~\> hidden layer has 1 neuron, and output layer has $L$ neurons. \\
+2. ~\> Let ${\bf V} = {\bf V} \cup \{{\bf t}\}$. \\
+3. ~\> Let $o_{j}$ be the output value of output neuron $j$. \\
+4. ~\> Compute $e = \sum_{i=1}^{M+1} \sum_{k=1}^{L} (a^{(i)}_{k} - o_{k})^{2}$. \\
+5. ~\> Let $\epsilon$ be a error threshold and $T$ be the maximum \\
+   ~\> number of epochs. \\
+6. ~\> {\bf While} \= $e > \epsilon$ {\bf and} iterations $< T$: \\
+7. ~\>             \> Add 1 hidden neuron. \\
+8. ~\>             \> Retrain the network. \\
+9. ~\>             \> Compute $e = \sum_{i=1}^{M+1} \sum_{k=1}^{L} (a^{(i)}_{k} - o_{k})^{2}$. \\
+10.~\> {\bf End} 
+\end{tabbing}
+Suppose the number of hidden neurons after the encoding process is $h$. Let ${\bf V}^{\prime} = 
+\{{\bf v}^{\prime}_{1}, {\bf v}^{\prime}_{2}, \ldots, {\bf v}^{\prime}_{M}, {\bf v}^{\prime}_{M+1}\}$ 
+be the set of encoded sample vectors from Algorithm 4. The dimensions of each encoded vector are equal 
+to $h$. The last ${\bf v}_{M+1}$ is the encoded test vector. These $M$ encoded vectors are used to train 
+a 3-layer neural network. Then the target of encoded test vector ${\bf v}^{\prime}_{M+1}$ is predicted 
+by using this trained network. The detail is in Algorithm 5. 
+
+\vspace{0.2in}
+\noindent
+{\bf Algorithm 5: Predicting number of clusters of testing data}
+\begin{tabbing}
+{\bf Input:}  \= 1. \= A set of all encoded training vectors, ${\bf V}^{\prime} = $ \\
+              \>    \> $\{{\bf v}^{\prime}_{1}, {\bf v}^{\prime}_{2}, \ldots, {\bf v}^{\prime}_{M}\}$ \\
+              \> 2. \> A testing vector ${\bf v}^{\prime}_{M+1}$. \\
+              \> 3. \> A target ${\bf t}_{i} = [b_{i,1}, b_{i,2}, \ldots, b_{i,C}]^{T}$. $C$ for each 
+                       input \\
+              \>    \> vector ${\bf v}^{\prime}_{i}$, including both training and test vectors. $C$ \\
+              \>    \> is the upper bound of number of clusters.
+\end{tabbing}
+\begin{tabbing}
+{\bf Output:} \= Predicted number of clusters.
+\end{tabbing}
+\begin{tabbing}
+1. ~\= {\bf For} \= each training vector ${\bf v}^{\prime}_{i}$ {\bf do} \\
+2. ~\>           \> Set target bit of $b_{i,j} = 0.5$ corresponding to the \\
+    \>           \> number of clusters $j$ generated by Algorithm 2. \\
+3. ~\> Construct a 3-layer feed-forward network with $h$ inputs \\
+    \> and $C$ outputs. \\
+4. ~\> Training the network until the target error is less than a \\
+    \> predefined value. \\
+5. ~\> Let $b_{M+1,j}$, $1 \leq j \leq C$ be the predicted output of \\
+    \> bit $j$ of test vector predicted by the trained network.\\
+6. ~\> Select bit $j$ of predicted output such that value of bit j \\
+    \> is equal to $\max\limits_{1 \leq j \leq C} (b_{M+1,j})$. \\
+7. ~\> Return $j$ as the number of predict clusters.
+\end{tabbing}
+
+\subsection{Examples}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[scale=0.55]{overview-example.eps}
+\vspace{-1.6in}
+\caption{An example of how the proposed algorithms work for the pre-training process. There are two 
+samples. The first sample has 7 data points and the second sample has 9 data points.}
+\label{overview-example}
+\end{figure*}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+\section{Theoretical Analysis of Upper Bound of Synthetic Patterns}
+
+Transforming a problem of clustering into a problem of classification to identify the actual
+number of clusters may not achieve the absolute accuracy due to the insufficient number of training 
+patterns. The interesting problem is how many pattern distributions of fixed number of clusters in $d$ 
+dimensional space must be synthesized. Actually, this problem is the same as the problem of sphere 
+packing \cite{Cohen-Elkies}\cite{Gaber}\cite{Goldberg}\cite{Torquato-Stillinger}. The problem of sphere 
+packing can be briefly addressed as follows. Given a space in a $d$ dimensional Euclidean space, how many 
+spheres of different sizes can be packed so that the spheres touch others at their boundaries. In a high 
+dimensional space, this problem is very complicated. Instead of indicating the number spheres, the upper 
+bound of density defined as the ratio of container volume and total volume of all packed spheres is 
+measured. However, estimating the density is not simple in case of hyper-spheres. Gabor Fejes Toth 
+\cite{Gaber} summarized the upper bound of packing density in a lattice structure
+($\delta_L(d)$) found by several researchers for 2-8, and 24 dimensions. For example, $\delta_L(2) = 
+\pi/\sqrt{12}$, $\delta_L(3) = \pi/\sqrt{18}$, $\delta_L(4) = \pi^{2}/16$, and $\delta_L(5) = \pi^{2}/
+(15\sqrt{2})$. All circles and spheres have one unit radius.
+
+In this paper, only 2, 3, and 4 dimensions are considered. The constraints imposed on the derivative 
+upper bound of pre-learned patterns are the followings.
+\begin{enumerate}
+\item Each cluster has the same volume size.
+\item The shape of each cluster is in a form of a circle (in 2 dimensions) and a sphere (in 3 dimensions).
+\item The radius of each hyper-sphere is less than the width of a container.
+\item The shape of container is in a form of a square (in 2 dimensions) and a cube (in 3 dimensions).
+\end{enumerate}
+Figure \ref{packing-density} illustrates the concept of deriving the upper bound of pre-learned patterns 
+in a 2-dimensional space. Each cluster is represented by a unit circle.  
+The concept consists of two phases. In the first phase, the upper bound of packing density is considered 
+and the number of possible circles is computed from the upper bound of packing density. In the second 
+phase, the number of pre-learned patterns for each number of clusters is derived. 
+
+In 2 dimensions, let $V$ be the area of a container, $N$ be the number of circles, and $r$ be the radius.
+Based on the theoretical upper bound in \cite{Gaber}, the packing density is $\pi/\sqrt{12}$.
+
+\begin{lemma}
+In 2 dimensions, the maximum number of packed circles is $N = \frac{0.9069}{\pi r^{2}}$.
+\end{lemma} 
+\begin{proof}
+The packing density can be computed from the ratio of $\frac{N \pi r^{2}}{V}$. The area of container is one
+unit. Thus, we have
+\begin{eqnarray}
+\frac{N \pi r^{2}}{V} & = & \frac{\pi}{\sqrt{12}} \\
+N & = & \frac{\pi}{\sqrt{12}} \frac{V}{\pi r^{2}} \\
+ & = & \left \lceil \frac{0.9069V}{\pi r^{2}} \right \rceil
+\end{eqnarray}
+\end{proof}
+Since the area of $V$ is one unit, the value of radius $r$ must be less than 1. The number of pre-learned 
+patterns must cover the number of possible clusters of a queried data set. Let $C$ be the maximum number 
+of clusters. There are two scenarios concerning the value of $C$. For classification problem, the value 
+of $C$ is unknown from a data set. In this circumstance, for safety, the value of $C$ can be set to the 
+number of classes plus $a$, where $a \geq 1$. For clustering problem, we assume that the shape of clusters 
+are governed by some known distribution such as Gaussian distribution. In this situation, defining the 
+value of $C$ is as difficult as defining the number of clusters prior to the clustering process. One 
+possible value of $C$ is to estimate the value from $N$ in Lemma 1.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.0in]{packing-density.eps}
+\caption{Concept of lower bound analysis of pre-learned patterns based on the imposed constraints. The possible distribution of clusters are shown by colored circles and transparent circles. The colored
+circles denote the locations of clusters and the transparent circles denote that empty locations.}
+\label{packing-density}
+\end{figure}
+
+\begin{thm}
+In 2 dimensions, the upper bound of pre-learned patterns $L$ in a 2-dimensional space is 
+\begin{equation}
+L = \sum\limits_{c=1}^{C} \left ( \begin{array}{c} 
+                                   N \\
+                                   c
+                                  \end{array} \right )
+\end{equation}
+\noindent
+for $N = \left \lceil \frac{0.9069V}{\pi r^{2}} \right \rceil$.
+\end{thm}
+\begin{proof}
+The reason is from Figure \ref{packing-density}. Each circle denotes the possible location of each cluster 
+without any overlap. Hence, the number of possible locations to distribute $c$, $1 \leq c \leq C$ clusters 
+in the container is $\left ( \begin{array}{c} N \\ c \end{array} \right )$.
+\end{proof} 
+In 3 dimensions, the same argument and derivation as that in the 2 dimensional space can be followed.
+The theoretical upper bound of packing density is from Kepler conjecture \cite{Hales1} which stated that 
+\begin{quote}
+{\em No packing of congruent balls in Euclidean three space has density greater than that of the face-
+centered cubic packing}
+\end{quote}
+The upper bound of packing density is $\pi/\sqrt{18} \approx 0.74$. This conjecture was later proved by 
+Thomas C. Hales \cite{Hales2}. Therefore, we have the following upper bound of pre-learned patterns for 3 
+dimensions.
+
+\begin{lemma}
+In 3 dimensions, the maximum number of packed circles is $N = \left \lceil \frac{0.74V}{1.33\pi 
+r^{3}} \right \rceil $.
+\label{3d-lemma}
+\end{lemma}
+ 
+\begin{thm}
+In 3 dimensions, the upper bound of pre-learned patterns $L$ in a 3-dimensional space is 
+\begin{equation}
+L = \sum\limits_{c=1}^{C} \left ( \begin{array}{c} 
+                                   N \\
+                                   c
+                                  \end{array} \right )
+\end{equation}
+\end{thm}
+\noindent
+for $N = \left \lceil \frac{0.74V}{1.33\pi r^{3}} \right \rceil$.
+
+\begin{lemma}
+In 4 dimensions, the maximum number of packed circles is $N = \left \lceil \frac{0.6169\times2V}{\pi^{2} 
+r^{4}} \right \rceil $.
+\end{lemma}
+ 
+\begin{thm}
+In 4 dimensions, the upper bound of pre-learned patterns $L$ in a 3-dimensional space is 
+\begin{equation}
+L = \sum\limits_{c=1}^{C} \left ( \begin{array}{c} 
+                                   N \\
+                                   c
+                                  \end{array} \right )
+\end{equation}
+\end{thm}
+\noindent
+for $N = \left \lceil \frac{0.6169\times2V}{\pi^{2} r^{4}} \right \rceil$.
+%--------------------- not correct -------------------------------
+\begin{table}[t]
+\caption{Lower bound of pre-learned patterns in 2-4 dimensions for each radius and density \cite{Gaber}. 
+The volume is a hyper-square of size $10^{d}$, where $d$ is the number of dimensions.}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}\hline
+\multirow{2}{*}{density \cite{Gaber}} & $r =$ & \multicolumn{5}{c|}{\# pre-learned patterns for \# clusters} 
+ & \multirow{2}{*}{total} \\ \cline{3-7}
+ & $0.75d$ & \#1 & \#2 & \#3 & \#4 & \#5 & \\ \hline
+0.9069 (d=2) & 1.5 & 13 & 78 & 286 & 715 & 1287 & 2379 \\ \hline
+0.7405 (d=3) & 2.25 & 16 & 120 & 560 & 1820 & 4368 & 6884 \\ \hline
+0.6169 (d=4) & 3.0 & 16 & 120 & 560 & 1820 & 4368 & 6884 \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+%-----------------------------------------------------------
+
+\section{Experiments and Results}
+
+The accuracy of estimation was measured from two experiments. The first experiment is based on the 
+synthetic patterns in a 2 dimensional space. The second experiment is based on iris data set whose number 
+of clusters is equal to 3. The detail of both experiments are in the following sections.
+
+\subsection{Experiments on Synthetic Data} 
+
+The package {\em scikit-learn} version 1.3 was used to generate synthetic data sets with random
+standard deviations and random locations of cluster centers in the experiment. 
+The number of clusters in each learning pattern ranges from 1 cluster to 5 clusters. There are 700 
+synthetic patterns for each number of clusters which makes the total number of patterns equal to $5 \times 
+700 = 3500$. To evaluate the accuracy, the experiment was conducted by using 700 folds of cross validation.
+For each fold, one randomly selected patterns from 3500 patterns is for testing and the rest is
+for training the network. Some of the training patterns are shown in Figure \ref{sythetic-cluster-data} 
+and the testing patterns are shown in Figure \ref{test-cluster-data}. There are 685 folds giving the 
+correct number of clusters, which is equal to 98\%. Figure \ref{wrong-test-cluster-data} shows the 
+clustering patterns of wrong prediction. Since the testing patterns were randomly selected, it is
+possible that some patterns were repeatedly selected.
+
+\begin{figure*}[t]
+\begin{center}
+\begin{tabular}{c@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}}
+\includegraphics[scale=0.2]{train-cluster1-dataset1.eps} & 
+\includegraphics[scale=0.2]{train-cluster1-dataset2.eps} &
+\includegraphics[scale=0.2]{train-cluster1-dataset3.eps} &
+\includegraphics[scale=0.2]{train-cluster1-dataset4.eps} &
+\includegraphics[scale=0.2]{train-cluster1-dataset5.eps} \\
+ & & (a) 1 cluster. & & \\
+\includegraphics[scale=0.2]{train-cluster2-dataset1.eps} & 
+\includegraphics[scale=0.2]{train-cluster2-dataset2.eps} &
+\includegraphics[scale=0.2]{train-cluster2-dataset3.eps} &
+\includegraphics[scale=0.2]{train-cluster2-dataset4.eps} &
+\includegraphics[scale=0.2]{train-cluster2-dataset5.eps} \\
+ & & (b) 2 clusters. & & \\
+\includegraphics[scale=0.2]{train-cluster3-dataset1.eps} & 
+\includegraphics[scale=0.2]{train-cluster3-dataset2.eps} &
+\includegraphics[scale=0.2]{train-cluster3-dataset3.eps} &
+\includegraphics[scale=0.2]{train-cluster3-dataset4.eps} &
+\includegraphics[scale=0.2]{train-cluster3-dataset5.eps} \\
+ & & (c) 3 clusters. & & \\
+\includegraphics[scale=0.2]{train-cluster4-dataset1.eps} & 
+\includegraphics[scale=0.2]{train-cluster4-dataset2.eps} &
+\includegraphics[scale=0.2]{train-cluster4-dataset3.eps} &
+\includegraphics[scale=0.2]{train-cluster4-dataset4.eps} &
+\includegraphics[scale=0.2]{train-cluster4-dataset5.eps} \\
+ & & (d) 4 clusters. & & \\
+\includegraphics[scale=0.2]{train-cluster5-dataset1.eps} & 
+\includegraphics[scale=0.2]{train-cluster5-dataset2.eps} &
+\includegraphics[scale=0.2]{train-cluster5-dataset3.eps} &
+\includegraphics[scale=0.2]{train-cluster5-dataset4.eps} &
+\includegraphics[scale=0.2]{train-cluster5-dataset5.eps} \\
+ & & (e) 5 clusters. & & \\
+\end{tabular}
+\end{center}
+\caption{Some examples of synthetic data for learning as past knowledge. (a) One cluster. (b) Two clusters. 
+(c) Three clusters. (d) Four clusters. (e) Five clusters.}
+\label{sythetic-cluster-data}
+\end{figure*}
+
+%-------------------------------------------------
+\begin{figure*}[t]
+\begin{center}
+\begin{tabular}{c@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}}
+\includegraphics[scale=0.2]{test-train-cluster1-dataset132.eps} & 
+\includegraphics[scale=0.2]{test-train-cluster1-dataset134.eps} &
+\includegraphics[scale=0.2]{test-train-cluster1-dataset170.eps} &
+\includegraphics[scale=0.2]{test-train-cluster1-dataset312.eps} &
+\includegraphics[scale=0.2]{test-train-cluster1-dataset670.eps} \\
+ & & (a) 1 cluster. & & \\
+\includegraphics[scale=0.2]{test-train-cluster2-dataset124.eps} & 
+\includegraphics[scale=0.2]{test-train-cluster2-dataset364.eps} &
+\includegraphics[scale=0.2]{test-train-cluster2-dataset425.eps} &
+\includegraphics[scale=0.2]{test-train-cluster2-dataset586.eps} &
+\includegraphics[scale=0.2]{test-train-cluster2-dataset652.eps} \\
+ & & (b) 2 clusters. & & \\
+\includegraphics[scale=0.2]{test-train-cluster3-dataset98.eps} & 
+\includegraphics[scale=0.2]{test-train-cluster3-dataset186.eps} &
+\includegraphics[scale=0.2]{test-train-cluster3-dataset249.eps} &
+\includegraphics[scale=0.2]{test-train-cluster3-dataset527.eps} &
+\includegraphics[scale=0.2]{test-train-cluster3-dataset540.eps} \\
+ & & (c) 3 clusters. & & \\
+\includegraphics[scale=0.2]{test-train-cluster4-dataset148.eps} & 
+\includegraphics[scale=0.2]{test-train-cluster4-dataset305.eps} &
+\includegraphics[scale=0.2]{test-train-cluster4-dataset337.eps} &
+\includegraphics[scale=0.2]{test-train-cluster4-dataset410.eps} &
+\includegraphics[scale=0.2]{test-train-cluster4-dataset607.eps} \\
+ & & (d) 4 clusters. & & \\
+\includegraphics[scale=0.2]{test-train-cluster5-dataset140.eps} & 
+\includegraphics[scale=0.2]{test-train-cluster5-dataset214.eps} &
+\includegraphics[scale=0.2]{test-train-cluster5-dataset282.eps} &
+\includegraphics[scale=0.2]{test-train-cluster5-dataset339.eps} &
+\includegraphics[scale=0.2]{test-train-cluster5-dataset596.eps} \\
+ & & (e) 5 clusters. & & \\
+\end{tabular}
+\end{center}
+\caption{Some examples of test data whose number of clusters is correctly predicted. (a) One cluster. (b) 
+Two clusters. (c) Three clusters. (d) Four clusters. (e) Five clusters.}
+\label{test-cluster-data}
+\end{figure*}
+
+%----------------------------------------------------------------------------
+\begin{figure*}[t]
+\begin{center}
+\begin{tabular}{c@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}}
+\includegraphics[scale=0.2]{wrong-test-train-cluster1-dataset195.eps} & 
+\includegraphics[scale=0.2]{wrong-test-train-cluster3-dataset572.eps} &
+\includegraphics[scale=0.2]{wrong-test-train-cluster4-dataset602.eps} \\
+(a) 1 cluster but predicted 2 clusters. & (b) 3 clusters but predicted 2 clusters. & (c) 4 clusters
+but predicted 2 clusters.
+\end{tabular}
+\end{center}
+\caption{Some examples of test data whose number of clusters is incorrectly predicted. (a) 1 cluster. (b)
+2 clusters. (c) 4 clusters.}
+\label{wrong-test-cluster-data}
+\end{figure*}
+
+\subsection{Experiment on Real Data Set}
+
+The proposed method was applied to predict the number of clusters in iris data set. This data set is in 4 
+dimensions which makes it difficult to visualize the correct number of clusters. However, the number of 
+clusters can be presumed to be equal to 3, which is the number of classes. In the experiment, the number
+of possible clusters was set from 1 to 5. For each number of clusters, 700 pre-training patterns in
+4 dimensions were synthesized. The proposed algorithm predicted 2 clusters in iris data set which is less
+than the number of classes. To empirically verify whether this result is correct or not, a set of scatter
+plots in 3 dimensions were visualized as illustrated in Figure \ref{iris-data}.
+It can be seen that that data of Iris-virginica overlap data of Iris-versicolor classes. This is the 
+reason why the number of predicted clusters is equal to 2.
+
+\begin{figure}[ht!]
+\begin{center}
+\begin{tabular}{cc}
+\includegraphics[scale=0.27]{iris-012.eps} & \includegraphics[scale=0.27]{iris-013.eps} \\
+\includegraphics[scale=0.27]{iris-023.eps} & \includegraphics[scale=0.27]{iris-123.eps}
+\end{tabular}
+\end{center}
+\caption{Four combinations of three features (dimensions) of Iris data distributions. Blue points denote 
+Iris-setosa. Orange points denote Iris-versicolor. Green points denote Iris-virginica. Some of 
+Iris-verginica data points overlap Iris-versicolor data points.}
+\label{iris-data}
+\end{figure}
+
+\section{Discussion}
+This new approach does not require any statistical analysis to predict the number of clusters (k-value)
+prior to the actual process of identifying the location of each cluster as well as the members of cluster.
+Although the preliminary experiments significantly imply the merit of this proposed methods, the accuracy
+depends on two factors which are the set of pre-training data and patterns of data distribution.
+The first factor which concerns the upper bound of number of training data can be theoretically estimated
+in the forms of sphere packing in a high dimensional space. However, the current theoretical bound of
+high dimensional packing is a very difficult problem which makes the estimation of maximum number of
+training data become an open problem. The second factor can be alleviated by synthesizing the training
+data with all available statistical distributions and also with some artificial distribution such as 
+nested spiral shapes. This artificial distribution, in fact, does not exist in nature. It is just used 
+for benchmarking the performance of proposed methods. Therefore, in practice, the proposed method in 
+this paper is suitable for coping with real data, whose distribution can be imitated by some well-defined 
+statistical distributions. But it is still possible to apply the proposed method to the artificial data
+as well. 
+
+New synthetic data distribution patterns can be continuously added and learned by the pre-trained neural 
+network without involving any previously trained data. One possible approach to this type of training 
+is by applying the concept of {\em discard-after-learn} \cite{Prem}\cite{Mongkhon} whose the training time 
+complexity is $O(P^{2})$ where $P$ is the number of training patterns. 
+
+For our approach, the time 
+complexity of the training process can be analyzed as follows. The data preparation before encoding step 
+is $O(NP)$ where $N = \max\limits_{i=1,P}(n_{i})$; $P$ is the number of training patterns and $n_{i}$ is the 
+number of data points in each training pattern $i$. The encoding input patterns and training of encoded 
+pattern steps were trained by a feedforward network implemented in Tensorflow and Keras environments.
+Unfortunately, the time complexity of these two steps is rather complex to analyze.
+
+\section{Conclusion}
+
+A new approach to identify the number of clusters (k-value) without applying any statistical distance 
+analysis is proposed. This method is based on the finding in cognitive science regarding the study of how 
+the brain uses past knowledge and experiences to solve problems. The problem of identifying number of
+clusters is transformed into a problem of classifying data distribution patterns according to the
+actual number of clusters.  The preliminary study and experiments signify this proposed method.
+The accuracy of prediction depends on the number of pre-trained cluster patterns with various 
+distributions. Further study should focus on how to estimate the upper bound of number of pre-trained 
+patterns and how to synthesize various distributions with some degree of overlap involved in a high 
+dimensional space.
+
+\begin{thebibliography}{1}
+\bibliographystyle{IEEEtran}
+
+\bibitem{Hong}
+Hong Yu, Zhanguo Liu, Guoyin Wang, ``An automatic method to determine the number of clusters using
+decision-theoretic rough set'', International Journal of Approximate Reasoning 55 (2014) 101–115.
+
+\bibitem{Calmon}
+Wilson Calmon and Mariana Albi, ``Estimation the number of clusters in a ranking data context'', Information Science
+546(2021) 977-995.
+
+\bibitem{Abdul} 
+Md Abdul Masud, Joshua Zhexue Huang, Chenghao Wei, Jikui Wang, Imran Khan, Ming Zhong, ``I-nice: A new approach 
+for identifying the number of clusters and initial cluster centres'', Information Science 466 (2018) 129–151.
+
+\bibitem{Liang}
+Jiye Liang, Xingwang Zhao, Deyu Li, Fuyuan Cao, Chuangyin Dang, ``Determining the number of clusters using 
+information entropy for mixed data'', Pattern Recognition 45 (2012) 2251–2265.
+
+\bibitem{Gupta}
+Avisek Gupta, Shounak Datta, Swagatam Das, ``Fast automatic estimation of the number of clusters from the
+minimum inter-center distance for k-means clustering'', Pattern Recognition Letters 116 (2018) 72–79.
+
+\bibitem{Gialampoukidis}
+Ilias Gialampoukidis, Stefanos Vrochidis, Ioannis Kompatsiaris, Ioannis Antoniou, ``Probabilistic 
+density-based estimation of the number of clusters using the DBSCAN-martingale process'', Pattern 
+Recognition Letters 123 (2019) 23–30.
+
+\bibitem{Chaea}
+Seong S. Chaea, Janice L. DuBienb, William D. Warde, ``A method of predicting the number of clusters 
+using Rand’s statistic'', Computational Statistics \& Data Analysis 50 (2006) 3531–3546.
+
+\bibitem{Bhowmik}
+Mrinal Kanti Bhowmik, Tathagata Debnath, Debotosh Bhattacharjee, Paramartha Dutta, ''EF-Index: Determining 
+number of cluster (K) to estimate number of segments (S) in an image'', Image and Vision Computing 
+88(2019) 29-40.
+
+\bibitem{Specht}
+E. Specht, ``Hugh Densitu packings of equal circles in rectangles with variable aspect ration'', 
+Computers \& Operations Research 40(2013) 58-69.
+
+\bibitem{Lippiello}
+E. Lippiello, S. Baccari, P. Bountzis, ``Determining the number of clusters, before finding clusters,
+from the susceptibility of the similarity matrix'', Physica A 616 (2023) 128592.
+
+\bibitem{Wang}
+Pingxin Wang, Yiyu Yao, ``CE3: A three-way clustering method based on mathematical morphology'',
+Knowledge-Based Systems 155 (2018) 54–65.
+
+\bibitem{Ramazan}
+Ramazan Ünlü, Petros Xanthopoulos, ``Estimating the number of clusters in a dataset via consensus 
+clustering'', Expert Systems With Applications 125 (2019) 33–39.
+
+\bibitem{Fahim}
+Ahmed Fahim, ``K and starting means for k-means algorithm'', Journal of Computational Science 55 (2021) 101445.
+
+\bibitem{Luo}
+Wei Luo, ``Determine the number of clusters by data augmentation'', Electronic Journal of Statistics
+Vol. 16 (2022) 3910–3936.
+
+\bibitem{He}
+Zhenzhen He, Zongpu Jia,and  Xiaohong Zhang, ``A Fast Method for Estimating the Number of Clusters
+Based on Score and the Minimum Distance of the Center Point'', Information 2020, 11, 16.
+
+\bibitem{Toan}
+Toan Nguyen Mau, Yasushi Inoguchi, and Van-Num Huynh, ``A Novel Cluster Prediction Approach Based
+on Locality-Sensitive Hashing for Fuzzy Clustering of Categorical Data, '', IEEE Access, vol. 10, 2022, 
+pp. 34196-34206.
+
+\bibitem{Xiaolong}
+Xiaolong Wang, Yiping Jiao, Shumin Fei, ``Estimation of Clusters Number and Initial Centers of K-means
+Algorithm Using Watershed Method'', 2015 14th International Symposium on Distributed Computing and Applications 
+for Business Engineering and Science, pp. 505-508.
+
+\bibitem{Rahman}
+Md Moshiur Rahman, Abdul Masudy, Badhan Mazumderz, ``Estimation of the Number of Clusters based on
+Simplical Depth'', 2020 2nd International Conference on Sustainable Technologies for
+Industry 4.0 (STI).
+
+\bibitem{Dong}
+Dong Sik Kim, ``Finding the Number of Clusters Using a Small Training Sequence'', IEEE Access, Vol. 11, 2023,
+pp. 25932-25940.
+  
+\bibitem{Cohen-Elkies}
+H. Cohen and N. Elkies, ``New upper bounds on sphere packings I'', \textit{Annals of Mathematics}, 157 (2003), 
+689–714.
+
+\bibitem{Gaber}
+Gabor Fejes Toth, ``Packing and Covering'', \textit{Handbook of Discrete and Computational Geometry},
+J.E. Goodman, J. O'Rourke, and C. D. Tóth (editors), 3rd edition, CRC Press, Boca Raton, FL, 2017
+
+\bibitem{Goldberg}
+M. Goldberg, ``The packing of equal circles in a square'', \textit{Mathematics Magazine}, Jan., 1970, 
+Vol. 43, No. 1 (Jan., 1970), pp. 24-30.
+
+\bibitem{Torquato-Stillinger}
+S. Torquato and F.H. Stillinger, ``New conjectural lower bounds on the optimal density of sphere 
+packings'', Experimental Mathematics, Vol. 15 (2006), No. 3. pp. 307-331.
+ 
+\bibitem{Karoly}
+K. Bezdek, ``Circle packings into convex domains of the Euclidean and hyperbolic plane and the sphere'', 
+Geometriae Dedicata 21 (1968) pp. 249-255.
+
+\bibitem{Hales1}
+Thomas C. Hales, ``A proof of the Kepler conjecture'', Annals of Mathematics, 162 (2005), 1065–1185.
+
+\bibitem{Hales2}
+Thoms C. Hales, ``The sphere packing problem'', Journal of Computational and Applied Mathematics 44(1992) 41-76.
+
+\bibitem{Prem}
+Prem Junsawang, Suphakant Phimoltares, Chidchanok Lursinsap, ``A fast learning method for streaming and 
+randomly ordered multi-class data chunks by using one-pass-throw-away class-wise learning concept'',
+Expert Systems With Applications 63 (2016) 249–266.
+
+\bibitem{Mongkhon}
+Mongkhon Thakong, Suphakant Phimoltares, Saichon Jaiyen, and Chidchanok Lursinsap, ``Fast Learning and 
+Testing for Imbalanced Multi-Class Changes in Streaming Data by Dynamic Multi-Stratum Network'',
+IEEE Access, Volume 5, 2017, pp. 10633-10648.
+
+\bibitem{Dagmar}
+Dagmar Divijak, ``Predicting: Using Past Experience to Guide Future Action'', Chapter 8, Frequency in 
+Language, Cambridge University Press, September 2019.
+
+\bibitem{Natalie}
+Natalie Biderman, Akram Bakkour,and Daphna Shohamy, ``What Are Memories For? The Hippocampus
+Bridges Past Experience with Future Decisions'', Trends in Cognitive Sciences, July 2020, Vol. 24, No. 7,
+pp. 542-556.
+
+\bibitem{Hawkins}
+J. Hawkins, and S. Blakeslee, On Intelligence, 2004 (Henry Holt: New York).
+
+\bibitem{Bar}
+M. Bar, Predictions in the Brain: Using Our Past to Generate a Future, 2011 (Oxford
+University Press: New York, Oxford)
+%---------------------------------
+
+
+\end{thebibliography}
+
+
+\newpage
+
+%\section{Biography Section}
+%If you have an EPS/PDF photo (graphicx package needed), extra braces are
+% needed around the contents of the optional argument to biography to prevent
+% the LaTeX parser from getting confused when it sees the complicated
+% $\backslash${\tt{includegraphics}} command within an optional argument. (You can create
+% your own custom macro containing the $\backslash${\tt{includegraphics}} command to make things
+% simpler here.)
+ 
+%\vspace{11pt}
+
+%\bf{If you include a photo:}\vspace{-33pt}
+%\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{fig1}}]{Michael Shell}
+%Use $\backslash${\tt{begin\{IEEEbiography\}}} and then for the 1st argument use $\backslash${\tt{includegraphics}} to declare and link the author photo.
+%Use the author name as the 3rd argument followed by the biography text.
+%\end{IEEEbiography}
+
+\vspace{11pt}
+
+%\bf{If you will not include a photo:}\vspace{-33pt}
+%\begin{IEEEbiographynophoto}{John Doe}
+%Use $\backslash${\tt{begin\{IEEEbiographynophoto\}}} and the author name as the argument followed by the biography text.
+%\end{IEEEbiographynophoto}
+
+
+
+
+%\vfill
+
+\end{document}
+
+

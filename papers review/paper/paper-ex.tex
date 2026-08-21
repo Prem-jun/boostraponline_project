@@ -1,0 +1,375 @@
+% This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
+%\pdfoutput=1
+% In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
+
+\documentclass[11pt]{article}
+
+% Remove the "review" option to generate the final version.
+\usepackage[review]{acl}
+
+% Standard package includes
+\usepackage{graphicx}
+\usepackage{times}
+\usepackage{latexsym}
+
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+% For Vietnamese characters
+% \usepackage[T5]{fontenc}
+% See https://www.latex-project.org/help/documentation/encguide.pdf for other character sets
+
+% This assumes your files are encoded as UTF8
+\usepackage[utf8]{inputenc}
+
+% This is not strictly necessary, and may be commented out,
+% but it will improve the layout of the manuscript,
+% and will typically save some space.
+\usepackage{microtype}
+
+% If the title and author information does not fit in the area allocated, uncomment the following
+%
+%\setlength\titlebox{<dim>}
+%
+% and set <dim> to something 5cm or larger.
+
+\title{Word-cloud Covariance Encoding for Identifying Types of Sentence Similarity}
+
+% Author information can be set in various styles:
+% For several authors from the same institution:
+% \author{Author 1 \and ... \and Author n \\
+%         Address line \\ ... \\ Address line}
+% if the names do not fit well on one line use
+%         Author 1 \\ {\bf Author 2} \\ ... \\ {\bf Author n} \\
+% For authors from different institutions:
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \And  ... \And
+%         Author n \\ Address line \\ ... \\ Address line}
+% To start a seperate ``row'' of authors use \AND, as in
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \AND
+%         Author 2 \\ Address line \\ ... \\ Address line \And
+%         Author 3 \\ Address line \\ ... \\ Address line}
+
+\author{Thanaporn Jinnovart \\
+  Affiliation / Address line 1 \\
+  Affiliation / Address line 2 \\
+  Affiliation / Address line 3 \\
+  \texttt{email@domain} \\\And
+  Chidchanok Lursinsap, Ph.D. \\
+  Affiliation / Address line 1 \\
+  Affiliation / Address line 2 \\
+  Affiliation / Address line 3 \\
+  \texttt{email@domain} \\}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+We believe that measuring sentence similarity can be achieved in an unsupervised manner. This means our system could bypass the use of pretrained word embeddings and sentence models. In this work, we explored and came up with a way of encoding sentences in a low dimensional space. Our vector representations of each sentence are of fixed size, 5d, which can conveniently be used as part of an input to a multilayer perceptron in order to distinguish between entailment and neutral. We used SICK-2014 dataset to test our sentence representation, specially designed for semantic similarity task, and were able to fully separate contradiction sentence pairs from the other two types. 
+\end{abstract}
+
+
+\section{Proposed Method}
+
+There are few most important issues concerning the identification of types of sentences similarity. The first
+issue concerns the set of words and their meanings directly indicating each type of similarity without
+deploy any complex computation such as neural learning. 
+For example, for a given sentence pair, if there exists some phrasal verb such as {\em there is no} 
+appearing in one sentence but not in the other sentence, then this pair can be identified as {\em 
+contradiction} type. The second issue concerns how to extract the appropriate features of the sentence pair
+for the use of classification in forms of feature vectors. This issue is rather difficult since each 
+sentence has different number of words. Several encoding schemes have been proposed, such as word-to-vector,
+bag-of-word, mixture of BERT and LSTM. These schemes are rather powerful but their space and time
+complexities are also high. In this paper, a new encoding scheme called {\em sentence-word cloud} encoding
+is proposed to achieve lower space and time complexities as well as maintaining the compatible accuracy.
+
+The framework of proposed method in this paper is illustrated in Fig.\ref{frame-work}. A pair of sentences
+are encoded by using the proposed {\em sentence-word cloud} encoding scheme. The framework consists
+of four main process. The first process is to filter all contradiction pairs of sentences by detecting
+the opposite words in both sentences. The sentences in {\em neutral} and {\em entailment}
+classes are classified by employing the rest of processes. The second process is to detect the synonymous 
+verbs as well as phrasal verbs in both sentences and assigned word codes in a numeric form to them. The third
+process is to assign the word codes to all other non-synonymous words, also in a numeric form. All word
+vectors in each sentence are transformed into a covariance matrix for further classification. The last 
+process is to classify the vector of each sentence pair into either {\em neutral} or {\em entailment} class
+by a shallow multi-layered neural network. The details are in the following sections.
+ 
+\begin{figure}[!h]
+\centering
+\resizebox{2.8in}{3.7in}{\includegraphics{fig1.eps}} 
+%{\includegraphics[width=0.45\textwidth]{fig1.eps}} 
+\caption{Framework. Three databases of opposite words, phrasal synonym words, and morpheme are incorporated.} 
+\label{frame-work}
+\end{figure}   
+
+\subsection{Filtering Contradiction Class}
+
+There are scenarios that two sentences are in contradiction class. The first scenario focuses on the
+set of opposite words. Two sentences contradict each other if one of them has a word or phrase and the 
+other sentence has the opposite word or phrase to the first sentence. For example, sentence 1 has this 
+set of words: "The brown horse is {\em near} red barrel at the rodeo"
+and sentence 2 has this set of words: "The brown horse is {\em far from} red barrel at the rodeo".  The 
+opposite words of this case are {\em near} and {\em far from}. Both words describe the distance of the horse
+with respect to the {\em red barrel}. The second scenario is the exception of 
+the first scenario. There are some implicitly opposite phrases appearing in only one sentence. These
+phrases imply the contradiction of the sentence pair. Consider the following sentence pair:
+
+sentence 1: "{\em There is no} biker jumping in the air"
+
+sentence 2: "lone biker is jumping in the air"
+
+\noindent
+Some of these implicitly opposite words and phrases are {\em no, none, no one, nobody, there is no,
+there are not, there have no}
+  
+\subsection{Word-Cloud Covariance Encoding}
+
+A word in this paper has two morphological forms. For the first form, a word refers to a morpheme or 
+a compound word such as {\em man}, {em football}. For the second form,
+a word refers to a group of words orderly arranged in the form of a phrase such as {\em get together}, 
+{\em have a good relationship}. The part of speech of any word in both form may 
+be noun, pronoun, verb, adjective, adverb, preposition, conjunction, and interjection. In the experiment, 
+it is found that the part of speech has the minimum impact on classification accuracy. Two words may 
+have either the same or opposite semantics. For example, word {\em turn back} has the same semantics as 
+word {\em change direction}, but word {\em agree} has opposite semantics to words {\em refuse}, 
+{\em argue}. Words with the same semantics must be assigned the same word code.
+
+A sentence composes of a set of words in two different morphological forms. The number of words in each 
+sentence is different. To classify a set of sentences, each sentence must be transformed into a set of
+vectors of equal size first by encoding all the words in the sentence. Let ${\bf S}^{(i)} = \{w^{(i)}_{1}, 
+\ldots, w^{(i)}_{m}\}$ be sentence $i$ consisting of a set of words $w^{(i)}_{j}$. Each word is represented
+by two pieces of information. For the first piece of information, a word is assigned 
+a word code $c^{(i)}_{j}$ in a numeric form. Another piece of information is the order of words in the 
+sentence. The subscript index $j$ of $w^{(i)}_{j}$ denotes the relative
+position of the word with respect to the first word in the sentence. The semantics of a sentence depends
+upon the relative position of each word. For example, sentence "{\em a boy is eating an apple}" is meaningful 
+but sentence "{\em a apply an is boy eating}" is meaningless. Therefore, the subscript index is used to
+represent this information of each word. Based on the pieces of information, word $w^{(i)}_{j}$ is transformed
+into a word vector $(c^{(i)}_{j}, j)$. Thus, the elements in a sentence become set of word vectors, 
+${\bf S}^{(i)} = \{(c^{(i)}_{1},j) ,\ldots, (c^{(i)}_{1},m)\}$. The relation among these words is captured 
+by a covariance matrix of these word vectors. 
+
+Consider this example taken from SICK \ref{} database:
+"Some people are in the snow  wearing clothes that provide camouflage". After lemmatizing the sentence,
+the remaining words are: 'people', 'are', 'snow', 'wearing', 'clothes', 'provide', 'camouflage'. Applying 
+{\em Word-Cloud Covariance Encoding} to these words, the following word vectors are obtained:
+[[1, 7.4461], [2, 7.6692], [3, 7.6556], [4, 7.2898], [5, 7.3847], [6, 7.2739], [7, 6.837]] and their
+relation in the form of a covariance matrix is
+\begin{equation}
+\left [ \begin{array}{cc}
+140.0 & 203.3364 \\
+203.3364 & 380.1984
+\end{array} \right ]
+\end{equation}
+Besides the covariance matrix the mean vector of word vectors is also included. In this example, the
+mean vector is [4.0, 7.3652]. Finally, the feature vector of this sentence is formed by concatenating
+the upper part of covaiance matrix and the mean vector  to obtain this vector:
+[140.0, 203.3364, 380.1984, 4.0, 7.3652]. The steps of {\em Word-Cloud Covariance Encoding} is summarized in
+Algorithm 1.
+
+\noindent
+{\bf Algorithm 1:} {\em Word-Cloud Covariance Encoding Algorithm} \\
+{\small
+{\bf Input: } lemmatized sentence ${\bf S}^{(i)} = \{w^{(i)}_{1}, \ldots, w^{(i)}_{m}\}$. \\
+{\bf Output: } feature vector of ${\bf S}^{(i)}$.
+
+\begin{tabbing}
+1. ~~ \= Assign word code to each $w^{(i)}_{j}$ to obtain ${\bf S}^{(i)} =$ \\
+      \> $\{c^{(i)}_{1}, \ldots, c^{(i)}_{m}\}$. \\
+2. ~~ \> {\bf For} each word code $c^{(i)}_{j}$, form a word vector $(c^{(i)}_{j}, j)$. \\
+3. ~~ \> Create covaraince matrix ${\bf M}^{(i)}$ from all word vectors, \\
+      \> $\{(c^{(i)}_{j}, j) \:\: | \:\: 1 \leq j \leq m\}$. \\
+4. ~~ \> Compute the mean vector ${\bf m}^{(i)}$ from all word vectors, \\
+      \> $\{(c^{(i)}_{j}, j) \:\: | \:\: 1 \leq j \leq m\}$. \\
+5. ~~ \> Form a feature vector of sentence ${\bf S}^{(i)}$ by concatenating \\
+      \> the upper part of ${\bf M}^{(i)}$ and ${\bf m}^{(i)}$. \\
+\end{tabbing}
+} 
+
+In general, each word $w^{(i)}_{j}$ can be represented by a set of defined $n$ features, instead of just using
+the word code $c^{(i)}_{j}$ and its relative position as in this paper. Thus, a sentence ${\bf S}^{(i)}$ of 
+$m$ words is represented by a matrix where each column is a word feature vectors as follows.
+
+{\small 
+\begin{eqnarray}
+{\bf S}^{(i)} & = & \left [
+\begin{array}{cccc}
+f^{(i)}_{1,1} & f^{(i)}_{2,1} & \ldots & f^{(i)}_{m,1} \\
+f^{(i)}_{1,2} & f^{(i)}_{2,2} & \ldots & f^{(i)}_{m,2} \\
+\vdots & \vdots & \vdots & \vdots \\
+f^{(i)}_{1,n-1} & f^{(i)}_{2,n-1} & \ldots & f^{(i)}_{m,n-1} \\
+f^{(i)}_{1,n} & f^{(i)}_{2,n} & \ldots & f^{(i)}_{m,n}
+\end{array}
+\right ] \\
+ & = & \left [{\bf F}^{(i)}_{1} \:\: {\bf F}^{(i)}_{2} \:\: \ldots \:\: {\bf F}^{(i)}_{m} \right ]
+\end{eqnarray}
+}
+The relation among all word feature vectors can be computed in the form of a covariance matrix from
+matrix ${\bf S}^{(i))}$. Let ${\bf \mu}^{(i)}$ be the mean feature vector and ${\bf F}^{\prime(i)}_{j} = 
+{\bf F}^{(i)}_{j} - {\bf \mu}^{(i)}$. The covariance matrix of sentence ${\bf S}^{(i)}$ is computed by
+
+{\small
+\begin{eqnarray}
+cov({\bf S}^{(i)}) & = & \left [{\bf F}^{\prime(i)}_{1} \:\: \ldots 
+\:\: {\bf F}^{\prime(i)}_{m} \right ] \left [{\bf F}^{\prime(i)}_{1} \:\:
+\ldots \:\: {\bf F}^{\prime(i)}_{m} \right ]^{T}
+\end{eqnarray}
+}
+
+\section{Results and Discussion}
+
+Our results show that we have successfully separate contradiction from neutral and entailment by 100\%. Since there are only 666 samples of contradiction out of 4501 training data, we tested on SICK’s testing data which contains additional contradiction samples of 587 and the results confirms total separation. This proves our method of detecting contradiction pairs to be effective. Our proposed method attempted to detect negative markers and antonyms between sentence pairs and then confirmed whether those cues were referring to the same subject, or object, in both sentences.
+
+We set aside all detected contradiction sentence pairs and fed the remaining samples into a multilayer perceptron. The remaining samples contain both neutral and entailment sentence pairs. Although our results did not exceed the top results we have known to the best of our knowledge, we may argue that our method does not need any pretrained models. This makes our proposed system lightweight and easy to be used across platforms, and environments. An attempt to classify among the three types of sentence pairs in [] can be seen as an example of using pretrained word embeddings of high dimensionality. Each word is referred to a unique GloVe vector and the baseline sentence embedding model was the sums of all word embeddings in each sentence. Despite the sentence model being 100d for each premise and each hypothesis, their word embeddings are generally of 300d. When compared to our sentence embeddings in which each word only contains one unique value, the use of pretrained model becomes comparably large. Also, for the actual sentence embeddings for our proposed method, we were able to fix the preliminary size of the vector to 5d. When used for training in the network, a fixed vector size of 14d is built from concatenation of the two preliminary 5d vectors and their four corresponding features. This is relatively small when compared with a concatenation of two 100d sentence vectors, \citep{bowman-etal-2015-large}. 
+
+We were able to handle multiword expressions. This can be seen in sentences with phrasal verb expressions where we detect groups of words and convert them to single verbs. In many times, these single verbs led to synonym detection between sentence pairs.
+We agreed with \citep{chen-etal-2021-neurallog} that there are samples that we disagree with the labels. 
+
+
+
+% \section{Document Body}
+
+% \subsection{Footnotes}
+
+% Footnotes are inserted with the \verb|\footnote| command.\footnote{This is a footnote.}
+
+% \subsection{Tables and figures}
+
+% See Table~\ref{tab:accents} for an example of a table and its caption.
+% \textbf{Do not override the default caption sizes.}
+
+% \begin{table}
+% \centering
+% \begin{tabular}{lc}
+% \hline
+% \textbf{Command} & \textbf{Output}\\
+% \hline
+% \verb|{\"a}| & {\"a} \\
+% \verb|{\^e}| & {\^e} \\
+% \verb|{\`i}| & {\`i} \\ 
+% \verb|{\.I}| & {\.I} \\ 
+% \verb|{\o}| & {\o} \\
+% \verb|{\'u}| & {\'u}  \\ 
+% \verb|{\aa}| & {\aa}  \\\hline
+% \end{tabular}
+% \begin{tabular}{lc}
+% \hline
+% \textbf{Command} & \textbf{Output}\\
+% \hline
+% \verb|{\c c}| & {\c c} \\ 
+% \verb|{\u g}| & {\u g} \\ 
+% \verb|{\l}| & {\l} \\ 
+% \verb|{\~n}| & {\~n} \\ 
+% \verb|{\H o}| & {\H o} \\ 
+% \verb|{\v r}| & {\v r} \\ 
+% \verb|{\ss}| & {\ss} \\
+% \hline
+% \end{tabular}
+% \caption{Example commands for accented characters, to be used in, \emph{e.g.}, Bib\TeX{} entries.}
+% \label{tab:accents}
+% \end{table}
+
+% \subsection{Hyperlinks}
+
+% Users of older versions of \LaTeX{} may encounter the following error during compilation: 
+% \begin{quote}
+% \tt\verb|\pdfendlink| ended up in different nesting level than \verb|\pdfstartlink|.
+% \end{quote}
+% This happens when pdf\LaTeX{} is used and a citation splits across a page boundary. The best way to fix this is to upgrade \LaTeX{} to 2018-12-01 or later.
+
+% \subsection{Citations}
+
+% \begin{table*}
+% \centering
+% \begin{tabular}{lll}
+% \hline
+% \textbf{Output} & \textbf{natbib command} & \textbf{Old ACL-style command}\\
+% \hline
+% \citep{Gusfield:97} & \verb|\citep| & \verb|\cite| \\
+% \citealp{Gusfield:97} & \verb|\citealp| & no equivalent \\
+% \citet{Gusfield:97} & \verb|\citet| & \verb|\newcite| \\
+% \citeyearpar{Gusfield:97} & \verb|\citeyearpar| & \verb|\shortcite| \\
+% \hline
+% \end{tabular}
+% \caption{\label{citation-guide}
+% Citation commands supported by the style file.
+% The style is based on the natbib package and supports all natbib citation commands.
+% It also supports commands defined in previous ACL style files for compatibility.
+% }
+% \end{table*}
+
+% Table~\ref{citation-guide} shows the syntax supported by the style files.
+% We encourage you to use the natbib styles.
+% You can use the command \verb|\citet| (cite in text) to get ``author (year)'' citations, like this citation to a paper by \citet{Gusfield:97}.
+% You can use the command \verb|\citep| (cite in parentheses) to get ``(author, year)'' citations \citep{Gusfield:97}.
+% You can use the command \verb|\citealp| (alternative cite without parentheses) to get ``author, year'' citations, which is useful for using citations within parentheses (e.g. \citealp{Gusfield:97}).
+
+% \subsection{References}
+
+% \nocite{Ando2005,borschinger-johnson-2011-particle,andrew2007scalable,rasooli-tetrault-2015,goodman-etal-2016-noise,harper-2014-learning}
+
+% The \LaTeX{} and Bib\TeX{} style files provided roughly follow the American Psychological Association format.
+% If your own bib file is named \texttt{custom.bib}, then placing the following before any appendices in your \LaTeX{} file will generate the references section for you:
+% \begin{quote}
+% \begin{verbatim}
+% \bibliographystyle{acl_natbib}
+% \bibliography{custom}
+% \end{verbatim}
+% \end{quote}
+
+% You can obtain the complete ACL Anthology as a Bib\TeX{} file from \url{https://aclweb.org/anthology/anthology.bib.gz}.
+% To include both the Anthology and your own .bib file, use the following instead of the above.
+% \begin{quote}
+% \begin{verbatim}
+% \bibliographystyle{acl_natbib}
+% \bibliography{anthology,custom}
+% \end{verbatim}
+% \end{quote}
+
+% Please see Section~\ref{sec:bibtex} for information on preparing Bib\TeX{} files.
+
+% \subsection{Appendices}
+
+% Use \verb|\appendix| before any appendix section to switch the section numbering over to letters. See Appendix~\ref{sec:appendix} for an example.
+
+% \section{Bib\TeX{} Files}
+% \label{sec:bibtex}
+
+% Unicode cannot be used in Bib\TeX{} entries, and some ways of typing special characters can disrupt Bib\TeX's alphabetization. The recommended way of typing special characters is shown in Table~\ref{tab:accents}.
+
+% Please ensure that Bib\TeX{} records contain DOIs or URLs when possible, and for all the ACL materials that you reference.
+% Use the \verb|doi| field for DOIs and the \verb|url| field for URLs.
+% If a Bib\TeX{} entry has a URL or DOI field, the paper title in the references section will appear as a hyperlink to the paper, using the hyperref \LaTeX{} package.
+
+% \section*{Acknowledgements}
+
+% This document has been adapted
+% by Steven Bethard, Ryan Cotterell and Rui Yan
+% from the instructions for earlier ACL and NAACL proceedings, including those for 
+% ACL 2019 by Douwe Kiela and Ivan Vuli\'{c},
+% NAACL 2019 by Stephanie Lukin and Alla Roskovskaya, 
+% ACL 2018 by Shay Cohen, Kevin Gimpel, and Wei Lu, 
+% NAACL 2018 by Margaret Mitchell and Stephanie Lukin,
+% Bib\TeX{} suggestions for (NA)ACL 2017/2018 from Jason Eisner,
+% ACL 2017 by Dan Gildea and Min-Yen Kan, 
+% NAACL 2017 by Margaret Mitchell, 
+% ACL 2012 by Maggie Li and Michael White, 
+% ACL 2010 by Jing-Shin Chang and Philipp Koehn, 
+% ACL 2008 by Johanna D. Moore, Simone Teufel, James Allan, and Sadaoki Furui, 
+% ACL 2005 by Hwee Tou Ng and Kemal Oflazer, 
+% ACL 2002 by Eugene Charniak and Dekang Lin, 
+% and earlier ACL and EACL formats written by several people, including
+% John Chen, Henry S. Thompson and Donald Walker.
+% Additional elements were taken from the formatting instructions of the \emph{International Joint Conference on Artificial Intelligence} and the \emph{Conference on Computer Vision and Pattern Recognition}.
+
+% % Entries for the entire Anthology, followed by custom entries
+\bibliography{anthology,custom}
+\bibliographystyle{acl_natbib}
+
+% \appendix
+
+% \section{Example Appendix}
+% \label{sec:appendix}
+
+% This is an appendix.
+
+\end{document}

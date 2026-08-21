@@ -1,0 +1,55 @@
++++++++++ Results for fdist_performance_summary ++++++++++++
+
+-------- fdistdfn5dfd10n10000_chunk_size_50 --------
+base	           other	base_mean	other_mean	stat_val	p_val	statistic	rejected
+bt_est_on_out	bt_est_on	28.9171	      28.9166	3.8533	0.9999	Paired t-test	False
+	        bt_est_onmm	              28.9222  -6.3888	0.0000	Paired t-test	True
+	        bt_est_trad	              31.0233	-21.757 0.0000	Paired t-test	True
+
+
+Summary of all results:
+
+-------- fdistdfn5dfd10n10000_chunk_size_100 --------
+base	other	base_mean	other_mean	stat_val	p_val	statistic	rejected
+bt_est_on_out	bt_est_on	28.8072	28.8073	-0.6088	        0.2737	Paired t-test	False
+	bt_est_onmm		        28.8103	-2.1992		0.0180	Paired t-test	True
+	bt_est_trad		        30.9120	-14.2734	0.0000	Paired t-test	True
+
+
+Summary of all results:
+
+-------- fdistdfn5dfd10n10000_chunk_size_500 --------
+base	other	base_mean	other_mean	stat_val	p_val	statistic	rejected
+bt_est_on_out	bt_est_on	28.5131	28.5144	0.0000		0.0206	Wilcoxon signed-rank test	True
+	bt_est_onmm			31.6657	0.0000		0.0206	Wilcoxon signed-rank test	True
+	bt_est_trad			30.4186	-6.0934		0.0009	Paired t-test			True
+
+
+Summary of all results:
+
+-------- fdistdfn5dfd20n10000_chunk_size_50 --------
+base	other	base_mean	other_mean	stat_val	p_val	statistic	rejected
+bt_est_on_out	bt_est_on	95.1280	95.1279	13.9233		1.0000	Paired t-test	False
+	bt_est_onmm			95.1300	-12.6299	0.0000	Paired t-test	True
+	bt_est_trad			98.2470	-14.2234	0.0000	Paired t-test	True
+
+
+Summary of all results:
+
+-------- fdistdfn5dfd20n10000_chunk_size_100 --------
+base	other	base_mean	other_mean	stat_val	p_val	statistic	rejected
+bt_est_on_out	bt_est_on	94.7388	94.7404	-3.3281		0.0012	Paired t-test	True
+	bt_est_onmm			94.7410	-5.1126		0.0000	Paired t-test	True
+	bt_est_trad			97.8486	-10.1673	0.0000	Paired t-test	True
+
+
+Summary of all results:
+
+-------- fdistdfn5dfd20n10000_chunk_size_500 --------
+base	other	base_mean	other_mean	stat_val	p_val	statistic	rejected
+bt_est_on_out	bt_est_on	93.9614	93.9601	12.0000		0.8918	Wilcoxon signed-rank test	False
+	bt_est_onmm			93.9629	-3.5366		0.0083	Paired t-test	True
+	bt_est_trad			97.1466	-4.3609		0.0036	Paired t-test	True
+
+
+Summary of all results:
