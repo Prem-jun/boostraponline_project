@@ -9,8 +9,10 @@ from .boot_stream import *
 from .samp1d import *
 from .res_bootstrap import *
 from .BatchOutlierDetection import *
-from .bootstrap_online import *
 
+# New modular classes (v2)
+from .bootstrap_online import BootstrapOnline
+from .res_bootstrap_v2 import ResBootstrap
 
 
 # __all__ = ['function1', 'function2']
