@@ -83,11 +83,13 @@ class RBULTControlChart:
         self.total_chunks_processed = 0
         self.total_samples_processed = 0
 
-    def update_chunk(self, chunk_data: Union[pd.DataFrame, Dict[str, List[float]]]) -> dict:
+    def update_chunk(self, chunk_data: Union[pd.DataFrame, Dict[str, List[float]]],
+                     ooc_threshold_count: int = 3) -> dict:
         """Process a streaming data chunk across all monitored features.
 
         Args:
             chunk_data: DataFrame or Dict mapping feature_name -> list of values.
+            ooc_threshold_count: Minimum number of out-of-bounds samples required to flag a chunk OOC.
 
         Returns:
             Dict containing chunk processing statistics, dynamic LCL/UCL bounds,
@@ -137,8 +139,8 @@ class RBULTControlChart:
 
             # Check Out-Of-Control (OOC) violations in the current chunk
             ooc_mask = [(x < lcl or x > ucl) for x in vals]
-            has_ooc = any(ooc_mask)
             ooc_count = sum(ooc_mask)
+            has_ooc = ooc_count >= ooc_threshold_count
 
             chunk_summary['bounds'][feat] = {
                 'lcl': lcl,
@@ -162,6 +164,7 @@ class RBULTControlChart:
 
         self.history.append(chunk_summary)
         return chunk_summary
+
 
     def get_control_limits(self) -> Dict[str, Tuple[float, float]]:
         """Get current dynamic [LCL, UCL] bounds for all features.
@@ -230,7 +233,9 @@ class RBULTControlChart:
                     feature_coverage[f'coverage_{feat}'] = covered / max(1, len(vals))
 
             metrics['overall_coverage_pct'] = (total_covered_samples / max(1, total_in_control_samples)) * 100.0
+            metrics['sample_far_pct'] = 100.0 - metrics['overall_coverage_pct']
             metrics['feature_coverage'] = feature_coverage
+
 
         # Compute ARL0 (In-Control Run Length) & ARL1 (Shift Detection Delay) if true_labels are provided
         if true_labels and len(true_labels) == len(self.history):
