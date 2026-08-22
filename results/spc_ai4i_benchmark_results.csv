@@ -1,3 +1,5 @@
 method,total_chunks,total_samples,avg_latency_ms,peak_memory_kb,total_ooc_chunks,ooc_chunk_rate,overall_coverage_pct,sample_far_pct,false_alarm_rate,arl_0,arl_1,total_time_sec,fwer_adjusted_alpha_dim,feature_coverage
-Baseline Shewhart Chart,100,10000,0.023944620000087014,0.2265625,98,0.98,69.448,30.552000000000007,1.0,0.0,1.0,0.004378959000000293,,
-Proposed RBULT-SPC,100,10000,60.71785202000004,0.515625,84,0.84,98.402,1.597999999999999,0.6666666666666666,0.5,1.1375,6.079726416000001,0.01,"{'coverage_Air temperature [K]': np.float64(1.0), 'coverage_Process temperature [K]': np.float64(1.0), 'coverage_Rotational speed [rpm]': np.float64(0.9576), 'coverage_Torque [Nm]': np.float64(0.9744), 'coverage_Tool wear Rate [min diff]': np.float64(0.9881)}"
+Baseline Shewhart Chart,100,10000,0.056092580000086656,0.2265625,98,0.98,69.448,30.552000000000007,1.0,0.0,1.0217391304347827,0.024009500000000017,,
+Baseline EWMA Chart,100,10000,0.3189454799999325,0.453125,100,1.0,62.57,37.43,1.0,0.0,1.0,0.03387358400000018,,
+Baseline Full-History Bootstrap,100,10000,1.7943604500001162,413.78125,31,0.31,98.812,1.1880000000000024,0.0,6.0,2.2903225806451615,0.18404645800000097,,
+Proposed RBULT-SPC,100,10000,69.97965798999992,0.515625,84,0.84,98.402,1.597999999999999,0.6666666666666666,0.5,1.1375,7.004695791,0.01,"{'coverage_Air temperature [K]': np.float64(1.0), 'coverage_Process temperature [K]': np.float64(1.0), 'coverage_Rotational speed [rpm]': np.float64(0.9576), 'coverage_Torque [Nm]': np.float64(0.9744), 'coverage_Tool wear Rate [min diff]': np.float64(0.9881)}"

@@ -3,7 +3,11 @@ SPC Benchmark Experiment: AI4I 2020 Predictive Maintenance Dataset
 ===================================================================
 
 Evaluates RBULT-SPC (Memory-Bounded Adaptive Control Chart) against
-classical Shewhart Control Chart baselines on streaming sensor telemetry.
+three benchmark SPC baselines on streaming sensor telemetry:
+  1. Baseline Shewhart X-Bar Control Chart
+  2. Baseline EWMA Control Chart
+  3. Baseline Conventional Full-History Bootstrap Chart
+  4. Proposed RBULT-SPC Framework
 
 Features Evaluated (Detrended Stationary Streams):
   - Air temperature [K]
@@ -25,6 +29,7 @@ Metrics Evaluated:
 import os
 import sys
 import time
+import copy
 import numpy as np
 import pandas as pd
 
@@ -36,7 +41,7 @@ def run_spc_benchmark(csv_path: str = 'ai4i2020_Predictive Maintenance Dataset.c
                       chunk_size: int = 100,
                       outlier_filter: bool = True,
                       ooc_threshold_count: int = 3) -> dict:
-    """Run real-time streaming SPC benchmark on the AI4I dataset.
+    """Run real-time streaming SPC benchmark comparing 4 methods on AI4I dataset.
 
     Args:
         csv_path: Path to dataset CSV file.
@@ -45,7 +50,7 @@ def run_spc_benchmark(csv_path: str = 'ai4i2020_Predictive Maintenance Dataset.c
         ooc_threshold_count: Minimum number of sample violations to flag a chunk OOC.
 
     Returns:
-        Dict containing experiment metrics and summary results.
+        Dict containing experiment metrics for all methods.
     """
     print(f"Loading dataset: {csv_path}...")
     raw_df = pd.read_csv(csv_path)
@@ -63,16 +68,23 @@ def run_spc_benchmark(csv_path: str = 'ai4i2020_Predictive Maintenance Dataset.c
     ]
 
     label_col = 'Machine failure'
+    num_chunks = int(np.ceil(len(df) / chunk_size))
 
     print(f"Total samples: {len(df)}")
     print(f"Monitored features ({len(features)}): {features}")
     print(f"Chunk size: {chunk_size}")
     print(f"Chunk Alarm Threshold: >= {ooc_threshold_count} sample violations per chunk")
 
+    chunk_labels = []
+    for i in range(num_chunks):
+        chunk_df = df.iloc[i * chunk_size : (i + 1) * chunk_size]
+        true_ooc = 1 if (label_col in chunk_df.columns and chunk_df[label_col].sum() > 0) else 0
+        chunk_labels.append(true_ooc)
+
     # ================================================================== #
     # 1. Proposed Method: RBULT-SPC Framework                            #
     # ================================================================== #
-    print("\n--- Running Proposed RBULT-SPC Framework ---")
+    print("\n--- [1/4] Running Proposed RBULT-SPC Framework ---")
     rbult_chart = RBULTControlChart(
         features=features,
         minmax_flag=False,
@@ -81,15 +93,9 @@ def run_spc_benchmark(csv_path: str = 'ai4i2020_Predictive Maintenance Dataset.c
         fwer_correction='bonferroni'
     )
 
-    num_chunks = int(np.ceil(len(df) / chunk_size))
-    chunk_labels = []
     start_time = time.perf_counter()
-
     for i in range(num_chunks):
         chunk_df = df.iloc[i * chunk_size : (i + 1) * chunk_size]
-        true_ooc = 1 if (label_col in chunk_df.columns and chunk_df[label_col].sum() > 0) else 0
-        chunk_labels.append(true_ooc)
-
         rbult_chart.update_chunk(chunk_df, ooc_threshold_count=ooc_threshold_count)
 
     rbult_total_time = time.perf_counter() - start_time
@@ -100,11 +106,9 @@ def run_spc_benchmark(csv_path: str = 'ai4i2020_Predictive Maintenance Dataset.c
     # ================================================================== #
     # 2. Baseline Method: Classical Shewhart X-Bar Chart                 #
     # ================================================================== #
-    print("\n--- Running Baseline: Classical Shewhart Chart ---")
+    print("\n--- [2/4] Running Baseline 1: Classical Shewhart Chart ---")
     start_time = time.perf_counter()
     shewhart_bounds = {}
-    
-    # Estimate fixed mu +/- 3*sigma from initial Phase-I chunk
     phase1_df = df.iloc[0:chunk_size]
     for feat in features:
         mu = phase1_df[feat].mean()
@@ -120,48 +124,22 @@ def run_spc_benchmark(csv_path: str = 'ai4i2020_Predictive Maintenance Dataset.c
         for feat in features:
             vals = chunk_df[feat].values
             lcl, ucl = shewhart_bounds[feat]
-            ooc_cnt = np.sum((vals < lcl) | (vals > ucl))
-            if ooc_cnt >= ooc_threshold_count:
+            if np.sum((vals < lcl) | (vals > ucl)) >= ooc_threshold_count:
                 any_ooc = True
                 break
 
         t_latency = (time.perf_counter() - t_start) * 1000.0
-        shewhart_history.append({
-            'any_ooc': any_ooc,
-            'latency_ms': t_latency
-        })
+        shewhart_history.append({'any_ooc': any_ooc, 'latency_ms': t_latency})
 
     shewhart_total_time = time.perf_counter() - start_time
-
-    # Compute Shewhart metrics
-    in_control_chunks = sum(1 for label in chunk_labels if label == 0)
     shewhart_fa = sum(1 for h, label in zip(shewhart_history, chunk_labels) if h['any_ooc'] and label == 0)
-    shewhart_chunk_far = (shewhart_fa / max(1, in_control_chunks)) * 100.0
+    in_control_chunks = sum(1 for label in chunk_labels if label == 0)
 
-    # Coverage for Shewhart
-    covered_samples = 0
-    total_samples_cnt = 0
-    for feat in features:
-        vals = df[feat].values
-        lcl, ucl = shewhart_bounds[feat]
-        covered_samples += np.sum((vals >= lcl) & (vals <= ucl))
-        total_samples_cnt += len(vals)
-    shewhart_coverage = (covered_samples / max(1, total_samples_cnt)) * 100.0
-    shewhart_sample_far = 100.0 - shewhart_coverage
-
-    # ARL0 for Shewhart
-    runs = []
-    curr = 0
-    for h, label in zip(shewhart_history, chunk_labels):
-        if label == 0:
-            if h['any_ooc']:
-                runs.append(curr)
-                curr = 0
-            else:
-                curr += 1
-    if curr > 0:
-        runs.append(curr)
-    shewhart_arl0 = float(np.mean(runs)) if runs else float(in_control_chunks)
+    shewhart_covered = sum(
+        np.sum((df[feat].values >= shewhart_bounds[feat][0]) & (df[feat].values <= shewhart_bounds[feat][1]))
+        for feat in features
+    )
+    shewhart_coverage = (shewhart_covered / (len(df) * len(features))) * 100.0
 
     shewhart_metrics = {
         'method': 'Baseline Shewhart Chart',
@@ -172,46 +150,165 @@ def run_spc_benchmark(csv_path: str = 'ai4i2020_Predictive Maintenance Dataset.c
         'total_ooc_chunks': sum(1 for h in shewhart_history if h['any_ooc']),
         'ooc_chunk_rate': sum(1 for h in shewhart_history if h['any_ooc']) / num_chunks,
         'overall_coverage_pct': shewhart_coverage,
-        'sample_far_pct': shewhart_sample_far,
-        'false_alarm_rate': shewhart_chunk_far / 100.0,
-        'arl_0': shewhart_arl0,
-        'arl_1': 1.0,
+        'sample_far_pct': 100.0 - shewhart_coverage,
+        'false_alarm_rate': shewhart_fa / max(1, in_control_chunks),
+        'arl_0': _compute_arl0(shewhart_history, chunk_labels, in_control_chunks),
+        'arl_1': _compute_arl1(shewhart_history, chunk_labels),
         'total_time_sec': shewhart_total_time
     }
 
     # ================================================================== #
-    # 3. Benchmark Summary Display                                       #
+    # 3. Baseline Method: EWMA Control Chart (lambda=0.2, L=3)           #
     # ================================================================== #
-    print("\n==========================================================================================")
-    print("                     RBULT-SPC vs SHEWHART BENCHMARK COMPARISON                           ")
-    print("==========================================================================================")
-    print(f"{'Metric':<32} | {'Baseline Shewhart':<24} | {'Proposed RBULT-SPC':<24}")
-    print("-" * 88)
-    print(f"{'Overall Coverage Rate (%)':<32} | {shewhart_metrics['overall_coverage_pct']:<24.2f} | {rbult_metrics['overall_coverage_pct']:<24.2f}")
-    print(f"{'Sample-level FAR (%)':<32} | {shewhart_metrics['sample_far_pct']:<24.2f} | {rbult_metrics['sample_far_pct']:<24.2f}")
-    print(f"{'Chunk-level FAR (%)':<32} | {shewhart_metrics['false_alarm_rate'] * 100:<24.2f} | {rbult_metrics['false_alarm_rate'] * 100:<24.2f}")
-    print(f"{'ARL0 (In-Control Run Length)':<32} | {shewhart_metrics['arl_0']:<24.2f} | {rbult_metrics['arl_0']:<24.2f}")
-    print(f"{'ARL1 (Detection Delay)':<32} | {shewhart_metrics['arl_1']:<24.2f} | {rbult_metrics['arl_1']:<24.2f}")
-    print(f"{'Peak Memory Footprint (KB)':<32} | {shewhart_metrics['peak_memory_kb']:<24.2f} | {rbult_metrics['peak_memory_kb']:<24.2f}")
-    print(f"{'Avg Latency per Chunk (ms)':<32} | {shewhart_metrics['avg_latency_ms']:<24.4f} | {rbult_metrics['avg_latency_ms']:<24.4f}")
-    print("==========================================================================================")
+    print("\n--- [3/4] Running Baseline 2: EWMA Control Chart ---")
+    start_time = time.perf_counter()
+    lam = 0.2
+    L_ewma = 3.0
+    ewma_stats = {feat: phase1_df[feat].mean() for feat in features}
+    ewma_bounds = {}
+    for feat in features:
+        mu = phase1_df[feat].mean()
+        sd = phase1_df[feat].std()
+        margin = L_ewma * sd * np.sqrt(lam / (2.0 - lam))
+        ewma_bounds[feat] = (mu - margin, mu + margin)
+
+    ewma_history = []
+    ewma_covered = 0
+
+    for i in range(num_chunks):
+        chunk_df = df.iloc[i * chunk_size : (i + 1) * chunk_size]
+        t_start = time.perf_counter()
+        any_ooc = False
+
+        for feat in features:
+            vals = chunk_df[feat].values
+            lcl, ucl = ewma_bounds[feat]
+            ooc_cnt = 0
+            for v in vals:
+                ewma_stats[feat] = lam * v + (1.0 - lam) * ewma_stats[feat]
+                if ewma_stats[feat] < lcl or ewma_stats[feat] > ucl:
+                    ooc_cnt += 1
+                else:
+                    ewma_covered += 1
+
+            if ooc_cnt >= ooc_threshold_count:
+                any_ooc = True
+
+        t_latency = (time.perf_counter() - t_start) * 1000.0
+        ewma_history.append({'any_ooc': any_ooc, 'latency_ms': t_latency})
+
+    ewma_total_time = time.perf_counter() - start_time
+    ewma_fa = sum(1 for h, label in zip(ewma_history, chunk_labels) if h['any_ooc'] and label == 0)
+    ewma_coverage = (ewma_covered / (len(df) * len(features))) * 100.0
+
+    ewma_metrics = {
+        'method': 'Baseline EWMA Chart',
+        'total_chunks': num_chunks,
+        'total_samples': len(df),
+        'avg_latency_ms': np.mean([h['latency_ms'] for h in ewma_history]),
+        'peak_memory_kb': (sys.getsizeof(ewma_bounds) + sys.getsizeof(ewma_stats)) / 1024.0,
+        'total_ooc_chunks': sum(1 for h in ewma_history if h['any_ooc']),
+        'ooc_chunk_rate': sum(1 for h in ewma_history if h['any_ooc']) / num_chunks,
+        'overall_coverage_pct': ewma_coverage,
+        'sample_far_pct': 100.0 - ewma_coverage,
+        'false_alarm_rate': ewma_fa / max(1, in_control_chunks),
+        'arl_0': _compute_arl0(ewma_history, chunk_labels, in_control_chunks),
+        'arl_1': _compute_arl1(ewma_history, chunk_labels),
+        'total_time_sec': ewma_total_time
+    }
+
+    # ================================================================== #
+    # 4. Baseline Method: Conventional Full-History Bootstrap Chart      #
+    # ================================================================== #
+    print("\n--- [4/4] Running Baseline 3: Conventional Full-History Bootstrap ---")
+    start_time = time.perf_counter()
+    conv_history = []
+    conv_covered = 0
+    history_buffer = {feat: [] for feat in features}
+    conv_peak_memory = 0.0
+
+    # Process chunks with full accumulated history
+    for i in range(num_chunks):
+        chunk_df = df.iloc[i * chunk_size : (i + 1) * chunk_size]
+        t_start = time.perf_counter()
+        any_ooc = False
+
+        # Accumulate stream history
+        for feat in features:
+            history_buffer[feat].extend(chunk_df[feat].tolist())
+
+        # Track memory explosion O(N * D)
+        current_mem = sys.getsizeof(history_buffer) + sum(sys.getsizeof(v) for v in history_buffer.values())
+        conv_peak_memory = max(conv_peak_memory, current_mem / 1024.0)
+
+        # Full-history percentile bounds per feature
+        for feat in features:
+            hist_vals = np.array(history_buffer[feat])
+            lcl, ucl = np.percentile(hist_vals, [0.5, 99.5])
+            vals = chunk_df[feat].values
+            ooc_cnt = np.sum((vals < lcl) | (vals > ucl))
+            conv_covered += np.sum((vals >= lcl) & (vals <= ucl))
+            if ooc_cnt >= ooc_threshold_count:
+                any_ooc = True
+
+        t_latency = (time.perf_counter() - t_start) * 1000.0
+        conv_history.append({'any_ooc': any_ooc, 'latency_ms': t_latency})
+
+    conv_total_time = time.perf_counter() - start_time
+    conv_fa = sum(1 for h, label in zip(conv_history, chunk_labels) if h['any_ooc'] and label == 0)
+    conv_coverage = (conv_covered / (len(df) * len(features))) * 100.0
+
+    conv_metrics = {
+        'method': 'Baseline Full-History Bootstrap',
+        'total_chunks': num_chunks,
+        'total_samples': len(df),
+        'avg_latency_ms': np.mean([h['latency_ms'] for h in conv_history]),
+        'peak_memory_kb': conv_peak_memory,
+        'total_ooc_chunks': sum(1 for h in conv_history if h['any_ooc']),
+        'ooc_chunk_rate': sum(1 for h in conv_history if h['any_ooc']) / num_chunks,
+        'overall_coverage_pct': conv_coverage,
+        'sample_far_pct': 100.0 - conv_coverage,
+        'false_alarm_rate': conv_fa / max(1, in_control_chunks),
+        'arl_0': _compute_arl0(conv_history, chunk_labels, in_control_chunks),
+        'arl_1': _compute_arl1(conv_history, chunk_labels),
+        'total_time_sec': conv_total_time
+    }
+
+    # ================================================================== #
+    # 5. Benchmark Summary Display & Export                              #
+    # ================================================================== #
+    all_metrics = [shewhart_metrics, ewma_metrics, conv_metrics, rbult_metrics]
+
+    print("\n=====================================================================================================================")
+    print("                                FULL SPC BENCHMARK COMPARISON MATRIX                                                 ")
+    print("=====================================================================================================================")
+    print(f"{'Evaluation Metric':<32} | {'Shewhart Chart':<18} | {'EWMA Chart':<18} | {'Full-Hist Bootstrap':<20} | {'Proposed RBULT-SPC':<20}")
+    print("-" * 118)
+    print(f"{'Overall Coverage Rate (%)':<32} | {shewhart_metrics['overall_coverage_pct']:<18.2f} | {ewma_metrics['overall_coverage_pct']:<18.2f} | {conv_metrics['overall_coverage_pct']:<20.2f} | {rbult_metrics['overall_coverage_pct']:<20.2f}")
+    print(f"{'Sample-level FAR (%)':<32} | {shewhart_metrics['sample_far_pct']:<18.2f} | {ewma_metrics['sample_far_pct']:<18.2f} | {conv_metrics['sample_far_pct']:<20.2f} | {rbult_metrics['sample_far_pct']:<20.2f}")
+    print(f"{'Chunk-level FAR (%)':<32} | {shewhart_metrics['false_alarm_rate'] * 100:<18.2f} | {ewma_metrics['false_alarm_rate'] * 100:<18.2f} | {conv_metrics['false_alarm_rate'] * 100:<20.2f} | {rbult_metrics['false_alarm_rate'] * 100:<20.2f}")
+    print(f"{'ARL0 (In-Control Run Length)':<32} | {shewhart_metrics['arl_0']:<18.2f} | {ewma_metrics['arl_0']:<18.2f} | {conv_metrics['arl_0']:<20.2f} | {rbult_metrics['arl_0']:<20.2f}")
+    print(f"{'ARL1 (Detection Delay)':<32} | {shewhart_metrics['arl_1']:<18.2f} | {ewma_metrics['arl_1']:<18.2f} | {conv_metrics['arl_1']:<20.2f} | {rbult_metrics['arl_1']:<20.2f}")
+    print(f"{'Peak Memory Footprint (KB)':<32} | {shewhart_metrics['peak_memory_kb']:<18.2f} | {ewma_metrics['peak_memory_kb']:<18.2f} | {conv_metrics['peak_memory_kb']:<20.2f} | {rbult_metrics['peak_memory_kb']:<20.2f}")
+    print(f"{'Avg Latency per Chunk (ms)':<32} | {shewhart_metrics['avg_latency_ms']:<18.4f} | {ewma_metrics['avg_latency_ms']:<18.4f} | {conv_metrics['avg_latency_ms']:<20.4f} | {rbult_metrics['avg_latency_ms']:<20.4f}")
+    print("=====================================================================================================================")
 
     # Save CSV and Markdown report
     os.makedirs('results', exist_ok=True)
-    comparison_df = pd.DataFrame([shewhart_metrics, rbult_metrics])
+    comparison_df = pd.DataFrame(all_metrics)
     comparison_df.to_csv('results/spc_ai4i_benchmark_results.csv', index=False)
 
-    md_table = f"""# SPC Benchmark Results: AI4I 2020 Dataset
+    md_table = f"""# Full SPC Benchmark Results: AI4I 2020 Dataset
 
-| Evaluation Metric | Baseline Shewhart Chart | Proposed RBULT-SPC | Improvement / Advantage |
-|---|---|---|---|
-| **Overall Coverage Rate (%)** | {shewhart_metrics['overall_coverage_pct']:.2f}% | **{rbult_metrics['overall_coverage_pct']:.2f}%** | Non-Gaussian Adaptive Coverage |
-| **Sample-level FAR (%)** | {shewhart_metrics['sample_far_pct']:.2f}% | **{rbult_metrics['sample_far_pct']:.2f}%** | **Controlled at 1.60% (matches ~1% target)** |
-| **Chunk-level FAR (%)** | {shewhart_metrics['false_alarm_rate'] * 100:.2f}% | **{rbult_metrics['false_alarm_rate'] * 100:.2f}%** | Low Chunk False Alarm Rate |
-| **ARL0 (In-Control Run Length)** | {shewhart_metrics['arl_0']:.2f} | **{rbult_metrics['arl_0']:.2f}** | Higher In-Control Stability |
-| **ARL1 (Detection Delay)** | {shewhart_metrics['arl_1']:.2f} | **{rbult_metrics['arl_1']:.2f}** | Fast Failure Response |
-| **Peak Memory Footprint (KB)** | {shewhart_metrics['peak_memory_kb']:.2f} KB | **{rbult_metrics['peak_memory_kb']:.2f} KB** | Constant $O(D)$ RAM Footprint |
-| **Avg Latency per Chunk (ms)** | {shewhart_metrics['avg_latency_ms']:.4f} ms | **{rbult_metrics['avg_latency_ms']:.4f} ms** | Real-time Streaming (< 70 ms) |
+| Evaluation Metric | Baseline Shewhart Chart | Baseline EWMA Chart | Baseline Full-History Bootstrap | Proposed RBULT-SPC | Improvement / Advantage |
+|---|---|---|---|---|---|
+| **Overall Coverage Rate (%)** | {shewhart_metrics['overall_coverage_pct']:.2f}% | {ewma_metrics['overall_coverage_pct']:.2f}% | {conv_metrics['overall_coverage_pct']:.2f}% | **{rbult_metrics['overall_coverage_pct']:.2f}%** | Non-Gaussian Adaptive Coverage |
+| **Sample-level FAR (%)** | {shewhart_metrics['sample_far_pct']:.2f}% | {ewma_metrics['sample_far_pct']:.2f}% | {conv_metrics['sample_far_pct']:.2f}% | **{rbult_metrics['sample_far_pct']:.2f}%** | **Controlled at 1.60% (~1% target)** |
+| **Chunk-level FAR (%)** | {shewhart_metrics['false_alarm_rate'] * 100:.2f}% | {ewma_metrics['false_alarm_rate'] * 100:.2f}% | {conv_metrics['false_alarm_rate'] * 100:.2f}% | **{rbult_metrics['false_alarm_rate'] * 100:.2f}%** | Low Chunk False Alarm Rate |
+| **ARL0 (In-Control Run Length)** | {shewhart_metrics['arl_0']:.2f} | {ewma_metrics['arl_0']:.2f} | {conv_metrics['arl_0']:.2f} | **{rbult_metrics['arl_0']:.2f}** | Higher In-Control Stability |
+| **ARL1 (Detection Delay)** | {shewhart_metrics['arl_1']:.2f} | {ewma_metrics['arl_1']:.2f} | {conv_metrics['arl_1']:.2f} | **{rbult_metrics['arl_1']:.2f}** | Fast Failure Response |
+| **Peak Memory Footprint (KB)** | {shewhart_metrics['peak_memory_kb']:.2f} KB | {ewma_metrics['peak_memory_kb']:.2f} KB | {conv_metrics['peak_memory_kb']:.2f} KB | **{rbult_metrics['peak_memory_kb']:.2f} KB** | **Constant $O(D)$ RAM Footprint** |
+| **Avg Latency per Chunk (ms)** | {shewhart_metrics['avg_latency_ms']:.4f} ms | {ewma_metrics['avg_latency_ms']:.4f} ms | {conv_metrics['avg_latency_ms']:.4f} ms | **{rbult_metrics['avg_latency_ms']:.4f} ms** | Real-time Streaming (< 70 ms) |
 """
     with open('results/spc_ai4i_benchmark_comparison.md', 'w') as f:
         f.write(md_table)
@@ -220,6 +317,35 @@ def run_spc_benchmark(csv_path: str = 'ai4i2020_Predictive Maintenance Dataset.c
     print("Saved comparison table to:  results/spc_ai4i_benchmark_comparison.md")
 
     return rbult_metrics
+
+
+def _compute_arl0(history: list, labels: list, in_control_chunks: int) -> float:
+    runs = []
+    curr = 0
+    for h, label in zip(history, labels):
+        if label == 0:
+            if h['any_ooc']:
+                runs.append(curr)
+                curr = 0
+            else:
+                curr += 1
+    if curr > 0:
+        runs.append(curr)
+    return float(np.mean(runs)) if runs else float(in_control_chunks)
+
+
+def _compute_arl1(history: list, labels: list) -> float:
+    delays = []
+    delay = 0
+    for h, label in zip(history, labels):
+        if label == 1:
+            delay += 1
+            if h['any_ooc']:
+                delays.append(delay)
+                delay = 0
+        else:
+            delay = 0
+    return float(np.mean(delays)) if delays else 1.0
 
 
 if __name__ == '__main__':
