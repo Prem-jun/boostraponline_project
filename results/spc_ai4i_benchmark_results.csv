@@ -1,2 +1,3 @@
-total_chunks,total_samples,avg_latency_ms,peak_memory_kb,total_ooc_chunks,ooc_chunk_rate,fwer_adjusted_alpha_dim,false_alarm_rate,total_experiment_time_sec
-100,10000,69.95775081000009,0.515625,100,1.0,0.01,1.0,7.011139417000001
+method,total_chunks,total_samples,avg_latency_ms,peak_memory_kb,total_ooc_chunks,ooc_chunk_rate,overall_coverage_pct,false_alarm_rate,arl_0,arl_1,total_time_sec,fwer_adjusted_alpha_dim,feature_coverage
+Baseline Shewhart Chart,100,10000,0.02172747000003028,0.2265625,100,1.0,69.448,100.0,0.0,1.0,0.006146458999999993,,
+Proposed RBULT-SPC,100,10000,69.55620293999999,0.515625,100,1.0,98.402,1.0,0.0,1.0,6.964110291999999,0.01,"{'coverage_Air temperature [K]': np.float64(1.0), 'coverage_Process temperature [K]': np.float64(1.0), 'coverage_Rotational speed [rpm]': np.float64(0.9576), 'coverage_Torque [Nm]': np.float64(0.9744), 'coverage_Tool wear Rate [min diff]': np.float64(0.9881)}"

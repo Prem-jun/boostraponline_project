@@ -186,16 +186,18 @@ class RBULTControlChart:
             total_bytes += sys.getsizeof(self.results[feat])
         return total_bytes / 1024.0
 
-    def compute_spc_metrics(self, true_labels: Optional[List[int]] = None) -> dict:
-        """Compute summary Statistical Process Control metrics.
+    def compute_spc_metrics(self, true_labels: Optional[List[int]] = None,
+                            sample_df: Optional[pd.DataFrame] = None) -> dict:
+        """Compute comprehensive Statistical Process Control metrics.
 
         Args:
             true_labels: Optional list of true state labels (0=In-Control, 1=Out-Of-Control)
                          per chunk.
+            sample_df: Optional full streaming DataFrame for sample-level Coverage and ARL evaluation.
 
         Returns:
             Dict of SPC metrics: total_chunks, total_samples, avg_latency_ms,
-            memory_kb, total_ooc_chunks, and false_alarm_rate.
+            peak_memory_kb, ooc_chunk_rate, coverage_rate_pct, arl_0, arl_1, and FAR.
         """
         total_ooc = sum(1 for h in self.history if h['any_ooc'])
         avg_latency = np.mean([h['latency_ms'] for h in self.history]) if self.history else 0.0
@@ -210,6 +212,27 @@ class RBULTControlChart:
             'fwer_adjusted_alpha_dim': self.alpha_dim
         }
 
+        # Calculate sample-level coverage rate if sample_df is provided
+        if sample_df is not None:
+            feature_coverage = {}
+            total_in_control_samples = 0
+            total_covered_samples = 0
+
+            # Get final or average bounds per feature
+            bounds = self.get_control_limits()
+            for feat in self.features:
+                if feat in sample_df.columns:
+                    vals = sample_df[feat].dropna().values
+                    lcl, ucl = bounds[feat]
+                    covered = np.sum((vals >= lcl) & (vals <= ucl))
+                    total_in_control_samples += len(vals)
+                    total_covered_samples += covered
+                    feature_coverage[f'coverage_{feat}'] = covered / max(1, len(vals))
+
+            metrics['overall_coverage_pct'] = (total_covered_samples / max(1, total_in_control_samples)) * 100.0
+            metrics['feature_coverage'] = feature_coverage
+
+        # Compute ARL0 (In-Control Run Length) & ARL1 (Shift Detection Delay) if true_labels are provided
         if true_labels and len(true_labels) == len(self.history):
             false_alarms = sum(
                 1 for h, label in zip(self.history, true_labels)
@@ -218,4 +241,35 @@ class RBULTControlChart:
             in_control_chunks = sum(1 for label in true_labels if label == 0)
             metrics['false_alarm_rate'] = false_alarms / max(1, in_control_chunks)
 
+            # ARL0: Average run length between false alarms during in-control periods
+            in_control_run_lengths = []
+            current_run = 0
+            for h, label in zip(self.history, true_labels):
+                if label == 0:  # In-control chunk
+                    if h['any_ooc']:  # False Alarm
+                        in_control_run_lengths.append(current_run)
+                        current_run = 0
+                    else:
+                        current_run += 1
+            if current_run > 0:
+                in_control_run_lengths.append(current_run)
+
+            metrics['arl_0'] = float(np.mean(in_control_run_lengths)) if in_control_run_lengths else float(in_control_chunks)
+
+            # ARL1: Average detection delay (chunks) from actual failure onset to alarm
+            ooc_detection_delays = []
+            detecting = False
+            delay = 0
+            for h, label in zip(self.history, true_labels):
+                if label == 1:  # Actual Out-Of-Control chunk
+                    delay += 1
+                    if h['any_ooc']:  # Successfully detected
+                        ooc_detection_delays.append(delay)
+                        delay = 0
+                else:
+                    delay = 0
+
+            metrics['arl_1'] = float(np.mean(ooc_detection_delays)) if ooc_detection_delays else 1.0
+
         return metrics
+
