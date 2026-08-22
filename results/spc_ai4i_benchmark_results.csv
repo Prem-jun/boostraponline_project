@@ -1,0 +1,2 @@
+total_chunks,total_samples,avg_latency_ms,peak_memory_kb,total_ooc_chunks,ooc_chunk_rate,fwer_adjusted_alpha_dim,false_alarm_rate,total_experiment_time_sec
+100,10000,69.95775081000009,0.515625,100,1.0,0.01,1.0,7.011139417000001

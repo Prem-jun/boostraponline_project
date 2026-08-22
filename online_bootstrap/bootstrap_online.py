@@ -181,9 +181,13 @@ class BootstrapOnline:
         if outlier:
             new_data_chunk = self._apply_outlier_detection(new_data_chunk)
 
+        if not new_data_chunk:
+            return False
+
         # Step 4: Compute chunk min/max and update global tracking
         chunk_min = min(new_data_chunk)
         chunk_max = max(new_data_chunk)
+
         self._update_global_minmax(chunk_min, chunk_max)
 
         # Step 5: Try expanding boundaries
@@ -341,15 +345,21 @@ class BootstrapOnline:
         Returns:
             Cleaned data chunk with outliers removed.
         """
+        if not new_data_chunk:
+            return []
+
         # Initialize avg/std from data if this is the first chunk
         if self.avg == []:
             self.avg.append(statistics.mean(new_data_chunk))
         if self.std == []:
-            self.std.append(statistics.stdev(new_data_chunk))
+            std_val = statistics.stdev(new_data_chunk) if len(new_data_chunk) > 1 else 0.0
+            self.std.append(std_val if std_val > 0 else 1e-6)
 
         detector = BatchOutlierDetection.ZBatchOutlierDetector()
         detector.add_init_params(threshold=3.0, mean=self.avg[-1], sd=self.std[-1])
-        return detector.get_clean_data(new_data_chunk)
+        cleaned = detector.get_clean_data(new_data_chunk)
+        return cleaned if len(cleaned) > 0 else new_data_chunk
+
 
     def _update_global_minmax(self, chunk_min: float, chunk_max: float) -> None:
         """Update global minimum and maximum values across all chunks.

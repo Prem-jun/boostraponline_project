@@ -10,9 +10,10 @@ from .samp1d import *
 from .res_bootstrap import *
 from .BatchOutlierDetection import *
 
-# New modular classes (v2)
+# New modular classes (v2 & SPC)
 from .bootstrap_online import BootstrapOnline
 from .res_bootstrap_v2 import ResBootstrap
+from .spc_rbult import RBULTControlChart
 
 
 # __all__ = ['function1', 'function2']
