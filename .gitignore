@@ -1,0 +1,15 @@
+# Python & OS
+__pycache__/
+*.py[cod]
+*$py.class
+.DS_Store
+.obsidian/
+.conda/
+*.crdownload
+
+# Large Datasets (> 50 MB)
+sensor.csv
+sensor.csv.zip
+archive.zip
+archive (1).zip.crdownload
+MetroPT3/MetroPT3_AirCompressor.csv

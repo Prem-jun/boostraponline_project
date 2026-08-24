@@ -123,7 +123,7 @@ def bootstrap_online(input_data: list, end_side: str,
         else:
             left_min = min(data_set)
             
-        if estimated_mean < input_mean:
+        if estimated_mean <= input_mean:
             # left_min = min(data_set)
             final_estimated_std = left_min - different_input_mean_bootstrap_mean
 
@@ -131,7 +131,7 @@ def bootstrap_online(input_data: list, end_side: str,
             # print("left min:", min(data_set), " final_estimated_std:", \
             #       final_estimated_std)
             
-        if input_mean < estimated_mean:
+        else:
             
             # left_min = min(data_set)
 #            final_estimated_std = left_min - estimated_std_of_std
@@ -154,7 +154,7 @@ def bootstrap_online(input_data: list, end_side: str,
             # right_max = st.mode(np.array(bootstrap_sample_max_list))[0][0]
         else:
             right_max = max(data_set)
-        if estimated_mean < input_mean:
+        if estimated_mean <= input_mean:
             # right_max = max(data_set)
 #            final_estimated_std = right_max + estimated_std_of_std
             final_estimated_std = right_max + different_input_std_bootstrap_std
@@ -162,17 +162,21 @@ def bootstrap_online(input_data: list, end_side: str,
             # print("right max:", max(data_set), " final_estimated_std:", \
             #       final_estimated_std)
                                     
-        if input_mean < estimated_mean:
+        else:
             # right_max = max(data_set)
             final_estimated_std = right_max + different_input_mean_bootstrap_mean            
             # print("\n>>>>> Bootstrap in right end: input_mean < estimated_mean")
             # print("right max:", max(data_set), " final_estimated_std:", \
             #       final_estimated_std)
 
+    if 'final_estimated_std' not in locals():
+        final_estimated_std = left_min if end_side == "left" else right_max
+
     # print(" ")
     # print("final_estimated_std:", final_estimated_std)
 
     return final_estimated_std
+
         
 #============================================================================
 def estimate_width_1D(input_data: list, max_value: float, z_score:float) -> float:
