@@ -85,14 +85,16 @@ class ResBootstrap:
         self.exp_l.append(self.net.exp_l)
         self.exp_r.append(self.net.exp_r)
         self.exp_range.append(self.net.range)
-        if len(self.nlearnl) == 0:
-            self.nlearnl.append(0)
-        else:
+        if len(self.net.nlearn_l) > 0:
             self.nlearnl.append(self.net.nlearn_l[-1])
-        if len(self.nlearnr) == 0:
-            self.nlearnr.append(0)
         else:
+            self.nlearnl.append(0)
+
+        if len(self.net.nlearn_r) > 0:
             self.nlearnr.append(self.net.nlearn_r[-1])
+        else:
+            self.nlearnr.append(0)
+
 
 
 # ====================================================================== #
