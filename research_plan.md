@@ -415,7 +415,89 @@ Below are the empirical benchmark results executed across 1,740,000 samples (Mod
 
 ---
 
-## 6. Project Implementation Roadmap
+## 6. Code Architecture & Experimental Script Repository
+
+Below is the complete module hierarchy, class definitions, sub-script dependencies, and execution commands for the proposed **RBULT-SPC** framework and its benchmark experiment suite.
+
+### 6.1 Module Interdependency & Execution Flow
+
+```mermaid
+flowchart TD
+    subgraph Experiments["Experimental Benchmark Suite (experiments/)"]
+        E1["exp_spc_benchmark.py (AI4I 2020)"]
+        E2["exp_metropt3_benchmark.py (MetroPT-3)"]
+        E3["exp_pump_benchmark.py (Industrial Pump)"]
+        E4["exp_waterpump_benchmark.py (Water Pump)"]
+        E5["exp_tep_benchmark.py (TEP Modes 1-5)"]
+        E6["exp_tep_sensitivity.py (Threshold Study)"]
+    end
+
+    subgraph Visualization["Plotting & Visualization (experiments/)"]
+        V1["plot_metropt3_spc.py"]
+        V2["plot_pump_spc.py"]
+        V3["plot_waterpump_spc.py"]
+        V4["plot_tep_spc.py"]
+    end
+
+    subgraph CoreEngine["Proposed Method Engine (online_bootstrap/)"]
+        M1["spc_rbult.py (RBULTControlChart Class)"]
+        M2["bootstrap_online.py (BootstrapOnline Class)"]
+        M3["stat_dist.py (Candidate Distribution MLE Fitting)"]
+        M4["BatchOutlierDetection.py (Algorithm 4 Z-Score Filter)"]
+        M5["boot_stream.py / bootstrap_v1.py (Online Resampler Engine)"]
+    end
+
+    E1 & E2 & E3 & E4 & E5 & E6 -->|Instantiates & Runs Chunks| M1
+    M1 -->|Feature-wise Spike Filtering| M4
+    M1 -->|Feature-wise Boundary Expansion| M2
+    M2 -->|Tail Density MLE Fitting| M3
+    M2 -->|Streaming Resampling & Bin Extraction| M5
+    E2 -->|Generates Plots| V1
+    E3 -->|Generates Plots| V2
+    E4 -->|Generates Plots| V3
+    E5 -->|Generates Plots| V4
+```
+
+---
+
+### 6.2 Core Engine Sub-scripts (`online_bootstrap/`)
+
+| Script / Module Path | Primary Class / Functions | Description & Responsibilities |
+|---|---|---|
+| [`online_bootstrap/spc_rbult.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/spc_rbult.py) ⭐ **(Main Engine)** | `RBULTControlChart` | High-level multivariate SPC framework. Coordinates dimensional bounds $\mathcal{B}_m = \prod [L_d, R_d]$, FWER Bonferroni/Šidák corrections, streaming chunk updates (`update_chunk`), sample/chunk alarm detection, and SPC metrics computation (`compute_spc_metrics`). |
+| [`online_bootstrap/bootstrap_online.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/bootstrap_online.py) | `BootstrapOnline` | Dimension-wise RBULT online bootstrap engine. Handles left/right tail bin extraction, recursive online tail bootstrapping, lazy boundary expansion (`expand_bt_online`), and memory management. |
+| [`online_bootstrap/stat_dist.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/stat_dist.py) | `fit_best_distribution`, `estimate_tail_quantile` | Fits 11 candidate statistical distributions (`exponweib`, `gamma`, `powerlaw`, `uniform`, `norm`, etc.) via SciPy MLE to estimate extreme tail quantiles non-parametrically. |
+| [`online_bootstrap/BatchOutlierDetection.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/BatchOutlierDetection.py) | `zscore_outlier_filter`, `detect_batch_spikes` | Implements Algorithm 4 Z-score spike filtering per feature channel to prevent sensor anomalies from polluting tail estimation bins. |
+| [`online_bootstrap/boot_stream.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/boot_stream.py) | `BootStreamEngine` | Low-level streaming chunk resampler, managing sliding memory buffers and online percentile estimation. |
+| [`online_bootstrap/bootstrap_v1.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/bootstrap_v1.py) | `OnlineChunkBootstrap` | Core chunk-based bootstrap resampling logic and tail interval boundary updating routines. |
+
+---
+
+### 6.3 Benchmark Experiment Scripts (`experiments/`)
+
+| Experiment Script | Dataset Monitored | Features ($D$) & Samples ($N$) | Baselines Evaluated | CLI Command to Execute |
+|---|---|:---:|---|---|
+| [`experiments/exp_spc_benchmark.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_spc_benchmark.py) | AI4I 2020 Predictive Maintenance | $D=5$, $N=10,000$ | Shewhart, EWMA, Full-History, RBULT-SPC | `PYTHONPATH=. ./.conda/bin/python experiments/exp_spc_benchmark.py` |
+| [`experiments/exp_metropt3_benchmark.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_metropt3_benchmark.py) | MetroPT-3 Air Compressor | $D=7$, $N=1,516,948$ | Shewhart, EWMA, Full-History, RBULT-SPC | `PYTHONPATH=. ./.conda/bin/python experiments/exp_metropt3_benchmark.py` |
+| [`experiments/exp_pump_benchmark.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_pump_benchmark.py) | Large Industrial Pump (Uniform Noise) | $D=5$, $N=20,000$ | Shewhart, EWMA, Full-History, RBULT-SPC | `PYTHONPATH=. ./.conda/bin/python experiments/exp_pump_benchmark.py` |
+| [`experiments/exp_waterpump_benchmark.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_waterpump_benchmark.py) | Water Pump Sensor (`sensor.csv`) | $D=10$, $N=220,320$ | Shewhart, EWMA, Full-History, RBULT-SPC | `PYTHONPATH=. ./.conda/bin/python experiments/exp_waterpump_benchmark.py` |
+| [`experiments/exp_tep_benchmark.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_tep_benchmark.py) | Tennessee Eastman Process (Modes 1,3,4,5) | $D=34$, $N=1,740,000+$ | Shewhart, EWMA, Sliding Bootstrap, RBULT-SPC | `PYTHONPATH=. ./.conda/bin/python experiments/exp_tep_benchmark.py` |
+| [`experiments/exp_tep_sensitivity.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_tep_sensitivity.py) | TEP Mode 1 Sensitivity Study | $D=34$, Thresholds $\in \{5,10,15\}$ | Shewhart, EWMA, Sliding Bootstrap, RBULT-SPC | `PYTHONPATH=. ./.conda/bin/python experiments/exp_tep_sensitivity.py` |
+
+---
+
+### 6.4 Visualization & Plotting Sub-scripts (`experiments/`)
+
+| Plotting Script | Purpose & Output Artifacts | Command to Generate |
+|---|---|---|
+| [`experiments/plot_metropt3_spc.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/plot_metropt3_spc.py) | Plots feature-wise control limit bounds $[L_d, R_d]$ vs time and out-of-control alarms on MetroPT-3 compressor stream. | `PYTHONPATH=. ./.conda/bin/python experiments/plot_metropt3_spc.py` |
+| [`experiments/plot_pump_spc.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/plot_pump_spc.py) | Generates SPC control chart figures comparing EWMA lag vs RBULT-SPC response on Industrial Pump telemetry. | `PYTHONPATH=. ./.conda/bin/python experiments/plot_pump_spc.py` |
+| [`experiments/plot_tep_spc.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/plot_tep_spc.py) | Plots 34-channel sensor bounds and multi-mode comparative performance curves for TEP dataset. | `PYTHONPATH=. ./.conda/bin/python experiments/plot_tep_spc.py` |
+| [`experiments/plot_waterpump_spc.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/plot_waterpump_spc.py) | Generates sensor anomaly detection control charts for Water Pump dataset. | `PYTHONPATH=. ./.conda/bin/python experiments/plot_waterpump_spc.py` |
+
+---
+
+## 7. Project Implementation Roadmap
 
 ```
 Phase 1: SPC Engine & Preprocessing Module Development (online_bootstrap/spc_rbult.py)
@@ -437,7 +519,7 @@ Phase 4: Manuscript Preparation (paper.tex)
 
 ---
 
-## 7. Practical Execution Guide for New Datasets (ขั้นตอนการนำข้อมูลใหม่มาทดสอบ)
+## 8. Practical Execution Guide for New Datasets (ขั้นตอนการนำข้อมูลใหม่มาทดสอบ)
 
 ### รูปแบบที่ 1: Real-time Streaming Integration (Multivariate Python Call)
 ```python
