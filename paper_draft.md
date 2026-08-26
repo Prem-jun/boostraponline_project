@@ -77,6 +77,13 @@ Bootstrapping is a powerful non-parametric technique for quantifying uncertainty
 ### Section 4: Proposed High-Dimensional RBULT-SPC Framework (Part II - From research_plan.md)
 - **4.1 System Architecture:** 4-Stage streaming pipeline.
 - **4.2 Algorithm 1: First Chunk Initial Fitting & Tail Bin Partitioning**
+- **4.2.1 Akaike Information Criterion (AIC) Selection & Streaming Efficiency Analysis:**
+  - **Mathematical Definition & Formula:** 
+    $$\text{AIC} = 2k - 2\ln(\hat{L})$$
+    where $k$ represents the number of estimated parameters (parsimony penalty) and $\hat{L}$ represents the maximum likelihood of the candidate distribution. Minimizing AIC selects the optimal non-parametric distribution that maximizes goodness-of-fit while preventing overfitting.
+  - **Phase 1 Initial Fitting Role ($c_1$):** Evaluates Maximum Likelihood Estimation (MLE) and AIC across 11 continuous candidate distributions $\mathcal{P} = \{\text{Gamma}, \text{Weibull}, \text{Wald}, \text{Uniform}, \text{Rayleigh}, \text{Normal}, \dots\}$ on the initial data chunk $c_1$. The candidate distribution $f(x; \hat{\boldsymbol{\theta}}) \in \mathcal{P}$ minimizing AIC ($\arg\min \text{AIC}$) is selected as the baseline template to compute theoretical tail element counts $|h_1|$ and $|h_8|$ via exact CDF integration.
+  - **Phase 2 Streaming Recurrence Efficiency ($c_m, m > 1$):** AIC model selection is **NOT** re-evaluated for every streaming chunk $c_m$ in normal in-control operations. Re-evaluating MLE and AIC across 11 candidate distributions per chunk would introduce prohibitive $O(N_{\text{models}} \cdot |c_m|)$ computational latency, violating real-time streaming constraints. Instead, RBULT reuses the established standard histogram template $H$ and relies on **Algorithm 3 (Bootstrap Tail Resampling)** and **Algorithm 4 (Z-Score Outlier Filter)** for fast lazy boundary adjustments ($4.18 - 4.78 \text{ ms}$ per chunk).
+  - **Concept Drift Refitting Trigger (Paper 2 Roadmap):** AIC model selection is re-triggered **only** when an external concept drift detector (e.g., ADWIN / DDM) signals a permanent distributional shift in the data stream, updating the baseline template $H$.
 - **4.3 Algorithm 2: Streaming Chunk Update & Lazy Boundary Expansion**
 - **4.4 Algorithm 3: Recurrent Tail Resampling & Quantile Interpolation**
 - **4.5 Algorithm 4: Z-Score Outlier Spike Filtering:** Suppression of contaminated sensor noise to prevent control limit pollution.
