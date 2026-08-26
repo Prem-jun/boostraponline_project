@@ -24,16 +24,17 @@ To achieve seamless coherence between **Draft 1 (`boostrap_expert_wo_authors.pdf
 
 ### Highlights
 - We propose **RBULT-SPC**, a novel resource-bounded non-parametric control chart framework for high-dimensional non-Gaussian data streams.
-- Combines foundational 1D probabilistic chunk excursion proofs with multivariate Bonferroni Family-Wise Error Rate (FWER) tail scaling.
-- Achieves strict $O(D)$ constant RAM memory boundedness (**3.23 KB**), delivering a **$180\times$ memory reduction** over conventional sliding-window bootstrap ($582.87\text{ KB}$).
+- Grounded in dual-protocol streaming evaluation: **In-Sample Adaptation Mode** and **One-Step-Ahead Pre-Sequential Predictive Mode** (IEEE TKDE gold standard).
+- Rigorously stress-tested across a **7-Scenario Gold Standard Suite** (Clean, GAWN $0.1\sigma - 0.3\sigma$, and Impulse Spikes $1\% - 10\%$), achieving 100% transient glitch absorption at 1% spikes ($\text{Coverage} = 95.29\%$, $\sigma_L = 0.05$).
+- Achieves strict $O(D)$ constant RAM memory boundedness (**0.52 KB – 3.23 KB**), delivering a **$180\times$ memory reduction** over conventional sliding-window bootstrap ($582.87\text{ KB}$).
 - Integrates Algorithm 4 Z-score spike filtering with dynamic 11-candidate distribution MLE fitting to prevent control limit pollution.
 - Eliminates batch false-alarm spam (**Chunk FAR = 0.00%**) on high-dimensional streams ($D=34$) while retaining an immediate anomaly detection response delay ($\text{ARL}_1 = 1.00$).
-- Validated across a comprehensive two-tier benchmark: 10 simulated 1D distributions, 4 economic datasets, 5 real industrial streams, and 4 TEP stress regimes (Modes 1, 3, 4, 5) up to 1.74M observations.
+- Validated across a comprehensive two-tier benchmark: 1,260 1D benchmark runs across 5 distributions and 7 scenarios, 4 economic datasets, 5 real industrial streams, and 4 TEP stress regimes (Modes 1, 3, 4, 5) up to 1.74M observations.
 
 ---
 
 ### Abstract
-Bootstrapping is a powerful non-parametric technique for quantifying uncertainty without restrictive distributional assumptions. However, applying conventional bootstrap methods to real-time industrial data streams poses two fundamental challenges: prohibitive memory overhead ($O(N \cdot D)$ storage growth) and susceptibility to control limit pollution when anomalous samples contaminate historical memory buffers. This paper presents **RBULT-SPC**, a resource-bounded non-parametric control chart framework designed for high-dimensional, non-Gaussian IoT data streams. Grounded in mathematical proofs of chunk extreme probabilities, RBULT-SPC maintains only compact tail summary statistics in $O(D)$ constant space, preventing memory overflow and eliminating buffer pollution. To handle high dimensionality ($D=34$), the framework combines Z-score outlier filtering, lazy boundary expansion, 11-candidate non-parametric distribution MLE fitting, and Bonferroni Family-Wise Error Rate (FWER) tail adjustment. Extensive two-tier empirical evaluations across 10 simulated 1D distributions, 4 economic datasets, 5 industrial streams, and 4 operating regimes of the Tennessee Eastman Process (TEP) demonstrate that RBULT-SPC achieves optimal coverage ($93.71\% - 99.95\%$) and controlled false alarm rates ($0.05\% - 6.29\%$), outperforming classical Shewhart and EWMA charts whose false alarm rates collapse to $18.21\% - 39.01\%$ under non-Gaussianity and operational throughput stress. Furthermore, hyperparameter sensitivity analysis demonstrates that dimension-aware thresholding completely eliminates batch false alarms ($\text{Chunk FAR} = 0.00\%$) while maintaining an immediate failure detection response delay ($\text{ARL}_1 = 1.00$) at an average latency under 45 ms.
+Bootstrapping is a powerful non-parametric technique for quantifying uncertainty without restrictive distributional assumptions. However, applying conventional bootstrap methods to real-time industrial data streams poses two fundamental challenges: prohibitive memory overhead ($O(N \cdot D)$ storage growth) and susceptibility to control limit pollution when anomalous samples contaminate historical memory buffers. This paper presents **RBULT-SPC**, a resource-bounded non-parametric control chart framework designed for high-dimensional, non-Gaussian IoT data streams. Grounded in mathematical proofs of chunk extreme probabilities, RBULT-SPC maintains only compact tail summary statistics in $O(D)$ constant space, preventing memory overflow and eliminating buffer pollution. To handle high dimensionality ($D=34$), the framework combines Z-score outlier filtering, lazy boundary expansion, 11-candidate non-parametric distribution MLE fitting, and Bonferroni Family-Wise Error Rate (FWER) tail adjustment. Extensive two-tier empirical evaluations evaluated under both **In-Sample Adaptation** and **One-Step-Ahead Pre-Sequential Predictive** protocols across a **7-Scenario Gold Standard Suite** (Clean, GAWN continuous noise $0.1\sigma - 0.3\sigma$, and Impulse Spikes $1\% - 10\%$), 4 economic datasets, 5 industrial streams, and 4 operating regimes of the Tennessee Eastman Process (TEP) demonstrate that RBULT-SPC achieves optimal coverage ($95.29\% - 99.95\%$) and controlled false alarm rates ($0.05\% - 3.27\%$), outperforming classical Shewhart and EWMA charts whose false alarm rates collapse to $18.21\% - 48.94\%$ under non-Gaussianity and operational throughput stress. Furthermore, hyperparameter sensitivity analysis demonstrates that dimension-aware thresholding completely eliminates batch false alarms ($\text{Chunk FAR} = 0.00\%$) while maintaining an immediate failure detection response delay ($\text{ARL}_1 = 1.00$) at an average latency under 45 ms.
 
 ---
 
@@ -105,9 +106,16 @@ Bootstrapping is a powerful non-parametric technique for quantifying uncertainty
 
 ### Section 5: Two-Tier Empirical Benchmark Experiments
 - **5.1 Experimental Setup & Evaluation Metrics:** Range Error, Coverage Rate (%), Sample FAR (%), Chunk FAR (%), ARL0, ARL1 (Detection Delay), Peak RAM (KB), Latency per Chunk (ms).
-- **5.2 Tier 1: Univariate Range Approximation Benchmarks (From Draft 1 PDF):**
-  - 10 Simulated 1D Distributions ($F(5,10), F(5,20), Wald(1.0,0.5), Wald(1.0,2.0), N(0,1), N(0,16), \chi^2(2), \chi^2(10), Weibull(1), Weibull(5)$).
-  - Outlier Contamination Scenarios ($0.05\%$ synthetic noise).
+- **5.2 Tier 1: Univariate Range Approximation & Dual-Protocol Noise Sensitivity Benchmarks:**
+  - Evaluates 1,260 simulation runs across 5 synthetic distributions ($F(5,10)$, Uniform, Wald, Gamma, Normal), 3 chunk sizes (50, 100, 500), 2 target alphas ($\alpha=0.05, 0.01$), 3 methods, and 2 protocols.
+  - **Dual Evaluation Protocol:** 
+    1. *In-Sample Adaptation Protocol:* Measures post-update boundary enclosure precision.
+    2. *One-Step-Ahead Pre-Sequential Protocol (IEEE TKDE Gold Standard):* Measures predictive violation rates using bounds from chunk $m-1$ prior to updating chunk $m$.
+  - **7-Scenario Gold Standard Suite:**
+    * *Scenario A (Clean Stream):* Baseline pure stream ($\text{Coverage} = 95.41\%$, $\bar{W} = 23.65$, $\text{Latency} = 4.45\text{ ms}$).
+    * *Scenarios B1–B3 (GAWN $0.1\sigma, 0.2\sigma, 0.3\sigma$):* Scale-invariant continuous noise adaptation ($\text{Coverage} = 95.34\% - 95.74\%$, $\text{NSR} = 1.05 - 1.21$).
+    * *Scenario C1 (1% Spikes):* Perfect transient glitch absorption ($\text{Coverage} = 95.29\%$, $\bar{W} = 24.22$, $\sigma_L = 0.05$).
+    * *Scenarios C2–C3 (5% & 10% Spikes):* Extreme stress resilience preventing memory explosion and boundary collapse ($\text{Coverage} = 97.70\% - 99.44\%$, $\sigma_L = 0.34$).
   - 4 Real-World Economic Datasets (Laptop Prices, Electronic Sales, E-Commerce Sales, World Tourism Economy).
 - **5.3 Tier 2: Real-World Industrial Streaming Benchmarks (From research_plan.md):**
   - AI4I 2020 Predictive Maintenance ($N=10,000, D=5$)
@@ -141,7 +149,7 @@ Bootstrapping is a powerful non-parametric technique for quantifying uncertainty
 
 | Tier / Level | Dataset Name | Sample Size ($N$) | Dimensions ($D$) | Data Type & Distribution | Source |
 |---|---|:---:|:---:|---|---|
-| **Tier 1** | 10 Simulated 1D Distributions | 10,000 | 1 | $F, \chi^2, N, Wald, Weibull$ | Draft 1 PDF |
+| **Tier 1** | 1D Benchmark (7-Scenario Suite) | 1,260 Runs ($N=10,000$) | 1 | $F$, Uniform, Wald, Gamma, Normal | Section 10 & PDF |
 | **Tier 1** | 4 Economic Kaggle Datasets | 1,000 - 10,000 | 1 | Laptop, Electronic, E-Com, Tourism | Draft 1 PDF |
 | **Tier 2** | AI4I 2020 Predictive Maint. | 10,000 | 5 | Mechanical Tool Wear Sensor | `research_plan.md` |
 | **Tier 2** | MetroPT-3 Air Compressor | 1,516,948 | 7 | Heavy-Tailed Pneumatic Stream | `research_plan.md` |

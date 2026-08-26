@@ -471,6 +471,41 @@ flowchart TD
 | [`online_bootstrap/boot_stream.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/boot_stream.py) | `BootStreamEngine` | Low-level streaming chunk resampler, managing sliding memory buffers and online percentile estimation. |
 | [`online_bootstrap/bootstrap_v1.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/bootstrap_v1.py) | `OnlineChunkBootstrap` | Core chunk-based bootstrap resampling logic and tail interval boundary updating routines. |
 
+#### 6.2.1 Mathematical & Operational Functionality of `online_bootstrap/stat_dist.py`
+
+The [`online_bootstrap/stat_dist.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/stat_dist.py) module serves as the foundational probability density calculator for the **RBULT-SPC** streaming framework. 
+
+##### 1. Theoretical Rationale & Tail Probability Area Integration
+In classical 3-Sigma Shewhart control charts, the probability mass outside $\mu \pm 3\sigma$ is assumed to be fixed at $0.27\%$ ($0.135\%$ per tail) based on the standard Normal distribution $\mathcal{N}(0, 1)$. However, industrial IoT streams exhibit severe non-Gaussian characteristics (asymmetry, heavy tails, negative kurtosis).
+
+[`stat_dist.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/stat_dist.py) computes exact Cumulative Distribution Function (CDF) area integrations across standard deviation intervals $[\mu - 4\sigma, \mu - 3\sigma], \dots, [\mu + 3\sigma, \mu + 4\sigma]$:
+$$\Delta F_{\text{left}} = \int_{\mu - 4\sigma}^{\mu - 3\sigma} f(x; \boldsymbol{\theta}) \, dx = F(\mu - 3\sigma) - F(\mu - 4\sigma)$$
+$$\Delta F_{\text{right}} = \int_{\mu + 3\sigma}^{\mu + 4\sigma} f(x; \boldsymbol{\theta}) \, dx = F(\mu + 4\sigma) - F(\mu + 3\sigma)$$
+
+This theoretical CDF integration provides exact probability density scaling factors for RBULT's online tail bootstrapping engine (`BootstrapOnline`).
+
+##### 2. Supported Candidate Distributions & Function Mapping
+The module implements 13 candidate statistical distributions to handle diverse industrial sensor noise patterns:
+
+| Function Name in `stat_dist.py` | Distribution Type | Industrial Application & Telemetry Characteristics |
+|---|---|---|
+| `gamma_percent_area_in_each_std` | **Gamma** | Right-skewed telemetry (vibration, bearing friction) |
+| `exponweib_percent_area_in_each_std` | **Exponentiated Weibull** | Tool wear, mechanical fatigue, component failure rates |
+| `weibull_min_percent_area_in_each_std` | **Weibull Minimum** | Reliability & minimum time-to-failure telemetry |
+| `weibull_max_percent_area_in_each_std` | **Weibull Maximum** | Peak pressure spikes & thermal stress maximums |
+| `wald_percent_area_in_each_std` | **Wald (Inverse Gaussian)** | First-passage times, fluid flow, diffusion processes |
+| `exponpow_percent_area_in_each_std` | **Exponential Power** | Flexible heavy/light-tailed sensor noise modeling |
+| `rayleigh_percent_area_in_each_std` | **Rayleigh** | Wind speed, acoustic amplitude, magnitude signals |
+| `powerlaw_percent_area_in_each_std` | **Powerlaw** | Asymmetric fatigue, crack propagation telemetry |
+| `expon_percent_area_in_each_std` | **Exponential** | Memoryless arrival rates & time-between-faults |
+| `uniform_percent_area_in_each_std` | **Uniform** | Bounded telemetry with negative kurtosis ($\approx -1.2$) |
+| `lognorm_percent_area_in_each_std` | **Lognormal** | Multiplicative variance (power consumption, electrical current) |
+| `chi2_percent_area_in_each_std` | **Chi-Square** | Sum of squared error signals & variance monitoring |
+| `norm_percent_area_in_each_std` | **Gaussian Normal** | Baseline symmetric control limit reference |
+
+##### 3. Integration into the Online Bootstrap Pipeline
+When [`online_bootstrap/bootstrap_online.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/bootstrap_online.py) extracts streaming tail bins, it queries [`stat_dist.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/stat_dist.py) to calculate the expected probability density contained within the left and right tail bins ($\text{Bin}_{\text{left}, d}$ and $\text{Bin}_{\text{right}, d}$). This ensures that non-parametric tail resampling accurately preserves the target Bonferroni tail coverage rate ($\alpha_{\text{dim}} = \alpha_{\text{sys}} / D$).
+
 ---
 
 ### 6.3 Benchmark Experiment Scripts (`experiments/`)
@@ -559,3 +594,285 @@ conda activate ./.conda
 # Run 4-Method Benchmark Comparison
 PYTHONPATH=. ./.conda/bin/python experiments/exp_spc_benchmark.py
 ```
+
+---
+
+## 9. Comprehensive Experimental Workflow & Script Architecture Map (ขั้นตอนการทดลองและ Script/Sub-script ที่เกี่ยวข้อง)
+
+การทดลองในงานวิจัยนี้แบ่งออกเป็น 4 เฟสหลัก (Phases) ครอบคลุมตั้งแต่การจำลองสถิติเชิงทฤษฎี (Synthetic Simulation), การประเมินผลกับข้อมูลอุตสาหกรรมจริง (Real-World Benchmarks), การสร้างกราฟเปรียบเทียบ (Visualization), ไปจนถึงการทดสอบนัยสำคัญทางสถิติ (Statistical Hypothesis Testing)
+
+### 9.1 Phase 1: Synthetic Data Generation & Simulation Experiments (การทดลองข้อมูลจำลองสถิติ)
+
+```mermaid
+flowchart TD
+    S1["1.1 Generate Population Data\n(sim_data_pop.py)"] --> S2["1.2 Generate Stream Chunks\n(sim_data_samp_chunk.py)"]
+    S2 --> S3["1.3 Run Online Bootstrap Engine\n(main_boostrap_v2.py / main_btonline.py)"]
+    
+    subgraph CoreEngine["Core Engine Modules (online_bootstrap/)"]
+        M1["bootstrap_online.py"]
+        M2["res_bootstrap_v2.py"]
+        M3["stat_dist.py"]
+        M4["BatchOutlierDetection.py"]
+    end
+    
+    S3 --> CoreEngine
+    CoreEngine --> S4["Save Raw Results (.p / .csv)\n(results/)"]
+```
+
+#### ขั้นตอนและไฟล์ที่เกี่ยวข้อง (Phase 1):
+1. **ขั้นตอนที่ 1.1: สร้าง Population Data ตามการแจกแจงทฤษฎี (Population Generation)**
+   - **วัตถุประสงค์:** สร้างประชากรขนาดใหญ่ ($N = 1,000,000+$) สำหรับการแจกแจง Non-Gaussian เช่น F-distribution, Uniform, Wald, Gamma, Normal
+   - **Script หลัก:** [`sim_data_pop.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/sim_data_pop.py) (หรือ [`sim_data_pop_v2.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/sim_data_pop_v2.py))
+   - **Sub-script / Config Files:** [`config_sim_data/`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/config_sim_data) (เช่น `config_fdist_simulate.yaml`, `config_uniform_simulate.yaml`, `config_wald_simulate.yaml`)
+   - **Command:** `PYTHONPATH=. ./.conda/bin/python sim_data_pop.py --file config_fdist_simulate.yaml`
+
+2. **ขั้นตอนที่ 1.2: สุ่มแบ่งข้อมูลเป็น Streaming Chunks (Sample Chunk Generation)**
+   - **วัตถุประสงค์:** สุ่มสตรีมข้อมูลตัวอย่างเป็นชิ้นๆ (Chunk Size = 50, 100, 500) เพื่อจำลองสตรีม real-time
+   - **Script หลัก:** [`sim_data_samp_chunk.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/sim_data_samp_chunk.py) (หรือ [`sim_data_samp_chunk_v2.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/sim_data_samp_chunk_v2.py))
+   - **Command:** `PYTHONPATH=. ./.conda/bin/python sim_data_samp_chunk.py --dir config_sim_data/fdist --file config_fdist_simulate.yaml`
+
+3. **ขั้นตอนที่ 1.3: ประมวลผล Online Bootstrap บนข้อมูลจำลอง (Online Bootstrap Execution)**
+   - **วัตถุประสงค์:** คำนวณขอบเขต Bootstrap ($L, R$) แบบออนไลน์และประเมิน Coverage Rate
+   - **Script หลัก:** [`main_boostrap_v2.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/main_boostrap_v2.py) (หรือ [`main_btonline.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/main_btonline.py), [`hist_bootstrap_main.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/hist_bootstrap_main.py))
+   - **Sub-scripts (Core Engines):**
+     - [`online_bootstrap/bootstrap_online.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/bootstrap_online.py) (`BootstrapOnline` - ตัวจัดการขอบเขตออนไลน์)
+     - [`online_bootstrap/res_bootstrap_v2.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/res_bootstrap_v2.py) (`ResBootstrap` - ตัวเก็บและรวบรวมผลลัพธ์)
+     - [`online_bootstrap/stat_dist.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/stat_dist.py) (`fit_best_distribution` - ตัวฟิตความหนาแน่นหางการแจกแจง)
+     - [`online_bootstrap/BatchOutlierDetection.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/BatchOutlierDetection.py) (`zscore_outlier_filter` - ตัวกรอง Outlier)
+   - **Command:** `PYTHONPATH=. ./.conda/bin/python main_boostrap_v2.py --dir config_sim_data/fdist --file config_fdist_simulate.yaml`
+
+---
+
+### 9.2 Phase 2: Real-World Industrial SPC Benchmark Experiments (การทดลองข้อมูลอุตสาหกรรมจริง)
+
+```mermaid
+flowchart TD
+    D1["2.1 Sensor Stream Ingestion & Preprocessing\n(online_bootstrap/spc_rbult.py)"] --> D2["2.2 Multi-Dataset Benchmark Execution"]
+    
+    subgraph BenchmarkDrivers["Benchmark Driver Scripts (experiments/)"]
+        E1["exp_spc_benchmark.py (AI4I 2020)"]
+        E2["exp_metropt3_benchmark.py (MetroPT-3)"]
+        E3["exp_pump_benchmark.py (Industrial Pump)"]
+        E4["exp_waterpump_benchmark.py (Water Pump)"]
+        E5["exp_tep_benchmark.py (TEP Modes 1-5)"]
+        E6["exp_tep_sensitivity.py (Threshold Study)"]
+    end
+    
+    D2 --> BenchmarkDrivers
+    BenchmarkDrivers --> D3["2.3 Baseline Comparison\n(Shewhart, EWMA, Full-History, RBULT-SPC)"]
+    D3 --> D4["2.4 Calculate 7 SPC Metrics\n(Coverage, FAR, ARL0, ARL1, Latency, RAM)"]
+```
+
+#### ขั้นตอนและไฟล์ที่เกี่ยวข้อง (Phase 2):
+1. **ขั้นตอนที่ 2.1: เตรียมข้อมูลและวิเคราะห์ความนิ่ง (Data Ingestion & Stationary Preprocessing Framework)**
+   - **วัตถุประสงค์:** ทำ Differencing/Detrending สำหรับข้อมูลสะสม (เช่น Tool wear rate) และเตรียม Data Stream แบบ Real-time
+   - **Script หลัก (Class Orchestrator):** [`online_bootstrap/spc_rbult.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/spc_rbult.py) (`RBULTControlChart`)
+   - **Sub-classes และ Sub-scripts ที่ถูกเรียกใช้ภายใน `spc_rbult.py`:**
+     * **1. `BootstrapOnline` Sub-class (ใน [`online_bootstrap/bootstrap_online.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/bootstrap_online.py)):**
+       - ตัวเอนจินหลักในการขยายขอบเขตการควบคุมแบบออนไลน์ราย Feature Channel (`expand_bt_online()`)
+       - ทำหน้าที่จัดเก็บและคำนวณ Tail Bins (`min_list`, `max_list`) และจัดการหน่วยความจำให้คงที่ $O(D)$
+     * **2. `ResBootstrap` Sub-class (ใน [`online_bootstrap/res_bootstrap_v2.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/res_bootstrap_v2.py)):**
+       - ตัวบันทึกพารามิเตอร์และสถิติสะสม (Tracking Parameter & Metric Collector)
+       - รวบรวมประวัติการเปลี่ยนแปลงขอบเขต ($L_d, R_d$) และประเมินข้อผิดพลาดการขยายขอบเขตในแต่ละ Chunk
+     * **3. `BatchOutlierDetection` Sub-script (ใน [`online_bootstrap/BatchOutlierDetection.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/BatchOutlierDetection.py)):**
+       - ฟังก์ชัน: `zscore_outlier_filter()`, `detect_batch_spikes()`
+       - กรองสัญญาณรบกวนชั่วคราว (Spikes/Outliers) แบบ Z-score ตาม Algorithm 4 ก่อนส่งเข้า Tail Bins เพื่อป้องกันขอบเขต LCL/UCL บิดเบือน
+     * **4. `stat_dist` Sub-script (ใน [`online_bootstrap/stat_dist.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/stat_dist.py)):**
+       - ฟังก์ชัน: `fit_best_distribution()`, `estimate_tail_quantile()`, และ 13 Probability Area Functions (เช่น `gamma_percent_area_in_each_std`, `exponweib_percent_area_in_each_std`, `weibull_min_percent_area_in_each_std`, `powerlaw_percent_area_in_each_std`, `uniform_percent_area_in_each_std`)
+       - ฟิตความหนาแน่นเชิงสถิติ (SciPy MLE) เพื่อคำนวณสัดส่วนพื้นที่หางสำหรับการปรับแต่งขอบเขตแบบ Non-parametric
+     * **5. `bootstrap_v1` & `boot_stream` Sub-scripts (ใน [`online_bootstrap/bootstrap_v1.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/bootstrap_v1.py) / [`online_bootstrap/boot_stream.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/boot_stream.py)):**
+       - โมดูลระดับล่างสำหรับกระบวนการ Resampling สตรีมมิ่งและการคำนวณ Percentile แบบออนไลน์
+
+2. **ขั้นตอนที่ 2.2: รันการทดลอง Benchmarks บนชุดข้อมูลอุตสาหกรรมจริง 5 ชุด (Benchmark Suite)**
+   - **Dataset 1: AI4I 2020 Predictive Maintenance ($D=5, N=10,000$)**
+     - **Script:** [`experiments/exp_spc_benchmark.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_spc_benchmark.py)
+     - **Command:** `PYTHONPATH=. ./.conda/bin/python experiments/exp_spc_benchmark.py`
+   - **Dataset 2: MetroPT-3 Air Compressor ($D=7, N=1,516,948$)**
+     - **Script:** [`experiments/exp_metropt3_benchmark.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_metropt3_benchmark.py)
+     - **Command:** `PYTHONPATH=. ./.conda/bin/python experiments/exp_metropt3_benchmark.py`
+   - **Dataset 3: Large Industrial Pump Maintenance ($D=5, N=20,000$)**
+     - **Script:** [`experiments/exp_pump_benchmark.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_pump_benchmark.py)
+     - **Command:** `PYTHONPATH=. ./.conda/bin/python experiments/exp_pump_benchmark.py`
+   - **Dataset 4: Water Pump Sensor (`sensor.csv`, $D=10, N=220,320$)**
+     - **Script:** [`experiments/exp_waterpump_benchmark.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_waterpump_benchmark.py)
+     - **Command:** `PYTHONPATH=. ./.conda/bin/python experiments/exp_waterpump_benchmark.py`
+   - **Dataset 5: Tennessee Eastman Process (TEP Modes 1–5, $D=34, N=1,740,000+$)**
+     - **Script:** [`experiments/exp_tep_benchmark.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_tep_benchmark.py) & [`experiments/exp_tep_sensitivity.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_tep_sensitivity.py)
+     - **Command:** `PYTHONPATH=. ./.conda/bin/python experiments/exp_tep_benchmark.py`
+
+3. **ขั้นตอนที่ 2.3: เปรียบเทียบกับวิธีมาตรฐาน 4 วิธี (Baseline Method Evaluation)**
+   - **คำนวณเปรียบเทียบใน Driver เดียวกัน:**
+     - 1. Shewhart Control Chart (3-Sigma)
+     - 2. EWMA Control Chart ($\lambda = 0.2, L = 2.962$)
+     - 3. Full-History / Sliding-Window Bootstrap
+     - 4. Proposed RBULT-SPC
+
+4. **ขั้นตอนที่ 2.4: ประเมินตัวชี้วัดประสิทธิภาพ 7 ตัว (SPC Metric Evaluation)**
+   - **ตัวชี้วัด:** Coverage Rate (%), Sample FAR (%), Chunk FAR (%), ARL0, ARL1, Latency (ms), Memory Footprint (KB)
+
+---
+
+### 9.3 Phase 3: Visualization & Plotting (การแสดงผลและสร้างกราฟเปรียบเทียบ)
+
+#### ขั้นตอนและไฟล์ที่เกี่ยวข้อง (Phase 3):
+1. **ขั้นตอนที่ 3.1: วาดกราฟเส้นขอบเขตการควบคุม (LCL/UCL) และจุด Out-of-Control Alarm**
+   - **MetroPT-3 Compressor Plots:**
+     - **Script:** [`experiments/plot_metropt3_spc.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/plot_metropt3_spc.py)
+     - **Command:** `PYTHONPATH=. ./.conda/bin/python experiments/plot_metropt3_spc.py`
+   - **Industrial Pump Plots:**
+     - **Script:** [`experiments/plot_pump_spc.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/plot_pump_spc.py)
+     - **Command:** `PYTHONPATH=. ./.conda/bin/python experiments/plot_pump_spc.py`
+   - **Water Pump Sensor Plots:**
+     - **Script:** [`experiments/plot_waterpump_spc.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/plot_waterpump_spc.py)
+     - **Command:** `PYTHONPATH=. ./.conda/bin/python experiments/plot_waterpump_spc.py`
+   - **Tennessee Eastman Process (TEP) Plots:**
+     - **Script:** [`experiments/plot_tep_spc.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/plot_tep_spc.py)
+     - **Command:** `PYTHONPATH=. ./.conda/bin/python experiments/plot_tep_spc.py`
+   - **Synthetic Online Bootstrap Progression Plots:**
+     - **Script:** [`main_boostrap_plotre.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/main_boostrap_plotre.py) / [`main_boostrap_plotre_v2.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/main_boostrap_plotre_v2.py)
+
+---
+
+### 9.4 Phase 4: Statistical Significance Analysis & Result Export (การทดสอบนัยสำคัญทางสถิติและการสรุปผล)
+
+#### ขั้นตอนและไฟล์ที่เกี่ยวข้อง (Phase 4):
+1. **ขั้นตอนที่ 4.1: ทดสอบนัยสำคัญทางสถิติ (Statistical Hypothesis Testing Pipeline)**
+   - **วัตถุประสงค์:** ทำการทดสอบ Wilcoxon Signed-Rank Test, ANOVA, Friedman Test และตรวจสอบการแจกแจง (Normality Check) เพื่อยืนยันว่า RBULT-SPC เหนือกว่า Baseline อย่างมีนัยสำคัญทางสถิติ ($p < 0.05$)
+   - **Script หลัก:** [`run_stat_pipeline.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/run_stat_pipeline.py) (หรือ [`analys_results.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/analys_results.py), [`main_boostrap_statanal.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/main_boostrap_statanal.py))
+   - **Sub-script Modules:**
+     - [`utils/stat_test/stat_test.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/utils/stat_test/stat_test.py) (`StatTest` - ตัวทำการทดสอบสถิติเปรียบเทียบคู่วิธี)
+     - [`utils/stat_test/check_assump.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/utils/stat_test/check_assump.py) (`CheckAssumption` - ตัวเช็ค Normality & Homogeneity)
+   - **Command:** `PYTHONPATH=. ./.conda/bin/python run_stat_pipeline.py`
+
+2. **ขั้นตอนที่ 4.2: รวบรวมและส่งออกตารางผลลัพธ์ (Result Export & Formatting)**
+   - **วัตถุประสงค์:** บันทึกผลลัพธ์ลงไฟล์ CSV และสร้าง HTML Dashboard
+   - **Script หลัก:** [`write_results.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/write_results.py)
+   - **Output Files:**
+     - `results/statistical_test_results.csv`
+     - `spc_benchmark_dashboard.html`
+     - `exp_progression_summary.html`
+
+---
+
+### 9.5 Summary Master Reference Matrix (ตารางสรุปขั้นตอนและไฟล์สคริปต์ทั้งหมด)
+
+| Phase / ขั้นตอนการทดลอง | วัตถุประสงค์ | Main Script File | Sub-script / Module Dependencies | Data / Output Files |
+|---|---|---|---|---|
+| **1.1 Gen Population** | สร้างประชากรตามการแจกแจงทฤษฎี | [`sim_data_pop.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/sim_data_pop.py) | [`config_sim_data/*.yaml`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/config_sim_data) | `sim_data/*.p` |
+| **1.2 Gen Chunks** | สุ่มแบ่ง Chunk Size | [`sim_data_samp_chunk.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/sim_data_samp_chunk.py) | `sim_data_chunk.py` | `sim_data/*.json` |
+| **1.3 Sim Bootstrap** | รัน Online Bootstrap จำลอง | [`main_boostrap_v2.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/main_boostrap_v2.py) | [`online_bootstrap/bootstrap_online.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/bootstrap_online.py)<br>[`online_bootstrap/res_bootstrap_v2.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/res_bootstrap_v2.py)<br>[`online_bootstrap/stat_dist.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/stat_dist.py)<br>[`online_bootstrap/BatchOutlierDetection.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/BatchOutlierDetection.py) | `results/*.p` |
+| **2.1 Preprocessing** | ทำ Differencing & Outlier Filtering | [`online_bootstrap/spc_rbult.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/spc_rbult.py) | [`online_bootstrap/bootstrap_online.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/bootstrap_online.py)<br>[`online_bootstrap/res_bootstrap_v2.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/res_bootstrap_v2.py)<br>[`online_bootstrap/BatchOutlierDetection.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/BatchOutlierDetection.py)<br>[`online_bootstrap/stat_dist.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/stat_dist.py) | Clean Stream Array |
+| **2.2 AI4I Benchmark** | ทดสอบกับ AI4I 2020 | [`experiments/exp_spc_benchmark.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_spc_benchmark.py) | [`online_bootstrap/spc_rbult.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/spc_rbult.py) | `results/spc_ai4i_benchmark_results.csv` |
+| **2.2 MetroPT3 Benchmark** | ทดสอบกับ MetroPT-3 | [`experiments/exp_metropt3_benchmark.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_metropt3_benchmark.py) | [`online_bootstrap/spc_rbult.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/spc_rbult.py) | `results/spc_metropt3_benchmark_results.csv` |
+| **2.2 Pump Benchmark** | ทดสอบกับ Industrial Pump | [`experiments/exp_pump_benchmark.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_pump_benchmark.py) | [`online_bootstrap/spc_rbult.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/spc_rbult.py) | `results/spc_pump_benchmark_results.csv` |
+| **2.2 Water Pump Benchmark** | ทดสอบกับ Water Pump (`sensor.csv`) | [`experiments/exp_waterpump_benchmark.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_waterpump_benchmark.py) | [`online_bootstrap/spc_rbult.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/spc_rbult.py) | `results/spc_waterpump_benchmark_results.csv` |
+| **2.2 TEP Benchmark** | ทดสอบกับ TEP Modes 1-5 | [`experiments/exp_tep_benchmark.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_tep_benchmark.py) | [`online_bootstrap/spc_rbult.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/spc_rbult.py) | `results/spc_tep_benchmark_results.csv` |
+| **2.2 Sensitivity Study** | ศึกษา Sensitivity ของ $C_{\text{thresh}}$ | [`experiments/exp_tep_sensitivity.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments/exp_tep_sensitivity.py) | [`online_bootstrap/spc_rbult.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/spc_rbult.py) | `results/spc_tep_sensitivity_results.csv` |
+| **3.1 Visualization** | สร้างกราฟ SPC Control Charts | [`experiments/plot_*_spc.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/experiments) | `plotly_figures/` | `.png` / `.html` Charts |
+| **4.1 Stat Testing** | ทดสอบ Wilcoxon / ANOVA / Friedman | [`run_stat_pipeline.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/run_stat_pipeline.py) | [`utils/stat_test/stat_test.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/utils/stat_test/stat_test.py)<br>[`utils/stat_test/check_assump.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/utils/stat_test/check_assump.py) | Console / Log Output |
+| **4.2 Result Export** | เขียนผลลัพธ์ลง CSV/HTML | [`write_results.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/write_results.py) | [`analys_results.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/analys_results.py) | `statistical_test_results.csv` |
+
+---
+
+## 10. Comprehensive 1D Synthetic Simulation Experimental Plan with Noise Contamination (แผนการทดลอง 1D ข้อมูลจำลองและ Noise)
+
+แผนการทดลองนี้จัดทำขึ้นเป็นพิเศษเพื่อประเมินประสิทธิภาพของ **RBULT Online Bootstrap ในกรณี 1 มิติ (Univariate Data Stream)** ภายใต้สภาวะข้อมูลสะอาด (Clean Stream) และสภาวะที่มีสัญญาณรบกวนปนเปื้อน (Noise & Outlier Contamination) โดยเปลี่ยนมาใช้ชุดตัววัดประสิทธิภาพทางสถิติฉบับขยาย 6 ตัววัด (แทนการใช้ Range Error เพียงอย่างเดียว)
+
+### 10.1 Theoretical Rationale & Target Significance ($\alpha = 0.05, 0.01$)
+
+ในกรณี 1D มิติเดียว ($D=1$) ไม่ต้องใช้ Bonferroni Adjustment ข้ามมิติ ($\alpha_{\text{dim}} = \alpha_{\text{sys}} / 1 = \alpha_{\text{sys}}$) แต่จะกำหนดเป้าหมาย Two-Sided Tail Coverage อย่างเคร่งครัด:
+
+1. **Target Alpha $\alpha = 0.05$ ( Target Coverage Rate = $95.00\%$ ):**
+   - หางซ้ายสุด (Left Tail $\alpha_{\text{tail}}$) = $2.50\%$ ($0.025$)
+   - หางขวาสุด (Right Tail $\alpha_{\text{tail}}$) = $2.50\%$ ($0.025$)
+2. **Target Alpha $\alpha = 0.01$ ( Target Coverage Rate = $99.00\%$ ):**
+   - หางซ้ายสุด (Left Tail $\alpha_{\text{tail}}$) = $0.50\%$ ($0.005$)
+   - หางขวาสุด (Right Tail $\alpha_{\text{tail}}$) = $0.50\%$ ($0.005$)
+
+---
+
+### 10.2 Synthetic Non-Gaussian Distributions (การแจกแจง 5 รูปแบบ)
+
+ทดลองสร้างประชากรสังเคราะห์ ($N = 1,000,000$) ครอบคลุมพฤติกรรมข้อมูล 5 แบบ:
+
+1. **F-Distribution ($df_1=5, df_2=10$):** ตัวแทนการแจกแจงแบบ Heavy Right-Tail (มีความเบ้ขวาและหางหนา)
+2. **Uniform Distribution ($U[0, 100]$):** ตัวแทนข้อมูลขอบเขตจำกัด (Bounded) ที่มี Kurtosis เป็นลบ ($\approx -1.2$)
+3. **Wald / Inverse Gaussian Distribution ($\mu=1, \lambda=2$):** ตัวแทนกระบวนการแพร่กระจายและระยะเวลาล้มเหลว (Asymmetric Diffusion)
+4. **Gamma Distribution ($k=2, \theta=2$):** ตัวแทน Noise และอัตราการเสียของเครื่องจักร
+5. **Gaussian Normal Distribution ($\mathcal{N}(0, 1)$):** ตัวแทนข้อมูลสมมาตรสำหรับเป็น Baseline เปรียบเทียบ
+
+---
+
+### 10.3 Noise & Outlier Contamination Scenarios (สภาวะปนเปื้อน 3 สภาพแวดล้อม)
+
+```mermaid
+flowchart TD
+    A["1D Streaming Data Chunk (n = 50, 100, 500)"] --> B{"Choose Noise Scenario"}
+    B -- Scenario A --> C["Clean Stream (No Noise Baseline)"]
+    B -- Scenario B --> D["Gaussian Additive White Noise GAWN\n(sigma_noise = 0.1 * sigma, 0.2 * sigma)"]
+    B -- Scenario C --> E["Impulse Spike Outliers\n(p_spike = 1%, 5%, Magnitude = +-4*sigma to +-6*sigma)"]
+    
+    C & D & E --> F["Module: Z-Score Outlier Filter (Algorithm 4)"]
+    F --> G["RBULT Online Bootstrap Engine (bootstrap_online.py)"]
+    G --> H["Evaluate 6 Quantitative Metrics"]
+```
+
+1. **Scenario A: Clean Stream (No Noise Baseline):**
+   - ข้อมูลจำลองบริสุทธิ์ ไร้สัญญาณรบกวน ใช้เป็นค่าอ้างอิงฐาน (Ground Truth Benchmark)
+2. **Scenario B: Gaussian Additive White Noise (GAWN):**
+   - รบกวนสัญญาณด้วย Noise แบบต่อเนื่อง: $x_t' = x_t + \epsilon_t$ โดย $\epsilon_t \sim \mathcal{N}(0, \sigma_{\text{noise}}^2)$ และ $\sigma_{\text{noise}} \in \{0.1\sigma, 0.2\sigma\}$
+3. **Scenario C: Impulse Spike Outliers (Transient Spikes):**
+   - สุ่มใส่ Outlier Spikes แบบสถดถอยด้วยความน่าจะเป็น $p_{\text{spike}} \in \{1\%, 5\%\}$ ขนาดความรุนแรง $\pm 4\sigma$ ถึง $\pm 6\sigma$
+
+---
+
+### 10.4 Experimental Factor Matrix (เมทริกซ์ปัจจัยการทดลอง)
+
+| ปัจจัยการทดลอง (Experimental Factor) | ค่าที่ทำการทดสอบ (Evaluated Levels) |
+|---|---|
+| **Chunk Sizes ($k$)** | $k = 50, 100, 500$ ตัวอย่างต่อ Chunk |
+| **Outlier Filter (`outlier_filter`)** | `True` (เปิด Algorithm 4 Z-score Spike Filter) vs `False` (ปิดตัวกรอง) |
+| **Min-Max Bootstrap (`minmax_flag`)** | `True` (เปิด Min-Max Bootstrap Boundary) vs `False` (ปิด) |
+| **Method Baselines** | 1. Traditional Offline Bootstrap<br>2. Cumulative Online Bootstrap (`net_online_cum`)<br>3. Proposed RBULT Online Bootstrap |
+
+---
+
+### 10.5 Expanded 6 Quantitative Evaluation Metrics (ตัววัดประสิทธิภาพ 6 ตัววัด)
+
+เพื่อทดแทนการใช้แค่ Range Error เดิม จะประเมินด้วย 6 ตัววัดสถิติที่ครอบคลุมดังนี้:
+
+| ตัววัดประสิทธิภาพ (Metric) | สูตรและคำอธิบายทางสถิติ | เป้าหมาย / การตีความ (Q1 Benchmark Target) |
+|---|---|---|
+| **1. Empirical Coverage Rate (%)** ⭐ | $\text{Coverage} = \frac{1}{N} \sum_{i=1}^N \mathbb{I}(L \le x_i \le R) \times 100\%$ | **Target: $\approx 95.00\%$ หรือ $99.00\%$** (วัดความถูกต้องของช่วง) |
+| **2. Left Tail Violation Rate ($\text{FAR}_{\text{left}}$ %)** | $\text{FAR}_{\text{left}} = \frac{\sum \mathbb{I}(x_i < L)}{N} \times 100\%$ | **Target: $\approx 2.50\%$ หรือ $0.50\%$** (วัดอัตราหลุดหางซ้าย) |
+| **3. Right Tail Violation Rate ($\text{FAR}_{\text{right}}$ %)** | $\text{FAR}_{\text{right}} = \frac{\sum \mathbb{I}(x_i > R)}{N} \times 100\%$ | **Target: $\approx 2.50\%$ หรือ $0.50\%$** (วัดอัตราหลุดหางขวา) |
+| **4. Mean Interval Width (Efficiency)** ⭐ | $\bar{W} = \frac{1}{M} \sum_{m=1}^M (R_m - L_m)$ | **ยิ่งน้อยยิ่งดี** (วัดความกระชับ ไม่ถ่างกว้างเกินจริง) |
+| **5. Boundary Stability ($\sigma_L, \sigma_R$)** | $\sigma_L = \text{std}(L_1, \dots, L_M), \quad \sigma_R = \text{std}(R_1, \dots, R_M)$ | **ยิ่งน้อยยิ่งดี** (วัดความนิ่งของขอบเขตเมื่อมี Noise) |
+| **6. Noise Sensitivity Ratio (NSR)** ⭐ | $\text{NSR} = \frac{\bar{W}_{\text{noise}}}{\bar{W}_{\text{clean}}}$ | **Target: $\approx 1.00$** (วัดความทนทานต่อ Noise หากใกล้ 1.00 แสดงว่านิ่งมาก) |
+
+---
+
+### 10.6 Execution Workflow & Script Mapping (ขั้นตอนการประมวลผลและ Script)
+
+1. **สร้าง Population & Chunks:**
+   - Script: [`sim_data_pop.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/sim_data_pop.py) และ [`sim_data_samp_chunk.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/sim_data_samp_chunk.py)
+2. **รันการทดลองสตรีมมิ่ง 1D ( Clean & Noise Scenarios ):**
+   - Script หลัก: [`main_boostrap_v2.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/main_boostrap_v2.py)
+   - Module สรุปผล: [`online_bootstrap/res_bootstrap_v2.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/online_bootstrap/res_bootstrap_v2.py) (เพิ่มฟังก์ชันคำนวณ Coverage, NSR, $\sigma_L, \sigma_R$)
+3. **ทดสอบนัยสำคัญทางสถิติ (Statistical Hypothesis Testing):**
+   - Script: [`run_stat_pipeline.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/run_stat_pipeline.py) (ทดสอบ Wilcoxon / ANOVA เปรียบเทียบ NSR และ Coverage ระหว่างวิธี)
+4. **สร้างกราฟการแกว่งของขอบเขต (Boundary Progression Plots):**
+   - Script: [`main_boostrap_plotre_v2.py`](file:///Users/premjunsawang/Documents/GitHub/boostraponline_project/main_boostrap_plotre_v2.py)
+
+---
+
+### 10.7 Expected Benchmark Results Matrix Template (ตารางเปรียบเทียบผลลัพธ์ 1D)
+
+| Noise Scenario | Data Distribution | Method | Empirical Coverage (%) | Left FAR (%) | Right FAR (%) | Mean Width ($\bar{W}$) | Stability ($\sigma_L$) | NSR Ratio |
+|---|---|---|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Clean Stream** | F-Distribution | Traditional Offline | 94.20% | 2.90% | 2.90% | 14.20 | 0.85 | 1.00 |
+| **Clean Stream** | F-Distribution | **Proposed RBULT** | **95.10%** | **2.45%** | **2.45%** | **12.50** | **0.32** | **1.00** |
+| **Impulse Spikes (5%)** | F-Distribution | Traditional Offline | 88.50% | 6.20% | 5.30% | 28.40 | 4.12 | 2.00 |
+| **Impulse Spikes (5%)** | F-Distribution | **Proposed RBULT** | **94.80%** | **2.60%** | **2.60%** | **13.10** | **0.45** | **1.05** 🎯 |
+
+
