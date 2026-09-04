@@ -46,7 +46,8 @@ throughout this whole exercise: 0.52 / 0.70 / 0.98 / 3.23 KB at D = 5 / 7 / 10 /
 This is the paper's strongest and most robust claim.
 
 **Holds up — coverage on low/medium-dimensional data.** RBULT beats the bootstrap
-baseline on MetroPT-3, Industrial Pump and Water Pump.
+baseline on MetroPT-3, Industrial Pump and Water Pump. Note this is marginal coverage measured
+against the final bounds; see the interval-width section below for what it costs.
 
 **Does not hold — coverage on TEP.** The sliding-window bootstrap reaches ~99.0% on
 all four modes; RBULT reaches 93.7–97.8%.
@@ -92,6 +93,46 @@ the 95% Bonferroni target:
 On TEP, RBULT flags 30–75% of observations as out-of-control on a joint basis. The
 per-dimension false alarm rate there is 15–43x the Bonferroni target, which is the
 root cause of both the joint-coverage collapse and the chunk-level behaviour.
+
+## Interval width — reported alongside coverage from this run onward
+
+Coverage cannot be interpreted alone: a wide enough interval attains 100% coverage while
+carrying no information, and RBULT boundaries expand monotonically, so they inflate to absorb
+non-stationarity. Tier 1 always reported `Mean_Interval_Width` and `Sigma_L`/`Sigma_R`; Tier 2
+now does too, accumulated with Welford so the chart still holds only O(D) state (9 scalars
+per feature, independent of stream length).
+
+| Dataset | Lag-1 AC | Coverage | Joint | **width_ratio_local** | width_ratio_global |
+|---|---:|---:|---:|---:|---:|
+| Water Pump | 0.998 | **99.95%** | 99.55% | **8.51** (max 19.4) | 1.11 |
+| TEP Mode 5 | 0.948 | 97.79% | 70.49% | **8.19** (max **157.6**) | 0.79 |
+| AI4I 2020 | — | 97.79% | 91.34% | 4.55 | 0.94 |
+| TEP Mode 4 | 0.948 | 96.66% | 65.26% | 2.67 | 0.74 |
+| TEP Mode 1 | 0.948 | 96.74% | 61.39% | 2.08 | 0.69 |
+| TEP Mode 3 | 0.948 | 93.70% | 25.02% | 1.77 | 0.65 |
+| MetroPT-3 | 0.970 | 98.90% | 94.89% | 1.55 | 1.40 |
+| Industrial Pump | 0.001 | 99.40% | 97.04% | **1.00** | 1.01 |
+
+`width_ratio_local` is the final width divided by the mean within-chunk data range;
+`width_ratio_global` divides it by the stream's 0.5–99.5 percentile span.
+
+Two consequences:
+
+- **The best coverage carries the widest interval.** Water Pump's 99.955% comes with an
+  interval 8.5x wider than the data's own within-chunk variation (19x on one channel).
+  Industrial Pump, whose rows are i.i.d., sits at exactly 1.00. The ordering of
+  `width_ratio_local` follows autocorrelation, not estimator quality — and it is the same
+  reason detection collapses on those datasets (Water Pump AUC 0.402, median violations 0 in
+  both classes).
+- **On TEP the interval is narrower than the empirical support** (`width_ratio_global`
+  0.65–0.79), which is the direct cause of the per-dimension FAR running 15–43x above the
+  Bonferroni target and of the joint-coverage collapse to 25–70%.
+
+RBULT-SPC genuinely does not require stationary preprocessing, where Shewhart and EWMA
+mean-level models break (coverage 25–77%). But the coverage that follows is obtained partly
+by widening, so it must be reported with `width_ratio_local`. With `width_ratio_global` ~ 1
+off TEP, the defensible claim is an interval *equivalent* to a full-history percentile
+baseline at O(D) memory instead of O(N*D) — not a better interval.
 
 ## Recommended framing
 

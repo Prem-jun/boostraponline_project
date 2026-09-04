@@ -6,6 +6,6 @@
 | **Sample-level FAR (%)** | 30.31% | 41.63% | 1.18% | **2.21%** | **Controlled at 1.60% (~1% target)** |
 | **Chunk-level FAR (%)** | 100.00% | 100.00% | 0.00% | **66.67%** | Low Chunk False Alarm Rate |
 | **ARL0 (In-Control Run Length)** | 0.00 | 0.00 | 6.00 | **0.50** | Higher In-Control Stability |
-| **ARL1 (Detection Delay)** | 1.02 | 1.00 | 2.59 | **1.29** | Fast Failure Response |
+| **ARL1 (Detection Delay)** | 1.02 | 1.00 | 2.59 | **1.28** | Fast Failure Response |
 | **Peak Memory Footprint (KB)** | 0.23 KB | 0.45 KB | 413.78 KB | **0.52 KB** | **Constant $O(D)$ RAM Footprint** |
-| **Avg Latency per Chunk (ms)** | 0.0140 ms | 0.2573 ms | 0.9389 ms | **37.2888 ms** | Real-time Streaming (< 70 ms) |
+| **Avg Latency per Chunk (ms)** | 0.0145 ms | 0.2616 ms | 0.9400 ms | **36.1339 ms** | Real-time Streaming (< 70 ms) |

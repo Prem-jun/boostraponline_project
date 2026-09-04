@@ -90,6 +90,16 @@ class RBULTControlChart:
         self._phase1_counts: List[List[int]] = []
         self._phase1_sizes: List[int] = []
 
+        # Running interval-width statistics, accumulated with Welford so the chart
+        # keeps O(D) memory (8 scalars per feature, independent of stream length).
+        # Coverage alone cannot judge an interval: a wide enough interval attains
+        # 100% coverage trivially. Width must be reported alongside it.
+        self._width_stats: Dict[str, dict] = {
+            feat: {'n': 0, 'w_mean': 0.0, 'w_m2': 0.0, 'l_mean': 0.0, 'l_m2': 0.0,
+                   'r_mean': 0.0, 'r_m2': 0.0, 'range_sum': 0.0, 'range_n': 0}
+            for feat in features
+        }
+
         # Calculate adjusted alpha per dimension for FWER control
         num_dim = len(features)
         if fwer_correction == 'bonferroni':
@@ -138,6 +148,28 @@ class RBULTControlChart:
         if self.feature_thresholds is not None and feat in self.feature_thresholds:
             return self.feature_thresholds[feat]
         return self.default_threshold(chunk_len)
+
+    def _update_width_stats(self, feat: str, lcl: float, ucl: float,
+                            vals: List[float]) -> None:
+        """Accumulate interval-width and boundary-stability statistics for one chunk.
+
+        Uses Welford's online algorithm so mean and variance of the interval width and
+        of each boundary are maintained in constant space per feature. Also tracks the
+        mean within-chunk data range, which is the reference the final interval width is
+        compared against: an interval far wider than the data's local variation attains
+        high coverage without being informative.
+        """
+        s = self._width_stats[feat]
+        s['n'] += 1
+        n = s['n']
+        for key, x in (('w', ucl - lcl), ('l', lcl), ('r', ucl)):
+            mean_key, m2_key = f'{key}_mean', f'{key}_m2'
+            delta = x - s[mean_key]
+            s[mean_key] += delta / n
+            s[m2_key] += delta * (x - s[mean_key])
+        if vals:
+            s['range_sum'] += (max(vals) - min(vals))
+            s['range_n'] += 1
 
     def start_phase1(self) -> None:
         """Begin collecting in-control violation counts for Phase I calibration.
@@ -271,6 +303,7 @@ class RBULTControlChart:
             chunk_summary['thresholds'][feat] = threshold
             chunk_summary['sample_ooc_count'] += ooc_count
             phase1_row.append(ooc_count)
+            self._update_width_stats(feat, lcl, ucl, vals)
 
             if has_ooc:
                 chunk_summary['any_ooc'] = True
@@ -311,6 +344,84 @@ class RBULTControlChart:
             total_bytes += sys.getsizeof(self.results[feat])
         return total_bytes / 1024.0
 
+    def compute_interval_metrics(self, sample_df: Optional[pd.DataFrame] = None) -> dict:
+        """Interval width and boundary stability — the counterpart to coverage.
+
+        Coverage cannot be interpreted on its own: an arbitrarily wide interval attains
+        100% coverage while carrying no information, and because RBULT boundaries expand
+        monotonically they inflate to absorb any non-stationarity in the stream. These
+        metrics quantify the price paid for a given coverage. Tier 1 already reports
+        Mean_Interval_Width and Sigma_L/Sigma_R; this is the Tier 2 equivalent.
+
+        Args:
+            sample_df: Optional full stream, used for the global reference width.
+
+        Returns:
+            mean_interval_width: Mean over dimensions of the per-chunk mean width
+                (comparable to Tier 1's Mean_Interval_Width).
+            final_interval_width: Mean over dimensions of the final width R_d - L_d.
+            sigma_L, sigma_R: Mean over dimensions of the standard deviation of each
+                boundary across chunks — boundary stability, lower is more stable.
+            width_ratio_local: Final width divided by the mean within-chunk data range,
+                averaged over dimensions. ~1 means the interval tracks local variation;
+                >> 1 means it is inflated well beyond it, so high coverage is cheap.
+            width_ratio_global: Final width divided by the 0.5-99.5 percentile span of
+                the whole stream. ~1 means the interval has converged to the empirical
+                support, i.e. to what a full-history percentile baseline would compute.
+            interval_width_per_feature: Per-dimension breakdown.
+        """
+        per_feat, w_means, w_finals, l_sds, r_sds, local_ratios, global_ratios = {}, [], [], [], [], [], []
+        bounds = self.get_control_limits()
+
+        for feat in self.features:
+            s = self._width_stats[feat]
+            if s['n'] == 0:
+                continue
+            lcl, ucl = bounds[feat]
+            final_w = ucl - lcl
+            denom = max(1, s['n'] - 1)
+            l_sd = float(np.sqrt(s['l_m2'] / denom))
+            r_sd = float(np.sqrt(s['r_m2'] / denom))
+            local = s['range_sum'] / s['range_n'] if s['range_n'] else float('nan')
+
+            entry = {'mean_width': s['w_mean'], 'final_width': final_w,
+                     'sigma_L': l_sd, 'sigma_R': r_sd, 'mean_chunk_range': local}
+            if local and local > 0 and np.isfinite(local):
+                entry['width_ratio_local'] = final_w / local
+                local_ratios.append(entry['width_ratio_local'])
+
+            if sample_df is not None and feat in sample_df.columns:
+                v = sample_df[feat].dropna().values
+                if len(v) > 1:
+                    p_lo, p_hi = np.percentile(v, [0.5, 99.5])
+                    span = p_hi - p_lo
+                    if span > 0:
+                        entry['width_ratio_global'] = final_w / span
+                        global_ratios.append(entry['width_ratio_global'])
+
+            per_feat[feat] = entry
+            w_means.append(s['w_mean'])
+            w_finals.append(final_w)
+            l_sds.append(l_sd)
+            r_sds.append(r_sd)
+
+        if not per_feat:
+            return {}
+
+        out = {
+            'mean_interval_width': float(np.mean(w_means)),
+            'final_interval_width': float(np.mean(w_finals)),
+            'sigma_L': float(np.mean(l_sds)),
+            'sigma_R': float(np.mean(r_sds)),
+            'interval_width_per_feature': per_feat,
+        }
+        if local_ratios:
+            out['width_ratio_local'] = float(np.mean(local_ratios))
+            out['width_ratio_local_max'] = float(np.max(local_ratios))
+        if global_ratios:
+            out['width_ratio_global'] = float(np.mean(global_ratios))
+        return out
+
     def compute_spc_metrics(self, true_labels: Optional[List[int]] = None,
                             sample_df: Optional[pd.DataFrame] = None) -> dict:
         """Compute comprehensive Statistical Process Control metrics.
@@ -350,6 +461,8 @@ class RBULTControlChart:
                                  else f'rate_{self.chunk_alarm_rate:g}k'),
             'chunk_alarm_rate': self.chunk_alarm_rate
         }
+
+        metrics.update(self.compute_interval_metrics(sample_df=sample_df))
 
         # Calculate sample-level coverage rate if sample_df is provided
         if sample_df is not None:

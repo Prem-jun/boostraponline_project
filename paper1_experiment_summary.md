@@ -130,7 +130,35 @@ Coverage ในตาราง 2.2 คือ **marginal coverage เฉลี่
 
 **สรุป: RBULT ไม่ได้เหนือกว่า baselines ในการคุม false alarm** บน TEP Mode 1/4/5 RBULT สูสีกับ Shewhart และแพ้บน Mode 3 ส่วนบน AI4I และ MetroPT-3 Bootstrap ชนะชัดเจน
 
-### 2.5 Memory Usage — จุดแข็งที่แท้จริง
+### 2.5 Interval Width — ตัวคู่ที่ต้องอ่านพร้อม Coverage
+
+Coverage อ่านลำพังไม่ได้ — ช่วงที่กว้างพอจะได้ coverage 100% เสมอโดยไม่มีข้อมูลอะไรเลย และเพราะขอบเขตของ RBULT ขยายอย่างเดียวไม่เคยหด มันจึงกว้างขึ้นเพื่อดูดซับความไม่นิ่งของข้อมูล Tier 1 มีเมตริกนี้อยู่แล้ว (`Mean_Interval_Width`, `Sigma_L/R`) ตอนนี้ Tier 2 มีครบเหมือนกัน (เก็บด้วย Welford → 9 scalar ต่อ feature ยังเป็น $O(D)$)
+
+| Dataset | lag-1 AC | Coverage | Joint | **width_ratio_local** | width_ratio_global |
+|---|---:|---:|---:|---:|---:|
+| Water Pump | 0.998 | **99.95%** | 99.55% | **8.51** (สูงสุด 19.4) | 1.11 |
+| TEP Mode 5 | 0.948 | 97.79% | 70.49% | **8.19** (สูงสุด **157.6**) | 0.79 |
+| AI4I 2020 | — | 97.79% | 91.34% | 4.55 | 0.94 |
+| TEP Mode 4 | 0.948 | 96.66% | 65.26% | 2.67 | 0.74 |
+| TEP Mode 1 | 0.948 | 96.74% | 61.39% | 2.08 | 0.69 |
+| TEP Mode 3 | 0.948 | 93.70% | 25.02% | 1.77 | 0.65 |
+| MetroPT-3 | 0.970 | 98.90% | 94.89% | 1.55 | 1.40 |
+| Industrial Pump | 0.001 | 99.40% | 97.04% | **1.00** | 1.01 |
+
+- **`width_ratio_local`** = ความกว้างสุดท้าย ÷ การแกว่งเฉลี่ยภายใน chunk → ใกล้ 1 คือช่วงพอดีกับข้อมูล, มากกว่า 1 มาก คือช่วงพองเกิน coverage จึงได้มาง่าย
+- **`width_ratio_global`** = ความกว้างสุดท้าย ÷ ช่วง percentile 0.5–99.5 ทั้งสตรีม → ใกล้ 1 คือลู่เข้าหา support จริง (เท่ากับที่ full-history bootstrap คำนวณ)
+
+**ข้อสังเกต 2 ข้อ**
+
+1. **Coverage สูงสุดมาพร้อมช่วงกว้างสุด** — Water Pump ได้ coverage ดีที่สุดในชุดทั้งหมด (99.955%) ด้วยช่วงที่กว้างกว่าการแกว่งจริง **8.5 เท่า** (มิติหนึ่งถึง 19 เท่า) ส่วน Industrial Pump ที่ข้อมูลเป็น i.i.d. ได้พอดี **1.00** ลำดับของ `width_ratio_local` เรียงตาม autocorrelation ไม่ได้เรียงตามคุณภาพของตัวประมาณ — และเป็นเหตุผลเดียวกันที่ detection พังบนชุดเหล่านั้นพอดี (Water Pump AUC 0.402, median violation = 0 ทั้งสองกลุ่ม)
+
+2. **บน TEP ช่วงกลับ *แคบกว่า* support จริง** (`width_ratio_global` 0.65–0.79) ซึ่งเป็นสาเหตุโดยตรงที่ per-dim FAR สูงกว่าเป้า Bonferroni 15–43 เท่า และทำให้ joint coverage ตกไป 25–70%
+
+> **ข้อสรุปที่ควรเขียนใน paper:** RBULT ไม่ต้องการ stationary preprocessing ต่างจาก Shewhart/EWMA ที่โมเดลค่ากลางพังทันที (coverage เหลือ 25–77%) — **นี่คือข้อได้เปรียบจริงที่วัดได้** แต่ coverage ที่สูงตามมานั้นได้จากการที่ช่วงกว้างขึ้นด้วย ไม่ใช่จากการประมาณที่แม่นขึ้นล้วน ๆ จึง **ต้องรายงาน coverage คู่กับ `width_ratio_local` เสมอ** และเพราะ `width_ratio_global` ≈ 1 บนชุดที่ไม่ใช่ TEP ข้ออ้างที่ซื่อสัตย์คือ RBULT ให้ช่วง **เทียบเท่า** full-history bootstrap โดยใช้หน่วยความจำ $O(D)$ แทน $O(N \cdot D)$ ไม่ใช่ให้ช่วงที่ดีกว่า
+
+---
+
+### 2.6 Memory Usage — จุดแข็งที่แท้จริง
 
 | Dataset | D | **RBULT** | Baseline Bootstrap | ประหยัด |
 |---|:---:|---:|---:|---:|
@@ -144,7 +172,7 @@ Coverage ในตาราง 2.2 คือ **marginal coverage เฉลี่
 
 > **แก้จากฉบับก่อน:** ตัวเลข "TEP ประหยัด ~156,000× เทียบ baseline 504,425.95 KB" **ใช้ไม่ได้แล้ว** เพราะ `exp_tep_benchmark.py` ปัจจุบันใช้ Sliding-Window (W=2000) ไม่ใช่ Full-History baseline ตัวที่ให้เลข 504,425.95 KB ไม่มีอยู่ในโค้ดอีกต่อไป ตัวเลขที่ reproduce ได้คือ **~180×**
 
-### 2.6 Latency
+### 2.7 Latency
 
 | Dataset | D | RBULT |
 |---|:---:|---:|
@@ -159,7 +187,7 @@ Coverage ในตาราง 2.2 คือ **marginal coverage เฉลี่
 
 ทุกชุดต่ำกว่า 65 ms ต่อ chunk รองรับ real-time streaming ได้ (ค่าเหล่านี้แปรตามภาระเครื่องขณะรัน)
 
-### 2.7 Baselines ที่เปรียบเทียบ
+### 2.8 Baselines ที่เปรียบเทียบ
 
 | Baseline | คำอธิบาย |
 |---|---|
@@ -257,13 +285,13 @@ Sliding-Window Bootstrap ได้ ~99.0% ทุก mode ส่วน RBULT ไ�
 
 วัดด้วย lag-1 autocorrelation (ถ้าเป็น time series ค่า ณ เวลา $t$ ต้องสัมพันธ์กับ $t-1$)
 
-| ชุดข้อมูล | D | lag-1 autocorr | เป็น time series? | in-control chunks |
-|---|---:|---:|---|---:|
-| Water Pump | 10 | **0.998** | ✅ ใช่ | 405 / 441 |
-| MetroPT-3 | 7 | **0.970** | ✅ ใช่ | 1,482 / 1,517 |
-| TEP 1/3/4/5 | 34 | 0.948 | ⚠️ ต่อจาก 2,900 runs | 38–44 / ~3,480 |
-| AI4I 2020 | 5 | 0.931 * | ❌ ไม่ใช่ (แต่ละแถวคือชิ้นงาน) | 6 / 100 |
-| Industrial Pump | 5 | **0.001** | ❌ ไม่ใช่ (5 เครื่องต่อกัน) | **0 / 100** |
+| ชุดข้อมูล       |   D | lag-1 autocorr | เป็น time series?             | in-control chunks |
+| --------------- | --: | -------------: | ----------------------------- | ----------------: |
+| Water Pump      |  10 |      **0.998** | ✅ ใช่                         |         405 / 441 |
+| MetroPT-3       |   7 |      **0.970** | ✅ ใช่                         |     1,482 / 1,517 |
+| TEP 1/3/4/5     |  34 |          0.948 | ⚠️ ต่อจาก 2,900 runs          |    38–44 / ~3,480 |
+| AI4I 2020       |   5 |        0.931 * | ❌ ไม่ใช่ (แต่ละแถวคือชิ้นงาน) |           6 / 100 |
+| Industrial Pump |   5 |      **0.001** | ❌ ไม่ใช่ (5 เครื่องต่อกัน)    |       **0 / 100** |
 
 - **AI4I** \* — ค่า 0.931 ไม่ได้แปลว่าเป็น time series แต่เป็น artifact จากวิธีสร้างคอลัมน์: อุณหภูมิสองตัวถูกสร้างด้วย random walk และ `Tool wear [min]` เป็นตัวนับสะสม ส่วนสองมิติที่อธิบายกระบวนการจริงคือ `Rotational speed` (**0.008**) และ `Torque` (**0.005**) ซึ่งเป็น i.i.d. หลักฐานเชิงโครงสร้างชี้ชัดกว่า: `UDI` เป็น index ของผลิตภัณฑ์ที่เพิ่มทีละ 1 และ `Tool wear` รีเซ็ต 119 ครั้ง ความเสียหาย 339 sample กระจายเป็น **310 episode แยกกัน** จึงเหลือ in-control แค่ 6 chunk
 - **Industrial Pump** — `Maintenance_Flag` เปลี่ยนค่า 9,979 ครั้งใน 20,000 แถว (ช่วง fault ยาวเฉลี่ย 2.0 แถว) ทำให้ทุก chunk มี flag → **ไม่มี in-control chunk เลย** ค่า Chunk FAR/ARL0 ของชุดนี้ไม่นิยาม
@@ -331,6 +359,7 @@ $$\text{Peak RAM} = \frac{1}{1024}\Big(\texttt{sizeof}(\text{chart}) + \sum_{d}[
 | 8 | เพิ่มหมายเหตุกับดักเมตริก 5 ข้อ | ARL1 fallback, ARL0 censored, CI ของ FAR, detection, RNG |
 | 9 | เพิ่มข้อจำกัดของชุดข้อมูล | Pump ไม่มี in-control chunk, AI4I มี 6, TEP มี 38–44 |
 | 10 | AI4I: เปลี่ยนจาก `Tool wear Rate [min diff]` → `Tool wear [min]` ค่าดิบ | ฟีเจอร์ diff สร้าง artifact — 98.8% ของความกว้างมาจากจุดเปลี่ยนเครื่องมือ 119 จุด และ **100% ของ violation บนมิตินั้นคือการเปลี่ยนเครื่องมือ ไม่ใช่ความผิดปกติของกระบวนการ** ค่า coverage 98.81% ของมันคือ 100% − 1.19% เฉย ๆ ผลคือ coverage รวมของ AI4I ลดจาก 98.40% → 97.79%, sample FAR 1.60% → 2.21%, joint 94.23% → 91.34% |
+| 11 | เพิ่มเมตริก Interval Width เข้า Tier 2 | `mean_interval_width`, `final_interval_width`, `sigma_L/R`, `width_ratio_local`, `width_ratio_global` — Tier 1 มีอยู่แล้วแต่ Tier 2 ไม่มี ทำให้ coverage ถูกอ่านลำพังโดยไม่มีตัวคู่ เก็บด้วย Welford จึงยังเป็น $O(D)$ |
 
 ### ไฟล์อ้างอิงใน `results/`
 

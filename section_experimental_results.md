@@ -281,6 +281,63 @@ To rigorously validate performance, the framework evaluates 7 quantitative metri
 
 ---
 
+### Interval width — the necessary companion to coverage
+
+Coverage cannot be read on its own. An arbitrarily wide interval attains 100% coverage
+while carrying no information, and because RBULT boundaries expand monotonically they
+inflate to absorb any non-stationarity in the stream. Tier 1 has always reported
+`Mean_Interval_Width` and `Sigma_L`/`Sigma_R`; Tier 2 now reports the equivalents, computed
+with Welford accumulators so the chart still holds only $O(D)$ state (9 scalars per feature,
+independent of stream length).
+
+| Metric | Definition | Reading |
+|---|---|---|
+| `mean_interval_width` | mean over $d$ of the per-chunk mean $R_d - L_d$ | comparable to Tier 1's `Mean_Interval_Width` |
+| `final_interval_width` | mean over $d$ of the final $R_d - L_d$ | the interval a practitioner would deploy |
+| `sigma_L`, `sigma_R` | mean over $d$ of the s.d. of each boundary across chunks | boundary stability; lower is more stable |
+| **`width_ratio_local`** | final width $\div$ mean within-chunk data range | $\approx 1$: the interval tracks local variation. $\gg 1$: it is inflated far beyond it, so high coverage is cheap |
+| `width_ratio_global` | final width $\div$ the $0.5$–$99.5$ percentile span of the stream | $\approx 1$: converged to the empirical support, i.e. to what a full-history percentile baseline computes |
+
+**Measured for RBULT-SPC:**
+
+| Dataset | Lag-1 AC | Coverage | Joint | **`width_ratio_local`** | `width_ratio_global` |
+|---|---:|---:|---:|---:|---:|
+| Water Pump | 0.998 | **99.95%** | 99.55% | **8.51** (max 19.4) | 1.11 |
+| TEP Mode 5 | 0.948 | 97.79% | 70.49% | **8.19** (max **157.6**) | 0.79 |
+| AI4I 2020 | — | 97.79% | 91.34% | 4.55 | 0.94 |
+| TEP Mode 4 | 0.948 | 96.66% | 65.26% | 2.67 | 0.74 |
+| TEP Mode 1 | 0.948 | 96.74% | 61.39% | 2.08 | 0.69 |
+| TEP Mode 3 | 0.948 | 93.70% | 25.02% | 1.77 | 0.65 |
+| MetroPT-3 | 0.970 | 98.90% | 94.89% | 1.55 | 1.40 |
+| Industrial Pump | 0.001 | 99.40% | 97.04% | **1.00** | 1.01 |
+
+Two patterns follow, and together they explain results reported elsewhere in this section.
+
+**1. The highest coverage comes with the widest interval.** Water Pump attains the suite's
+best coverage (99.955%) with an interval **8.5× wider than the data's own within-chunk
+variation** — on one channel, 19×. Industrial Pump, whose rows are i.i.d., sits at exactly
+1.00: with no autocorrelation each chunk is a representative sample of the whole
+distribution, so the interval has nothing extra to absorb. The ordering of
+`width_ratio_local` tracks the ordering of autocorrelation, not of estimator quality. This is
+also why detection collapses on precisely those datasets (Water Pump AUC 0.402, median
+violations 0 in **both** classes): an interval that wide is never crossed.
+
+**2. On TEP the interval is *narrower* than the empirical support** (`width_ratio_global`
+0.65–0.79), which is the direct cause of the per-dimension false alarm rate running 15–43×
+above the Bonferroni target there, and hence of the joint-coverage collapse to 25–70%.
+Water Pump and MetroPT-3 sit above 1.0 and show the opposite behaviour.
+
+> **Consequence for how coverage should be presented.** RBULT-SPC does not need stationary
+> preprocessing — unlike Shewhart and EWMA, whose mean-level models break on these streams
+> (coverage 25–77%). That is a genuine and measurable advantage. But the high coverage that
+> follows is obtained partly by widening, not purely by better estimation, so **coverage must
+> be reported together with `width_ratio_local`.** With `width_ratio_global` ≈ 1 on the
+> non-TEP streams, the honest claim is that RBULT-SPC reaches an interval *equivalent* to a
+> full-history percentile baseline while holding $O(D)$ memory rather than $O(N \cdot D)$ —
+> not that it produces a better interval.
+
+---
+
 ### Metric Description
 
 1. **Overall Coverage Rate (%):** Measures the proportion of sample observations that fall inside the dynamic upper and lower control limits $[L_{m,d}, R_{m,d}]$ across all dimensions $D$ and stream chunks $M$. For non-Gaussian data, classical parametric 3-sigma limits drop to 50–70%, whereas RBULT maintains $\approx 99.00\%$.
