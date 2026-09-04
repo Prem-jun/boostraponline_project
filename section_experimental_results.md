@@ -6,72 +6,241 @@ A streaming workflow pipeline for multivariate sensor streams, mathematical form
 
 ## 1. Multivariate Streaming Experiment Workflow
 
-### 1.1 Mathematical Formulation of the Multivariate Pipeline
+This section describes the pipeline **as implemented**. Every step below is traceable to a
+named function; the reference table in §1.3 gives the file and symbol for each. Fixed
+parameters, all taken from `BootstrapOnline.set_online()` unless noted:
 
-For an incoming streaming data chunk of $D$-dimensional multivariate vectors $\mathbf{X}_m = \{\mathbf{x}_{m,1}, \mathbf{x}_{m,2}, \dots, \mathbf{x}_{m,k}\} \subset \mathbb{R}^{k \times D}$ representing chunk index $m \in \{1, 2, \dots, M\}$ with chunk size $k$:
+| Parameter | Value | Meaning |
+|---|---|---|
+| $\theta$ | $3.0$ | Z-score threshold for spike filtering |
+| $B$ (`numbin`) | $8$ | Bins in the theoretical tail histogram |
+| $n_{\min}$ (`nboost`) | $3$ | Minimum tail points required to bootstrap |
+| $N_{\text{boot}}$ (`number_bt_iter`) | $600$ | Bootstrap resamples per tail estimate |
+| `minmax_flag` | `False` | Min-max bootstrap disabled in **all** Tier 2 runs |
+| $\alpha_{\text{sys}}$ | $0.05$ | System-wide false alarm rate |
+| $C_{\text{thresh}}$ | $\lceil 0.05\,k \rceil$ | Chunk alarm threshold (scale-free rate rule) |
 
-#### Step 1: Streaming Chunk Ingestion & Stationary Preprocessing
-The system receives streaming chunk $\mathbf{X}_m = \{\mathbf{x}_{m,1}, \mathbf{x}_{m,2}, \dots, \mathbf{x}_{m,k}\} \subset \mathbb{R}^{k \times D}$, where sample time index $t$ ranges from $1$ to $k$ within each chunk.  For cumulative or non-stationary features (e.g., tool wear accumulation), first-order differencing or detrending is applied per dimension $d \in \{1, \dots, D\}$ across all sample positions $t \in \{1, 2, \dots, k\}$:
-- **For $t = 2, 3, \dots, k$ (within chunk $m$):**
-  $$\tilde{x}_{m,t,d} = x_{m,t,d} - x_{m,t-1,d}$$
-- **For $t = 1$ (chunk boundary transition):**
-  - If $m = 1$ (initial stream chunk): $\tilde{x}_{1,1,d} = 0$
-  - If $m > 1$ (subsequent stream chunks): differencing is evaluated against the last sample of the preceding chunk $\mathbf{x}_{m-1,k}$:
-    $$\tilde{x}_{m,1,d} = x_{m,1,d} - x_{m-1,k,d}$$
+### 1.1 Notation
 
-This ensures continuous stream differencing while storing only a single state vector $\mathbf{x}_{m-1,k} \in \mathbb{R}^D$, maintaining strict $O(D)$ constant RAM usage.
+A stream of $N$ observations in $\mathbb{R}^D$ is partitioned into $M = \lceil N/k \rceil$
+consecutive chunks $\mathbf{X}_m = \{\mathbf{x}_{m,1}, \dots, \mathbf{x}_{m,k}\} \subset
+\mathbb{R}^{k \times D}$, $m \in \{1, \dots, M\}$. Each dimension $d$ is monitored by an
+independent estimator $E_d$ holding exactly two scalars — the current limits $L_d$ (`exp_l`)
+and $R_d$ (`exp_r`).
 
-#### Step 2: Feature-wise Outlier Filtering (Algorithm 4)
-To prevent transient sensor spikes from corrupting extreme tail estimation, a Z-score spike filter receives the preprocessed stationary chunk $\tilde{\mathbf{X}}_m$ and is applied per dimension $d$:
-$$\tilde{\mathbf{X}}_{m,d}^{\text{clean}} = \{ \tilde{x}_{d} \in \tilde{\mathbf{X}}_{m,d} \mid |\tilde{x}_{d} - \bar{\mu}_{m,d}| \le \theta \cdot \hat{\sigma}_{m,d} \}$$
-where $\bar{\mu}_{m,d}$ and $\hat{\sigma}_{m,d}$ are the online sample mean and standard deviation of the stationary chunk $m$ for feature $d$, and $\theta = 3.0$ is the z-score threshold.
+### Step 1: Chunk ingestion
 
-#### Step 3: Dimensional Tail Bin Extraction & Adaptive Control Limits
-For each dimension $d \in \{1, \dots, D\}$, tail bins are extracted from the cleaned stationary data $\tilde{\mathbf{X}}_{m,d}^{\text{clean}}$:
-1. **Extract Tail Bins:**
-   $$\text{Bin}_{\text{left}, d} = \{ \tilde{x} \in \tilde{\mathbf{X}}_{m,d}^{\text{clean}} \mid \bar{\mu}_d - 4\hat{\sigma}_d \le \tilde{x} \le \bar{\mu}_d - 3\hat{\sigma}_d \}$$
-   $$\text{Bin}_{\text{right}, d} = \{ \tilde{x} \in \tilde{\mathbf{X}}_{m,d}^{\text{clean}} \mid \bar{\mu}_d + 3\hat{\sigma}_d \le \tilde{x} \le \bar{\mu}_d + 4\hat{\sigma}_d \}$$
+> **No differencing or detrending is applied.** Earlier revisions of this document specified
+> first-order differencing with a carried state vector $\mathbf{x}_{m-1,k}$. That scheme is
+> **not implemented for any dataset**, and the only differencing that ever existed
+> (`df['Tool wear [min]'].diff()` on AI4I) was a batch operation over the full column before
+> chunking — not the streaming, state-carrying formulation described. It has since been
+> removed; see the *Public Benchmark Datasets* section for why it was inappropriate.
 
-2. **Update Dimensional Bounds via Parallel RBULT Online Estimators:**
-   $$\text{LCL}_{m,d} = L_{m,d} = \text{Bootstrap}_{\text{online}}(\text{Bin}_{\text{left}, d}, \text{"left"})$$
-   $$\text{UCL}_{m,d} = R_{m,d} = \text{Bootstrap}_{\text{online}}(\text{Bin}_{\text{right}, d}, \text{"right"})$$
+Preprocessing is confined to dataset-specific loading, performed once before streaming:
 
-#### Step 4: Streaming Bounding Box Geometry $\mathcal{B}_m \subset \mathbb{R}^D$
-The overall multivariate process control region is constructed as a $D$-dimensional adaptive bounding hyper-rectangle evaluated on the stationary feature space:
-$$\mathcal{B}_m = \prod_{d=1}^D [L_{m,d}, R_{m,d}] = [L_{m,1}, R_{m,1}] \times [L_{m,2}, R_{m,2}] \times \dots \times [L_{m,D}, R_{m,D}]$$
+| Dataset | Preprocessing applied | Function |
+|---|---|---|
+| AI4I 2020 | none (`raw_df.copy()`) | `run_spc_benchmark` |
+| Industrial Pump | `sort_values(['Pump_ID', 'Operational_Hours'])` | `load_and_preprocess_pump_data` |
+| Water Pump | `ffill().bfill()` on the monitored channels | `load_and_preprocess_waterpump_data` |
+| MetroPT-3 | none beyond loading and failure-window labelling | `load_and_label_metropt3` |
+| TEP | `signals.reshape(-1, 34)` flattening $2900 \times 600$ runs | `load_and_preprocess_tep_data` |
 
-#### Step 5: Sample-Level Violation & Chunk Alarm Trigger Condition
-A chunk is flagged as Out-of-Control (OOC) if **any single monitored dimension** accumulates at least $C_{\text{thresh}}$ stationary sample-level bounding box violations. The threshold follows the scale-free rate rule $C_{\text{thresh}} = \lceil 0.05\,k \rceil$ and is applied identically to every method compared. (Earlier revisions summed violations across all dimensions for the baselines but evaluated RBULT-SPC per dimension, which made the comparison favour RBULT-SPC — increasingly so as $D$ grew.):
-$$\text{Status}(\tilde{\mathbf{X}}_m) = \begin{cases} \text{In-Control}, & \text{if } \sum_{t=1}^k \mathbb{I}(\tilde{\mathbf{x}}_t \notin \mathcal{B}_m) < C_{\text{thresh}} \\ \text{Out-of-Control (Alarm)}, & \text{if } \sum_{t=1}^k \mathbb{I}(\tilde{\mathbf{x}}_t \notin \mathcal{B}_m) \ge C_{\text{thresh}} \end{cases}$$
+Within `update_chunk`, each dimension is extracted independently and missing values dropped:
+$\mathbf{v}_{m,d} = \texttt{df\_chunk[d].dropna()}$. A dimension absent from the chunk, or
+empty after dropping, is skipped for that chunk — its limits carry over unchanged.
 
-#### Step 6: Memory Cleanup Guarantee ($O(D)$ RAM Footprint)
-Immediately after updating the boundary vectors $\mathbf{L}_m = [L_{m,1}, \dots, L_{m,D}]$ and $\mathbf{R}_m = [R_{m,1}, \dots, R_{m,D}]$, the raw data chunk $\mathbf{X}_m$ is purged from memory, ensuring total RAM usage scales strictly as $O(D)$ independent of stream length $N = M \cdot k$.
+### Step 2: Feature-wise Z-score spike filtering (Algorithm 4)
+
+Applied per dimension when `outlier_filter=True` (the default in all Tier 2 runs):
+
+$$\mathbf{v}_{m,d}^{\text{clean}} = \{ v \in \mathbf{v}_{m,d} \;:\; |v - \mu_{d}^{\ast}| \le \theta \cdot \sigma_{d}^{\ast} \}$$
+
+Two implementation details matter and differ from a textbook description:
+
+1. **$\mu^{\ast}_d, \sigma^{\ast}_d$ are not the current chunk's moments.** They are the most
+   recent entries of the estimator's running history, which `update_center_range()` derives
+   **from the boundaries themselves** (see Step 4):
+   $\mu^{\ast}_d = (R_d + L_d)/2$ and $\sigma^{\ast}_d = (R_d - L_d)/8$. On the very first
+   chunk, before any boundary update exists, they are initialised from the chunk's own sample
+   mean and standard deviation (with $\sigma$ floored at $10^{-6}$).
+2. **The filter fails safe.** If filtering would empty the chunk, the raw chunk is used
+   instead: `return cleaned if len(cleaned) > 0 else new_data_chunk`.
+
+### Step 3: Lazy expansion trigger
+
+The expensive machinery of Steps 4–5 runs **only when the chunk reaches outside the current
+limits**. With $v^{\min}_{m,d} = \min \mathbf{v}^{\text{clean}}_{m,d}$ and
+$v^{\max}_{m,d} = \max \mathbf{v}^{\text{clean}}_{m,d}$:
+
+$$\text{trigger}_{m,d} = \mathbb{I}\left(v^{\min}_{m,d} < L_d\right) \;\vee\; \mathbb{I}\left(v^{\max}_{m,d} > R_d\right)$$
+
+If neither holds, the limits are left untouched and the chunk costs only a min/max scan.
+This is the mechanism behind the amortised near-$O(1)$ per-chunk cost: on steady-state
+streams the trigger fires rarely once the boundaries have settled.
+
+When the trigger does fire, the breached boundary is first moved to the observed extreme.
+Because `minmax_flag=False` throughout Tier 2, this is a **direct assignment**, not a
+bootstrap:
+
+$$L_d \leftarrow v^{\min}_{m,d} \quad\text{and / or}\quad R_d \leftarrow v^{\max}_{m,d}$$
+
+(The alternative `minmax_flag=True` path would instead bootstrap the tail list when it holds
+at least $n_{\min}$ points; it is not exercised by any reported experiment.)
+
+### Step 4: Tail binning and theoretical reference histogram
+
+Centre and spread are recomputed **from the boundaries**, not from the data:
+
+$$\mu_d = \frac{R_d + L_d}{2}, \qquad \sigma_d = \frac{R_d - L_d}{8}$$
+
+The $\sigma_d = (R_d - L_d)/8$ convention is what makes the $\pm 4\sigma$ window coincide with
+the boundary interval, so the two extreme bins sit exactly at the edges. The two tail sets are
+
+$$\mathcal{T}^{-}_d = \{ v : \mu_d - 4\sigma_d \le v \le \mu_d - 3\sigma_d \}, \qquad
+\mathcal{T}^{+}_d = \{ v : \mu_d + 3\sigma_d \le v \le \mu_d + 4\sigma_d \}$$
+
+An 8-bin observed histogram $\mathbf{h}^{\text{obs}}_d$ is allocated, but **only four bins are
+populated** — the two extreme bins and their immediate neighbours:
+
+$$h^{\text{obs}}_{d}[0] = |\mathcal{T}^{-}_d|, \quad h^{\text{obs}}_{d}[7] = |\mathcal{T}^{+}_d|, \quad
+h^{\text{obs}}_{d}[1] = |\{v \in [\mu_d - 3\sigma_d, \mu_d - 2\sigma_d]\}|, \quad
+h^{\text{obs}}_{d}[6] = |\{v \in [\mu_d + 2\sigma_d, \mu_d + 3\sigma_d]\}|$$
+
+The central bins are never counted, since only the tails drive boundary decisions.
+
+The theoretical counterpart $\mathbf{h}^{\text{theo}}_d$ comes from fitting the tail data
+against a candidate family and scaling the per-bin tail areas by the cumulative sample count
+$n_d$ seen so far:
+
+$$h^{\text{theo}}_{d}[b] = \left\lceil \frac{p_b \cdot n_d}{100} \right\rceil, \qquad
+p_b = \texttt{get\_percent\_std\_data\_from\_best\_distribution}\!\left(n_d, \mathcal{T}^{-}_d, \mathcal{T}^{+}_d, \mathcal{D}\right)$$
+
+where $\mathcal{D}$ is the candidate set actually configured in `set_online()` — **10
+distributions**, fitted independently for the left and right tail:
+
+$$\mathcal{D} = \{\texttt{exponweib},\ \texttt{wald},\ \texttt{gamma},\ \texttt{norm},\ \texttt{expon},\ \texttt{powerlaw},\ \texttt{lognorm},\ \texttt{chi2},\ \texttt{weibull\_min},\ \texttt{weibull\_max}\}$$
+
+> Earlier text described "11-candidate" fitting. The runtime list holds 10. (`stat_dist.py`
+> exports tail-area functions for 13 families, but only these 10 are passed to the fitter.)
+
+### Step 5: Iterative tail bootstrap until convergence
+
+Expansion is driven by the **excess of observed over theoretical mass in the extreme bins**:
+
+$$\Delta^{-}_d = h^{\text{obs}}_{d}[0] - h^{\text{theo}}_{d}[0], \qquad
+\Delta^{+}_d = h^{\text{obs}}_{d}[7] - h^{\text{theo}}_{d}[7]$$
+
+While either excess is positive and the corresponding tail holds at least $n_{\min} = 3$
+points, the boundary is re-estimated by bootstrapping that tail set with
+$N_{\text{boot}} = 600$ resamples:
+
+$$R_d \leftarrow \max\left(R_d,\; \texttt{bootstrap\_online}(\mathcal{T}^{+}_d, \text{"right"})\right), \qquad
+L_d \leftarrow \min\left(L_d,\; \texttt{bootstrap\_online}(\mathcal{T}^{-}_d, \text{"left"})\right)$$
+
+with a correction pass that re-bootstraps whenever the new boundary still lies inside the
+observed tail data ($R_d \le \max \mathcal{T}^{+}_d$, or $L_d \ge \min \mathcal{T}^{-}_d$).
+Because $\mu_d$ and $\sigma_d$ are functions of $L_d, R_d$, moving a boundary shifts the bin
+edges, so the bins are recomputed and the test repeated. **The loop terminates when a full
+pass leaves both $L_d$ and $R_d$ unchanged.** Boundaries therefore only ever widen —
+monotone expansion, never contraction.
+
+### Step 6: Bounding hyper-rectangle and chunk alarm
+
+The control region after chunk $m$ is the product of the per-dimension intervals:
+
+$$\mathcal{B}_m = \prod_{d=1}^{D} [L_d, R_d] \subset \mathbb{R}^D$$
+
+Violations are counted **per dimension** within the chunk, and a chunk alarms if **any single
+dimension** reaches the threshold:
+
+$$V^{(d)}_m = \sum_{t=1}^{k} \mathbb{I}\big(x_{m,t,d} \notin [L_d, R_d]\big), \qquad
+A_m = \mathbb{I}\left(\exists\, d : V^{(d)}_m \ge C_{\text{thresh}}\right)$$
+
+$C_{\text{thresh}}$ is resolved per chunk in this precedence order (`resolve_threshold`):
+
+1. an explicit `ooc_threshold_count` argument;
+2. a per-dimension $C_d$ from `calibrate_phase1()`, if Phase I calibration was run;
+3. the default rate rule $C_{\text{thresh}} = \lceil 0.05\,k \rceil$.
+
+All reported experiments use rule 3, applied identically to RBULT-SPC and to all three
+baselines.
+
+### Step 7: Memory behaviour
+
+The **algorithmic** state is genuinely $O(D)$: each estimator retains only $L_d$ and $R_d$,
+and the raw chunk goes out of scope when `update_chunk` returns. No raw observation is
+retained, so no boundary can be polluted by a stale buffer.
+
+> **What the reported "Peak Memory Footprint" does and does not measure.**
+> `estimate_memory_kb()` sums `sys.getsizeof()` over the chart object plus each feature's
+> engine and result collector. `sys.getsizeof` reports only an object's own header and does
+> **not** traverse the lists it references. The `ResBootstrap` collector appends one entry per
+> chunk to five history lists per feature (`exp_l`, `exp_r`, `exp_range`, `nlearnl`,
+> `nlearnr`), so its true footprint grows as $O(M \cdot D)$ while the reported figure stays
+> flat — measured at a constant 0.328 KB across 1, 50 and 200 chunks in a $D=3$ probe.
+> That telemetry exists for diagnostics and plotting and is not consumed by the algorithm, so
+> the $O(D)$ claim holds for the method; the metric, however, reflects the algorithmic state
+> rather than process RSS, and should be described as such.
+
+### 1.2 Where the evaluation metrics are computed
+
+`compute_spc_metrics()` runs **once, after the whole stream**, and evaluates coverage using
+the **final** limits $[L_d, R_d]$ applied retrospectively to every observation. This is an
+in-sample (post-hoc) figure, not a prequential one. Because the limits only widen, the final
+interval is the widest the method ever held, so retrospective coverage is optimistic relative
+to the online value obtained by scoring each chunk against the limits in force at that time.
+Measured on MetroPT-3: online sample FAR $1.795\%$ against retrospective $1.107\%$, a factor
+of $1.62$.
+
+Tier 1 reports both protocols explicitly (*In-Sample Adaptation* and *One-Step-Ahead
+Pre-Sequential*); Tier 2 reports only the in-sample variant.
+
+Chunk-level quantities (Chunk FAR, $\text{ARL}_0$, $\text{ARL}_1$) are computed from the
+per-chunk alarm flags $A_m$ recorded during streaming, against chunk labels
+$\text{label}_m = \mathbb{I}(\text{any sample in chunk } m \text{ is faulty})$.
+
+### 1.3 Step-to-code reference
+
+| Step | Implementation | File |
+|---|---|---|
+| 1. Chunk ingestion, threshold resolution | `run_*_benchmark()`, `RBULTControlChart.update_chunk` | `experiments/exp_*_benchmark.py`, `spc_rbult.py` |
+| 2. Z-score spike filter | `BootstrapOnline._apply_outlier_detection` → `ZBatchOutlierDetector` | `bootstrap_online.py`, `BatchOutlierDetection.py` |
+| 3. Lazy trigger, direct boundary move | `_update_global_minmax`, `_try_expand_left`, `_try_expand_right` | `bootstrap_online.py` |
+| 4. Centre/spread, tail bins, reference histogram | `update_center_range`, `_compute_histogram`, `_recompute_bins` | `bootstrap_online.py`, `stat_dist.py` |
+| 5. Iterative tail bootstrap | `_run_expansion_loop` → `bootstrap_v1.bootstrap_online` | `bootstrap_online.py`, `bootstrap_v1.py` |
+| 6. Bounding box, per-dimension alarm | `update_chunk`, `resolve_threshold`, `default_threshold` | `spc_rbult.py` |
+| 7. Memory accounting | `estimate_memory_kb` | `spc_rbult.py` |
+| Metrics | `compute_spc_metrics`, `_compute_arl0`, `_compute_arl1` | `spc_rbult.py`, `exp_spc_benchmark.py` |
+| Phase I calibration (optional) | `start_phase1`, `calibrate_phase1` | `spc_rbult.py` |
 
 ---
 
-### 1.2 Workflow Experiment Flowchart (Mermaid Diagram)
-
-The complete end-to-end experimental workflow for multivariate variables, starting from streaming data chunk creation through boundary evaluation and memory purge, is illustrated below:
+### 1.4 Workflow Flowchart
 
 ```mermaid
 flowchart TD
-    A["1. Streaming Data Chunk Creation: X_m in R^(k x D)"] --> B["2. Module 1: Stationary Preprocessing / Differencing"]
-    B --> C["3. Module 2: Feature-wise Z-Score Outlier Filter (Algorithm 4)"]
-    C --> D["4. Module 3: Parallel RBULT Online Estimators (E_1, ..., E_D)"]
-    
-    D --> E{Check Min / Max vs Current Bounds L_d, R_d}
-    E -- Boundary Exceeded --> F["Extract Tail Bins & Fit Density (stat_dist.py)"]
-    F --> G["Run Recursive Tail-Bootstrapping -> Update L_d, R_d"]
-    E -- Within Bounds --> H["Maintain Current Bounds L_d, R_d"]
-    G --> H
-    
-    H --> I["5. Module 4: Evaluate Bounding Hyper-rectangle B_m = PROD [L_d, R_d]"]
-    I --> J{Sample Violations >= C_thresh ?}
-    J -- Yes --> K["Trigger Out-of-Control Alarm"]
-    J -- No --> L["Flag In-Control State"]
-    
-    K --> M["6. Discard Raw Chunk X_m -> Maintain O(D) Constant RAM Footprint"]
+    A["Chunk X_m in R^(k x D)<br/>(no differencing applied)"] --> B["Per dimension d: drop NaN -> v_(m,d)"]
+    B --> C["Z-score filter, theta=3<br/>mu*=(R_d+L_d)/2, sigma*=(R_d-L_d)/8<br/>falls back to raw chunk if emptied"]
+    C --> D{"min(v) &lt; L_d  OR  max(v) &gt; R_d ?"}
+
+    D -- No --> H["Keep L_d, R_d unchanged<br/>(lazy: cost is one min/max scan)"]
+    D -- Yes --> E["Move breached boundary to observed extreme<br/>(direct assignment; minmax_flag=False)"]
+    E --> F["Recompute mu_d, sigma_d from L_d, R_d<br/>Extract tail bins at +/-3..4 sigma<br/>Fit 10-distribution reference histogram"]
+    F --> G{"observed tail count &gt; theoretical ?"}
+    G -- Yes --> G2["Bootstrap tail, 600 resamples<br/>-> widen L_d / R_d"]
+    G2 --> F
+    G -- No --> H
+
+    H --> I["Bounding box B_m = PROD_d [L_d, R_d]"]
+    I --> J{"ANY dimension with V_d &gt;= ceil(0.05k) ?"}
+    J -- Yes --> K["A_m = 1 (Out-of-Control alarm)"]
+    J -- No --> L["A_m = 0 (In-Control)"]
+
+    K --> M["Raw chunk released<br/>Algorithmic state stays O(D): only L_d, R_d"]
     L --> M
+    M --> N["After the stream:<br/>compute_spc_metrics with FINAL bounds<br/>(in-sample, not prequential)"]
 ```
 
 ---

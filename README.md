@@ -52,7 +52,7 @@ manuscript materials; 8–11 are the supporting analyses behind specific decisio
 | `bootstrap_online.py` | `BootstrapOnline` | The streaming bootstrap engine. `expand_bt_online()` grows the tail boundaries $[v_{\min}, v_{\max}]$ chunk by chunk without retaining raw data; also provides the offline `expand_bt_trad()` for baseline comparison. |
 | `res_bootstrap_v2.py` | `ResBootstrap` | Collects per-chunk boundary/error history and provides the Plotly plotting helpers. |
 | `spc_rbult.py` | `RBULTControlChart` | **The Paper 1 contribution.** Wraps one `BootstrapOnline` per feature into a multivariate control chart: Bonferroni FWER correction across $D$ dimensions, per-chunk OOC decisions, and the SPC metrics (coverage, joint coverage, FAR, ARL0/ARL1, RAM, latency). |
-| `stat_dist.py` | — | Per-distribution tail-area tables for the 11 candidate distributions used in MLE fitting. |
+| `stat_dist.py` | — | Per-distribution tail-area functions. 13 families are exported, but `set_online()` passes only 10 to the fitter. |
 | `BatchOutlierDetection.py` | — | Z-score spike filtering (Algorithm 4) applied before boundary updates. |
 
 ### Chunk alarm threshold
