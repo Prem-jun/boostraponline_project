@@ -28,13 +28,13 @@ To achieve seamless coherence between **Draft 1 (`boostrap_expert_wo_authors.pdf
 - Rigorously stress-tested across a **7-Scenario Gold Standard Suite** (Clean, GAWN $0.1\sigma - 0.3\sigma$, and Impulse Spikes $1\% - 10\%$), achieving 100% transient glitch absorption at 1% spikes ($\text{Coverage} = 95.29\%$, $\sigma_L = 0.05$).
 - Achieves strict $O(D)$ constant RAM memory boundedness (**0.52 KB – 3.23 KB**), delivering a **$180\times$ memory reduction** over conventional sliding-window bootstrap ($582.87\text{ KB}$).
 - Integrates Algorithm 4 Z-score spike filtering with dynamic 11-candidate distribution MLE fitting to prevent control limit pollution.
-- Eliminates batch false-alarm spam (**Chunk FAR = 0.00%**) on high-dimensional streams ($D=34$) while retaining an immediate anomaly detection response delay ($\text{ARL}_1 = 1.00$).
+- Introduces a scale-free batch alarm threshold $C = \lceil 0.05\,k \rceil$, comparable across chunk sizes and dimensionalities, and reports **both marginal and joint (all-dimension) coverage** — the latter exposing a $25\% - 71\%$ joint rate on $D=34$ streams that marginal coverage alone conceals.
 - Validated across a comprehensive two-tier benchmark: 1,260 1D benchmark runs across 5 distributions and 7 scenarios, 4 economic datasets, 5 real industrial streams, and 4 TEP stress regimes (Modes 1, 3, 4, 5) up to 1.74M observations.
 
 ---
 
 ### Abstract
-Bootstrapping is a powerful non-parametric technique for quantifying uncertainty without restrictive distributional assumptions. However, applying conventional bootstrap methods to real-time industrial data streams poses two fundamental challenges: prohibitive memory overhead ($O(N \cdot D)$ storage growth) and susceptibility to control limit pollution when anomalous samples contaminate historical memory buffers. This paper presents **RBULT-SPC**, a resource-bounded non-parametric control chart framework designed for high-dimensional, non-Gaussian IoT data streams. Grounded in mathematical proofs of chunk extreme probabilities, RBULT-SPC maintains only compact tail summary statistics in $O(D)$ constant space, preventing memory overflow and eliminating buffer pollution. To handle high dimensionality ($D=34$), the framework combines Z-score outlier filtering, lazy boundary expansion, 11-candidate non-parametric distribution MLE fitting, and Bonferroni Family-Wise Error Rate (FWER) tail adjustment. Extensive two-tier empirical evaluations evaluated under both **In-Sample Adaptation** and **One-Step-Ahead Pre-Sequential Predictive** protocols across a **7-Scenario Gold Standard Suite** (Clean, GAWN continuous noise $0.1\sigma - 0.3\sigma$, and Impulse Spikes $1\% - 10\%$), 4 economic datasets, 5 industrial streams, and 4 operating regimes of the Tennessee Eastman Process (TEP) demonstrate that RBULT-SPC achieves optimal coverage ($95.29\% - 99.95\%$) and controlled false alarm rates ($0.05\% - 3.27\%$), outperforming classical Shewhart and EWMA charts whose false alarm rates collapse to $18.21\% - 48.94\%$ under non-Gaussianity and operational throughput stress. Furthermore, hyperparameter sensitivity analysis demonstrates that dimension-aware thresholding completely eliminates batch false alarms ($\text{Chunk FAR} = 0.00\%$) while maintaining an immediate failure detection response delay ($\text{ARL}_1 = 1.00$) at an average latency under 45 ms.
+Bootstrapping is a powerful non-parametric technique for quantifying uncertainty without restrictive distributional assumptions. However, applying conventional bootstrap methods to real-time industrial data streams poses two fundamental challenges: prohibitive memory overhead ($O(N \cdot D)$ storage growth) and susceptibility to control limit pollution when anomalous samples contaminate historical memory buffers. This paper presents **RBULT-SPC**, a resource-bounded non-parametric control chart framework designed for high-dimensional, non-Gaussian IoT data streams. Grounded in mathematical proofs of chunk extreme probabilities, RBULT-SPC maintains only compact tail summary statistics in $O(D)$ constant space, preventing memory overflow and eliminating buffer pollution. To handle high dimensionality ($D=34$), the framework combines Z-score outlier filtering, lazy boundary expansion, 11-candidate non-parametric distribution MLE fitting, and Bonferroni Family-Wise Error Rate (FWER) tail adjustment. Extensive two-tier empirical evaluations evaluated under both **In-Sample Adaptation** and **One-Step-Ahead Pre-Sequential Predictive** protocols across a **7-Scenario Gold Standard Suite** (Clean, GAWN continuous noise $0.1\sigma - 0.3\sigma$, and Impulse Spikes $1\% - 10\%$), 4 economic datasets, 5 industrial streams, and 4 operating regimes of the Tennessee Eastman Process (TEP) demonstrate that RBULT-SPC achieves optimal coverage ($95.29\% - 99.95\%$) and controlled false alarm rates ($0.05\% - 3.27\%$), outperforming classical Shewhart and EWMA charts whose false alarm rates collapse to $18.21\% - 48.94\%$ under non-Gaussianity and operational throughput stress. Batch-level alarms are governed by a scale-free threshold $C = \lceil 0.05\,k \rceil$ applied identically to every method. Under this matched protocol RBULT-SPC attains zero batch false alarms on TEP Modes 1 and 4 while detecting $63\% - 69\%$ of fault batches, but it does not dominate the classical charts at the batch level, and its joint all-dimension coverage falls to $25\% - 71\%$ on $D=34$ streams even where marginal coverage exceeds $93\%$. Average latency remains under 65 ms per batch. The framework's decisive advantage is therefore memory, not false-alarm control.
 
 ---
 
@@ -134,7 +134,7 @@ Bootstrapping is a powerful non-parametric technique for quantifying uncertainty
   - Mode 3: Chemical Feed Skewness (90/10 Mass Ratio)
   - Mode 4: Operational Throughput Stress (50/50 Mass Ratio, Max Production Rate)
   - Mode 5: Combined Extreme Stress (10/90 Mass Ratio, Max Production Rate)
-- **5.5 Hyperparameter Sensitivity Study (`ooc_threshold_count` $\in \{5, 10, 15\}$):** Demonstration of zero false alarm spam ($\text{Chunk FAR} = 0.00\%$) and immediate detection ($\text{ARL}_1 = 1.00$).
+- **5.5 Hyperparameter Sensitivity Study (`ooc_threshold_count` $\in \{5, 10, 15, 25, 50\}$):** RBULT-SPC is **strongly** sensitive to the batch alarm threshold on TEP Mode 1 (Chunk FAR $100\% \to 94.74\% \to 34.21\% \to 0.00\%$ as $C$ rises from 5 to 50), motivating the scale-free rule $C = \lceil 0.05\,k \rceil$. Also compares PER-FEATURE against TOTAL violation aggregation: equivalent on six of seven datasets, but TOTAL lifts TEP Mode 3 from AUC 0.448 to 0.859.
 - **5.6 Resource & Latency Trade-off Analysis:** $180\times$ RAM savings vs. $<45\text{ ms}$ real-time execution.
 
 ---
@@ -194,3 +194,27 @@ Insert this bridging text at the start of Section 5.1 to guide reviewers seamles
 - **Draft 1 Baseline ($D=1$):** Evaluated single scalar features where the tail percentile parameter was unscaled ($\alpha_{\text{dim}} = \frac{\alpha}{1} = \alpha$).
 - **Draft 2 Extension ($D \ge 1$):** Extends the theoretical formulation to multivariate streaming control limits by introducing Bonferroni FWER tail scaling ($\alpha_{\text{dim}} = \frac{\alpha_{\text{sys}}}{D}$). This constrains system-wide false alarms to $\le \alpha_{\text{sys}} = 5\%$, preventing an explosion of false alarm spam ($1 - (1-0.05)^{34} \approx 82.5\%$).
 
+
+
+---
+
+## Revision Note (4 Sep 2026)
+
+Claims about batch-level false-alarm superiority were withdrawn after the Tier 2 suite
+was re-run under a matched protocol. Two defects had inflated them:
+
+1. **Mismatched alarm semantics.** The baselines summed violations across all $D$
+   dimensions before comparing to $C$, while RBULT-SPC evaluated each dimension
+   separately. At the same $C$ these are very different conditions, and the gap widened
+   with $D$ — so the $D=34$ TEP results were distorted most. All four methods now use
+   the per-feature rule.
+2. **A missing dictionary key.** `exp_tep_sensitivity.py` read `sample_ooc_count` from a
+   result dict that never contained it, scoring RBULT-SPC as having zero violations in
+   every chunk. This alone produced the published "Chunk FAR $= 0.00\%$ at every
+   threshold, $\text{ARL}_0 = 38.00$" (38 being TEP Mode 1's in-control chunk count).
+
+What survives unchanged: $O(D)$ memory ($0.52 - 3.23$ KB, $180\times - 130{,}000\times$
+reduction), coverage parity with full-history bootstrap on low/medium-dimensional
+streams, sub-65 ms latency, and all Tier 1 conclusions.
+
+See `results/TIER2_RERUN_SUMMARY.md` and `paper1_experiment_summary.md`.

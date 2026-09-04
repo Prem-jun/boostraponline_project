@@ -20,7 +20,8 @@ This document outlines the strategic publication roadmap splitting the research 
 1. **Strict $O(D)$ Bounded RAM Storage (3.23 KB):** Eliminates memory overflow bottlenecks on edge IoT streaming devices, achieving $>99.99\%$ RAM reduction over conventional sliding-window bootstrap ($180\times$ RAM savings).
 2. **Z-Score Spike Filtering & Bonferroni FWER Control:** Outlier suppression via Algorithm 4 + FWER tail scaling for high-dimensional sensor streams ($D=34$).
 3. **Multi-Mode Cross-Regime Robustness:** Comprehensive evaluation across 5 real datasets (AI4I 2020, MetroPT-3, Industrial Pump, Water Pump, TEP Modes 1, 3, 4, 5).
-4. **Zero Batch False Alarm Spam ($\text{Chunk FAR} = 0.00\%$):** Achieved via dimension-aware thresholding while retaining immediate anomaly detection response ($\text{ARL}_1 = 1.00$).
+4. **Scale-Free Batch Alarm Threshold ($C = \lceil 0.05\,k \rceil$):** Comparable across chunk sizes and dimensionalities, replacing an absolute count. Under this matched protocol RBULT-SPC reaches zero batch false alarms on TEP Modes 1 and 4 with $63\%-69\%$ fault-batch detection, but does **not** dominate the classical charts at the batch level — the decisive advantage is memory, not false-alarm control.
+5. **Marginal *and* Joint Coverage Reporting:** Joint (all-dimension) coverage falls to $25\%-71\%$ on $D=34$ streams where marginal coverage exceeds $93\%$ — a gap that marginal coverage alone conceals.
 
 ### Key Empirical Result Matrix (TEP Multi-Mode Benchmark Summary)
 

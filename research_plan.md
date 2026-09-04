@@ -108,7 +108,7 @@ The overall process control region is defined as a $D$-dimensional bounding hype
 $$\mathcal{B}_m = \prod_{d=1}^D [L_{m,d}, R_{m,d}] = [L_{m,1}, R_{m,1}] \times [L_{m,2}, R_{m,2}] \times \dots \times [L_{m,D}, R_{m,D}]$$
 
 **Out-of-Control (OOC) Trigger Condition:**
-A chunk is flagged as Out-of-Control if the number of sample violations exceeds the alarm threshold $C_{\text{thresh}}$ (default $C_{\text{thresh}} = 3$):
+A chunk is flagged as Out-of-Control if **any single monitored dimension** accumulates at least $C_{\text{thresh}}$ sample violations. The threshold is set by the scale-free rate rule $C_{\text{thresh}} = \lceil 0.05\,k \rceil$ (previously a fixed count of 3, which is not comparable across chunk sizes: the violations an in-control chunk carries grow with $k$). The same rule is applied to every method compared:
 $$\text{Status}(\mathbf{X}_m) = \begin{cases} \text{In-Control}, & \text{if } \sum_{t=1}^k \mathbb{I}(\mathbf{x}_t \notin \mathcal{B}_m) < C_{\text{thresh}} \\ \text{Out-of-Control (Alarm)}, & \text{if } \sum_{t=1}^k \mathbb{I}(\mathbf{x}_t \notin \mathcal{B}_m) \ge C_{\text{thresh}} \end{cases}$$
 
 ### 3.5 Family-Wise Error Rate (FWER) Adjustment
@@ -241,11 +241,11 @@ Below are the empirical benchmark results executed across 10,000 samples (100 ch
 | -------------------------------- | :---------------------: | :-----------------: | :-----------------------------: | :----------------: | ------------------------------------------------------------------------ |
 | **Overall Coverage Rate (%)** ⭐  |         69.45%          |       62.57%        |             98.81%              |     **98.40%**     | **Non-Gaussian Adaptive Coverage** (Matches theoretical 99% target)      |
 | **Sample-level FAR (%)** ⭐       |         30.55%          |       37.43%        |              1.19%              |     **1.60%**      | **Controlled at 1.60%** (Matches Bonferroni $\alpha_{\text{dim}} = 1\%$) |
-| **Chunk-level FAR (%)**          |         100.00%         |       100.00%       |              0.00%              |     **66.67%**     | Significant reduction in batch false alarm rate                          |
+| **Chunk-level FAR (%)**          |         100.00%         |       100.00%       |            **0.00%**            |       66.67%       | Bootstrap baseline is best here; RBULT-SPC does **not** lead on this metric |
 | **ARL0 (In-Control Run Length)** |          0.00           |        0.00         |              6.00               |      **0.50**      | Higher in-control boundary stability                                     |
-| **ARL1 (Detection Delay)** ⭐     |          1.02           |        1.00         |              2.29               |      **1.14**      | **Fast Failure Response** (2x faster detection than Full-History)        |
+| **ARL1 (Detection Delay)**       |          1.02           |        1.00         |              2.60               |        1.77        | Read with detection count; ARL1 near 1.0 can also mean *never detected*   |
 | **Peak Memory Footprint (KB)** ⭐ |         0.23 KB         |       0.45 KB       |            413.78 KB            |    **0.52 KB**     | **Constant $O(D)$ RAM** (>99.88% memory reduction vs Full-History)       |
-| **Avg Latency per Chunk (ms)**   |        0.0561 ms        |      0.3189 ms      |            1.7944 ms            |   **69.9797 ms**   | **Real-time Low Latency** (< 70 ms per 100-sample batch)                 |
+| **Avg Latency per Chunk (ms)**   |        0.0230 ms        |      0.3145 ms      |            1.5489 ms            |   **60.2070 ms**   | **Real-time Low Latency** (< 65 ms per 100-sample batch)                 |
 The classical Shewhart chart sets static control limits based on the **Gaussian Normal Distribution ($\mathcal{N}(\mu, \sigma^2)$) assumption** using the famous **3-Sigma ($\pm 3\sigma$) rule**:
 
 $$\text{UCL} = \mu + 3\sigma$$ $$\text{Center Line (CL)} = \mu$$ $$\text{LCL} = \mu - 3\sigma$$
@@ -269,12 +269,12 @@ Below are the empirical benchmark results executed across 1,516,948 samples (1,5
 | -------------------------------- | :---------------------: | :-----------------: | :-----------------------------: | :----------------: | -------------------------------------------------------------------------- |
 | **Overall Coverage Rate (%)** ⭐  |         77.68%          |       51.01%        |             98.76%              |     **98.90%**     | **High Interval Estimation Accuracy** (Matches 99.0% gold standard)        |
 | **Sample-level FAR (%)** ⭐       |         22.32%          |       48.99%        |              1.24%              |     **1.10%**      | **Controlled at 1.10%** (Matches Bonferroni $\alpha_{\text{dim}} = 1.0\%$) |
-| **Chunk-level FAR (%)**          |         99.80%          |       100.00%       |             96.83%              |     **95.61%**     | Lowest batch false alarm rate among non-parametric methods                 |
-| **ARL0 (In-Control Run Length)** |          0.00           |        0.00         |              0.03               |      **0.05**      | Dynamic boundary convergence                                               |
-| **ARL1 (Detection Delay)**       |          1.00           |        1.00         |              1.40               |      **3.12**      | **Robust Detection Delay** (Avoids False Alarm Spam)                       |
+| **Chunk-level FAR (%)**          |         99.46%          |       100.00%       |            **8.23%**            |       25.24%       | Bootstrap baseline leads; RBULT-SPC is second among non-parametric methods |
+| **ARL0 (In-Control Run Length)** |          0.01           |        0.00         |            **11.06**            |        2.95        | Bootstrap baseline is more stable in control                               |
+| **ARL1 (Detection Delay)**       |          1.00           |        1.00         |              1.55               |        5.25        | Read with detection count; ARL1 near 1.0 can also mean *never detected*    |
 
 | **Peak Memory Footprint (KB)** ⭐ |         0.35 KB         |       0.70 KB       |     90,932.70 KB (~90.9 MB)     |    **0.70 KB**     | **>99.999% RAM Reduction** (Strict $O(D)$ constant memory)                 |
-| **Avg Latency per Chunk (ms)** ⭐ |        0.2635 ms        |      3.1581 ms      |           238.7620 ms           |   **8.3219 ms**    | **28.7x Speedup vs Full-History** (Amortized real-time stream execution)   |
+| **Avg Latency per Chunk (ms)** ⭐ |        0.2152 ms        |      1.7616 ms      |           155.1839 ms           |   **5.2432 ms**    | **28.7x Speedup vs Full-History** (Amortized real-time stream execution)   |
 
 
 
@@ -286,11 +286,11 @@ Below are the empirical benchmark results executed across 1,516,948 samples (1,5
 | -------------------------------- | :---------------------: | :-----------------: | :-----------------------------: | :----------------: | -------------------------------------------------------------------------- |
 | **Overall Coverage Rate (%)** ⭐  |         77.68%          |       51.01%        |             98.76%              |     **98.90%**     | **High Interval Estimation Accuracy** (Matches 99.0% gold standard)        |
 | **Sample-level FAR (%)** ⭐       |         22.32%          |       48.99%        |              1.24%              |     **1.10%**      | **Controlled at 1.10%** (Matches Bonferroni $\alpha_{\text{dim}} = 1.0\%$) |
-| **Chunk-level FAR (%)**          |         99.80%          |       100.00%       |             96.69%              |     **95.41%**     | **Lowest batch false alarm rate** among all non-parametric methods         |
-| **ARL0 (In-Control Run Length)** |          0.00           |        0.00         |              0.03               |      **0.05**      | Dynamic boundary convergence stability                                     |
-| **ARL1 (Detection Delay)** ⭐     |          1.00           |        1.00         |              1.40               |      **3.12**      | **Robust Detection Delay** (Avoids False Alarm Spam)                       |
+| **Chunk-level FAR (%)**          |         99.46%          |       100.00%       |            **8.23%**            |       25.24%       | Bootstrap baseline leads; RBULT-SPC is second among non-parametric methods |
+| **ARL0 (In-Control Run Length)** |          0.01           |        0.00         |            **11.06**            |        2.95        | Bootstrap baseline is more stable in control                               |
+| **ARL1 (Detection Delay)**       |          1.00           |        1.00         |              1.55               |        5.25        | Read with detection count; ARL1 near 1.0 can also mean *never detected*    |
 | **Peak Memory Footprint (KB)** ⭐ |         0.35 KB         |       0.70 KB       |     90,932.70 KB (~90.9 MB)     |    **0.70 KB**     | **>99.999% RAM Reduction** (Strict $O(D)$ constant memory)                 |
-| **Avg Latency per Chunk (ms)** ⭐ |        0.1132 ms        |      1.3185 ms      |           148.9073 ms           |   **5.3139 ms**    | **28x Speedup vs Full-History** (Amortized real-time stream execution)     |
+| **Avg Latency per Chunk (ms)** ⭐ |        0.2152 ms        |      1.7616 ms      |           155.1839 ms           |   **5.2432 ms**    | **28x Speedup vs Full-History** (Amortized real-time stream execution)     |
 
 ---
 
@@ -313,7 +313,7 @@ Below are the empirical benchmark results executed across 1,516,948 samples (1,5
 
 5. **Scientific Rationale on MetroPT-3 Chunk-level FAR & Proportion-based Thresholding:**
    * **Large-Chunk Statistical Ratio:** The Chunk-level FAR of 95.41% on MetroPT-3 stems from the ultra-large chunk capacity ($k = 1,000$ samples across $D = 7$ features, yielding **7,000 evaluated points per batch**). Given the sample-level FAR of 1.10%, an average chunk contains $\approx 77$ out-of-bound sample points ($7,000 \times 1.10\% = 77$). An absolute threshold of $C_{\text{thresh}} = 7$ represents merely **0.1% of the total batch points**.
-   * **Superiority over Baselines:** Despite this high sensitivity, **RBULT-SPC achieves the lowest Chunk FAR among all non-parametric baselines** (Full-History Bootstrap: 96.69%, Shewhart: 99.80%, EWMA: 100.00%).
+   * **Correction — no superiority at batch level:** Under a matched per-dimension alarm rule the Full-History Bootstrap achieves the lowest Chunk FAR (8.23%), ahead of RBULT-SPC (25.24%); Shewhart 99.46% and EWMA 100.00% remain unusable. The earlier claim of RBULT-SPC superiority was an artefact of the baselines aggregating violations across all $D$ dimensions while RBULT-SPC evaluated each dimension separately.
    * **Deployment Recommendation:** For large-chunk streaming deployments ($k \ge 1,000$), adopting a **proportion-based threshold ($C_{\text{prop}} \ge 2.0\%$ of batch points, i.e., $\ge 140$ points)** effectively suppresses batch false alarm rates to $\approx 0.00\%$ while maintaining zero-delay failure detection.
 ---
 
@@ -437,25 +437,52 @@ Below are the empirical benchmark results executed across 1,740,000 samples (Mod
 * **Combined Extreme Stress Robustness (Mode 5):** Under combined 10/90 mass ratio skewness AND maximum production rate, EWMA FAR spikes to **28.62%** and Shewhart FAR spikes to **14.85%**. Proposed **RBULT-SPC** achieves **97.79%** coverage and **2.21%** FAR, maintaining perfect alignment with theoretical Bonferroni bounds!
 * **Constant Bounded Memory Footprint:** Across all four evaluated operating regimes ($D=34$), RBULT-SPC maintains a strictly constant memory footprint of **3.23 KB** ($O(D)$ bounded storage), compared to Sliding-Window Bootstrap's **582.87 KB** ($180\times$ higher RAM consumption).
 
-#### 5. Hyperparameter Sensitivity Study (`ooc_threshold_count` $\in \{5, 10, 15\}$ on TEP Mode 1):
+#### 5. Hyperparameter Sensitivity Study (`ooc_threshold_count` $\in \{5, 10, 15, 25, 50\}$ on TEP Mode 1):
 
-| Threshold (`ooc_threshold_count`) | Method | Overall Coverage (%) | Sample FAR (%) | Chunk FAR (%) ⭐ | ARL0 | ARL1 (Delay) ⭐ | Peak RAM (KB) | Latency (ms) |
+> **Corrected.** The previously published version of this study reported RBULT-SPC at
+> $\text{Chunk FAR} = 0.00\%$, $\text{ARL}_0 = 38.00$ for *every* threshold. That was a defect,
+> not a measurement: `exp_tep_sensitivity.py` read `sample_ooc_count` from a result dictionary
+> that never contained that key, so RBULT-SPC was scored as having zero violations in every
+> chunk. The value $38.00$ is exactly TEP Mode 1's in-control chunk count — what `_compute_arl0`
+> returns when no alarm ever fires. Corrected numbers below (violations aggregated across
+> dimensions, as this study does for all four methods):
+
+| Threshold (`ooc_threshold_count`) | Method | Overall Coverage (%) | Sample FAR (%) | Chunk FAR (%) | ARL0 | ARL1 (Delay) | Peak RAM (KB) | Latency (ms) |
 |:---:|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **5** | Baseline Shewhart Chart | 91.19% | 8.81% | 100.00% | 0.00 | 1.00 | 1.15 KB | 2.14 ms |
-| **5** | Baseline EWMA Chart | 81.79% | 18.21% | 100.00% | 0.00 | 1.00 | 2.30 KB | 13.68 ms |
-| **5** | Baseline Sliding-Window Bootstrap ($W=2k$) | 99.02% | 0.98% | 100.00% | 0.00 | 1.00 | 582.87 KB | 14.15 ms |
-| **5** ⭐ | **Proposed RBULT-SPC** | **96.74%** | **3.26%** | **0.00%** 🎯 | **38.00** | **1.00** ⚡ | **3.23 KB** | **35.10 ms** |
-| **10** | Baseline Shewhart Chart | 91.19% | 8.81% | 100.00% | 0.00 | 1.00 | 1.15 KB | 2.14 ms |
-| **10** | Baseline EWMA Chart | 81.79% | 18.21% | 100.00% | 0.00 | 1.00 | 2.30 KB | 13.68 ms |
-| **10** | Baseline Sliding-Window Bootstrap ($W=2k$) | 99.02% | 0.98% | 100.00% | 0.00 | 1.00 | 582.87 KB | 14.15 ms |
-| **10** ⭐ | **Proposed RBULT-SPC** | **96.74%** | **3.26%** | **0.00%** 🎯 | **38.00** | **1.00** ⚡ | **3.23 KB** | **35.10 ms** |
-| **15** | Baseline Shewhart Chart | 91.19% | 8.81% | 92.11% | 0.09 | 1.02 | 1.15 KB | 2.14 ms |
-| **15** | Baseline EWMA Chart | 81.79% | 18.21% | 100.00% | 0.00 | 1.00 | 2.30 KB | 13.68 ms |
-| **15** | Baseline Sliding-Window Bootstrap ($W=2k$) | 99.02% | 0.98% | 94.74% | 0.06 | 1.02 | 582.87 KB | 14.15 ms |
-| **15** ⭐ | **Proposed RBULT-SPC** | **96.74%** | **3.26%** | **0.00%** 🎯 | **38.00** | **1.00** ⚡ | **3.23 KB** | **35.10 ms** |
+| **5** | Baseline Shewhart Chart | 91.19% | 8.81% | 100.00% | 0.00 | 1.00 | 1.15 KB | 0.91 ms |
+| **5** | Baseline EWMA Chart | 81.79% | 18.21% | 100.00% | 0.00 | 1.00 | 2.30 KB | 5.65 ms |
+| **5** | Baseline Sliding-Window Bootstrap ($W=2k$) | 99.02% | 0.98% | 100.00% | 0.00 | 1.00 | 582.87 KB | 6.51 ms |
+| **5** | **Proposed RBULT-SPC** | **96.73%** | **3.27%** | **100.00%** | **0.00** | **1.00** | **3.23 KB** | **14.26 ms** |
+| **10** | Baseline Shewhart Chart | 91.19% | 8.81% | 100.00% | 0.00 | 1.00 | 1.15 KB | 0.91 ms |
+| **10** | Baseline EWMA Chart | 81.79% | 18.21% | 100.00% | 0.00 | 1.00 | 2.30 KB | 5.65 ms |
+| **10** | Baseline Sliding-Window Bootstrap ($W=2k$) | 99.02% | 0.98% | 100.00% | 0.00 | 1.00 | 582.87 KB | 6.51 ms |
+| **10** | **Proposed RBULT-SPC** | **96.73%** | **3.27%** | **100.00%** | **0.00** | **1.00** | **3.23 KB** | **14.26 ms** |
+| **15** | Baseline Shewhart Chart | 91.19% | 8.81% | 92.11% | 0.09 | 1.02 | 1.15 KB | 0.91 ms |
+| **15** | Baseline EWMA Chart | 81.79% | 18.21% | 100.00% | 0.00 | 1.00 | 2.30 KB | 5.65 ms |
+| **15** | Baseline Sliding-Window Bootstrap ($W=2k$) | 99.02% | 0.98% | 94.74% | 0.06 | 1.02 | 582.87 KB | 6.51 ms |
+| **15** | **Proposed RBULT-SPC** | **96.73%** | **3.27%** | **94.74%** | **0.06** | **1.01** | **3.23 KB** | **14.26 ms** |
+| **25** | Baseline Shewhart Chart | 91.19% | 8.81% | 55.26% | 0.81 | 1.09 | 1.15 KB | 0.91 ms |
+| **25** | Baseline EWMA Chart | 81.79% | 18.21% | 100.00% | 0.00 | 1.00 | 2.30 KB | 5.65 ms |
+| **25** | Baseline Sliding-Window Bootstrap ($W=2k$) | 99.02% | 0.98% | 76.32% | 0.30 | 1.06 | 582.87 KB | 6.51 ms |
+| **25** | **Proposed RBULT-SPC** | **96.73%** | **3.27%** | **34.21%** | **1.79** | **1.18** | **3.23 KB** | **14.26 ms** |
+| **50** | Baseline Shewhart Chart | 91.19% | 8.81% | 10.53% | 6.80 | 1.21 | 1.15 KB | 0.91 ms |
+| **50** | Baseline EWMA Chart | 81.79% | 18.21% | 100.00% | 0.00 | 1.00 | 2.30 KB | 5.65 ms |
+| **50** | Baseline Sliding-Window Bootstrap ($W=2k$) | 99.02% | 0.98% | 73.68% | 0.34 | 1.16 | 582.87 KB | 6.51 ms |
+| **50** | **Proposed RBULT-SPC** | **96.73%** | **3.27%** | **0.00%** | **38.00** | **1.39** | **3.23 KB** | **14.26 ms** |
 
-* **Zero Batch False Alarm Spam:** Increasing `ooc_threshold_count` to 5, 10, or 15 points (out of 17,000 points per chunk) eliminates batch false alarms for **RBULT-SPC** (**Chunk FAR = 0.00%**, $\text{ARL}_0 = 38.00$), while maintaining an immediate failure detection response delay (**$\text{ARL}_1 = 1.00$**).
-* **Baseline Vulnerability:** EWMA remains stuck at **100.00% Chunk FAR** even at threshold 15, while Shewhart and Sliding Bootstrap still suffer severe false alarm spam (**92.11% – 94.74% Chunk FAR**).
+* **RBULT-SPC is strongly sensitive to this hyperparameter,** not insensitive as previously
+  claimed: Chunk FAR falls $100\% \to 94.74\% \to 34.21\% \to 0.00\%$ as the threshold rises
+  from 5 to 50. Thresholds of 5-15 sit *below* the violation count an in-control chunk already
+  carries (TEP Mode 1 averages $\approx 16$ violations per feature per chunk), so no alarm
+  suppression is possible there. This motivates the scale-free rule
+  $C_{\text{thresh}} = \lceil 0.05\,k \rceil$, which gives $C = 25$ at $k = 500$.
+* **Baseline Vulnerability:** EWMA remains stuck at 100.00% Chunk FAR at every threshold tested.
+* **$\text{ARL}_0 = 38.00$ is censored, not estimated.** It equals the total in-control chunk
+  count and means "no false alarm within the observation window" — a lower bound that cannot be
+  compared numerically against a baseline's $\text{ARL}_0$ of 0.06.
+* **$\text{Chunk FAR} = 0.00\%$ is not measurable at this sample size.** With only 38 in-control
+  chunks, an observed $0/38$ supports "below $9.25\%$ at 95% confidence" (Clopper-Pearson),
+  not "$= 0\%$".
 
 #### 6. Latency & Computational Complexity Trade-off Analysis (RBULT-SPC vs Sliding-Window Bootstrap):
 
