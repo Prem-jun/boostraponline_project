@@ -1,5 +1,5 @@
-method,total_chunks,total_samples,avg_latency_ms,peak_memory_kb,total_ooc_chunks,ooc_chunk_rate,overall_coverage_pct,sample_far_pct,false_alarm_rate,arl_0,arl_1,total_time_sec,fwer_adjusted_alpha_dim,feature_coverage
-Baseline Shewhart Chart,100,10000,0.014152060000078848,0.2265625,98,0.98,69.448,30.552000000000007,1.0,0.0,1.0217391304347827,0.002613875000001542,,
-Baseline EWMA Chart,100,10000,0.19652046000018686,0.453125,100,1.0,62.57,37.43,1.0,0.0,1.0,0.020751083000000392,,
-Baseline Full-History Bootstrap,100,10000,0.9298958100000476,413.78125,11,0.11,98.812,1.1880000000000024,0.0,6.0,4.7272727272727275,0.140115208000001,,
-Proposed RBULT-SPC,100,10000,35.99805832000005,0.515625,7,0.07,98.402,1.597999999999999,0.0,6.0,5.571428571428571,3.602109624999999,0.01,"{'coverage_Air temperature [K]': np.float64(1.0), 'coverage_Process temperature [K]': np.float64(1.0), 'coverage_Rotational speed [rpm]': np.float64(0.9576), 'coverage_Torque [Nm]': np.float64(0.9744), 'coverage_Tool wear Rate [min diff]': np.float64(0.9881)}"
+method,total_chunks,total_samples,avg_latency_ms,peak_memory_kb,total_ooc_chunks,ooc_chunk_rate,overall_coverage_pct,sample_far_pct,false_alarm_rate,arl_0,arl_1,total_time_sec,fwer_adjusted_alpha_dim,chunk_alarm_rule,chunk_alarm_rate,feature_coverage,joint_coverage_pct,joint_far_pct
+Baseline Shewhart Chart,100,10000,0.02296168999999182,0.2265625,98,0.98,69.448,30.552000000000007,1.0,0.0,1.0217391304347827,0.004310916000000553,,,,,,
+Baseline EWMA Chart,100,10000,0.3145294900000195,0.453125,100,1.0,62.57,37.43,1.0,0.0,1.0,0.03331700000000026,,,,,,
+Baseline Full-History Bootstrap,100,10000,1.5488632900000885,413.78125,20,0.2,98.812,1.1880000000000024,0.0,6.0,2.6,0.15741408299999993,,,,,,
+Proposed RBULT-SPC,100,10000,60.20704002,0.515625,52,0.52,98.402,1.597999999999999,0.6666666666666666,0.5,1.7708333333333333,6.024022041,0.01,rate_0.05k,0.05,"{'coverage_Air temperature [K]': np.float64(1.0), 'coverage_Process temperature [K]': np.float64(1.0), 'coverage_Rotational speed [rpm]': np.float64(0.9576), 'coverage_Torque [Nm]': np.float64(0.9744), 'coverage_Tool wear Rate [min diff]': np.float64(0.9881)}",94.23,5.769999999999996

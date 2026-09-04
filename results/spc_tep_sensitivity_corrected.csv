@@ -1,0 +1,13 @@
+c_thresh,method,chunk_far_pct,arl_0,arl_1
+5,Baseline Shewhart Chart,100.0,0.0,1.0
+5,Baseline EWMA Chart,100.0,0.0,1.0
+5,Baseline Sliding-Window Bootstrap (W=2000),100.0,0.0,1.0
+5,Proposed RBULT-SPC,100.0,0.0,1.0
+10,Baseline Shewhart Chart,100.0,0.0,1.003206062372486
+10,Baseline EWMA Chart,100.0,0.0,1.0
+10,Baseline Sliding-Window Bootstrap (W=2000),100.0,0.0,1.0037911927675707
+10,Proposed RBULT-SPC,100.0,0.0,1.000290613193839
+15,Baseline Shewhart Chart,92.10526315789474,0.08571428571428572,1.0219845513963162
+15,Baseline EWMA Chart,100.0,0.0,1.0
+15,Baseline Sliding-Window Bootstrap (W=2000),94.73684210526315,0.05555555555555555,1.0183594906721942
+15,Proposed RBULT-SPC,94.73684210526315,0.05555555555555555,1.0082063305978899

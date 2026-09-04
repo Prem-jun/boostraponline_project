@@ -1,5 +1,5 @@
-method,total_chunks,total_samples,avg_latency_ms,peak_memory_kb,total_ooc_chunks,ooc_chunk_rate,overall_coverage_pct,sample_far_pct,false_alarm_rate,arl_0,arl_1,total_time_sec,fwer_adjusted_alpha_dim,feature_coverage
-Baseline Shewhart Chart,100,20000,0.12274542000000999,0.2265625,0,0.0,100.0,0.0,0.0,0.0,1.0,0.01424962499999971,,
-Baseline EWMA Chart,100,20000,0.36124791000001544,0.453125,8,0.08,99.912,0.08799999999999386,0.0,0.0,12.25,0.03801566699999981,,
-Baseline Full-History Bootstrap,100,20000,3.011845850000023,826.90625,100,1.0,98.955,1.0450000000000017,0.0,0.0,1.0,0.30378008400000045,,
-Proposed RBULT-SPC,100,20000,17.185497119999965,0.515625,70,0.7,99.399,0.6009999999999991,0.0,0.0,1.4285714285714286,1.7212986249999997,0.01,"{'coverage_Temperature': np.float64(0.9947), 'coverage_Vibration': np.float64(0.99505), 'coverage_Pressure': np.float64(0.99525), 'coverage_Flow_Rate': np.float64(0.9983), 'coverage_RPM': np.float64(0.98665)}"
+method,total_chunks,total_samples,avg_latency_ms,peak_memory_kb,total_ooc_chunks,ooc_chunk_rate,overall_coverage_pct,sample_far_pct,false_alarm_rate,arl_0,arl_1,total_time_sec,fwer_adjusted_alpha_dim,chunk_alarm_rule,chunk_alarm_rate,feature_coverage,joint_coverage_pct,joint_far_pct
+Baseline Shewhart Chart,100,20000,0.07489203000000444,0.2265625,0,0.0,100.0,0.0,0.0,0.0,1.0,0.008654583999999854,,,,,,
+Baseline EWMA Chart,100,20000,0.23044920999999885,0.453125,0,0.0,99.912,0.08799999999999386,0.0,0.0,1.0,0.024225166999999992,,,,,,
+Baseline Full-History Bootstrap,100,20000,1.8953591600000141,826.90625,0,0.0,98.955,1.0450000000000017,0.0,0.0,1.0,0.19088683299999998,,,,,,
+Proposed RBULT-SPC,100,20000,10.993498770000006,0.515625,0,0.0,99.402,0.597999999999999,0.0,0.0,1.0,1.101090292,0.01,rate_0.05k,0.05,"{'coverage_Temperature': np.float64(0.99475), 'coverage_Vibration': np.float64(0.99495), 'coverage_Pressure': np.float64(0.99525), 'coverage_Flow_Rate': np.float64(0.9982), 'coverage_RPM': np.float64(0.98695)}",97.03,2.969999999999999

@@ -6,6 +6,6 @@
 | **Sample-level FAR (%)** | 0.00% | 0.09% | 1.05% | **0.60%** | Controlled near Bonferroni $\alpha_{dim}$ |
 | **Chunk-level FAR (%)** | 0.00% | 0.00% | 0.00% | **0.00%** | Low Batch False Alarm Rate |
 | **ARL0 (In-Control Run Length)** | 0.00 | 0.00 | 0.00 | **0.00** | Boundary Stability |
-| **ARL1 (Detection Delay)** | 1.00 | 12.25 | 1.00 | **1.43** | Fast Failure Response |
+| **ARL1 (Detection Delay)** | 1.00 | 1.00 | 1.00 | **1.00** | Fast Failure Response |
 | **Peak Memory Footprint (KB)** | 0.23 KB | 0.45 KB | 826.91 KB | **0.52 KB** | **Constant $O(D)$ RAM Footprint** |
-| **Avg Latency per Chunk (ms)** | 0.1227 ms | 0.3612 ms | 3.0118 ms | **17.1855 ms** | Real-time Streaming (< 70 ms) |
+| **Avg Latency per Chunk (ms)** | 0.0749 ms | 0.2304 ms | 1.8954 ms | **10.9935 ms** | Real-time Streaming (< 70 ms) |
