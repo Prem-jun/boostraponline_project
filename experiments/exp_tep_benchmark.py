@@ -22,11 +22,16 @@ import sys
 import time
 import pickle
 from collections import deque
+from typing import Optional
+
 import numpy as np
 import pandas as pd
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from online_bootstrap.spc_rbult import RBULTControlChart
+
+# Default chunk alarm threshold as a fraction of chunk size: C = ceil(q * k)
+CHUNK_ALARM_RATE = 0.05
 
 
 def load_and_preprocess_tep_data(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_Mode1.pickle') -> pd.DataFrame:
@@ -66,7 +71,7 @@ def run_tep_spc_benchmark(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_Mode1.
                           chunk_size: int = 100,
                           window_size: int = 2000,
                           outlier_filter: bool = True,
-                          ooc_threshold_count: int = 3) -> dict:
+                          ooc_threshold_count: Optional[int] = None) -> dict:
     """Run streaming SPC benchmark comparing 4 methods on TEP dataset.
 
     Args:
@@ -86,6 +91,12 @@ def run_tep_spc_benchmark(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_Mode1.
 
     label_col = 'failure_label'
     num_chunks = int(np.ceil(len(df) / chunk_size))
+
+    # Chunk alarm threshold: scale-free rate rule C = ceil(CHUNK_ALARM_RATE * k).
+    # An absolute count is not scale-free -- the number of violations an in-control
+    # chunk carries grows with k. Applied to every method for a fair comparison.
+    if ooc_threshold_count is None:
+        ooc_threshold_count = max(1, int(np.ceil(CHUNK_ALARM_RATE * chunk_size)))
 
     print(f"\nMonitored features ({len(features)}): D = {len(features)} channels")
     print(f"Streaming chunk size: {chunk_size} samples per chunk")
@@ -146,14 +157,16 @@ def run_tep_spc_benchmark(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_Mode1.
         chunk_df = df.iloc[i * chunk_size : (i + 1) * chunk_size]
         t_start = time.perf_counter()
 
-        ooc_cnt_chunk = 0
+        feat_ooc_counts = []
         for feat in features:
             vals = chunk_df[feat].values
             lcl, ucl = shewhart_bounds[feat]
-            ooc_cnt_chunk += np.sum((vals < lcl) | (vals > ucl))
+            feat_ooc_counts.append(np.sum((vals < lcl) | (vals > ucl)))
             shewhart_covered += np.sum((vals >= lcl) & (vals <= ucl))
 
-        any_ooc = (ooc_cnt_chunk >= ooc_threshold_count)
+        # ANY single feature reaching the threshold flags the chunk, matching
+        # RBULTControlChart.update_chunk and the Bonferroni per-dimension design.
+        any_ooc = any(c >= ooc_threshold_count for c in feat_ooc_counts)
         t_latency = (time.perf_counter() - t_start) * 1000.0
         shewhart_history.append({'any_ooc': any_ooc, 'latency_ms': t_latency})
 
@@ -200,19 +213,23 @@ def run_tep_spc_benchmark(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_Mode1.
     for i in range(num_chunks):
         chunk_df = df.iloc[i * chunk_size : (i + 1) * chunk_size]
         t_start = time.perf_counter()
-        ooc_cnt_chunk = 0
+        feat_ooc_counts = []
 
         for feat in features:
             vals = chunk_df[feat].values
             lcl, ucl = ewma_bounds[feat]
+            n_viol_feat = 0
             for v in vals:
                 ewma_stats[feat] = lam * v + (1.0 - lam) * ewma_stats[feat]
                 if ewma_stats[feat] < lcl or ewma_stats[feat] > ucl:
-                    ooc_cnt_chunk += 1
+                    n_viol_feat += 1
                 else:
                     ewma_covered += 1
+            feat_ooc_counts.append(n_viol_feat)
 
-        any_ooc = (ooc_cnt_chunk >= ooc_threshold_count)
+        # ANY single feature reaching the threshold flags the chunk, matching
+        # RBULTControlChart.update_chunk and the Bonferroni per-dimension design.
+        any_ooc = any(c >= ooc_threshold_count for c in feat_ooc_counts)
         t_latency = (time.perf_counter() - t_start) * 1000.0
         ewma_history.append({'any_ooc': any_ooc, 'latency_ms': t_latency})
 
@@ -249,7 +266,7 @@ def run_tep_spc_benchmark(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_Mode1.
     for i in range(num_chunks):
         chunk_df = df.iloc[i * chunk_size : (i + 1) * chunk_size]
         t_start = time.perf_counter()
-        ooc_cnt_chunk = 0
+        feat_ooc_counts = []
 
         for feat in features:
             history_buffer[feat].extend(chunk_df[feat].tolist())
@@ -262,10 +279,12 @@ def run_tep_spc_benchmark(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_Mode1.
             hist_vals = np.array(history_buffer[feat])
             lcl, ucl = np.percentile(hist_vals, [0.5, 99.5])
             vals = chunk_df[feat].values
-            ooc_cnt_chunk += np.sum((vals < lcl) | (vals > ucl))
+            feat_ooc_counts.append(np.sum((vals < lcl) | (vals > ucl)))
             conv_covered += np.sum((vals >= lcl) & (vals <= ucl))
 
-        any_ooc = (ooc_cnt_chunk >= ooc_threshold_count)
+        # ANY single feature reaching the threshold flags the chunk, matching
+        # RBULTControlChart.update_chunk and the Bonferroni per-dimension design.
+        any_ooc = any(c >= ooc_threshold_count for c in feat_ooc_counts)
         t_latency = (time.perf_counter() - t_start) * 1000.0
         conv_history.append({'any_ooc': any_ooc, 'latency_ms': t_latency})
 

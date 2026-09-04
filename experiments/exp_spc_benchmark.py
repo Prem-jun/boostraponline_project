@@ -30,17 +30,22 @@ import os
 import sys
 import time
 import copy
+from typing import Optional
+
 import numpy as np
 import pandas as pd
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from online_bootstrap.spc_rbult import RBULTControlChart
 
+# Default chunk alarm threshold as a fraction of chunk size: C = ceil(q * k)
+CHUNK_ALARM_RATE = 0.05
+
 
 def run_spc_benchmark(csv_path: str = 'ai4i2020_Predictive Maintenance Dataset.csv',
                       chunk_size: int = 100,
                       outlier_filter: bool = True,
-                      ooc_threshold_count: int = 3) -> dict:
+                      ooc_threshold_count: Optional[int] = None) -> dict:
     """Run real-time streaming SPC benchmark comparing 4 methods on AI4I dataset.
 
     Args:
@@ -69,6 +74,12 @@ def run_spc_benchmark(csv_path: str = 'ai4i2020_Predictive Maintenance Dataset.c
 
     label_col = 'Machine failure'
     num_chunks = int(np.ceil(len(df) / chunk_size))
+
+    # Chunk alarm threshold: scale-free rate rule C = ceil(CHUNK_ALARM_RATE * k).
+    # An absolute count is not scale-free -- the number of violations an in-control
+    # chunk carries grows with k. Applied to every method for a fair comparison.
+    if ooc_threshold_count is None:
+        ooc_threshold_count = max(1, int(np.ceil(CHUNK_ALARM_RATE * chunk_size)))
 
     print(f"Total samples: {len(df)}")
     print(f"Monitored features ({len(features)}): {features}")
