@@ -8,4 +8,4 @@
 | **ARL0 (In-Control Run Length)** | 0.01 | 0.00 | 11.06 | **2.95** | Boundary Stability |
 | **ARL1 (Detection Delay)** | 1.00 | 1.00 | 1.55 | **5.25** | Fast Failure Response |
 | **Peak Memory Footprint (KB)** | 0.35 KB | 0.70 KB | 90932.70 KB | **0.70 KB** | **Constant $O(D)$ RAM Footprint** |
-| **Avg Latency per Chunk (ms)** | 0.1170 ms | 1.3541 ms | 151.3169 ms | **5.7313 ms** | Low Latency Stream Processing |
+| **Avg Latency per Chunk (ms)** | 0.1159 ms | 1.3126 ms | 149.2548 ms | **5.2188 ms** | Low Latency Stream Processing |

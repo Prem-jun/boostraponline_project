@@ -94,6 +94,48 @@ On TEP, RBULT flags 30–75% of observations as out-of-control on a joint basis.
 per-dimension false alarm rate there is 15–43x the Bonferroni target, which is the
 root cause of both the joint-coverage collapse and the chunk-level behaviour.
 
+## One-step-ahead (prequential) coverage — reported alongside the in-sample figure
+
+`compute_spc_metrics()` scores coverage **in-sample**: it applies the FINAL limits
+retrospectively to the whole stream. Since RBULT limits only widen, the final interval is the
+widest the chart ever held, and early observations are judged by limits fitted to data that
+had not yet arrived. The per-chunk violation counts are in-sample too — a chunk widens the
+limits first, then is measured against the widened ones.
+
+A deployed control chart cannot work that way: limits must exist before the data they judge.
+`compute_prequential_metrics()` now scores every chunk against the limits carried in from
+chunks 1..m-1, before that chunk is allowed to update them (each dimension's first chunk is
+excluded from the denominator). Tier 1 has always reported both *In-Sample Adaptation* and
+*One-Step-Ahead Pre-Sequential*; Tier 2 now gives the same pair.
+
+| Dataset | `width_ratio_local` | Coverage in-sample | **one-step-ahead** | gap | Joint in-sample | **joint one-step-ahead** | gap |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Industrial Pump | **1.00** | 99.417% | 99.411% | **0.006** | 97.10% | 97.07% | **0.03** |
+| TEP Mode 3 | 1.77 | 93.705% | 93.525% | 0.180 | 25.17% | 24.42% | 0.76 |
+| TEP Mode 1 | 2.07 | 96.736% | 96.540% | 0.196 | 61.40% | 60.71% | 0.69 |
+| TEP Mode 4 | 2.67 | 96.670% | 95.918% | 0.753 | 65.27% | 63.36% | 1.91 |
+| MetroPT-3 | 1.55 | 98.895% | 98.109% | 0.787 | 94.89% | 91.30% | 3.58 |
+| TEP Mode 5 | 8.19 | 97.789% | 96.865% | 0.924 | 70.45% | 65.80% | 4.66 |
+| Water Pump | **8.51** | **99.955%** | 97.808% | 2.146 | **99.55%** | **87.68%** | **11.87** |
+| AI4I 2020 | 4.55 | 97.792% | 95.495% | 2.297 | 91.34% | 82.47% | 8.87 |
+
+**The gap is a direct function of how much the interval had to inflate.** Correlation between
+`width_ratio_local` and the marginal gap is **0.686**, and with the joint gap **0.782**.
+Industrial Pump, whose rows are i.i.d. and whose interval already matches local variation
+(ratio 1.00), loses **0.006 points** — the two protocols are indistinguishable there. Water
+Pump, whose interval is 8.5x wider than local variation, loses **11.87 points of joint
+coverage** (99.55% → 87.68%). The same mechanism drives both quantities: an interval that
+widens to absorb non-stationarity is one that was fitted using data the forecaster had not
+yet seen.
+
+Validated on synthetic data before deployment: a stationary stream gives 99.22% in-sample
+against 99.21% prequential, while a drifting one gives 99.93% against **71.23%** — the gap
+appears only where there is drift to exploit, as theory requires.
+
+Both figures are now reported. The in-sample values remain valid for what they measure
+(how well the final interval covers the observed history); the prequential values are the
+ones that describe deployment behaviour.
+
 ## Interval width — reported alongside coverage from this run onward
 
 Coverage cannot be interpreted alone: a wide enough interval attains 100% coverage while

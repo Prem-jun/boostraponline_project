@@ -100,6 +100,14 @@ class RBULTControlChart:
             for feat in features
         }
 
+        # Prequential (one-step-ahead) scoring counters, O(D).
+        # Each chunk is scored against the limits in force BEFORE it is allowed to
+        # update them, which is how a deployed control chart actually operates.
+        # compute_spc_metrics()'s coverage is in-sample by contrast: it applies the
+        # FINAL limits retrospectively to the whole stream.
+        self._preq: Dict[str, dict] = {feat: {'covered': 0, 'total': 0} for feat in features}
+        self._preq_joint: Dict[str, int] = {'covered': 0, 'total': 0}
+
         # Calculate adjusted alpha per dimension for FWER control
         num_dim = len(features)
         if fwer_correction == 'bonferroni':
@@ -148,6 +156,40 @@ class RBULTControlChart:
         if self.feature_thresholds is not None and feat in self.feature_thresholds:
             return self.feature_thresholds[feat]
         return self.default_threshold(chunk_len)
+
+    def _score_prequential(self, df_chunk: pd.DataFrame, chunk_len: int) -> None:
+        """Score a chunk against the limits held *before* it updates them.
+
+        Run as a pre-pass, so every dimension is evaluated against the state carried in
+        from chunks 1..m-1. Dimensions whose estimator has not yet seen data are skipped
+        (their initial interval is the empty [9999.99, -9999.99]), which excludes the
+        first chunk from the denominator exactly as a forecaster would.
+
+        Joint coverage is only accumulated on chunks where every monitored dimension
+        already has limits, so the marginal and joint denominators stay consistent.
+        """
+        joint = None
+        for feat in self.features:
+            if feat not in df_chunk.columns:
+                continue
+            eng = self.engines[feat]
+            if eng.total_size <= 0:
+                continue
+            lcl, ucl = eng.exp_l, eng.exp_r
+
+            vals = df_chunk[feat].dropna().values
+            if len(vals):
+                s = self._preq[feat]
+                s['covered'] += int(np.sum((vals >= lcl) & (vals <= ucl)))
+                s['total'] += len(vals)
+
+            raw = df_chunk[feat].values
+            in_bounds = (raw >= lcl) & (raw <= ucl)
+            joint = in_bounds if joint is None else (joint & in_bounds)
+
+        if joint is not None:
+            self._preq_joint['covered'] += int(np.sum(joint))
+            self._preq_joint['total'] += chunk_len
 
     def _update_width_stats(self, feat: str, lcl: float, ucl: float,
                             vals: List[float]) -> None:
@@ -264,6 +306,10 @@ class RBULTControlChart:
         }
         phase1_row = []
 
+        # Pre-pass: score this chunk against the limits carried in from chunks 1..m-1,
+        # before any of them are widened by this chunk's data.
+        self._score_prequential(df_chunk, chunk_len)
+
         # Update RBULT bounds per feature channel
         for feat in self.features:
             if feat not in df_chunk.columns:
@@ -343,6 +389,53 @@ class RBULTControlChart:
             total_bytes += sys.getsizeof(self.engines[feat])
             total_bytes += sys.getsizeof(self.results[feat])
         return total_bytes / 1024.0
+
+    def compute_prequential_metrics(self) -> dict:
+        """One-step-ahead (prequential) coverage — the deployment-realistic protocol.
+
+        Every chunk is scored against the limits in force before it arrived. This is what
+        a control chart does in production: limits must exist before the data they judge.
+
+        It differs from the in-sample coverage in `compute_spc_metrics()` in two ways,
+        both of which make the in-sample figure optimistic:
+
+        1. `compute_spc_metrics()` applies the FINAL limits retrospectively to the entire
+           stream. Since RBULT limits only ever widen, the final interval is the widest
+           the chart ever held, and early observations are judged by limits fitted to
+           data that had not yet arrived.
+        2. Even the per-chunk violation counts recorded in `update_chunk` are in-sample:
+           the chunk widens the limits first, then is measured against the widened ones,
+           so the very samples that pushed a boundary out are then scored as inside it.
+
+        Tier 1 reports both *In-Sample Adaptation* and *One-Step-Ahead Pre-Sequential*;
+        these metrics give Tier 2 the same pair.
+
+        Returns:
+            prequential_coverage_pct / prequential_far_pct: marginal, averaged over
+                dimensions; prequential_joint_coverage_pct / prequential_joint_far_pct:
+                all dimensions simultaneously in bounds; prequential_coverage_per_feature;
+                prequential_n_samples: denominator (excludes each dimension's first chunk).
+        """
+        total = sum(s['total'] for s in self._preq.values())
+        if total == 0:
+            return {}
+
+        covered = sum(s['covered'] for s in self._preq.values())
+        cov_pct = covered / total * 100.0
+        out = {
+            'prequential_coverage_pct': cov_pct,
+            'prequential_far_pct': 100.0 - cov_pct,
+            'prequential_n_samples': total,
+            'prequential_coverage_per_feature': {
+                f'preq_coverage_{feat}': (s['covered'] / s['total'] if s['total'] else float('nan'))
+                for feat, s in self._preq.items()
+            },
+        }
+        if self._preq_joint['total'] > 0:
+            j = self._preq_joint['covered'] / self._preq_joint['total'] * 100.0
+            out['prequential_joint_coverage_pct'] = j
+            out['prequential_joint_far_pct'] = 100.0 - j
+        return out
 
     def compute_interval_metrics(self, sample_df: Optional[pd.DataFrame] = None) -> dict:
         """Interval width and boundary stability — the counterpart to coverage.
@@ -463,6 +556,7 @@ class RBULTControlChart:
         }
 
         metrics.update(self.compute_interval_metrics(sample_df=sample_df))
+        metrics.update(self.compute_prequential_metrics())
 
         # Calculate sample-level coverage rate if sample_df is provided
         if sample_df is not None:

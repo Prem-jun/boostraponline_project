@@ -281,6 +281,48 @@ To rigorously validate performance, the framework evaluates 7 quantitative metri
 
 ---
 
+### One-step-ahead (prequential) coverage
+
+The coverage figure in the tables is **in-sample**: `compute_spc_metrics()` applies the
+FINAL limits retrospectively to the whole stream. Because RBULT limits only widen, the final
+interval is the widest the chart ever held, so early observations are judged by limits fitted
+to data that had not yet arrived. The per-chunk violation counts share the bias — a chunk
+widens the limits, then is scored against the widened ones.
+
+A deployed chart cannot operate that way: limits must exist before the data they judge.
+`compute_prequential_metrics()` scores each chunk against the limits carried in from chunks
+$1 \dots m-1$, before that chunk updates them; each dimension's first chunk is excluded from
+the denominator. Tier 1 has always reported both protocols, and Tier 2 now matches.
+
+| Dataset | `width_ratio_local` | Coverage in-sample | **one-step-ahead** | gap | Joint in-sample | **joint one-step-ahead** | gap |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Industrial Pump | **1.00** | 99.417% | 99.411% | **0.006** | 97.10% | 97.07% | **0.03** |
+| TEP Mode 3 | 1.77 | 93.705% | 93.525% | 0.180 | 25.17% | 24.42% | 0.76 |
+| TEP Mode 1 | 2.07 | 96.736% | 96.540% | 0.196 | 61.40% | 60.71% | 0.69 |
+| TEP Mode 4 | 2.67 | 96.670% | 95.918% | 0.753 | 65.27% | 63.36% | 1.91 |
+| MetroPT-3 | 1.55 | 98.895% | 98.109% | 0.787 | 94.89% | 91.30% | 3.58 |
+| TEP Mode 5 | 8.19 | 97.789% | 96.865% | 0.924 | 70.45% | 65.80% | 4.66 |
+| Water Pump | **8.51** | **99.955%** | 97.808% | 2.146 | **99.55%** | **87.68%** | **11.87** |
+| AI4I 2020 | 4.55 | 97.792% | 95.495% | 2.297 | 91.34% | 82.47% | 8.87 |
+
+**The gap is a direct function of how much the interval had to inflate.** Its correlation
+with `width_ratio_local` is $0.686$ for the marginal gap and $0.782$ for the joint gap.
+Industrial Pump, whose rows are i.i.d. and whose interval already matches local variation
+(ratio $1.00$), loses $0.006$ points — the two protocols are indistinguishable there. Water
+Pump, at $8.5\times$, loses **11.87 points of joint coverage** ($99.55\% \to 87.68\%$). One
+mechanism drives both: an interval that widens to absorb non-stationarity is an interval
+fitted with data the forecaster had not yet seen.
+
+The behaviour was validated on synthetic streams before being applied here — a stationary
+stream gives $99.22\%$ in-sample against $99.21\%$ prequential, a drifting one $99.93\%$
+against $\mathbf{71.23\%}$. The gap appears only where there is drift to exploit.
+
+Both figures are reported. The in-sample value remains valid for what it measures — how well
+the final interval covers the observed history — while the prequential value describes
+deployment behaviour.
+
+---
+
 ### Interval width — the necessary companion to coverage
 
 Coverage cannot be read on its own. An arbitrarily wide interval attains 100% coverage
