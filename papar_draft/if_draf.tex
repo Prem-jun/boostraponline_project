@@ -41,13 +41,16 @@
 \def\textpagefraction{.001}
 
 % Short title
-\shorttitle{Resource-Bounded Non-Parametric Bootstrap Control Chart via RBULT}    
+\shorttitle{Resource-Bounded Non-Parametric SPC Framework for High-Dimensional Non-Gaussian IoT Stream}
+%\shorttitle{Resource-Bounded Non-Parametric Bootstrap Control Chart via RBULT}    
+
 
 % Short author
 \shortauthors{P. Junsawang et~al.}  
 
 % Main title of the paper
-\title [mode = title]{Resource-Bounded Non-Parametric Bootstrap Control Chart for High-Dimensional Non-Gaussian Data Streams via RBULT}  
+\title [mode = title]{Resource-Bounded Non-Parametric SPC Framework for High-Dimensional Non-Gaussian IoT Stream}
+%\title [mode = title]{Resource-Bounded Non-Parametric Bootstrap Control Chart for High-Dimensional Non-Gaussian Data Streams via RBULT}  
 
 \tnotemark[1] 
 \tnotetext[1]{This work was supported in part by the Advanced Virtual and Intelligent Computing (AVIC) Research Center, Department of Mathematics and Computer Science, Faculty of Science, Chulalongkorn University.} 
@@ -136,7 +139,7 @@ Review of streaming range estimation, hyper-rectangle bounding boxes, and Z-scor
 % =========================================================================
 % SECTION 3: THEORETICAL FOUNDATIONS & 1D RANGE ESTIMATION
 % =========================================================================
-\section{Theoretical Foundations and 1D Range Estimation}\label{sec3_theory}
+\section{Theoretical Foundations and Univariate Range Estimation}\label{sec3_theory}
 This section presents the mathematical foundation and 1D range estimation formulation of the proposed Recursively Bootstrapping at Upper-Lower Tails (RBULT) concept, establishing the theoretical ground truth for streaming boundary expansion.
 
 \subsection{Concerned Scenario}
@@ -159,7 +162,7 @@ Let $|c_i|$ represent the number of elements in a given chunk $c_i$. The bin set
     \item Once all data in chunk $c_i$ have been evaluated, the raw data chunk is completely discarded and cannot be re-inspected.
 \end{enumerate}
 
-\subsection{Proposed Concept of RBULT}
+\subsection{Concept of Recursively Bootstrapping at Upper-Lower Tails (RBULT)}
 \label{concept}
 RBULT resamples data only in the left-end and right-end tail intervals ($b_1$ and $b_8$), differing from classical bootstrap which resamples across the entire data body. The size of left-end and right-end intervals is determined from the standard histogram shape of the best-fitting probability distribution. If the heights of left-end ($|b_1|$) or right-end ($|b_8|$) intervals in the actual incoming data histogram exceed the theoretical heights ($|h_1|$ or $|h_8|$) of the standard histogram, the boundary intervals are extended by bootstrapping data in $b_1$ and $b_8$.
 
@@ -170,14 +173,25 @@ The RBULT execution operates in two phases:
 \end{enumerate}
 
 \subsection{Candidate Distribution Selection and CDF Tail Bin Area Integration}
-To construct the standard histogram $H = \{h_1, \dots, h_8\}$ without relying on standard normal assumptions, RBULT evaluates a candidate family of continuous distributions $\mathcal{P} = \{\text{Gamma}, \text{Weibull}, \text{Wald}, \text{Uniform}, \text{Rayleigh}, \text{Lognormal}, \dots\}$.
-
-For an initial data chunk $c_1$, the optimal parameter vector $\hat{\boldsymbol{\theta}}$ for each candidate density $f(x; \boldsymbol{\theta})$ is estimated via Maximum Likelihood Estimation (MLE):
+To capture diverse physical telemetry behaviors in smart manufacturing (e.g., right-skewed bearing friction, Weibull mechanical wear, Wald diffusion processes, and negative-kurtosis uniform signals), RBULT evaluates a candidate family of continuous distributions $\mathcal{P} = \{\text{Gamma}$, $\text{ExponWeibull}$, $\text{Weibull}_{\min/\max}$, $\text{Wald}$, $\text{ExponPow}$, $\text{Rayleigh}$, $\text{Powerlaw}$, $\text{Lognormal}$, $\text{Chi-Square}$, $\text{Uniform}$, $\text{Normal}\}$. Each candidate represents distinct tail skewness and kurtosis characteristics observed in real-world IoT sensor streams.
+To construct the standard histogram $H = \{h_1, \dots, h_8\}$ without relying on standard normal assumptions, the candidate family of continuous distributions is evaluated on initial data chunk $c_1$. The candidate distribution achieving the optimal parameter fit $\hat{\boldsymbol{\theta}}$ is then selected by minimizing the Akaike Information Criterion (AIC), defined as:
 \begin{equation}
-\hat{\boldsymbol{\theta}} = \arg\max_{\boldsymbol{\theta}} \sum_{j=1}^{|c_1|} \log f(x_{1,j}; \boldsymbol{\theta})
+\text{AIC} = 2k - 2\ln \mathcal{L}(\hat{\boldsymbol{\theta}} \mid c_1)
 \end{equation}
+where $k$ represents the number of estimated parameters (complexity penalty) and $\ln \mathcal{L}(\hat{\boldsymbol{\theta}} \mid c_1)$ denotes the maximized log-likelihood value.
 
-The best-fitting distribution is selected by minimizing the Akaike Information Criterion (AIC) or Kolmogorov-Smirnov statistic. Once $\hat{\boldsymbol{\theta}}$ is selected, the expected theoretical element count $|h_k|$ for each bin $b_k$ ($k \in \{1, \dots, 8\}$) is computed via exact CDF integration:
+
+
+For each candidate density $f(x; \boldsymbol{\theta}) \in \mathcal{P}$, the parameter vector $\boldsymbol{\theta}$ is estimated via Maximum Likelihood Estimation (MLE) by maximizing the log-likelihood function:
+\begin{equation}
+\hat{\boldsymbol{\theta}} = \arg\max_{\boldsymbol{\theta}} \ln \mathcal{L}(\boldsymbol{\theta} \mid c_1) = \arg\max_{\boldsymbol{\theta}} \sum_{j=1}^{|c_1|} \ln f(x_{1,j}; \boldsymbol{\theta})
+\end{equation}
+The candidate distribution achieving the optimal parameter fit $\hat{\boldsymbol{\theta}}$ is then selected by minimizing the Akaike Information Criterion (AIC), defined as:
+\begin{equation}
+\text{AIC} = 2k - 2\ln \mathcal{L}(\hat{\boldsymbol{\theta}} \mid c_1)
+\end{equation}
+where $k$ represents the number of estimated parameters (complexity penalty) and $\ln \mathcal{L}(\hat{\boldsymbol{\theta}} \mid c_1)$ denotes the maximized log-likelihood value. Minimizing AIC ($\arg\min \text{AIC}$) selects the optimal candidate distribution $f(x; \hat{\boldsymbol{\theta}}) \in \mathcal{P}$ that achieves the best trade-off between fitting accuracy and model simplicity (parsimony). This prevents selecting unnecessarily complex distributions that might overfit transient noise spikes in initial data chunk $c_1$. Once $\hat{\boldsymbol{\theta}}$ is selected, the expected theoretical element count $|h_k|$ for each bin $b_k$ ($k \in \{1, \dots, 8\}$) is computed via exact CDF integration:
+
 \begin{equation}
 |h_1| = |c_1| \cdot \int_{\mu - 4\sigma}^{\mu - 3\sigma} f(x; \hat{\boldsymbol{\theta}}) \, dx = |c_1| \left[ F(\mu - 3\sigma; \hat{\boldsymbol{\theta}}) - F(\mu - 4\sigma; \hat{\boldsymbol{\theta}}) \right]
 \end{equation}

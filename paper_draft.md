@@ -61,7 +61,7 @@ Bootstrapping is a powerful non-parametric technique for quantifying uncertainty
 
 ---
 
-### Section 3: Theoretical Foundations & 1D Range Estimation (Part I - From Draft 1 PDF)
+### Section 3: Theoretical Foundations and Univariate Streaming Range Estimation (Part I - From Draft 1 PDF)
 - **3.1 Streaming Data Model & Discard-After-Learn Constraint:** Chunks $c_i \in \mathbb{R}^{m \times D}$ arriving over time $t=1, 2, \dots$
 - **3.2 Univariate Population Range Estimation ($[L, R]$):** Formulation of left-end ($L$) and right-end ($R$) boundary expansion.
 - **3.3 Mathematical Analysis of Extreme Value Excursion:**

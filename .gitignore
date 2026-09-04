@@ -16,3 +16,14 @@ archive (1).zip.crdownload
 MetroPT3/MetroPT3_AirCompressor.csv
 TEPDataset_M1_M5/
 
+# LaTeX Auxiliaries
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.abs
+*.toc
+*.fls
+*.fdb_latexmk
+
+
