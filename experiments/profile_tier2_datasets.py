@@ -63,9 +63,8 @@ rows = []
 # ---- AI4I 2020 ----
 raw = pd.read_csv('ai4i2020_Predictive Maintenance Dataset.csv')
 df = raw.copy()
-df['Tool wear Rate [min diff]'] = df['Tool wear [min]'].diff().fillna(0)
 f_ai4i = ['Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]',
-          'Torque [Nm]', 'Tool wear Rate [min diff]']
+          'Torque [Nm]', 'Tool wear [min]']
 rows.append(profile('AI4I 2020', df, f_ai4i, 'Machine failure',
                     note='columns: ' + ', '.join(raw.columns[:5])))
 print(f"  UDI monotonic? {bool((raw['UDI'].diff().dropna() == 1).all())}   "

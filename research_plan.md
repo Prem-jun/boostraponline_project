@@ -235,17 +235,17 @@ To ensure rigorous validation for top-tier Q1 journals (IEEE TKDE, Information S
 
 ### 5.2 Empirical 4-Method Benchmark Results (AI4I 2020 Dataset)
 
-Below are the empirical benchmark results executed across 10,000 samples (100 chunks of size 100) on the AI4I dataset ($D = 5$ features):
+Below are the empirical benchmark results executed across 10,000 samples (100 chunks of size 100) on the AI4I dataset ($D = 5$ features, monitoring `Tool wear [min]` as recorded rather than a differenced rate — see `section_experimental_results.md` for why):
 
 | Evaluation Metric                | Baseline Shewhart Chart | Baseline EWMA Chart | Baseline Full-History Bootstrap | Proposed RBULT-SPC | Key Advantage / Discussion                                               |
 | -------------------------------- | :---------------------: | :-----------------: | :-----------------------------: | :----------------: | ------------------------------------------------------------------------ |
-| **Overall Coverage Rate (%)** ⭐  |         69.45%          |       62.57%        |             98.81%              |     **98.40%**     | **Non-Gaussian Adaptive Coverage** (Matches theoretical 99% target)      |
-| **Sample-level FAR (%)** ⭐       |         30.55%          |       37.43%        |              1.19%              |     **1.60%**      | **Controlled at 1.60%** (Matches Bonferroni $\alpha_{\text{dim}} = 1\%$) |
+| **Overall Coverage Rate (%)** ⭐  |         69.69%          |       58.37%        |             98.82%              |     **97.79%**     | **Non-Gaussian Adaptive Coverage** (Matches theoretical 99% target)      |
+| **Sample-level FAR (%)** ⭐       |         30.31%          |       41.63%        |              1.18%              |     **2.21%**      | $2.2\times$ the Bonferroni target $\alpha_{\text{dim}} = 1\%$              |
 | **Chunk-level FAR (%)**          |         100.00%         |       100.00%       |            **0.00%**            |       66.67%       | Bootstrap baseline is best here; RBULT-SPC does **not** lead on this metric |
 | **ARL0 (In-Control Run Length)** |          0.00           |        0.00         |              6.00               |      **0.50**      | Higher in-control boundary stability                                     |
-| **ARL1 (Detection Delay)**       |          1.02           |        1.00         |              2.60               |        1.77        | Read with detection count; ARL1 near 1.0 can also mean *never detected*   |
+| **ARL1 (Detection Delay)**       |          1.02           |        1.00         |              2.59               |        1.29        | Read with detection count; ARL1 near 1.0 can also mean *never detected*   |
 | **Peak Memory Footprint (KB)** ⭐ |         0.23 KB         |       0.45 KB       |            413.78 KB            |    **0.52 KB**     | **Constant $O(D)$ RAM** (>99.88% memory reduction vs Full-History)       |
-| **Avg Latency per Chunk (ms)**   |        0.0230 ms        |      0.3145 ms      |            1.5489 ms            |   **60.2070 ms**   | **Real-time Low Latency** (< 65 ms per 100-sample batch)                 |
+| **Avg Latency per Chunk (ms)**   |        0.0140 ms        |      0.2573 ms      |            0.9389 ms            |   **37.2888 ms**   | **Real-time Low Latency** (< 65 ms per 100-sample batch)                 |
 The classical Shewhart chart sets static control limits based on the **Gaussian Normal Distribution ($\mathcal{N}(\mu, \sigma^2)$) assumption** using the famous **3-Sigma ($\pm 3\sigma$) rule**:
 
 $$\text{UCL} = \mu + 3\sigma$$ $$\text{Center Line (CL)} = \mu$$ $$\text{LCL} = \mu - 3\sigma$$
@@ -321,7 +321,7 @@ Below are the empirical benchmark results executed across 1,516,948 samples (1,5
 
 #### 1. RBULT-SPC vs Parametric Baselines (Shewhart & EWMA):
 * Parametric baselines assume Gaussian normality. On non-Gaussian IoT telemetry (both AI4I tool wear and MetroPT-3 compressor pressure/current), they fail severely, generating sample-level false alarms of **22.32% – 48.99%** and coverage dropping to **51.01% – 77.68%**.
-* **Proposed RBULT-SPC achieves 98.40% – 98.90% coverage**, demonstrating robust, non-parametric adaptive boundary fitting across both short and ultra-long industrial streams.
+* **Proposed RBULT-SPC achieves 97.79% – 98.90% coverage**, demonstrating robust, non-parametric adaptive boundary fitting across both short and ultra-long industrial streams.
 
 #### 2. Memory Overhead & Asymptotic Scaling ($O(D)$ RAM vs $O(N \cdot D)$ Explosion):
 * **AI4I Dataset (Short Stream, $N = 10,000$):** Full-History Bootstrap requires accumulating all past observations, consuming **413.78 KB** RAM. RBULT-SPC consumes **0.52 KB**.

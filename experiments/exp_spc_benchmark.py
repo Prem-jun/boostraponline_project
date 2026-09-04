@@ -9,12 +9,12 @@ three benchmark SPC baselines on streaming sensor telemetry:
   3. Baseline Conventional Full-History Bootstrap Chart
   4. Proposed RBULT-SPC Framework
 
-Features Evaluated (Detrended Stationary Streams):
+Features Evaluated (monitored as recorded, no detrending):
   - Air temperature [K]
   - Process temperature [K]
   - Rotational speed [rpm]
   - Torque [Nm]
-  - Tool wear Rate [min diff] (Detrended)
+  - Tool wear [min] (as recorded; see the note in run_spc_benchmark)
 
 Metrics Evaluated:
   - Overall Coverage Rate (%)
@@ -60,16 +60,25 @@ def run_spc_benchmark(csv_path: str = 'ai4i2020_Predictive Maintenance Dataset.c
     print(f"Loading dataset: {csv_path}...")
     raw_df = pd.read_csv(csv_path)
 
-    # Stationary Preprocessing: Difference cumulative 'Tool wear [min]'
+    # 'Tool wear [min]' is monitored as recorded, without differencing.
+    #
+    # Earlier revisions applied df['Tool wear [min]'].diff() as "stationary preprocessing".
+    # That is not appropriate here. AI4I rows are independent manufactured products, not
+    # time steps (UDI is a product index; per-channel lag-1 autocorrelation is ~0.008 on
+    # the non-temperature channels), so there is no temporal trend to difference away.
+    # Worse, 'Tool wear [min]' is a cumulative counter that resets 119 times as tools are
+    # replaced, and diff() turns each reset into a -198..-253 spike. Normal wear increments
+    # span only 2..5, so 98.8% of the derived feature's range came from those 119 artefact
+    # points, and 100% of the boundary violations RBULT recorded on that channel were tool
+    # changes rather than process anomalies.
     df = raw_df.copy()
-    df['Tool wear Rate [min diff]'] = df['Tool wear [min]'].diff().fillna(0)
 
     features = [
         'Air temperature [K]',
         'Process temperature [K]',
         'Rotational speed [rpm]',
         'Torque [Nm]',
-        'Tool wear Rate [min diff]'
+        'Tool wear [min]'
     ]
 
     label_col = 'Machine failure'

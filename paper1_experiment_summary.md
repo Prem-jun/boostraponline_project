@@ -73,7 +73,7 @@ $$C = \lceil 0.05 \cdot k \rceil$$
 
 | Dataset | Shewhart | EWMA | Bootstrap | **RBULT** |
 |---|---:|---:|---:|---:|
-| AI4I 2020 | 69.45% | 62.57% | **98.81%** | 98.40% |
+| AI4I 2020 | 69.69% | 58.37% | **98.82%** | 97.79% |
 | MetroPT-3 | 77.68% | 51.01% | 98.76% | **98.90%** |
 | Industrial Pump | 100.00% | 99.91% | 98.96% | **99.40%** |
 | Water Pump | 51.06% | 25.65% | 98.63% | **99.95%** |
@@ -93,7 +93,7 @@ Coverage ในตาราง 2.2 คือ **marginal coverage เฉลี่
 | Water Pump | 10 | 99.95% | 99.55% | ✓ |
 | Industrial Pump | 5 | 99.40% | 97.03% | ✓ |
 | MetroPT-3 | 7 | 98.90% | **94.89%** | ✗ |
-| AI4I 2020 | 5 | 98.40% | **94.23%** | ✗ |
+| AI4I 2020 | 5 | 97.79% | **91.34%** | ✗ |
 | TEP Mode 5 | 34 | 97.79% | **70.50%** | ✗ |
 | TEP Mode 4 | 34 | 96.67% | **65.26%** | ✗ |
 | TEP Mode 1 | 34 | 96.74% | **61.39%** | ✗ |
@@ -155,7 +155,7 @@ Coverage ในตาราง 2.2 คือ **marginal coverage เฉลี่
 | Industrial Pump | 5 | 10.99 ms |
 | TEP Mode 4 | 34 | 12.30 ms |
 | Water Pump | 10 | 25.59 ms |
-| AI4I 2020 | 5 | 60.21 ms |
+| AI4I 2020 | 5 | 37.29 ms |
 
 ทุกชุดต่ำกว่า 65 ms ต่อ chunk รองรับ real-time streaming ได้ (ค่าเหล่านี้แปรตามภาระเครื่องขณะรัน)
 
@@ -253,6 +253,28 @@ Sliding-Window Bootstrap ได้ ~99.0% ทุก mode ส่วน RBULT ไ�
 
 ---
 
+## ลักษณะข้อมูล Tier 2 — มีเพียง 2 จาก 5 ชุดที่เป็น time series แท้
+
+วัดด้วย lag-1 autocorrelation (ถ้าเป็น time series ค่า ณ เวลา $t$ ต้องสัมพันธ์กับ $t-1$)
+
+| ชุดข้อมูล | D | lag-1 autocorr | เป็น time series? | in-control chunks |
+|---|---:|---:|---|---:|
+| Water Pump | 10 | **0.998** | ✅ ใช่ | 405 / 441 |
+| MetroPT-3 | 7 | **0.970** | ✅ ใช่ | 1,482 / 1,517 |
+| TEP 1/3/4/5 | 34 | 0.948 | ⚠️ ต่อจาก 2,900 runs | 38–44 / ~3,480 |
+| AI4I 2020 | 5 | 0.931 * | ❌ ไม่ใช่ (แต่ละแถวคือชิ้นงาน) | 6 / 100 |
+| Industrial Pump | 5 | **0.001** | ❌ ไม่ใช่ (5 เครื่องต่อกัน) | **0 / 100** |
+
+- **AI4I** \* — ค่า 0.931 ไม่ได้แปลว่าเป็น time series แต่เป็น artifact จากวิธีสร้างคอลัมน์: อุณหภูมิสองตัวถูกสร้างด้วย random walk และ `Tool wear [min]` เป็นตัวนับสะสม ส่วนสองมิติที่อธิบายกระบวนการจริงคือ `Rotational speed` (**0.008**) และ `Torque` (**0.005**) ซึ่งเป็น i.i.d. หลักฐานเชิงโครงสร้างชี้ชัดกว่า: `UDI` เป็น index ของผลิตภัณฑ์ที่เพิ่มทีละ 1 และ `Tool wear` รีเซ็ต 119 ครั้ง ความเสียหาย 339 sample กระจายเป็น **310 episode แยกกัน** จึงเหลือ in-control แค่ 6 chunk
+- **Industrial Pump** — `Maintenance_Flag` เปลี่ยนค่า 9,979 ครั้งใน 20,000 แถว (ช่วง fault ยาวเฉลี่ย 2.0 แถว) ทำให้ทุก chunk มี flag → **ไม่มี in-control chunk เลย** ค่า Chunk FAR/ARL0 ของชุดนี้ไม่นิยาม
+- **TEP** — รูปทรงจริงคือ (2900 runs × 600 steps × 34 vars) การ flatten สร้าง **รอยต่อเทียม 2,899 จุด** และที่ $k=500$ ทุก chunk คร่อมรอยต่อ อีกทั้ง **3 จาก 34 channels เป็นค่าคงที่**
+- **Non-Gaussian ยืนยันได้** — ผ่าน Shapiro-Wilk เพียง **3 จาก 61 channels** และ excess kurtosis สูงถึง 117.91 บน TEP → ข้ออ้าง non-parametric มีน้ำหนักมาก
+
+> รายละเอียดเต็มอยู่ใน `section_experimental_results.md` หัวข้อ *Public Benchmark Datasets*
+> รันซ้ำได้ด้วย `python experiments/profile_tier2_datasets.py` ตัวเลขอยู่ใน `results/tier2_dataset_profile.csv`
+
+---
+
 ## Metrics ที่ใช้ประเมิน
 
 สัญลักษณ์: $N$ = จำนวนสังเกต, $M$ = จำนวน chunk, $M_0$ = จำนวน in-control chunk, $D$ = จำนวนมิติ, $[L_d, R_d]$ = ขอบเขตมิติที่ $d$, $C$ = เกณฑ์แจ้งเตือน
@@ -308,6 +330,7 @@ $$\text{Peak RAM} = \frac{1}{1024}\Big(\texttt{sizeof}(\text{chart}) + \sum_{d}[
 | 7 | เพิ่มการวิเคราะห์ PER-FEATURE vs TOTAL | พบว่า TEP Mode 3 มีสัญญาณจริง (AUC 0.448 → 0.859) |
 | 8 | เพิ่มหมายเหตุกับดักเมตริก 5 ข้อ | ARL1 fallback, ARL0 censored, CI ของ FAR, detection, RNG |
 | 9 | เพิ่มข้อจำกัดของชุดข้อมูล | Pump ไม่มี in-control chunk, AI4I มี 6, TEP มี 38–44 |
+| 10 | AI4I: เปลี่ยนจาก `Tool wear Rate [min diff]` → `Tool wear [min]` ค่าดิบ | ฟีเจอร์ diff สร้าง artifact — 98.8% ของความกว้างมาจากจุดเปลี่ยนเครื่องมือ 119 จุด และ **100% ของ violation บนมิตินั้นคือการเปลี่ยนเครื่องมือ ไม่ใช่ความผิดปกติของกระบวนการ** ค่า coverage 98.81% ของมันคือ 100% − 1.19% เฉย ๆ ผลคือ coverage รวมของ AI4I ลดจาก 98.40% → 97.79%, sample FAR 1.60% → 2.21%, joint 94.23% → 91.34% |
 
 ### ไฟล์อ้างอิงใน `results/`
 

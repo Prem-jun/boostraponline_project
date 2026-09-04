@@ -137,12 +137,17 @@ measured, not quoted from the source publications.
 | Water Pump (SCADA) | 10 | 220,320 | **0.998** | Yes | 405 / 441 |
 | MetroPT-3 | 7 | 1,516,948 | **0.970** | Yes | 1,482 / 1,517 |
 | TEP Modes 1/3/4/5 | 34 | ~1.74 M | 0.948 | Yes, but reconstructed | 38–44 / ~3,480 |
-| AI4I 2020 | 5 | 10,000 | **0.008** | **No** | 6 / 100 |
+| AI4I 2020 | 5 | 10,000 | 0.931 * | **No** | 6 / 100 |
 | Industrial Pump | 5 | 20,000 | **0.001** | **No** | **0 / 100** |
 
 Lag-1 autocorrelation is the decisive test: in a true time series the value at $t$ must
 correlate with $t-1$. A coefficient near zero means the rows are mutually independent
 observations, whatever the column ordering suggests.
+
+\* **AI4I is the exception that proves the rule.** Its median of 0.931 is not evidence of
+temporal structure — it is an artefact of how three of its five columns were synthesised. The
+two channels that actually describe the process, `Rotational speed [rpm]` and `Torque [Nm]`,
+have autocorrelations of **0.008** and **0.005**. See the per-channel breakdown below.
 
 **Non-Gaussianity is confirmed across the board.** Only **3 of 61 monitored feature channels**
 pass a Shapiro-Wilk normality test at $p > 0.05$ (5,000-sample subsamples). This is the
@@ -198,15 +203,25 @@ tools are replaced. Per-channel lag-1 autocorrelation:
 | Process temperature [K] | 0.9985 |
 | Rotational speed [rpm] | **0.0077** |
 | Torque [Nm] | **0.0054** |
-| Tool wear Rate [min diff] | **−0.0124** |
 
-The two temperature channels were synthesised as random walks and therefore look smooth; the
-other three are i.i.d.
 
-> **Caveat on the derived feature.** `Tool wear Rate [min diff]` is produced by
-> `df['Tool wear [min]'].diff()`, which differences **consecutive but unrelated products** and
-> crosses all 119 tool-reset points. It is not a wear rate in any physical sense, and should
-> be documented as such or dropped.
+| Tool wear [min] | 0.9990 |
+
+The two temperature channels were synthesised as random walks (per the UCI dataset
+description) and `Tool wear [min]` is a cumulative counter, so all three look smooth. The two
+channels that actually describe the machining process — rotational speed and torque — are
+i.i.d. Structural evidence settles the question regardless: `UDI` is a product index
+incrementing by exactly 1, and tool wear resets 119 times as tools are replaced.
+
+> **Resolved — the derived feature was removed.** Earlier revisions monitored
+> `Tool wear Rate [min diff]`, produced by `df['Tool wear [min]'].diff()`. That differences
+> **consecutive but unrelated products** and crosses all 119 tool-reset points, turning each
+> reset into a $-198 \dots -253$ spike while genuine wear increments span only $2 \dots 5$.
+> **98.8% of the derived feature's range came from those 119 artefact points (1.19% of rows),
+> and 100% of the boundary violations RBULT recorded on that channel were tool changes rather
+> than process anomalies** — its 98.81% "coverage" was simply $100\% - 1.19\%$. The channel is
+> now monitored as recorded (`Tool wear [min]`), which lowers RBULT coverage on it from an
+> artefactual 98.81% to a genuine 95.76%.
 
 *Challenge:* the 339 failure samples occur as **310 separate single-row episodes**, so almost
 every 100-row chunk contains one. Only **6 of 100 chunks are in-control**, giving Chunk FAR a
@@ -254,28 +269,28 @@ Below are the empirical benchmark results executed across 10,000 samples (100 ch
 
 | Evaluation Metric                | Baseline Shewhart Chart | Baseline EWMA Chart | Baseline Full-History Bootstrap | Proposed RBULT-SPC | Key Advantage / Discussion                                               |
 | -------------------------------- | :---------------------: | :-----------------: | :-----------------------------: | :----------------: | ------------------------------------------------------------------------ |
-| **Overall Coverage Rate (%)** ⭐  |         69.45%          |       62.57%        |             98.81%              |     **98.40%**     | **Non-Gaussian Adaptive Coverage** (Matches theoretical 99% target)      |
-| **Sample-level FAR (%)** ⭐       |         30.55%          |       37.43%        |              1.19%              |     **1.60%**      | **Controlled at 1.60%** (Matches Bonferroni $\alpha_{\text{dim}} = 1\%$) |
+| **Overall Coverage Rate (%)** ⭐  |         69.69%          |       58.37%        |             98.82%              |     **97.79%**     | **Non-Gaussian Adaptive Coverage** (Matches theoretical 99% target)      |
+| **Sample-level FAR (%)** ⭐       |         30.31%          |       41.63%        |              1.18%              |     **2.21%**      | Above the Bonferroni target $\alpha_{\text{dim}} = 1\%$ by a factor of 2.2 |
 | **Chunk-level FAR (%)**          |         100.00%         |       100.00%       |            **0.00%**            |       66.67%       | Bootstrap baseline leads; RBULT-SPC does **not** lead on this metric (4/6 chunks) |
 | **ARL0 (In-Control Run Length)** |          0.00           |        0.00         |            **6.00**             |        0.50        | Bootstrap baseline is more stable in control                             |
-| **ARL1 (Detection Delay)**       |          1.02           |        1.00         |              2.60               |        1.77        | Read with detection count; ARL1 near 1.0 can also mean *never detected*  |
+| **ARL1 (Detection Delay)**       |          1.02           |        1.00         |              2.59               |        1.29        | Read with detection count; ARL1 near 1.0 can also mean *never detected*  |
 | **Peak Memory Footprint (KB)** ⭐ |         0.23 KB         |       0.45 KB       |            413.78 KB            |    **0.52 KB**     | **Constant $O(D)$ RAM** (>99.88% memory reduction vs Full-History)       |
-| **Avg Latency per Chunk (ms)**   |        0.0230 ms        |      0.3145 ms      |            1.5489 ms            |   **60.2070 ms**   | **Real-time Low Latency** (< 65 ms per 100-sample batch)                 |
+| **Avg Latency per Chunk (ms)**   |        0.0140 ms        |      0.2573 ms      |            0.9389 ms            |   **37.2888 ms**   | **Real-time Low Latency** (< 65 ms per 100-sample batch)                 |
 
 ---
 
 ### Results of AI4I 2020 Results ($C_{\text{thresh}} = 5$)
 
 1. **Parametric Collapse vs. Non-Gaussian Adaptive Coverage:**
-   * Classical 3-sigma Shewhart and EWMA control charts rely strictly on Gaussian normality assumptions ($\mathcal{N}(\mu, \sigma^2)$). On non-Gaussian telemetry ($D=5$ sensor channels: `Air temp`, `Process temp`, `Rotational speed`, `Torque`, `Tool wear rate`), Shewhart coverage drops to **69.45%** (Sample FAR **30.55%**) and EWMA coverage collapses to **62.57%** (Sample FAR **37.43%**), both producing **100.00% Chunk FAR** (false alarm spam on every single batch).
-   * Proposed **RBULT-SPC** achieves **98.40% Overall Coverage** and controls Sample-level FAR at **1.60%**, aligning with the theoretical Bonferroni target ($\alpha_{\text{dim}} = 1.0\%$, Target Coverage = $99.00\%$).
+   * Classical 3-sigma Shewhart and EWMA control charts rely strictly on Gaussian normality assumptions ($\mathcal{N}(\mu, \sigma^2)$). On non-Gaussian telemetry ($D=5$ sensor channels: `Air temp`, `Process temp`, `Rotational speed`, `Torque`, `Tool wear rate`), Shewhart coverage drops to **69.69%** (Sample FAR **30.31%**) and EWMA coverage collapses to **58.37%** (Sample FAR **41.63%**), both producing **100.00% Chunk FAR** (false alarm spam on every single batch).
+   * Proposed **RBULT-SPC** achieves **97.79% Overall Coverage** with a Sample-level FAR of **2.21%**, which is $2.2\times$ the theoretical Bonferroni target ($\alpha_{\text{dim}} = 1.0\%$, Target Coverage = $99.00\%$) — it does not attain the nominal level on this dataset.
 
 2. **Batch False Alarm Reduction & Boundary Stability ($\text{ARL}_0$):**
    * Under the scale-free threshold $C_{\text{thresh}} = 5$, RBULT-SPC records a Chunk-level FAR of **66.67%** (4 of the 6 in-control chunks), while the Full-History Bootstrap records **0.00%**. RBULT-SPC does **not** lead on this metric here; the parametric baselines remain trapped at 100.00%.
    * With only 6 in-control chunks this metric carries very little statistical weight and should not be used to rank methods on this dataset.
 
 3. **Detection Delay ($\text{ARL}_1$) & Memory Footprint ($O(D)$ RAM):**
-   * RBULT-SPC records a detection response delay of $\text{ARL}_1 = 1.77$ chunks while discarding past raw data chunks immediately after tail updating.
+   * RBULT-SPC records a detection response delay of $\text{ARL}_1 = 1.29$ chunks while discarding past raw data chunks immediately after tail updating.
    * Memory storage is strictly constant at **0.52 KB** ($O(D)$ spatial complexity), achieving a **>99.88% RAM reduction** compared to Full-History Bootstrap (413.78 KB).
 
 4. **Real-time Edge Execution Speed:**
@@ -354,5 +369,11 @@ MetroPT-3 and Water Pump are, AI4I 2020 and Industrial Pump have lag-1 autocorre
 $\approx 0$, and TEP is 2,900 independent runs flattened into one stream. Reproduce with
 `python experiments/profile_tier2_datasets.py`; values are tabulated in
 `results/tier2_dataset_profile.csv`.
+
+**4. AI4I 2020 feature set.** The synthetic `Tool wear Rate [min diff]` channel was replaced
+by the recorded `Tool wear [min]`. See the dataset section for why. RBULT coverage on AI4I
+consequently falls from 98.40% to 97.79%, sample FAR rises from 1.60% to 2.21%, and joint
+coverage from 94.23% to 91.34% — the earlier figures were inflated by an artefact channel
+whose only "violations" were tool replacements.
 
 See `results/TIER2_RERUN_SUMMARY.md`.
