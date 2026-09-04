@@ -145,7 +145,8 @@ def run_single_pass_sensitivity(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_
         for name, ooc_counts, cov_pct, mem_kb, lat_ms in methods_data:
             history = [{'any_ooc': (cnt >= thresh), 'latency_ms': lat_ms} for cnt in ooc_counts]
             fa_count = sum(1 for h, label in zip(history, chunk_labels) if h['any_ooc'] and label == 0)
-            chunk_far = (fa_count / max(1, in_control_chunks)) * 100.0
+            chunk_far = ((fa_count / in_control_chunks) * 100.0
+                         if in_control_chunks > 0 else float('nan'))
             arl0 = _compute_arl0(history, chunk_labels, in_control_chunks)
             arl1 = _compute_arl1(history, chunk_labels)
 

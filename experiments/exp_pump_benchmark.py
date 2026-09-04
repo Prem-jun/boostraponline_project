@@ -97,6 +97,30 @@ def run_pump_spc_benchmark(csv_path: str = 'Large_Industrial_Pump_Maintenance_Da
         chunk_labels.append(true_ooc)
 
     in_control_chunks = sum(1 for label in chunk_labels if label == 0)
+
+    # ------------------------------------------------------------------ #
+    # Label quality gate                                                   #
+    # ------------------------------------------------------------------ #
+    # Maintenance_Flag on this dataset is statistically indistinguishable from an
+    # independent coin flip: no monitored variable predicts it (AUC 0.49-0.51, all
+    # p > 0.05), its rate is ~50% in every one of the five pumps, and its mean
+    # contiguous run length of 1.99 rows matches the 1.99 implied by independent
+    # Bernoulli(0.4984) draws. It therefore carries no ground truth, and every chunk
+    # contains at least one flagged sample, leaving zero in-control chunks.
+    #
+    # Chunk FAR, ARL0 and ARL1 are undefined here and are reported as NaN rather than
+    # the 0.00 the old max(1, in_control_chunks) guard produced -- which read as
+    # flawless in-control behaviour. Sample-level metrics (coverage, sample FAR,
+    # interval width, RAM, latency) do not depend on the label and remain valid.
+    if in_control_chunks == 0:
+        print("\n" + "!" * 78)
+        print("WARNING: no in-control chunks -- chunk-level metrics are UNDEFINED")
+        print(f"  label column      : {label_col}")
+        print(f"  positive rate     : {df[label_col].mean() * 100:.2f}% of rows")
+        print(f"  mean run length   : {df[label_col].sum() / max(1, int((np.diff(np.r_[0, df[label_col].values, 0]) == 1).sum())):.2f} rows")
+        print("  Chunk FAR / ARL0 / ARL1 will be reported as NaN.")
+        print("  Only sample-level metrics are interpretable on this dataset.")
+        print("!" * 78)
     ooc_chunks = sum(1 for label in chunk_labels if label == 1)
     print(f"Chunk distribution -> In-Control Chunks: {in_control_chunks:,} | Maintenance/Failure Chunks: {ooc_chunks:,}")
 
@@ -167,7 +191,8 @@ def run_pump_spc_benchmark(csv_path: str = 'Large_Industrial_Pump_Maintenance_Da
         'ooc_chunk_rate': sum(1 for h in shewhart_history if h['any_ooc']) / num_chunks,
         'overall_coverage_pct': shewhart_coverage,
         'sample_far_pct': 100.0 - shewhart_coverage,
-        'false_alarm_rate': shewhart_fa / max(1, in_control_chunks),
+        'false_alarm_rate': (shewhart_fa / in_control_chunks
+                             if in_control_chunks > 0 else float('nan')),
         'arl_0': _compute_arl0(shewhart_history, chunk_labels, in_control_chunks),
         'arl_1': _compute_arl1(shewhart_history, chunk_labels),
         'total_time_sec': shewhart_total_time
@@ -228,7 +253,8 @@ def run_pump_spc_benchmark(csv_path: str = 'Large_Industrial_Pump_Maintenance_Da
         'ooc_chunk_rate': sum(1 for h in ewma_history if h['any_ooc']) / num_chunks,
         'overall_coverage_pct': ewma_coverage,
         'sample_far_pct': 100.0 - ewma_coverage,
-        'false_alarm_rate': ewma_fa / max(1, in_control_chunks),
+        'false_alarm_rate': (ewma_fa / in_control_chunks
+                             if in_control_chunks > 0 else float('nan')),
         'arl_0': _compute_arl0(ewma_history, chunk_labels, in_control_chunks),
         'arl_1': _compute_arl1(ewma_history, chunk_labels),
         'total_time_sec': ewma_total_time
@@ -282,7 +308,8 @@ def run_pump_spc_benchmark(csv_path: str = 'Large_Industrial_Pump_Maintenance_Da
         'ooc_chunk_rate': sum(1 for h in conv_history if h['any_ooc']) / num_chunks,
         'overall_coverage_pct': conv_coverage,
         'sample_far_pct': 100.0 - conv_coverage,
-        'false_alarm_rate': conv_fa / max(1, in_control_chunks),
+        'false_alarm_rate': (conv_fa / in_control_chunks
+                             if in_control_chunks > 0 else float('nan')),
         'arl_0': _compute_arl0(conv_history, chunk_labels, in_control_chunks),
         'arl_1': _compute_arl1(conv_history, chunk_labels),
         'total_time_sec': conv_total_time
@@ -312,15 +339,18 @@ def run_pump_spc_benchmark(csv_path: str = 'Large_Industrial_Pump_Maintenance_Da
     comparison_df = pd.DataFrame(all_metrics)
     comparison_df.to_csv('results/spc_pump_benchmark_results.csv', index=False)
 
+    chunk_note = ('**UNDEFINED — no in-control chunks** (see label quality note)'
+                  if in_control_chunks == 0 else 'Batch-level alarm behaviour')
+
     md_table = f"""# Full SPC Benchmark Results: Large Industrial Pump Dataset
 
 | Evaluation Metric | Baseline Shewhart Chart | Baseline EWMA Chart | Baseline Full-History Bootstrap | Proposed RBULT-SPC | Advantage / Key Discussion |
 |---|---|---|---|---|---|
 | **Overall Coverage Rate (%)** | {shewhart_metrics['overall_coverage_pct']:.2f}% | {ewma_metrics['overall_coverage_pct']:.2f}% | {conv_metrics['overall_coverage_pct']:.2f}% | **{rbult_metrics['overall_coverage_pct']:.2f}%** | Non-Gaussian Adaptive Bounds |
 | **Sample-level FAR (%)** | {shewhart_metrics['sample_far_pct']:.2f}% | {ewma_metrics['sample_far_pct']:.2f}% | {conv_metrics['sample_far_pct']:.2f}% | **{rbult_metrics['sample_far_pct']:.2f}%** | Controlled near Bonferroni $\\alpha_{{dim}}$ |
-| **Chunk-level FAR (%)** | {shewhart_metrics['false_alarm_rate'] * 100:.2f}% | {ewma_metrics['false_alarm_rate'] * 100:.2f}% | {conv_metrics['false_alarm_rate'] * 100:.2f}% | **{rbult_metrics['false_alarm_rate'] * 100:.2f}%** | Low Batch False Alarm Rate |
-| **ARL0 (In-Control Run Length)** | {shewhart_metrics['arl_0']:.2f} | {ewma_metrics['arl_0']:.2f} | {conv_metrics['arl_0']:.2f} | **{rbult_metrics['arl_0']:.2f}** | Boundary Stability |
-| **ARL1 (Detection Delay)** | {shewhart_metrics['arl_1']:.2f} | {ewma_metrics['arl_1']:.2f} | {conv_metrics['arl_1']:.2f} | **{rbult_metrics['arl_1']:.2f}** | Fast Failure Response |
+| **Chunk-level FAR (%)** | {_fmt(shewhart_metrics['false_alarm_rate'] * 100, '%')} | {_fmt(ewma_metrics['false_alarm_rate'] * 100, '%')} | {_fmt(conv_metrics['false_alarm_rate'] * 100, '%')} | **{_fmt(rbult_metrics['false_alarm_rate'] * 100, '%')}** | {chunk_note} |
+| **ARL0 (In-Control Run Length)** | {_fmt(shewhart_metrics['arl_0'])} | {_fmt(ewma_metrics['arl_0'])} | {_fmt(conv_metrics['arl_0'])} | **{_fmt(rbult_metrics['arl_0'])}** | {chunk_note} |
+| **ARL1 (Detection Delay)** | {_fmt(shewhart_metrics['arl_1'])} | {_fmt(ewma_metrics['arl_1'])} | {_fmt(conv_metrics['arl_1'])} | **{_fmt(rbult_metrics['arl_1'])}** | {chunk_note} |
 | **Peak Memory Footprint (KB)** | {shewhart_metrics['peak_memory_kb']:.2f} KB | {ewma_metrics['peak_memory_kb']:.2f} KB | {conv_metrics['peak_memory_kb']:.2f} KB | **{rbult_metrics['peak_memory_kb']:.2f} KB** | **Constant $O(D)$ RAM Footprint** |
 | **Avg Latency per Chunk (ms)** | {shewhart_metrics['avg_latency_ms']:.4f} ms | {ewma_metrics['avg_latency_ms']:.4f} ms | {conv_metrics['avg_latency_ms']:.4f} ms | **{rbult_metrics['avg_latency_ms']:.4f} ms** | Real-time Streaming (< 70 ms) |
 """
@@ -331,6 +361,19 @@ def run_pump_spc_benchmark(csv_path: str = 'Large_Industrial_Pump_Maintenance_Da
     print("Saved comparison table to:  results/spc_pump_benchmark_comparison.md")
 
     return rbult_metrics
+
+
+def _fmt(value: float, suffix: str = '') -> str:
+    """Render a metric, showing an em dash for an undefined (NaN) value.
+
+    Chunk FAR, ARL0 and ARL1 are undefined when a dataset has no in-control chunks.
+    Printing 'nan' beside a caption like "Low Batch False Alarm Rate" invites the
+    reader to treat it as a result, so undefined values are rendered explicitly.
+    """
+    import math
+    if value is None or (isinstance(value, float) and math.isnan(value)):
+        return '—'
+    return f'{value:.2f}{suffix}'
 
 
 def _compute_arl0(history: list, labels: list, in_control_chunks: int) -> float:
@@ -345,6 +388,10 @@ def _compute_arl0(history: list, labels: list, in_control_chunks: int) -> float:
                 curr += 1
     if curr > 0:
         runs.append(curr)
+    # NaN when there is no in-control data; otherwise, with no false alarm the
+    # value is right-censored at the observation window and returned as a bound.
+    if in_control_chunks == 0:
+        return float('nan')
     return float(np.mean(runs)) if runs else float(in_control_chunks)
 
 
@@ -359,7 +406,9 @@ def _compute_arl1(history: list, labels: list) -> float:
                 delay = 0
         else:
             delay = 0
-    return float(np.mean(delays)) if delays else 1.0
+    # NaN, not 1.0, when nothing was ever detected -- the old fallback was
+    # indistinguishable from instant detection.
+    return float(np.mean(delays)) if delays else float('nan')
 
 
 if __name__ == '__main__':

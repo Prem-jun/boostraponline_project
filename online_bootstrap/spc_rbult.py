@@ -669,7 +669,10 @@ class RBULTControlChart:
                 if h['any_ooc'] and label == 0
             )
             in_control_chunks = sum(1 for label in true_labels if label == 0)
-            metrics['false_alarm_rate'] = false_alarms / max(1, in_control_chunks)
+            # NaN, not 0, when there is nothing to false-alarm on: a 0/0 rate is undefined
+            # and reporting it as 0.00 reads as flawless in-control behaviour.
+            metrics['false_alarm_rate'] = (false_alarms / in_control_chunks
+                                          if in_control_chunks > 0 else float('nan'))
 
             # ARL0: Average run length between false alarms during in-control periods
             in_control_run_lengths = []
@@ -684,7 +687,15 @@ class RBULTControlChart:
             if current_run > 0:
                 in_control_run_lengths.append(current_run)
 
-            metrics['arl_0'] = float(np.mean(in_control_run_lengths)) if in_control_run_lengths else float(in_control_chunks)
+            # With no false alarm, ARL0 is right-censored at the observation window, so
+            # report the in-control chunk count as a lower bound -- and NaN when there is
+            # no in-control data at all.
+            if in_control_chunks == 0:
+                metrics['arl_0'] = float('nan')
+            else:
+                metrics['arl_0'] = (float(np.mean(in_control_run_lengths))
+                                    if in_control_run_lengths else float(in_control_chunks))
+            metrics['arl_0_censored'] = not bool(in_control_run_lengths)
 
             # ARL1: Average detection delay (chunks) from actual failure onset to alarm
             ooc_detection_delays = []
@@ -699,7 +710,11 @@ class RBULTControlChart:
                 else:
                     delay = 0
 
-            metrics['arl_1'] = float(np.mean(ooc_detection_delays)) if ooc_detection_delays else 1.0
+            # NaN, not 1.0, when nothing was ever detected. The old fallback was
+            # indistinguishable from instant detection, the best possible score.
+            metrics['arl_1'] = (float(np.mean(ooc_detection_delays))
+                                if ooc_detection_delays else float('nan'))
+            metrics['n_detected_episodes'] = len(ooc_detection_delays)
 
         return metrics
 

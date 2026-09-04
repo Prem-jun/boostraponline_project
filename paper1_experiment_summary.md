@@ -130,7 +130,43 @@ Coverage ในตาราง 2.2 คือ **marginal coverage เฉลี่
 
 **สรุป: RBULT ไม่ได้เหนือกว่า baselines ในการคุม false alarm** บน TEP Mode 1/4/5 RBULT สูสีกับ Shewhart และแพ้บน Mode 3 ส่วนบน AI4I และ MetroPT-3 Bootstrap ชนะชัดเจน
 
-### 2.5 TEP: ปรับ chunk size ให้ตรง run และทำ within-run differencing
+### 2.5 เมตริกที่ไม่นิยาม รายงานเป็น NaN แทนเลขสวย
+
+โค้ดเดิมมี fallback 3 จุดที่คืน**ตัวเลขที่ดูดี**ในกรณีที่ปริมาณนั้นไม่นิยาม แก้แล้วทั้งใน library และสคริปต์ทั้ง 6 ตัว
+
+| สถานการณ์ | ค่าเดิม | ค่าใหม่ |
+|---|---|---|
+| Chunk FAR เมื่อไม่มี in-control chunk (0/0) | `0.00` จาก `max(1, in_control_chunks)` | **NaN** |
+| ARL0 เมื่อไม่มี in-control chunk | `0.00` | **NaN** |
+| ARL1 เมื่อไม่เคยตรวจเจออะไรเลย | `1.00` — เท่ากับ "ตรวจเจอทันที" ซึ่งเป็นคะแนนดีที่สุด | **NaN** + เพิ่มฟิลด์ `n_detected_episodes` |
+
+ARL0 ยังคงคืนจำนวน in-control chunk เมื่อไม่มี false alarm เพราะเป็น lower bound แบบ censored ที่ถูกต้อง และเพิ่ม flag `arl_0_censored` กำกับ
+
+**สิ่งที่การแก้นี้เปิดโปง — ตอนนี้ปรากฏในไฟล์ผลจริง ไม่ใช่แค่การวิเคราะห์แยก**
+
+1. **Industrial Pump** — ทั้ง 4 method คืน NaN สำหรับ Chunk FAR, ARL0, ARL1 เพราะไม่มี in-control chunk เลย ค่า `0.00%` ทุกช่องที่เคยรายงานจึงเป็นผลของเลขคณิต ไม่ใช่การวัด และอ่านแล้วเหมือน RBULT คุม false alarm ได้สมบูรณ์แบบ
+
+2. **Sliding-Window Bootstrap ไม่เคยตรวจเจออะไรเลยบน TEP** — `arl_1` เป็น NaN ทั้ง 8 การรัน (4 mode × raw/diff) ค่า `ARL1 = 1.00` ที่เคยตีพิมพ์เป็น fallback มาตลอด เมื่อรวมกับ Chunk FAR 0.00% และ ARL0 = 100 การอ่านที่ซื่อสัตย์คือ **baseline ตัวนี้ไม่เคยส่งสัญญาณเตือนเลยบน TEP** จึงไม่ใช่คู่แข่งที่แข็งแรง และการเทียบ chunk-level metric กับมันไม่มีความหมาย
+
+#### Industrial Pump: label เป็นการโยนเหรียญ
+
+`Maintenance_Flag` ไม่มีข้อมูลเลย ยืนยันด้วย 3 ทางที่สอดคล้องกัน:
+
+| การตรวจ | ผล |
+|---|---|
+| AUC ของ 6 ตัวแปรในการทำนาย flag | 0.4925 – 0.5050, **p > 0.05 ทุกตัว** |
+| flag rate ต่อปั๊ม (5 ปั๊ม) | 48.6% – 50.6% เท่ากันหมด |
+| ความยาวช่วงต่อเนื่องเฉลี่ย | **1.99 แถว** ตรงกับที่ Bernoulli(0.4984) อิสระทำนายไว้ (1.99) พอดี |
+
+**ไม่มีวิธีใดกู้ chunk-level metric จาก label ที่สุ่มได้** — ไม่ว่าจะนิยาม chunk label ใหม่ แยกตาม `Pump_ID` หรือปรับ threshold
+
+`exp_pump_benchmark.py` จึงเพิ่ม label quality gate ที่ตรวจและเตือนตอนรัน พร้อมแสดง **—** และข้อความ "UNDEFINED — no in-control chunks" ในตาราง แทนที่จะปล่อย `nan%` วางคู่กับคำบรรยาย "Low Batch False Alarm Rate"
+
+> เมตริกระดับ sample (coverage, sample FAR, interval width, RAM, latency) ไม่ขึ้นกับ label จึงยังใช้ได้ และชุดนี้ยังมีประโยชน์ **เพราะ**มันเป็น i.i.d. — เป็นจุดอ้างอิงที่ `width_ratio_local = 1.00` ซึ่งใช้วัดว่าช่วงบนข้อมูลที่มี autocorrelation พองไปเท่าไร
+
+---
+
+### 2.6 TEP: ปรับ chunk size ให้ตรง run และทำ within-run differencing
 
 **chunk size 500 → 600** — TEP มีรูปทรง (runs × 600 steps × 34 vars) ต่อกันเป็นสตรีมเดียว ค่า k ที่ไม่หาร 600 ลงตัวทำให้ทุก chunk คร่อมรอยต่อ run ซึ่งเป็นความไม่ต่อเนื่องจากการจัดข้อมูล ไม่ใช่จากกระบวนการ
 
@@ -160,7 +196,7 @@ Coverage ในตาราง 2.2 คือ **marginal coverage เฉลี่
 
 ---
 
-### 2.6 One-Step-Ahead Coverage — protocol ที่สะท้อนการใช้งานจริง
+### 2.7 One-Step-Ahead Coverage — protocol ที่สะท้อนการใช้งานจริง
 
 Coverage ในตาราง 2.2 เป็นแบบ **in-sample**: `compute_spc_metrics()` เอาขอบเขต **สุดท้าย** ไปวัดย้อนหลังทั้งสตรีม และเพราะขอบเขตขยายอย่างเดียวไม่เคยหด ข้อมูลช่วงต้นจึงถูกวัดด้วยขอบเขตที่เรียนจากข้อมูลที่ยังมาไม่ถึง ส่วนการนับ violation รายchunk ก็เอนเอียงเช่นกัน — chunk ขยายขอบเขตก่อน แล้วค่อยถูกวัดด้วยขอบเขตที่เพิ่งขยาย
 
@@ -190,7 +226,7 @@ Coverage ในตาราง 2.2 เป็นแบบ **in-sample**: `compute
 
 ---
 
-### 2.7 Interval Width — ตัวคู่ที่ต้องอ่านพร้อม Coverage
+### 2.8 Interval Width — ตัวคู่ที่ต้องอ่านพร้อม Coverage
 
 Coverage อ่านลำพังไม่ได้ — ช่วงที่กว้างพอจะได้ coverage 100% เสมอโดยไม่มีข้อมูลอะไรเลย และเพราะขอบเขตของ RBULT ขยายอย่างเดียวไม่เคยหด มันจึงกว้างขึ้นเพื่อดูดซับความไม่นิ่งของข้อมูล Tier 1 มีเมตริกนี้อยู่แล้ว (`Mean_Interval_Width`, `Sigma_L/R`) ตอนนี้ Tier 2 มีครบเหมือนกัน (เก็บด้วย Welford → 9 scalar ต่อ feature ยังเป็น $O(D)$)
 
@@ -218,7 +254,7 @@ Coverage อ่านลำพังไม่ได้ — ช่วงที่
 
 ---
 
-### 2.8 Memory Usage — จุดแข็งที่แท้จริง
+### 2.9 Memory Usage — จุดแข็งที่แท้จริง
 
 | Dataset | D | **RBULT** | Baseline Bootstrap | ประหยัด |
 |---|:---:|---:|---:|---:|
@@ -232,7 +268,7 @@ Coverage อ่านลำพังไม่ได้ — ช่วงที่
 
 > **แก้จากฉบับก่อน:** ตัวเลข "TEP ประหยัด ~156,000× เทียบ baseline 504,425.95 KB" **ใช้ไม่ได้แล้ว** เพราะ `exp_tep_benchmark.py` ปัจจุบันใช้ Sliding-Window (W=2000) ไม่ใช่ Full-History baseline ตัวที่ให้เลข 504,425.95 KB ไม่มีอยู่ในโค้ดอีกต่อไป ตัวเลขที่ reproduce ได้คือ **~180×**
 
-### 2.9 Latency
+### 2.10 Latency
 
 | Dataset | D | RBULT |
 |---|:---:|---:|
@@ -247,7 +283,7 @@ Coverage อ่านลำพังไม่ได้ — ช่วงที่
 
 ทุกชุดต่ำกว่า 65 ms ต่อ chunk รองรับ real-time streaming ได้ (ค่าเหล่านี้แปรตามภาระเครื่องขณะรัน)
 
-### 2.10 Baselines ที่เปรียบเทียบ
+### 2.11 Baselines ที่เปรียบเทียบ
 
 | Baseline | คำอธิบาย |
 |---|---|
@@ -422,6 +458,7 @@ $$\text{Peak RAM} = \frac{1}{1024}\Big(\texttt{sizeof}(\text{chart}) + \sum_{d}[
 | 11 | เพิ่มเมตริก Interval Width เข้า Tier 2 | `mean_interval_width`, `final_interval_width`, `sigma_L/R`, `width_ratio_local`, `width_ratio_global` — Tier 1 มีอยู่แล้วแต่ Tier 2 ไม่มี ทำให้ coverage ถูกอ่านลำพังโดยไม่มีตัวคู่ เก็บด้วย Welford จึงยังเป็น $O(D)$ |
 | 12 | เพิ่ม One-Step-Ahead (prequential) coverage เข้า Tier 2 | เดิม Tier 2 รายงานเฉพาะ in-sample ที่ใช้ขอบเขตสุดท้ายวัดย้อนหลัง ขณะที่ Tier 1 รายงานสอง protocol มาตลอด ช่องว่างสัมพันธ์กับ `width_ratio_local` (r = 0.686 marginal, 0.782 joint) ตั้งแต่ 0.006 จุด (Industrial Pump) ถึง 11.87 จุด joint (Water Pump) |
 | 13 | TEP: chunk size 500 → 600 และเพิ่ม within-run differencing | k=600 ทำให้ 1 chunk = 1 run in-control chunks เพิ่มจาก 38–44 เป็น 100 ทุก mode; differencing ทำให้ **Mode 3 พลิกจาก Chunk FAR 100% เป็น 0.00%** และ joint 17.8% → 59.1% ทุก mode ดีขึ้นทุกเมตริก แต่ AUC รายมิติลดบน Mode 1/4 พบข้อจำกัดใหม่: ความกว้างของช่วงขึ้นกับ k แบบไม่เป็นเชิงเดียว |
+| 14 | เมตริกที่ไม่นิยามคืน NaN แทน 0.00 / 1.00 | แก้ fallback 3 จุด: Chunk FAR และ ARL0 เมื่อ in-control chunk = 0, และ ARL1 เมื่อไม่เคยตรวจเจอ เปิดโปงว่า **Industrial Pump ทั้ง 4 method ไม่นิยาม** และ **Sliding-Window Bootstrap ไม่เคยเตือนเลยบน TEP ทั้ง 8 การรัน** (ARL1 = 1.00 เดิม เป็น fallback) เพิ่ม label quality gate ใน `exp_pump_benchmark.py` |
 
 ### ไฟล์อ้างอิงใน `results/`
 

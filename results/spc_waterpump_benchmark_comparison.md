@@ -8,4 +8,4 @@
 | **ARL0 (In-Control Run Length)** | 0.00 | 0.00 | 2.05 | **2.38** | Boundary Stability |
 | **ARL1 (Detection Delay)** | 1.00 | 1.00 | 1.15 | **3.67** | Fast Failure Response |
 | **Peak Memory Footprint (KB)** | 0.35 KB | 0.70 KB | 17667.15 KB | **0.98 KB** | **Constant $O(D)$ RAM Footprint** |
-| **Avg Latency per Chunk (ms)** | 0.1506 ms | 0.9838 ms | 30.9206 ms | **24.7807 ms** | Real-time Streaming (< 70 ms) |
+| **Avg Latency per Chunk (ms)** | 0.4257 ms | 1.1148 ms | 30.6462 ms | **26.3030 ms** | Real-time Streaming (< 70 ms) |

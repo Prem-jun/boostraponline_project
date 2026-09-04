@@ -168,7 +168,8 @@ def run_waterpump_spc_benchmark(csv_path: str = 'sensor.csv',
         'ooc_chunk_rate': sum(1 for h in shewhart_history if h['any_ooc']) / num_chunks,
         'overall_coverage_pct': shewhart_coverage,
         'sample_far_pct': 100.0 - shewhart_coverage,
-        'false_alarm_rate': shewhart_fa / max(1, in_control_chunks),
+        'false_alarm_rate': (shewhart_fa / in_control_chunks
+                             if in_control_chunks > 0 else float('nan')),
         'arl_0': _compute_arl0(shewhart_history, chunk_labels, in_control_chunks),
         'arl_1': _compute_arl1(shewhart_history, chunk_labels),
         'total_time_sec': shewhart_total_time
@@ -229,7 +230,8 @@ def run_waterpump_spc_benchmark(csv_path: str = 'sensor.csv',
         'ooc_chunk_rate': sum(1 for h in ewma_history if h['any_ooc']) / num_chunks,
         'overall_coverage_pct': ewma_coverage,
         'sample_far_pct': 100.0 - ewma_coverage,
-        'false_alarm_rate': ewma_fa / max(1, in_control_chunks),
+        'false_alarm_rate': (ewma_fa / in_control_chunks
+                             if in_control_chunks > 0 else float('nan')),
         'arl_0': _compute_arl0(ewma_history, chunk_labels, in_control_chunks),
         'arl_1': _compute_arl1(ewma_history, chunk_labels),
         'total_time_sec': ewma_total_time
@@ -283,7 +285,8 @@ def run_waterpump_spc_benchmark(csv_path: str = 'sensor.csv',
         'ooc_chunk_rate': sum(1 for h in conv_history if h['any_ooc']) / num_chunks,
         'overall_coverage_pct': conv_coverage,
         'sample_far_pct': 100.0 - conv_coverage,
-        'false_alarm_rate': conv_fa / max(1, in_control_chunks),
+        'false_alarm_rate': (conv_fa / in_control_chunks
+                             if in_control_chunks > 0 else float('nan')),
         'arl_0': _compute_arl0(conv_history, chunk_labels, in_control_chunks),
         'arl_1': _compute_arl1(conv_history, chunk_labels),
         'total_time_sec': conv_total_time
@@ -346,6 +349,10 @@ def _compute_arl0(history: list, labels: list, in_control_chunks: int) -> float:
                 curr += 1
     if curr > 0:
         runs.append(curr)
+    # NaN when there is no in-control data; otherwise, with no false alarm the
+    # value is right-censored at the observation window and returned as a bound.
+    if in_control_chunks == 0:
+        return float('nan')
     return float(np.mean(runs)) if runs else float(in_control_chunks)
 
 
@@ -360,7 +367,9 @@ def _compute_arl1(history: list, labels: list) -> float:
                 delay = 0
         else:
             delay = 0
-    return float(np.mean(delays)) if delays else 1.0
+    # NaN, not 1.0, when nothing was ever detected -- the old fallback was
+    # indistinguishable from instant detection.
+    return float(np.mean(delays)) if delays else float('nan')
 
 
 if __name__ == '__main__':

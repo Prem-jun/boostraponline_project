@@ -94,6 +94,53 @@ On TEP, RBULT flags 30–75% of observations as out-of-control on a joint basis.
 per-dimension false alarm rate there is 15–43x the Bonferroni target, which is the
 root cause of both the joint-coverage collapse and the chunk-level behaviour.
 
+## Undefined metrics now report NaN instead of a flattering zero
+
+Three fallbacks in the metric code returned a *good-looking number* where the quantity was
+undefined. All three are fixed, in the library and in all six experiment scripts.
+
+| Situation | Old value | New value |
+|---|---|---|
+| Chunk FAR with no in-control chunks (0/0) | `0.00` via `max(1, in_control_chunks)` | `NaN` |
+| ARL0 with no in-control chunks | `0.00` | `NaN` |
+| ARL1 when nothing was ever detected | `1.00` — identical to instant detection, the best possible score | `NaN`, plus a new `n_detected_episodes` field |
+
+ARL0 remains the in-control chunk count when no false alarm fires, since that is a genuine
+right-censored lower bound; a new `arl_0_censored` flag marks those cells.
+
+**What this exposed, now visible in the shipped result files rather than only in ad-hoc
+analysis:**
+
+- **Industrial Pump** — all four methods report NaN for Chunk FAR, ARL0 and ARL1. The dataset
+  has zero in-control chunks, so the previous `0.00%` across the board was arithmetic, not
+  measurement, and read as flawless in-control behaviour.
+- **The sliding-window bootstrap baseline never detects anything on TEP.** `arl_1` is NaN on
+  all eight TEP runs (four modes, raw and differenced). Its published `ARL1 = 1.00` was the
+  fallback throughout. Combined with its 0.00% Chunk FAR and ARL0 of 100, the honest reading
+  is that this baseline simply never fires an alarm on TEP — it is not a strong competitor
+  there, and any comparison against it on chunk-level metrics is vacuous.
+
+### Industrial Pump: the label is a coin flip
+
+`Maintenance_Flag` carries no information. Three independent checks agree:
+
+| Check | Result |
+|---|---|
+| AUC of each of the 6 variables predicting the flag | 0.4925 – 0.5050, **every p > 0.05** |
+| Flag rate per pump (5 pumps) | 48.6% – 50.6%, uniform |
+| Mean contiguous run length | **1.99 rows**, exactly the 1.99 implied by independent Bernoulli(0.4984) draws |
+
+No redefinition of the chunk label, grouping by `Pump_ID`, or threshold choice can recover a
+chunk-level metric from a random label. `exp_pump_benchmark.py` now runs a label-quality gate
+that prints this diagnosis at run time and renders the affected cells as `—` with an
+"UNDEFINED — no in-control chunks" caption, rather than leaving `nan%` beside a caption
+reading "Low Batch False Alarm Rate".
+
+Sample-level metrics — coverage, sample FAR, interval width, RAM, latency — do not depend on
+the label and remain valid. The dataset stays useful precisely because it is i.i.d.: it is the
+reference point where `width_ratio_local` equals 1.00, against which the inflated intervals on
+the autocorrelated streams are measured.
+
 ## TEP: chunk size aligned to the simulation run, and within-run differencing
 
 **Chunk size 500 -> 600.** The TEP arrays are (runs x 600 steps x 34 vars) flattened into one
