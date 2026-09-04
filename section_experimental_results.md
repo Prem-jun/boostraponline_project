@@ -125,10 +125,116 @@ To rigorously validate performance, the framework evaluates 7 quantitative metri
 
 ## Public Benchmark Datasets
 
-* **AI4I 2020 Predictive Maintenance Dataset (Kaggle / UCI):**
-  * 10,000 samples, 5 telemetry feature channels (`Air temp`, `Process temp`, `Rotational speed`, `Torque`, `Tool wear rate`), 339 failure events.
-* **MetroPT-3 Dataset (Kaggle):**
-  * Time-series compressor signals recorded at 1 Hz (Pressure, Temperature, Current).
+Five distinct datasets are used (TEP contributing four operating regimes, for eight
+evaluation streams in total). Their statistical character differs substantially, and that
+difference determines which metrics are meaningful on which stream. All figures below are
+measured, not quoted from the source publications.
+
+### Overview
+
+| Dataset | $D$ | $N$ | Lag-1 autocorr. (median) | Genuine time series? | In-control chunks |
+|---|---:|---:|---:|:---:|---:|
+| Water Pump (SCADA) | 10 | 220,320 | **0.998** | Yes | 405 / 441 |
+| MetroPT-3 | 7 | 1,516,948 | **0.970** | Yes | 1,482 / 1,517 |
+| TEP Modes 1/3/4/5 | 34 | ~1.74 M | 0.948 | Yes, but reconstructed | 38–44 / ~3,480 |
+| AI4I 2020 | 5 | 10,000 | **0.008** | **No** | 6 / 100 |
+| Industrial Pump | 5 | 20,000 | **0.001** | **No** | **0 / 100** |
+
+Lag-1 autocorrelation is the decisive test: in a true time series the value at $t$ must
+correlate with $t-1$. A coefficient near zero means the rows are mutually independent
+observations, whatever the column ordering suggests.
+
+**Non-Gaussianity is confirmed across the board.** Only **3 of 61 monitored feature channels**
+pass a Shapiro-Wilk normality test at $p > 0.05$ (5,000-sample subsamples). This is the
+strongest empirical support for a non-parametric approach in the whole suite.
+
+### Genuine multivariate time series
+
+**Water Pump SCADA (`sensor.csv`)** — 10 sensor channels sampled once per minute
+(April–August 2018), with **7 contiguous failure episodes** covering 6.57% of the stream.
+*Challenge:* lag-1 autocorrelation of 0.998 means consecutive samples are almost identical,
+which voids the independence assumption underlying any binomial model of within-chunk
+violation counts. Median $|\text{skewness}| = 2.31$ and excess kurtosis $= 5.57$; no channel
+passes a normality test.
+
+**MetroPT-3** — 7 analogue compressor channels (February–August 2020) with **4 contiguous
+failure windows** reported by the operator, covering 1.97% of the stream. *Challenge:* this
+is the only stream whose in-control proportion (97.7%) matches a realistic SPC monitoring
+scenario, and therefore the only one on which Chunk FAR is measured with real statistical
+weight. Excess kurtosis reaches 38.71 on some channels. Its fault signature is also
+**inverted**: during the labelled failures the sensors go quiet and sit inside the control
+limits, while normal operation cycles across them.
+
+### Reconstructed time series
+
+**Tennessee Eastman Process (Modes 1, 3, 4, 5)** — the source arrays have shape
+$(2900 \times 600 \times 34)$: **2,900 mutually independent simulation runs** of 600 time
+steps each. `load_and_preprocess_tep_data()` flattens these into a single continuous stream.
+
+*Challenges:*
+- The flattening introduces **2,899 artificial discontinuities** at run boundaries. Within a
+  run the lag-1 autocorrelation is 0.917 (a genuine process); the 0.999 measured after
+  flattening is an artefact of concatenation.
+- With $k = 500$ and runs of length 600, **every chunk straddles a run boundary**. Aligning
+  the chunk size to the run length ($k = 600$ or $300$) would remove this artefact.
+- **3 of the 34 channels are constant** ($\text{sd} \approx 0$), so their skewness and
+  kurtosis are undefined and any control limit fitted to them is degenerate.
+- Across the 31 non-constant channels, median $|\text{skewness}| = 1.78$ (max 9.40) and
+  median excess kurtosis $= 13.12$ (max **117.91**) — by a wide margin the most severely
+  non-Gaussian data in the suite.
+- **96.55% of samples are labelled faulty**, leaving only 38–44 in-control chunks out of
+  ~3,480. Chunk FAR and $\text{ARL}_0$ therefore rest on a very small denominator.
+
+### Not time series
+
+**AI4I 2020 Predictive Maintenance (UCI / Kaggle)** — 10,000 rows, 5 monitored channels,
+339 failure events. Each row is **one manufactured product, not a time step**: `UDI`
+increments by exactly 1 as a product index, and `Tool wear [min]` **resets 119 times** as
+tools are replaced. Per-channel lag-1 autocorrelation:
+
+| Channel | Lag-1 autocorr. |
+|---|---:|
+| Air temperature [K] | 0.9994 |
+| Process temperature [K] | 0.9985 |
+| Rotational speed [rpm] | **0.0077** |
+| Torque [Nm] | **0.0054** |
+| Tool wear Rate [min diff] | **−0.0124** |
+
+The two temperature channels were synthesised as random walks and therefore look smooth; the
+other three are i.i.d.
+
+> **Caveat on the derived feature.** `Tool wear Rate [min diff]` is produced by
+> `df['Tool wear [min]'].diff()`, which differences **consecutive but unrelated products** and
+> crosses all 119 tool-reset points. It is not a wear rate in any physical sense, and should
+> be documented as such or dropped.
+
+*Challenge:* the 339 failure samples occur as **310 separate single-row episodes**, so almost
+every 100-row chunk contains one. Only **6 of 100 chunks are in-control**, giving Chunk FAR a
+resolution of 16.67% per chunk.
+
+**Large Industrial Pump Maintenance** — 20,000 rows, 5 channels, lag-1 autocorrelation
+$\approx 0.001$ on every channel. `Pump_ID` takes 5 distinct values, so the stream is **five
+separate machines concatenated**, not one continuous process.
+
+*Challenge — the labels are unusable for batch-level evaluation.* `Maintenance_Flag` changes
+value **9,979 times across 20,000 rows (49.9%)**, with a mean contiguous fault run of
+**2.0 rows**. This is an alternating indicator, not a failure process with duration.
+Consequently **every 200-row chunk contains at least one flagged sample, and the dataset has
+zero in-control chunks.** Its Chunk FAR and $\text{ARL}_0$ are undefined; the `0.00` values
+that appear in the results tables come from the `max(1, in_control_chunks)` guard in the
+metric code, not from a measurement. Only sample-level metrics (coverage, sample FAR, RAM,
+latency) are interpretable on this dataset.
+
+### Implications for the evaluation
+
+1. Claims about **streaming / time-series** behaviour are supported by MetroPT-3 and Water
+   Pump. AI4I and Industrial Pump are better described as multivariate non-Gaussian batch
+   data.
+2. **Chunk FAR and $\text{ARL}_0$ should be reported only for MetroPT-3 and Water Pump**,
+   which have 405 and 1,482 in-control chunks respectively. On the others the denominator is
+   6, 0, or 38–44.
+3. The **non-parametric motivation is strongly supported** — 58 of 61 channels fail a
+   normality test, with excess kurtosis up to 117.91.
 
 ### Compared Methods
 - **Shewhart chart** =: The classical Shewhart chart sets static control limits based on the **Gaussian Normal Distribution ($\mathcal{N}(\mu, \sigma^2)$) assumption** using the famous **3-Sigma ($\pm 3\sigma$) rule**:
@@ -240,5 +346,13 @@ returned when *nothing was ever detected*; $\text{ARL}_0$ is censored at the in-
 count when no false alarm fires; and Chunk FAR must be read with a detection count, since a
 detector that never alarms scores 0.00%. Industrial Pump has **zero** in-control chunks, so its
 Chunk FAR and ARL0 are undefined rather than zero.
+
+**3. Dataset characterisation.** The *Public Benchmark Datasets* section above was rewritten
+from measured properties rather than source-publication descriptions. It had previously
+listed only two of the five datasets and described them all as time series; in fact only
+MetroPT-3 and Water Pump are, AI4I 2020 and Industrial Pump have lag-1 autocorrelation
+$\approx 0$, and TEP is 2,900 independent runs flattened into one stream. Reproduce with
+`python experiments/profile_tier2_datasets.py`; values are tabulated in
+`results/tier2_dataset_profile.csv`.
 
 See `results/TIER2_RERUN_SUMMARY.md`.
