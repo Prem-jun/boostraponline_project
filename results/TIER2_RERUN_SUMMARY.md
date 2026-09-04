@@ -94,6 +94,62 @@ On TEP, RBULT flags 30–75% of observations as out-of-control on a joint basis.
 per-dimension false alarm rate there is 15–43x the Bonferroni target, which is the
 root cause of both the joint-coverage collapse and the chunk-level behaviour.
 
+## TEP: chunk size aligned to the simulation run, and within-run differencing
+
+**Chunk size 500 -> 600.** The TEP arrays are (runs x 600 steps x 34 vars) flattened into one
+stream, so any k not dividing 600 makes every chunk straddle a run boundary — a discontinuity
+of the data layout, not of the process. Alignment also fixes the labels: with only 100 of
+~2,900 runs normal, and each normal run spanning 1.2 chunks of 500, normal runs were routinely
+labelled faulty by a neighbour sharing their chunk. **In-control chunks rise from 38-44 to 100
+in every mode**, so the Clopper-Pearson upper bound on an observed 0% Chunk FAR tightens from
+~9.25% to ~3.0%. C = ceil(0.05 * 600) = 30.
+
+Coverage *fell* under the corrected chunking (Mode 1 96.74 -> 93.71, Mode 4 96.67 -> 90.64).
+The cause is not the run alignment itself: at fixed N and fixed data, the final interval width
+varies with k in a way that is **not monotonic** — on a 300-run subset of Mode 1, k = 100 / 150
+/ 300 / 600 / 1200 gives final widths of 62.98 / 31.22 / 34.32 / 36.10 / 45.37 and coverage
+98.17 / 96.64 / 97.53 / 93.59 / 95.14. Repeating each setting four times gives a spread of
+0.0 in width and 0.01 points in coverage, so this is a real property of the lazy expansion
+mechanism, not RNG noise. **The interval estimate is chunk-size dependent**, and that should
+be stated as a limitation: k is a free experimental parameter that moves the headline number.
+
+**Within-run differencing.** Differencing is applied inside each run and never across runs —
+the error that made AI4I's `Tool wear Rate` an artefact. Each run loses its first sample
+(600 -> 599). Applied to the dataframe so all four methods receive identical input;
+`RBULTControlChart(difference=True)` performs the same transform in streaming O(D) form
+(one scalar of state per feature) and is verified to reproduce `np.diff` exactly in both the
+continuous and the `new_sequence` mode.
+
+| Mode | Coverage raw -> diff | Joint raw -> diff | Chunk FAR raw -> diff | ARL0 raw -> diff | width_ratio_global |
+|---|---|---|---|---|---|
+| 1 | 93.71 -> **98.13** | 48.83 -> **66.17** | 0.00 -> 0.00 | 100.0 -> 100.0 | 0.51 -> **0.85** |
+| 3 | 91.76 -> **97.20** | 17.79 -> **59.10** | **100.00 -> 0.00** | **0.00 -> 100.0** | 0.52 -> **0.78** |
+| 4 | 90.64 -> **96.09** | 50.61 -> **55.23** | 1.00 -> 0.00 | 49.5 -> **100.0** | 0.40 -> **0.65** |
+| 5 | 92.39 -> **97.37** | 45.15 -> **61.63** | **37.00 -> 0.00** | 1.7 -> **100.0** | 0.46 -> **0.73** |
+
+Every mode improves on every metric. **Mode 3 is transformed**: it had been the worst case
+throughout this exercise — Chunk FAR pinned at 100% for every threshold, joint coverage 17.8%,
+ARL0 zero — and differencing takes it to 0.00% Chunk FAR with 59.1% joint coverage. The
+earlier conclusion that Mode 3 "has no signal" was wrong twice over: the signal is there, it
+is simply distributed across dimensions (see `spc_total_vs_perfeature_report.md`) *and*
+masked by the level at which each run sits.
+
+Two secondary findings:
+
+- **The in-sample / prequential gap closes to zero** on all four modes (0.25-0.69 points ->
+  0.00). This independently confirms the mechanism identified earlier: the gap comes from
+  boundaries inflating to absorb non-stationarity, so removing the non-stationarity removes
+  the gap.
+- **`width_ratio_global` rises to 0.65-0.85** from 0.40-0.52 — the interval moves closer to
+  the empirical support instead of covering only half of it, which is what drove the
+  per-dimension FAR above the Bonferroni target on raw TEP.
+
+Against this, AUC of the per-feature violation statistic falls on Modes 1 and 4
+(0.849 -> 0.791, 0.863 -> 0.780): differencing discards level information, so a fault that
+holds a shifted level becomes a single spike at the transition. The sum-over-dimensions
+statistic is far less affected (0.863 -> 0.844, 0.870 -> 0.853). Both raw and differenced
+results are reported rather than replacing one with the other.
+
 ## One-step-ahead (prequential) coverage — reported alongside the in-sample figure
 
 `compute_spc_metrics()` scores coverage **in-sample**: it applies the FINAL limits

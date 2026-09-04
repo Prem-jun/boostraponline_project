@@ -63,7 +63,8 @@ class RBULTControlChart:
     def __init__(self, features: List[str], minmax_flag: bool = False,
                  outlier_filter: bool = True, alpha_sys: float = 0.05,
                  fwer_correction: str = 'bonferroni',
-                 chunk_alarm_rate: float = 0.05, alpha_chunk: float = 0.05):
+                 chunk_alarm_rate: float = 0.05, alpha_chunk: float = 0.05,
+                 difference: bool = False):
         """Initialize the RBULT Control Chart engine.
 
         Args:
@@ -75,6 +76,10 @@ class RBULTControlChart:
             chunk_alarm_rate: Fraction q of chunk size used for the default
                 threshold C = ceil(q * k).
             alpha_chunk: Target per-chunk false alarm probability for Phase I calibration.
+            difference: If True, first-order difference each dimension as chunks arrive,
+                carrying one scalar of state per feature so the transform stays O(D).
+                Pass new_sequence=True to update_chunk() at boundaries where the process
+                restarts, so no difference is taken across them.
         """
         self.features = features
         self.minmax_flag = minmax_flag
@@ -83,6 +88,14 @@ class RBULTControlChart:
         self.fwer_correction = fwer_correction
         self.chunk_alarm_rate = chunk_alarm_rate
         self.alpha_chunk = alpha_chunk
+
+        # Optional first-order differencing, applied per dimension as the chunk arrives.
+        # State is one scalar per feature — the last value of the previous chunk — so the
+        # transform is genuinely streaming and keeps the chart at O(D). Set
+        # new_sequence=True on update_chunk() when a chunk begins an independent segment
+        # (e.g. a TEP simulation run), so no difference is taken across that boundary.
+        self.difference = difference
+        self._diff_state: Dict[str, Optional[float]] = {feat: None for feat in features}
 
         # Phase I state (optional per-dimension binomial calibration)
         self.feature_thresholds: Optional[Dict[str, int]] = None
@@ -156,6 +169,52 @@ class RBULTControlChart:
         if self.feature_thresholds is not None and feat in self.feature_thresholds:
             return self.feature_thresholds[feat]
         return self.default_threshold(chunk_len)
+
+    def _apply_difference(self, df_chunk: pd.DataFrame,
+                          new_sequence: bool = False) -> pd.DataFrame:
+        """First-order difference the chunk per dimension, carrying O(D) state.
+
+        For sample t > 1 within the chunk this is x[t] - x[t-1]. For t = 1 the difference
+        is taken against the last value of the previous chunk, held in `_diff_state` —
+        one scalar per feature, so the transform adds no memory that grows with the stream.
+
+        Args:
+            df_chunk: Raw chunk.
+            new_sequence: True when this chunk starts an independent segment. The carried
+                state is discarded and the chunk's first row is dropped, so no difference
+                is ever taken across a boundary where the process restarts. This is
+                required for TEP, whose stream is 2,900 independent simulation runs
+                concatenated; differencing across such a boundary produces a meaningless
+                jump, which is exactly what made AI4I's 'Tool wear Rate' an artefact.
+
+        Returns:
+            The differenced chunk. One row shorter than the input on the first chunk of
+            each sequence, otherwise the same length.
+        """
+        if new_sequence:
+            for feat in self.features:
+                self._diff_state[feat] = None
+
+        out = {}
+        drop_first = False
+        for feat in self.features:
+            if feat not in df_chunk.columns:
+                continue
+            v = df_chunk[feat].to_numpy(dtype=float)
+            prev = self._diff_state[feat]
+            if prev is None:
+                d = np.diff(v)                      # loses the first row
+                drop_first = True
+            else:
+                d = np.diff(np.concatenate([[prev], v]))
+            out[feat] = d
+            if len(v):
+                self._diff_state[feat] = float(v[-1])
+
+        if not out:
+            return df_chunk.iloc[0:0]
+        idx = df_chunk.index[1:] if drop_first else df_chunk.index
+        return pd.DataFrame(out, index=idx)
 
     def _score_prequential(self, df_chunk: pd.DataFrame, chunk_len: int) -> None:
         """Score a chunk against the limits held *before* it updates them.
@@ -265,7 +324,8 @@ class RBULTControlChart:
         return self.feature_thresholds
 
     def update_chunk(self, chunk_data: Union[pd.DataFrame, Dict[str, List[float]]],
-                     ooc_threshold_count: Optional[int] = None) -> dict:
+                     ooc_threshold_count: Optional[int] = None,
+                     new_sequence: bool = False) -> dict:
         """Process a streaming data chunk across all monitored features.
 
         Args:
@@ -274,6 +334,10 @@ class RBULTControlChart:
                 required to flag a chunk OOC. When None (default), the threshold is
                 taken from Phase I calibration if available, otherwise from the rate
                 rule C = ceil(chunk_alarm_rate * k).
+            new_sequence: Only meaningful when difference=True. Marks this chunk as the
+                start of an independent segment, so no difference is taken against the
+                previous chunk. Use it when the stream is a concatenation of separate
+                records rather than one continuous process.
 
         Returns:
             Dict containing chunk processing statistics, dynamic LCL/UCL bounds,
@@ -288,6 +352,9 @@ class RBULTControlChart:
             df_chunk = pd.DataFrame(chunk_data)
         else:
             df_chunk = chunk_data
+
+        if self.difference:
+            df_chunk = self._apply_difference(df_chunk, new_sequence=new_sequence)
 
         chunk_len = len(df_chunk)
         self.total_samples_processed += chunk_len

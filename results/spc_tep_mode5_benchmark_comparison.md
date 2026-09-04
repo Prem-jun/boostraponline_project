@@ -2,10 +2,10 @@
 
 | Evaluation Metric | Baseline Shewhart Chart | Baseline EWMA Chart | Baseline Sliding-Window Bootstrap (W=2000) | Proposed RBULT-SPC | Advantage / Key Discussion |
 |---|---|---|---|---|---|
-| **Overall Coverage Rate (%)** | 85.15% | 71.38% | 99.05% | **97.79%** | High-Dimensional Non-Gaussian Coverage |
-| **Sample-level FAR (%)** | 14.85% | 28.62% | 0.95% | **2.21%** | Controlled near Bonferroni $\alpha_{dim}$ |
-| **Chunk-level FAR (%)** | 90.91% | 100.00% | 0.00% | **11.36%** | Low Batch False Alarm Rate |
-| **ARL0 (In-Control Run Length)** | 0.10 | 0.00 | 44.00 | **6.50** | Boundary Stability |
-| **ARL1 (Detection Delay)** | 1.01 | 1.00 | 1.00 | **1.55** | Fast Failure Response |
+| **Overall Coverage Rate (%)** | 84.85% | 71.23% | 99.18% | **92.39%** | High-Dimensional Non-Gaussian Coverage |
+| **Sample-level FAR (%)** | 15.15% | 28.77% | 0.82% | **7.61%** | Controlled near Bonferroni $\alpha_{dim}$ |
+| **Chunk-level FAR (%)** | 99.00% | 100.00% | 0.00% | **37.00%** | Low Batch False Alarm Rate |
+| **ARL0 (In-Control Run Length)** | 0.01 | 0.00 | 100.00 | **1.70** | Boundary Stability |
+| **ARL1 (Detection Delay)** | 1.01 | 1.00 | 1.00 | **1.18** | Fast Failure Response |
 | **Peak Memory Footprint (KB)** | 1.15 KB | 2.30 KB | 582.87 KB | **3.23 KB** | **Constant $O(D)$ RAM Footprint** |
-| **Avg Latency per Chunk (ms)** | 0.5509 ms | 3.6562 ms | 4.1089 ms | **11.4897 ms** | Real-time Stream Execution |
+| **Avg Latency per Chunk (ms)** | 0.5806 ms | 4.1916 ms | 4.3476 ms | **11.6985 ms** | Real-time Stream Execution |

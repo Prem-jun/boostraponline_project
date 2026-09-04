@@ -68,10 +68,12 @@ def run_tep_spc_benchmark(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_Mode1.
                           mode_label: str = 'Mode 1',
                           csv_output: str = 'results/spc_tep_benchmark_results.csv',
                           md_output: str = 'results/spc_tep_benchmark_comparison.md',
-                          chunk_size: int = 100,
+                          chunk_size: int = 600,
                           window_size: int = 2000,
                           outlier_filter: bool = True,
-                          ooc_threshold_count: Optional[int] = None) -> dict:
+                          ooc_threshold_count: Optional[int] = None,
+                          difference: bool = False,
+                          run_length: int = 600) -> dict:
     """Run streaming SPC benchmark comparing 4 methods on TEP dataset.
 
     Args:
@@ -79,7 +81,12 @@ def run_tep_spc_benchmark(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_Mode1.
         mode_label: Label for the TEP mode being evaluated.
         csv_output: Path to save result metrics CSV.
         md_output: Path to save result markdown table.
-        chunk_size: Streaming chunk size (samples per batch, default 100).
+        chunk_size: Streaming chunk size, default 600 = exactly one TEP simulation run.
+            The source arrays are (runs x 600 steps x 34 vars) flattened into one stream,
+            so any k that does not divide 600 makes every chunk straddle a run boundary --
+            a discontinuity of the experimental setup, not of the process. Aligning k to the
+            run length also stops normal runs being labelled faulty by a neighbour sharing
+            their chunk: in-control chunks rise from 38-44 to 100 in every mode.
         window_size: Sliding window size W for conventional bootstrap (default 2000).
         outlier_filter: Whether Z-score spike filtering (Algorithm 4) is enabled.
         ooc_threshold_count: Minimum sample violations per chunk to flag chunk OOC.
@@ -88,8 +95,27 @@ def run_tep_spc_benchmark(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_Mode1.
         Dict of results for all evaluated methods.
     """
     df, features = load_and_preprocess_tep_data(pickle_path)
-
     label_col = 'failure_label'
+
+    if difference:
+        # First-order difference WITHIN each simulation run, never across runs. The stream
+        # is `run_length`-step runs concatenated, so differencing across a boundary would
+        # subtract the end of one simulation from the start of an unrelated one -- the
+        # error that made AI4I's 'Tool wear Rate' an artefact. Each run loses its first
+        # sample. Applied to the dataframe so all four methods receive identical input;
+        # RBULTControlChart(difference=True) performs the same transform in streaming
+        # O(D) form and is verified to produce identical values.
+        n_runs = len(df) // run_length
+        blocks = []
+        for i in range(n_runs):
+            blk = df.iloc[i * run_length:(i + 1) * run_length]
+            d = blk[features].diff().iloc[1:]
+            d[label_col] = blk[label_col].iloc[1:].values
+            blocks.append(d)
+        df = pd.concat(blocks, ignore_index=True)
+        print(f"Applied within-run first-order differencing: "
+              f"{n_runs} runs x {run_length - 1} samples = {len(df):,}")
+
     num_chunks = int(np.ceil(len(df) / chunk_size))
 
     # Chunk alarm threshold: scale-free rate rule C = ceil(CHUNK_ALARM_RATE * k).
@@ -389,7 +415,7 @@ if __name__ == '__main__':
         mode_label='Mode 5 (10/90 Mass Ratio, Max Rate)',
         csv_output='results/spc_tep_mode5_benchmark_results.csv',
         md_output='results/spc_tep_mode5_benchmark_comparison.md',
-        chunk_size=500
+        chunk_size=600
     )
 
 

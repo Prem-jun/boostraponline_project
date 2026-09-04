@@ -20,7 +20,7 @@ from experiments.exp_tep_benchmark import load_and_preprocess_tep_data, _compute
 
 def run_single_pass_sensitivity(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_Mode1.pickle',
                                  thresholds: list = [5, 10, 15],
-                                 chunk_size: int = 500,
+                                 chunk_size: int = 600,   # = one TEP simulation run
                                  window_size: int = 2000):
     print("===================================================================================")
     print("      FAST SINGLE-PASS TEP SENSITIVITY STUDY (Thresholds = [5, 10, 15])            ")
