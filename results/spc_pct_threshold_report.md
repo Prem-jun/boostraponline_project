@@ -8,6 +8,14 @@ faulty chunks from normal ones.
 
 ## 1. Discriminative power (the decisive result)
 
+> **Superseded for TEP Mode 3 — see `spc_total_vs_perfeature_report.md`.** The
+> "no signal" verdict for TEP Mode 3 below reflects only the per-feature statistic.
+> Summing violations across dimensions raises its AUC from 0.448 to **0.859** and
+> detection at FAR <= 5% from 18.3% to **65.8%**. Mode 3's fault signal is distributed
+> across many dimensions rather than concentrated in one, so a per-feature maximum
+> cannot see it. The conclusion that "no threshold rule can rescue it" is wrong.
+
+
 AUC of per-chunk max-over-features violation count vs. the true fault label:
 
 | Dataset | D | k | in-control / OOC chunks | **AUC** | median violations (in-control → OOC) | verdict |

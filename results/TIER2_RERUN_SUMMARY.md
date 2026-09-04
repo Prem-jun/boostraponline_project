@@ -57,6 +57,15 @@ all four modes; RBULT reaches 93.7–97.8%.
 the bootstrap baseline wins or ties on 6 of the 7 datasets where the metric is
 measurable; RBULT wins only on Water Pump (29.38% vs 32.59%).
 
+> **Correction (see `spc_total_vs_perfeature_report.md`).** The Chunk FAR column above
+> must be read together with a detection count, which these tables do not carry. Under
+> the per-feature rule the sliding-window bootstrap **never raises a single alarm on any
+> TEP mode** — its 0.00% Chunk FAR, its ARL0 of 38/39/41/44 and its ARL1 of 1.00 all mean
+> "never fired", not "fired accurately". So it does not beat RBULT on TEP. On Mode 1
+> RBULT reaches 0.00% Chunk FAR *with 68.65% detection*, Shewhart 0.00% *with 79.92%*,
+> and the bootstrap 0.00% with nothing. The honest summary is that RBULT is competitive
+> with Shewhart on TEP Modes 1/4/5 and loses on Mode 3, not that the bootstrap dominates.
+
 **Does not hold — the TEP sensitivity claim.** The published "RBULT Chunk FAR = 0.00%
 at every threshold, ARL0 = 38.00" came from `exp_tep_sensitivity.py:56` reading
 `summary['sample_ooc_count']`, a key `update_chunk` never returned, so RBULT was
