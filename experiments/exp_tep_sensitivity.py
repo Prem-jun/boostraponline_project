@@ -2,8 +2,17 @@
 Fast Single-Pass TEP Threshold Sensitivity Study
 =================================================
 
-Evaluates OOC threshold counts [5, 10, 15] on TEP Mode 1 in a single streaming pass
-across 4 control chart methods: Shewhart, EWMA, Sliding Bootstrap (W=2000), and RBULT-SPC.
+Evaluates the chunk alarm threshold on TEP Mode 1 in a single streaming pass across four
+control charts: Shewhart, EWMA, Sliding-Window Bootstrap (W=2000) and RBULT-SPC.
+
+Per-feature violation counts are recorded once per chunk, so any threshold can be scored
+post hoc without re-streaming. A chunk alarms when ANY single feature reaches the
+threshold — the same rule as RBULTControlChart.update_chunk and the benchmark scripts.
+Earlier revisions summed violations across all D features here, which made this study's
+numbers incomparable with the main TEP tables.
+
+Chunk size is 600, one TEP simulation run, so the default rate rule gives
+C = ceil(0.05 * 600) = 30; the swept thresholds bracket it.
 """
 
 import os
@@ -19,7 +28,7 @@ from experiments.exp_tep_benchmark import load_and_preprocess_tep_data, _compute
 
 
 def run_single_pass_sensitivity(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_Mode1.pickle',
-                                 thresholds: list = [5, 10, 15],
+                                 thresholds: list = [5, 15, 30, 60, 120],
                                  chunk_size: int = 600,   # = one TEP simulation run
                                  window_size: int = 2000):
     print("===================================================================================")
@@ -53,7 +62,8 @@ def run_single_pass_sensitivity(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_
     for i in range(num_chunks):
         chunk_df = df.iloc[i * chunk_size : (i + 1) * chunk_size]
         summary = rbult_chart.update_chunk(chunk_df, ooc_threshold_count=1)
-        rbult_chunk_ooc_counts.append(summary.get('sample_ooc_count', 0))
+        rbult_chunk_ooc_counts.append(
+            [summary['ooc_flags'].get(f, {}).get('ooc_count', 0) for f in features])
     rbult_time = time.perf_counter() - t_start
     rbult_base_metrics = rbult_chart.compute_spc_metrics(true_labels=chunk_labels, sample_df=df)
 
@@ -71,13 +81,13 @@ def run_single_pass_sensitivity(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_
     shewhart_covered = 0
     for i in range(num_chunks):
         chunk_df = df.iloc[i * chunk_size : (i + 1) * chunk_size]
-        ooc_cnt = 0
+        feat_counts = []
         for feat in features:
             vals = chunk_df[feat].values
             lcl, ucl = shewhart_bounds[feat]
-            ooc_cnt += np.sum((vals < lcl) | (vals > ucl))
+            feat_counts.append(int(np.sum((vals < lcl) | (vals > ucl))))
             shewhart_covered += np.sum((vals >= lcl) & (vals <= ucl))
-        shewhart_chunk_ooc_counts.append(ooc_cnt)
+        shewhart_chunk_ooc_counts.append(feat_counts)
     shewhart_time = time.perf_counter() - t_start
     shewhart_cov = (shewhart_covered / (len(df) * len(features))) * 100.0
 
@@ -97,17 +107,19 @@ def run_single_pass_sensitivity(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_
     ewma_covered = 0
     for i in range(num_chunks):
         chunk_df = df.iloc[i * chunk_size : (i + 1) * chunk_size]
-        ooc_cnt = 0
+        feat_counts = []
         for feat in features:
             vals = chunk_df[feat].values
             lcl, ucl = ewma_bounds[feat]
+            n_viol_feat = 0
             for v in vals:
                 ewma_stats[feat] = lam * v + (1.0 - lam) * ewma_stats[feat]
                 if ewma_stats[feat] < lcl or ewma_stats[feat] > ucl:
-                    ooc_cnt += 1
+                    n_viol_feat += 1
                 else:
                     ewma_covered += 1
-        ewma_chunk_ooc_counts.append(ooc_cnt)
+            feat_counts.append(n_viol_feat)
+        ewma_chunk_ooc_counts.append(feat_counts)
     ewma_time = time.perf_counter() - t_start
     ewma_cov = (ewma_covered / (len(df) * len(features))) * 100.0
 
@@ -121,18 +133,18 @@ def run_single_pass_sensitivity(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_
         chunk_df = df.iloc[i * chunk_size : (i + 1) * chunk_size]
         for feat in features:
             history_buffer[feat].extend(chunk_df[feat].tolist())
-        ooc_cnt = 0
+        feat_counts = []
         for feat in features:
             hist_vals = np.array(history_buffer[feat])
             lcl, ucl = np.percentile(hist_vals, [0.5, 99.5])
             vals = chunk_df[feat].values
-            ooc_cnt += np.sum((vals < lcl) | (vals > ucl))
+            feat_counts.append(int(np.sum((vals < lcl) | (vals > ucl))))
             conv_covered += np.sum((vals >= lcl) & (vals <= ucl))
-        conv_chunk_ooc_counts.append(ooc_cnt)
+        conv_chunk_ooc_counts.append(feat_counts)
     conv_time = time.perf_counter() - t_start
     conv_cov = (conv_covered / (len(df) * len(features))) * 100.0
 
-    # Evaluate across thresholds [5, 10, 15]
+    # Evaluate every threshold from the single streaming pass, per-feature
     results_list = []
     methods_data = [
         ('Baseline Shewhart Chart', shewhart_chunk_ooc_counts, shewhart_cov, 1.15, (shewhart_time/num_chunks)*1000),
@@ -143,7 +155,12 @@ def run_single_pass_sensitivity(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_
 
     for thresh in thresholds:
         for name, ooc_counts, cov_pct, mem_kb, lat_ms in methods_data:
-            history = [{'any_ooc': (cnt >= thresh), 'latency_ms': lat_ms} for cnt in ooc_counts]
+            # ANY single feature reaching the threshold flags the chunk, matching
+            # RBULTControlChart.update_chunk and the benchmark scripts. Earlier revisions
+            # summed violations across all D features here, so this study's numbers were
+            # not comparable with the main TEP tables.
+            history = [{'any_ooc': any(c >= thresh for c in counts), 'latency_ms': lat_ms}
+                       for counts in ooc_counts]
             fa_count = sum(1 for h, label in zip(history, chunk_labels) if h['any_ooc'] and label == 0)
             chunk_far = ((fa_count / in_control_chunks) * 100.0
                          if in_control_chunks > 0 else float('nan'))
@@ -182,4 +199,5 @@ def run_single_pass_sensitivity(pickle_path: str = 'TEPDataset_M1_M5/TEPDataset_
 
 
 if __name__ == '__main__':
-    run_single_pass_sensitivity(thresholds=[5, 10, 15])
+    # 30 = the default rate rule C = ceil(0.05 * 600); the others bracket it
+    run_single_pass_sensitivity(thresholds=[5, 15, 30, 60, 120])

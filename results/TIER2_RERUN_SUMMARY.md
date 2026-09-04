@@ -94,6 +94,33 @@ On TEP, RBULT flags 30–75% of observations as out-of-control on a joint basis.
 per-dimension false alarm rate there is 15–43x the Bonferroni target, which is the
 root cause of both the joint-coverage collapse and the chunk-level behaviour.
 
+## TEP sensitivity study: per-feature semantics, now comparable to the main tables
+
+`exp_tep_sensitivity.py` recorded violations summed across all D features while the
+benchmark scripts evaluate each feature separately, so the same threshold meant different
+things in the two places and their numbers could not be compared. It now records
+per-feature counts and flags a chunk when **any single feature** reaches the threshold.
+
+At the default C = ceil(0.05 * 600) = 30 it reproduces the main TEP Mode 1 table exactly —
+Chunk FAR 0.00%, ARL0 100.00, coverage 93.70% — so the study and the benchmark agree for
+the first time. Thresholds swept are 5 / 15 / 30 / 60 / 120, bracketing the default.
+
+| C | Shewhart | EWMA | Sliding-Window | **RBULT-SPC** |
+|---:|---:|---:|---:|---:|
+| 5 | 74.00% | 100.00% | 100.00% | 100.00% |
+| 15 | 11.00% | 100.00% | 3.00% | 5.00% |
+| **30** | 1.00% | 100.00% | 0.00% † | **0.00%** |
+| 60 | 0.00% | 100.00% | 0.00% † | **0.00%** |
+| 120 | 0.00% | 96.00% | 0.00% † | **0.00%** |
+
+Chunk FAR; † the sliding-window bootstrap's ARL1 is NaN at these thresholds — it never
+raises an alarm at all, so its 0.00% is not a result.
+
+Under the corrected semantics RBULT-SPC is no longer uniquely good: Shewhart also reaches
+0.00% by C = 60, and 1.00% at C = 30. RBULT reaches 0.00% at C = 30 while still detecting
+(ARL1 = 1.53, a real value rather than the NaN the bootstrap returns). EWMA remains pinned
+at ~100% throughout.
+
 ## Undefined metrics now report NaN instead of a flattering zero
 
 Three fallbacks in the metric code returned a *good-looking number* where the quantity was
@@ -287,10 +314,12 @@ claim should be withdrawn.
 
 ## Open issues not addressed
 
-- **`exp_tep_sensitivity.py` still uses total-across-features semantics** for all four
-  methods, while the main benchmarks now use per-feature. Internally consistent, but
-  not comparable to the main tables — the two disagree at C=25 on TEP Mode 1
-  (34.21% vs 0.00%). Pick one convention for the paper.
+- ~~`exp_tep_sensitivity.py` uses total-across-features semantics~~ **Fixed.** It now
+  records per-feature violation counts and flags a chunk when ANY single feature reaches
+  the threshold, matching `update_chunk` and the benchmark scripts. At the default
+  C = ceil(0.05 * 600) = 30 it now reproduces the main TEP Mode 1 table exactly
+  (Chunk FAR 0.00%, ARL0 100.00, coverage 93.70%), so the two are comparable for the
+  first time. Thresholds swept are 5 / 15 / 30 / 60 / 120, bracketing the default.
 - **`_compute_arl1` returns 1.0 when nothing is ever detected**, indistinguishable
   from "detected immediately". Always read ARL1 alongside a detection count.
 - **ARL0 is censored when no false alarm fires** — it returns the in-control chunk
